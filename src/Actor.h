@@ -1,7 +1,9 @@
 #pragma once
 
-#include <vector>
 #include "Math.h"
+#include "Game.h"
+#include "Component.h"
+#include <vector>
 
 class Actor {
 public:
@@ -36,6 +38,6 @@ private:
     Vector2 position;
     float scale;
     float rotation;
-    std::vector<class Component*> components
+    std::vector<class Component*> components;
     class Game* game;
 };

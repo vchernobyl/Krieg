@@ -1,4 +1,4 @@
-OBJS = src\Main.cpp
+OBJS = src\Main.cpp src\Game.cpp src\Actor.cpp src\Component.cpp
 CC = g++
 
 SDL_PATH = C:\libs\mingw_dev_libs\SDL2

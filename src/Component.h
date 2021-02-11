@@ -7,7 +7,7 @@ public:
 
     virtual void Update(float deltaTime);
 
-    int GetUpdteOrder() const { return updateOrder; }
+    int GetUpdateOrder() const { return updateOrder; }
 
 protected:
     class Actor* owner;
