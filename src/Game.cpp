@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Actor.h"
+#include "SDL_image.h"
 #include <algorithm>
 
 Game::Game() :
@@ -10,19 +11,24 @@ Game::Game() :
 
 bool Game::Initialize() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
-	SDL_Log("Could not initialize SDL: %s", SDL_GetError());
+	SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 	return false;
     }
 
     window = SDL_CreateWindow("Game", 100, 100, 640, 480, 0);
     if (!window) {
-	SDL_Log("Could not create a window: %s", SDL_GetError());
+	SDL_Log("Unable to create a window: %s", SDL_GetError());
 	return false;
     }
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer) {
-	SDL_Log("Could not create a renderer: %s", SDL_GetError());
+	SDL_Log("Unable to create a renderer: %s", SDL_GetError());
+	return false;
+    }
+
+    if (IMG_Init(IMG_INIT_PNG) == 0) {
+	SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
 	return false;
     }
 
@@ -65,6 +71,28 @@ void Game::RemoveActor(Actor* actor) {
 	std::iter_swap(iter, actors.end() - 1);
 	actors.pop_back();
     }
+}
+
+SDL_Texture* Game::GetTexture(const std::string& filename) {
+    SDL_Texture* tex = nullptr;
+    auto iter = textures.find(filename);
+    if (iter != textures.end()) {
+	tex = iter->second;
+    } else {
+	SDL_Surface* surf = IMG_Load(filename.c_str());
+	if (!surf) {
+	    SDL_Log("Failed to load texture file %s", filename.c_str());
+	    return nullptr;
+	}
+	tex = SDL_CreateTextureFromSurface(renderer, surf);
+	SDL_FreeSurface(surf);
+	if (!tex) {
+	    SDL_Log("Failed to convert surface to texture for %s", filename.c_str());
+	    return nullptr;
+	}
+	textures.emplace(filename.c_str(), tex);
+    }
+    return tex;
 }
 
 void Game::ProcessInput() {

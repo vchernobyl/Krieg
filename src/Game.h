@@ -2,6 +2,8 @@
 
 #include "SDL.h"
 #include <vector>
+#include <unordered_map>
+#include <string>
 
 class Game {
 public:
@@ -12,6 +14,8 @@ public:
 
     void AddActor(class Actor* actor);
     void RemoveActor(class Actor* actor);
+
+    SDL_Texture* GetTexture(const std::string& filename);
 private:
     void ProcessInput();
     void UpdateGame();
@@ -19,6 +23,7 @@ private:
     void LoadData();
     void UnloadData();
 
+    std::unordered_map<std::string, SDL_Texture*> textures;
     std::vector<class Actor*> actors;
     std::vector<class Actor*> pendingActors;
 
