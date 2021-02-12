@@ -21,7 +21,7 @@ void SpriteComponent::Draw(SDL_Renderer* renderer) {
 	rect.h = static_cast<int>(texHeight * owner->GetScale());
 	rect.x = static_cast<int>(owner->GetPosition().x - rect.w / 2);
 	rect.y = static_cast<int>(owner->GetPosition().y - rect.h / 2);
-	SDL_RenderCopyEx(renderer, texture, nullptr, &rect, 0, nullptr, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(renderer, texture, nullptr, &rect, -Math::ToDegrees(owner->GetRotation()), nullptr, SDL_FLIP_NONE);
     }
 }
 

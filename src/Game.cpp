@@ -175,8 +175,10 @@ void Game::LoadData() {
     GetTexture("assets/Farback02.png");
 
     Actor* actor = new Actor(this);
+    actor->SetPosition(Vector2 { 100.0f, 200.0f });
+    SDL_Log("Position x = %f, y = %f", actor->GetPosition().x, actor->GetPosition().y);
     SpriteComponent* sc = new SpriteComponent(actor);
-    sc->SetTexture(GetTexture("assets/Stars.png"));
+    sc->SetTexture(GetTexture("assets/Farback01.png"));
 }
 
 void Game::UnloadData() {
