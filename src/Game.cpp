@@ -32,6 +32,7 @@ bool Game::Initialize() {
 	return false;
     }
 
+    LoadData();
     ticks = SDL_GetTicks();
     return true;
 }
@@ -148,6 +149,9 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
+    GetTexture("assets/Stars.png");
+    GetTexture("assets/Farback01.png");
+    GetTexture("assets/Farback02.png");
 }
 
 void Game::UnloadData() {
