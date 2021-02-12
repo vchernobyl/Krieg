@@ -74,6 +74,22 @@ void Game::RemoveActor(Actor* actor) {
     }
 }
 
+void Game::AddSprite(SpriteComponent* sprite) {
+    int drawOrder = sprite->GetDrawOrder();
+    auto iter = sprites.begin();
+    while (iter != sprites.end() && drawOrder < (*iter)->GetDrawOrder()) {
+	++iter;
+    }
+    sprites.insert(iter, sprite);
+}
+
+void Game::RemoveSprite(SpriteComponent* sprite) {
+    auto iter = std::find(sprites.begin(), sprites.end(), sprite);
+    if (iter != sprites.end()) {
+	sprites.erase(iter);
+    }
+}
+
 SDL_Texture* Game::GetTexture(const std::string& filename) {
     SDL_Texture* tex = nullptr;
     auto iter = textures.find(filename);
@@ -145,6 +161,11 @@ void Game::UpdateGame() {
 void Game::GenerateOutput() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
+
+    for (auto sprite : sprites) {
+	sprite->Draw(renderer);
+    }
+
     SDL_RenderPresent(renderer);
 }
 
@@ -152,6 +173,10 @@ void Game::LoadData() {
     GetTexture("assets/Stars.png");
     GetTexture("assets/Farback01.png");
     GetTexture("assets/Farback02.png");
+
+    Actor* actor = new Actor(this);
+    SpriteComponent* sc = new SpriteComponent(actor);
+    sc->SetTexture(GetTexture("assets/Stars.png"));
 }
 
 void Game::UnloadData() {

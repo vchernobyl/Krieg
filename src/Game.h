@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDL.h"
+#include "SpriteComponent.h"
 #include <vector>
 #include <unordered_map>
 #include <string>
@@ -15,6 +16,9 @@ public:
     void AddActor(class Actor* actor);
     void RemoveActor(class Actor* actor);
 
+    void AddSprite(class SpriteComponent* sprite);
+    void RemoveSprite(class SpriteComponent* sprite);
+
     SDL_Texture* GetTexture(const std::string& filename);
 private:
     void ProcessInput();
@@ -26,6 +30,7 @@ private:
     std::unordered_map<std::string, SDL_Texture*> textures;
     std::vector<class Actor*> actors;
     std::vector<class Actor*> pendingActors;
+    std::vector<class SpriteComponent*> sprites;
 
     SDL_Window* window;
     SDL_Renderer* renderer;
