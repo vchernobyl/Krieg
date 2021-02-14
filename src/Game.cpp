@@ -1,5 +1,6 @@
 #include "Game.h"
 #include "Actor.h"
+#include "BGSpriteComponent.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -15,7 +16,7 @@ bool Game::Initialize() {
 	return false;
     }
 
-    window = SDL_CreateWindow("Game", 100, 100, 640, 480, 0);
+    window = SDL_CreateWindow("Game", 100, 100, 1024, 768, 0);
     if (!window) {
 	SDL_Log("Unable to create a window: %s", SDL_GetError());
 	return false;
@@ -171,17 +172,27 @@ void Game::GenerateOutput() {
 
 void Game::LoadData() {
     GetTexture("assets/Stars.png");
-    GetTexture("assets/Farback01.png");
-    GetTexture("assets/Farback02.png");
 
     Actor* actor = new Actor(this);
-    actor->SetPosition(Vector2 { 100.0f, 200.0f });
-    SpriteComponent* sc = new SpriteComponent(actor);
-    sc->SetTexture(GetTexture("assets/Farback01.png"));
+    actor->SetPosition(Vector2 { 512.0f, 384.0f });
+
+    BGSpriteComponent* bg = new BGSpriteComponent(actor);
+    bg->SetScreenSize(Vector2 { 1024.0f, 768.0f });
+    std::vector<SDL_Texture*> textures = {
+	GetTexture("assets/Farback01.png"),
+	GetTexture("assets/Farback02.png")
+    };
+    bg->SetBGTextures(textures);
+    bg->SetScrollSpeed(-100.0f);
 }
 
 void Game::UnloadData() {
     while (!actors.empty()) {
 	delete actors.back();
     }
+
+    for (auto tex : textures) {
+	SDL_DestroyTexture(tex.second);
+    }
+    textures.clear();
 }
