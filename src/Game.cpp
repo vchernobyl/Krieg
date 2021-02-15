@@ -188,6 +188,15 @@ void Game::LoadData() {
     };
     bg->SetBGTextures(textures);
     bg->SetScrollSpeed(-100.0f);
+
+    bg = new BGSpriteComponent(actor, 50);
+    bg->SetScreenSize(Vector2 { 1024.0f, 768.0f });
+    textures = {
+	GetTexture("assets/Stars.png"),
+	GetTexture("assets/Stars.png")
+    };
+    bg->SetBGTextures(textures);
+    bg->SetScrollSpeed(-200.0f);
 }
 
 void Game::UnloadData() {
