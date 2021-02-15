@@ -129,6 +129,8 @@ void Game::ProcessInput() {
     if (state[SDL_SCANCODE_ESCAPE]) {
 	isRunning = false;
     }
+
+    ship->ProcessKeyboard(state);
 }
 
 void Game::UpdateGame() {

@@ -18,7 +18,17 @@ Ship::Ship(Game* game)
 
 void Ship::UpdateActor(float deltaTime) {
     Actor::UpdateActor(deltaTime);
+    Vector2 pos = GetPosition();
+    pos.x += rightSpeed * deltaTime;
+    pos.y += downSpeed * deltaTime;
+    SetPosition(pos);
 }
 
 void Ship::ProcessKeyboard(const uint8_t* state) {
+    rightSpeed = 0.0f;
+    downSpeed = 0.0f;
+    if (state[SDL_SCANCODE_D]) rightSpeed += 250.0f;
+    if (state[SDL_SCANCODE_A]) rightSpeed -= 250.0f;
+    if (state[SDL_SCANCODE_S]) downSpeed += 300.0f;
+    if (state[SDL_SCANCODE_W]) downSpeed -= 300.0f;
 }
