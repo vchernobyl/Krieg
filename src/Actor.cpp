@@ -37,7 +37,7 @@ void Actor::UpdateActor(float deltaTime) {}
 void Actor::AddComponent(Component* component) {
     int order = component->GetUpdateOrder();
     auto iter = components.begin();
-    while (iter != components.end() && order < (*iter)->GetUpdateOrder()) {
+    while (iter != components.end() && order > (*iter)->GetUpdateOrder()) {
 	++iter;
     }
     components.insert(iter, component);

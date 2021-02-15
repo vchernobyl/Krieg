@@ -1,6 +1,8 @@
 #include "Game.h"
 #include "Actor.h"
+#include "Ship.h"
 #include "BGSpriteComponent.h"
+#include "SpriteComponent.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -78,7 +80,7 @@ void Game::RemoveActor(Actor* actor) {
 void Game::AddSprite(SpriteComponent* sprite) {
     int drawOrder = sprite->GetDrawOrder();
     auto iter = sprites.begin();
-    while (iter != sprites.end() && drawOrder < (*iter)->GetDrawOrder()) {
+    while (iter != sprites.end() && drawOrder > (*iter)->GetDrawOrder()) {
 	++iter;
     }
     sprites.insert(iter, sprite);
@@ -171,7 +173,9 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
-    GetTexture("assets/Stars.png");
+    ship = new Ship(this);
+    ship->SetPosition(Vector2 { 100.0f, 384.0f });
+    ship->SetScale(1.5f);
 
     Actor* actor = new Actor(this);
     actor->SetPosition(Vector2 { 512.0f, 384.0f });

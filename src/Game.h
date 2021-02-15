@@ -1,10 +1,9 @@
 #pragma once
 
 #include "SDL.h"
-#include "SpriteComponent.h"
-#include <vector>
 #include <unordered_map>
 #include <string>
+#include <vector>
 
 class Game {
 public:
@@ -34,6 +33,7 @@ private:
 
     SDL_Window* window;
     SDL_Renderer* renderer;
+    class Ship* ship;
 
     bool isRunning;
     bool updatingActors;
