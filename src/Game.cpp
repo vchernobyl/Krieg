@@ -176,14 +176,14 @@ void Game::GenerateOutput() {
 
 void Game::LoadData() {
     ship = new Ship(this);
-    ship->SetPosition(Vector2 { 100.0f, 384.0f });
+    ship->SetPosition(Vector2(100.0f, 384.0f));
     ship->SetScale(1.5f);
 
     Actor* actor = new Actor(this);
-    actor->SetPosition(Vector2 { 512.0f, 384.0f });
+    actor->SetPosition(Vector2(512.0f, 384.0f));
 
     BGSpriteComponent* bg = new BGSpriteComponent(actor);
-    bg->SetScreenSize(Vector2 { 1024.0f, 768.0f });
+    bg->SetScreenSize(Vector2(1024.0f, 768.0f));
     std::vector<SDL_Texture*> textures = {
 	GetTexture("assets/Farback01.png"),
 	GetTexture("assets/Farback02.png")
@@ -192,7 +192,7 @@ void Game::LoadData() {
     bg->SetScrollSpeed(-100.0f);
 
     bg = new BGSpriteComponent(actor, 50);
-    bg->SetScreenSize(Vector2 { 1024.0f, 768.0f });
+    bg->SetScreenSize(Vector2(1024.0f, 768.0f));
     textures = {
 	GetTexture("assets/Stars.png"),
 	GetTexture("assets/Stars.png")

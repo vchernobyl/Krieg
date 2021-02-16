@@ -5,7 +5,7 @@
 
 Actor::Actor(Game* g)
     : state(Active),
-      position(Vector2 { 0.0f, 0.0f }),
+      position(Vector2(0.0f, 0.0f)),
       scale(1.0f),
       rotation(0.0f),
       game(g) {
