@@ -1,4 +1,4 @@
-OBJS = src\Main.cpp src\Game.cpp src\Actor.cpp src\Component.cpp src\SpriteComponent.cpp src\AnimSpriteComponent.cpp src\BGSpriteComponent.cpp src\Ship.cpp
+OBJS = src\Main.cpp src\Game.cpp src\Actor.cpp src\Component.cpp src\SpriteComponent.cpp src\AnimSpriteComponent.cpp src\BGSpriteComponent.cpp src\Ship.cpp src\MoveComponent.cpp
 CC = g++
 
 SDL_PATH = C:\libs\mingw_dev_libs\SDL2

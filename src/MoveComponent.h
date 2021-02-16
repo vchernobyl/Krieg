@@ -9,10 +9,10 @@ public:
     void Update(float deltaTime) override;
 
     float GetAngularSpeed() const { return angularSpeed; }
-    float SetAngularSpeed(float speed) { angularSpeed = speed; }
+    void SetAngularSpeed(float speed) { angularSpeed = speed; }
     
     float GetForwardSpeed() const { return forwardSpeed; }
-    float SetForwardSpeed(float speed) { return forwardSpeed = speed; }
+    void SetForwardSpeed(float speed) { forwardSpeed = speed; }
 
 private:
     float angularSpeed;

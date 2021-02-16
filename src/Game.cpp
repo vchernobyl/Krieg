@@ -3,6 +3,7 @@
 #include "Ship.h"
 #include "BGSpriteComponent.h"
 #include "SpriteComponent.h"
+#include "MoveComponent.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -178,6 +179,9 @@ void Game::LoadData() {
     ship = new Ship(this);
     ship->SetPosition(Vector2(100.0f, 384.0f));
     ship->SetScale(1.5f);
+    MoveComponent* mc = new MoveComponent(ship);
+    mc->SetForwardSpeed(78.0f);
+    mc->SetAngularSpeed(3.0f);
 
     Actor* actor = new Actor(this);
     actor->SetPosition(Vector2(512.0f, 384.0f));
