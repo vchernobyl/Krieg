@@ -24,6 +24,8 @@ public:
     State GetState() const { return state; }
     void SetState(State s) { state = s; }
 
+    Vector2 GetForward() const { return Vector2(Math::Cos(rotation), -Math::Sin(rotation)); }
+
     class Game* GetGame() const { return game; }
 
     void Update(float deltaTime);
