@@ -4,6 +4,7 @@
 
 namespace Math {
     const float Pi = 3.1415926535f;
+    const float TwoPi = Pi * 2.0f;
 
     inline float ToDegrees(float radians) {
 	return radians * 180.0f / Pi;
@@ -63,4 +64,8 @@ public:
 	y -= v.y;
 	return *this;
     }
+
+    static const Vector2 Zero;
+    static const Vector2 UnitX;
+    static const Vector2 UnitY;
 };
