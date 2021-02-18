@@ -7,9 +7,4 @@ public:
     Ship(class Game* game);
     void UpdateActor(float deltaTime) override;
     void ActorInput(const uint8_t* state) override;
-    float GetRightSpeed() const { return rightSpeed; }
-    float GetDownSpeed() const { return downSpeed; }
-private:
-    float rightSpeed;
-    float downSpeed;
 };

@@ -1,11 +1,9 @@
 #include "Ship.h"
+#include "InputComponent.h"
 #include "AnimSpriteComponent.h"
 #include "Game.h"
 
-Ship::Ship(Game* game)
-    : Actor(game),
-      rightSpeed(0.0f),
-      downSpeed(0.0f) {
+Ship::Ship(Game* game) : Actor(game) {
     AnimSpriteComponent* anim = new AnimSpriteComponent(this);
     std::vector<SDL_Texture*> frames = {
 	game->GetTexture("assets/Ship01.png"),
@@ -14,21 +12,18 @@ Ship::Ship(Game* game)
 	game->GetTexture("assets/Ship04.png"),
     };
     anim->SetAnimTextures(frames);
+
+    InputComponent* input = new InputComponent(this);
+    input->SetMaxForwardSpeed(250.0f);
+    input->SetMaxAngularSpeed(2.0f);
+    input->SetForwardKey(SDL_SCANCODE_UP);
+    input->SetBackKey(SDL_SCANCODE_DOWN);
+    input->SetClockwiseKey(SDL_SCANCODE_LEFT);
+    input->SetCounterClockwiseKey(SDL_SCANCODE_RIGHT);
 }
 
 void Ship::UpdateActor(float deltaTime) {
-    Actor::UpdateActor(deltaTime);
-    Vector2 pos = GetPosition();
-    pos.x += rightSpeed * deltaTime;
-    pos.y += downSpeed * deltaTime;
-    SetPosition(pos);
 }
 
 void Ship::ActorInput(const uint8_t* state) {
-    rightSpeed = 0.0f;
-    downSpeed = 0.0f;
-    if (state[SDL_SCANCODE_D]) rightSpeed += 250.0f;
-    if (state[SDL_SCANCODE_A]) rightSpeed -= 250.0f;
-    if (state[SDL_SCANCODE_S]) downSpeed += 300.0f;
-    if (state[SDL_SCANCODE_W]) downSpeed -= 300.0f;
 }
