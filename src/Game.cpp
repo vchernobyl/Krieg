@@ -134,7 +134,11 @@ void Game::ProcessInput() {
 	isRunning = false;
     }
 
-    ship->ProcessKeyboard(state);
+    updatingActors = true;
+    for (auto actor : actors) {
+	actor->ProcessInput(state);
+    }
+    updatingActors = false;
 }
 
 void Game::UpdateGame() {

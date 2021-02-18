@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Component.h"
 #include <vector>
+#include <cstdint>
 
 class Actor {
 public:
@@ -27,6 +28,9 @@ public:
     Vector2 GetForward() const { return Vector2(Math::Cos(rotation), -Math::Sin(rotation)); }
 
     class Game* GetGame() const { return game; }
+
+    void ProcessInput(const uint8_t* keyState);
+    virtual void ActorInput(const uint8_t* keyState);
 
     void Update(float deltaTime);
     void UpdateComponents(float deltaTime);
