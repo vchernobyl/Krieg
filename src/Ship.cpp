@@ -3,12 +3,17 @@
 #include "Game.h"
 #include "InputComponent.h"
 #include "SpriteComponent.h"
+#include "RigidbodyComponent.h"
 
 Ship::Ship(Game* game)
     : Actor(game),
       laserCooldown(0.0f) {
     SpriteComponent* sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetTexture("assets/Ship.png"));
+
+    RigidbodyComponent* rigidbody = new RigidbodyComponent(this);
+    rigidbody->SetMass(1.0f);
+    rigidbody->SetGravity(9.82f * 10);
 
     InputComponent* input = new InputComponent(this);
     input->SetForwardKey(SDL_SCANCODE_UP);
