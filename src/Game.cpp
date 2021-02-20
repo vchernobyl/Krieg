@@ -97,6 +97,17 @@ void Game::RemoveSprite(SpriteComponent* sprite) {
     }
 }
 
+void Game::AddAsteroid(Asteroid* asteroid) {
+    asteroids.emplace_back(asteroid);
+}
+
+void Game::RemoveAsteroid(Asteroid* asteroid) {
+    auto iter = std::find(asteroids.begin(), asteroids.end(), asteroid);
+    if (iter != asteroids.end()) {
+	asteroids.erase(iter);
+    }
+}
+
 SDL_Texture* Game::GetTexture(const std::string& filename) {
     SDL_Texture* tex = nullptr;
     auto iter = textures.find(filename);

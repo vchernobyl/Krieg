@@ -21,4 +21,10 @@ Asteroid::Asteroid(Game* game)
 
     circle = new CircleComponent(this);
     circle->SetRadius(40.0f);
+
+    game->AddAsteroid(this);
+}
+
+Asteroid::~Asteroid() {
+    GetGame()->RemoveAsteroid(this);
 }

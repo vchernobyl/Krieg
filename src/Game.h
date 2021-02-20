@@ -19,6 +19,12 @@ public:
     void RemoveSprite(class SpriteComponent* sprite);
 
     SDL_Texture* GetTexture(const std::string& filename);
+
+    // Game specific
+    void AddAsteroid(class Asteroid* asteroid);
+    void RemoveAsteroid(class Asteroid* asteroid);
+    std::vector<class Asteroid*>& GetAsteroids() { return asteroids; }
+
 private:
     void ProcessInput();
     void UpdateGame();
@@ -33,10 +39,12 @@ private:
 
     SDL_Window* window;
     SDL_Renderer* renderer;
-    class Ship* ship;
 
     bool isRunning;
     bool updatingActors;
-
     Uint32 ticks;
+
+    // Game specific fields
+    class Ship* ship;
+    std::vector<class Asteroid*> asteroids;
 };

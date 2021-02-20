@@ -1,0 +1,8 @@
+----------
+Open Tasks
+----------
+
+1. Implement rigidbody physics component to control actors by applying force, where the
+   change to the actors position is done by calculating velocity.
+
+2. Extend the animation component to support sprite animations in both directions.

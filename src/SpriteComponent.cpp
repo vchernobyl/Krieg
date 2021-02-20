@@ -1,12 +1,12 @@
 #include "Actor.h"
 #include "SpriteComponent.h"
 
-SpriteComponent::SpriteComponent(Actor* owner, int drawOrder) :
-    Component(owner, drawOrder),
-    texture(nullptr),
-    drawOrder(drawOrder),
-    texWidth(0),
-    texHeight(0) {
+SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
+    : Component(owner, drawOrder),
+      texture(nullptr),
+      drawOrder(drawOrder),
+      texWidth(0),
+      texHeight(0) {
     owner->GetGame()->AddSprite(this);
 }
 
