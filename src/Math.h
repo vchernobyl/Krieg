@@ -76,4 +76,6 @@ public:
     static const Vector2 Zero;
     static const Vector2 UnitX;
     static const Vector2 UnitY;
+    static const Vector2 NegUnitX;
+    static const Vector2 NegUnitY;
 };

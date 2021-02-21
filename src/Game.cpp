@@ -3,6 +3,7 @@
 #include "Ship.h"
 #include "BGSpriteComponent.h"
 #include "SpriteComponent.h"
+#include "Skeleton.h"
 #include "MoveComponent.h"
 #include "Asteroid.h"
 #include "Random.h"
@@ -194,34 +195,8 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
-    ship = new Ship(this);
-    ship->SetPosition(Vector2(100.0f, 384.0f));
-    ship->SetScale(1.5f);
-
-    for (int i = 0; i < 10; ++i) {
-	new Asteroid(this);
-    }
-
-    Actor* actor = new Actor(this);
-    actor->SetPosition(Vector2(512.0f, 384.0f));
-
-    BGSpriteComponent* bg = new BGSpriteComponent(actor);
-    bg->SetScreenSize(Vector2(1024.0f, 768.0f));
-    std::vector<SDL_Texture*> textures = {
-	GetTexture("assets/Farback01.png"),
-	GetTexture("assets/Farback02.png")
-    };
-    bg->SetBGTextures(textures);
-    bg->SetScrollSpeed(-100.0f);
-
-    bg = new BGSpriteComponent(actor, 50);
-    bg->SetScreenSize(Vector2(1024.0f, 768.0f));
-    textures = {
-	GetTexture("assets/Stars.png"),
-	GetTexture("assets/Stars.png")
-    };
-    bg->SetBGTextures(textures);
-    bg->SetScrollSpeed(-200.0f);
+    Skeleton* skeleton = new Skeleton(this);
+    skeleton->SetPosition(Vector2(150.0f, 150.0f));
 }
 
 void Game::UnloadData() {

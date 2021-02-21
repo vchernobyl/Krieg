@@ -1,8 +1,13 @@
-----------
-Open Tasks
-----------
+---------------
+Open Tasks 2021
+---------------
 
+February:
+---------
 1. Implement rigidbody physics component to control actors by applying force, where the
    change to the actors position is done by calculating velocity. [DONE]
-
-2. Extend the animation component to support sprite animations in both directions by using SDL_FLIP_* flag.
+2. Implement functionality for the animation component to support loading and switching
+   of multiple animations. [DONE]
+3. Extend the animation component to support sprite animations in both directions by using SDL_FLIP_* flag.
+4. Extend the animation component to support loading of animations from animation sheet.
+5. Fix rigidbody component bug, where velocity is unchanged after nullifying the force.

@@ -10,7 +10,7 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, int updateOrder)
 void RigidbodyComponent::Update(float deltaTime) {
     acceleration.x = force.x / mass;
     acceleration.y = gravity + force.y / mass;
-    velocity += acceleration * deltaTime;
+    velocity = acceleration * deltaTime;
     Vector2 position = owner->GetPosition() + velocity * deltaTime;
     owner->SetPosition(position);
 }
