@@ -12,7 +12,7 @@ Ship::Ship(Game* game)
     sprite->SetTexture(game->GetTexture("assets/Ship.png"));
 
     RigidbodyComponent* rigidbody = new RigidbodyComponent(this);
-    rigidbody->SetMass(1.0f);
+    rigidbody->SetMass(0.5f);
     rigidbody->SetGravity(9.82f * 10);
 
     InputComponent* input = new InputComponent(this);

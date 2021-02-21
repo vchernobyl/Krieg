@@ -21,6 +21,10 @@ namespace Math {
     inline bool NearZero(float val, float epsilon = 0.001f) {
 	return fabs(val) <= epsilon;
     }
+
+    inline float Fmod(float number, float denom) {
+	return fmod(number, denom);
+    }
 }
 
 class Vector2 {
