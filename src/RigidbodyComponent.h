@@ -21,6 +21,7 @@ private:
     Vector2 force;
     Vector2 velocity;
     Vector2 acceleration;
+    Vector2 position;
     float mass;
     float gravity;
 };

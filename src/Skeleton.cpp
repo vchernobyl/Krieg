@@ -28,15 +28,15 @@ Skeleton::Skeleton(Game* game) : Actor(game), animState(Idle) {
 
     rigidbody = new RigidbodyComponent(this);
     rigidbody->SetMass(1.0f);
-    SetScale(2.0f);
+    SetScale(1.5f);
 }
 
 void Skeleton::ActorInput(const uint8_t* keyState) {
     if (keyState[SDL_SCANCODE_RIGHT]) {
-	rigidbody->AddForce(Vector2::UnitX * 20000.0f);
+	rigidbody->AddForce(Vector2::UnitX * 200.0f);
     }
     if (keyState[SDL_SCANCODE_LEFT]) {
-	rigidbody->AddForce(Vector2::NegUnitX * 20000.0f);
+	rigidbody->AddForce(Vector2::NegUnitX * 200.0f);
     }
 }
 
