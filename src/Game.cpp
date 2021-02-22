@@ -1,11 +1,7 @@
 #include "Game.h"
 #include "Actor.h"
-#include "Ship.h"
-#include "BGSpriteComponent.h"
 #include "SpriteComponent.h"
-#include "Skeleton.h"
-#include "MoveComponent.h"
-#include "Asteroid.h"
+#include "Hero.h"
 #include "Random.h"
 #include "SDL_image.h"
 #include <algorithm>
@@ -195,8 +191,8 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
-    Skeleton* skeleton = new Skeleton(this);
-    skeleton->SetPosition(Vector2(150.0f, 150.0f));
+    Hero* hero = new Hero(this);
+    hero->SetPosition(Vector2(150.0f, 150.0f));
 }
 
 void Game::UnloadData() {

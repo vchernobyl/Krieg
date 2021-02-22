@@ -6,9 +6,8 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, int updateOrder)
 
 void RigidbodyComponent::Update(float deltaTime) {
     acceleration.x = force.x / mass;
-    acceleration.y = gravity + force.y / mass;
+    acceleration.y = force.y / mass;
     velocity += acceleration * deltaTime;
     position += velocity * deltaTime;
-    SDL_Log("(x, y) = (%f, %f)", position.x, position.y);
     owner->SetPosition(owner->GetPosition() + position);
 }

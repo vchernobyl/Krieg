@@ -1,4 +1,4 @@
-OBJS = src\Main.cpp src\Game.cpp src\Actor.cpp src\Component.cpp src\SpriteComponent.cpp src\AnimSpriteComponent.cpp src\BGSpriteComponent.cpp src\Ship.cpp src\MoveComponent.cpp src\Asteroid.cpp src\Random.cpp src\InputComponent.cpp src\CircleComponent.cpp src\Laser.cpp src\RigidbodyComponent.cpp src\Math.cpp src\Skeleton.cpp
+OBJS = src\Main.cpp src\Game.cpp src\Actor.cpp src\Component.cpp src\SpriteComponent.cpp src\AnimSpriteComponent.cpp src\Random.cpp src\CircleComponent.cpp src\RigidbodyComponent.cpp src\Math.cpp src\Hero.cpp src\MovementComponent.cpp
 
 CC = g++
 

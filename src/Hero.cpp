@@ -1,14 +1,14 @@
-#include "Skeleton.h"
+#include "Hero.h"
 #include "Game.h"
-#include "RigidbodyComponent.h"
 #include "Math.h"
 #include <vector>
 
-Skeleton::Skeleton(Game* game) : Actor(game), animState(Idle) {
+Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     animation = new AnimSpriteComponent(this);
     std::vector<AnimFrameData> animFrameData = {
 	{ 0, 3 },
 	{ 3, 6 },
+	{10, 4 },
     };
     std::vector<SDL_Texture*> images = {
 	game->GetTexture("assets/adventurer-idle-00.png"),
@@ -20,26 +20,19 @@ Skeleton::Skeleton(Game* game) : Actor(game), animState(Idle) {
 	game->GetTexture("assets/adventurer-run-03.png"),
 	game->GetTexture("assets/adventurer-run-04.png"),
 	game->GetTexture("assets/adventurer-run-05.png"),
+	game->GetTexture("assets/adventurer-attack1-00.png"),
+	game->GetTexture("assets/adventurer-attack1-01.png"),
+	game->GetTexture("assets/adventurer-attack1-02.png"),
+	game->GetTexture("assets/adventurer-attack1-03.png"),
+	game->GetTexture("assets/adventurer-attack1-04.png"),
     };
     AnimData animData = { images, animFrameData };
     animation->SetAnimData(animData);
     animation->SetAnimFPS(10.0f);
-    animation->ChangeAnim(Run);
+    animation->ChangeAnim(Idle);
 
-    rigidbody = new RigidbodyComponent(this);
-    rigidbody->SetMass(1.0f);
+    input = new MovementComponent(this);
+    input->SetSpeed(200.0f);
+
     SetScale(1.5f);
-}
-
-void Skeleton::ActorInput(const uint8_t* keyState) {
-    if (keyState[SDL_SCANCODE_RIGHT]) {
-	rigidbody->AddForce(Vector2::UnitX * 200.0f);
-    }
-    if (keyState[SDL_SCANCODE_LEFT]) {
-	rigidbody->AddForce(Vector2::NegUnitX * 200.0f);
-    }
-}
-
-void Skeleton::UpdateActor(float deltaTime) {
-    rigidbody->ResetForce();
 }
