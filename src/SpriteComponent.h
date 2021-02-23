@@ -9,7 +9,7 @@ public:
     ~SpriteComponent();
 
     virtual void Draw(SDL_Renderer* renderer);
-    virtual void SetTexture(SDL_Texture* texture);
+    virtual void SetTexture(SDL_Texture* texture, SDL_RendererFlip flip = SDL_FLIP_NONE);
 
     int GetDrawOrder() const { return drawOrder; }
     int GetTexWidth() const { return texWidth; }
@@ -17,6 +17,7 @@ public:
     
 protected:
     SDL_Texture* texture;
+    SDL_RendererFlip flip;
     int drawOrder;
     int texWidth;
     int texHeight;

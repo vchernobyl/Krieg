@@ -193,6 +193,11 @@ void Game::GenerateOutput() {
 void Game::LoadData() {
     Hero* hero = new Hero(this);
     hero->SetPosition(Vector2(150.0f, 150.0f));
+
+    Actor* temp = new Actor(this);
+    temp->SetPosition(Vector2(500.0f, 250.0f));
+    SpriteComponent* sprite = new SpriteComponent(temp);
+    sprite->SetTexture(GetTexture("assets/adventurer-attack1-00.png"), SDL_FLIP_HORIZONTAL);
 }
 
 void Game::UnloadData() {
