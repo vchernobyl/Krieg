@@ -3,6 +3,7 @@
 
 AnimSpriteComponent::AnimSpriteComponent(Actor* owner)
     : SpriteComponent(owner),
+      flip(SDL_FLIP_NONE),
       animNum(0), frameNum(0),
       frameTime(0.0f), animFPS(24.0f) {}
 
@@ -14,15 +15,16 @@ void AnimSpriteComponent::Update(float deltaTime) {
 	    frameNum = frameNum % animData.frameInfo[animNum].numFrames;
 	}
 	int imageNum = animData.frameInfo[animNum].startFrame + frameNum;
-	SetTexture(animData.images[imageNum]);
+	SetTexture(animData.images[imageNum], flip);
 	frameTime = Math::Fmod(frameTime, 1.0f / animFPS);
     }
 }
 
-void AnimSpriteComponent::ChangeAnim(int num) {
+void AnimSpriteComponent::ChangeAnim(int num, SDL_RendererFlip flip) {
+    this->flip = flip;
     animNum = num;
     frameNum = 0;
     frameTime = 0.0f;
     int imageNum = animData.frameInfo[animNum].startFrame;
-    SetTexture(animData.images[imageNum]);
+    SetTexture(animData.images[imageNum], flip);
 }

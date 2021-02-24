@@ -21,9 +21,10 @@ public:
     void SetAnimData(const AnimData& animData) { this->animData = animData; }
     void SetAnimFPS(float animFPS) { this->animFPS = animFPS; }
     void Update(float deltaTime) override;
-    void ChangeAnim(int num);
+    void ChangeAnim(int num, SDL_RendererFlip flip = SDL_FLIP_NONE);
 private:
     AnimData animData;
+    SDL_RendererFlip flip;
     int animNum, frameNum;
     float frameTime, animFPS;
 };

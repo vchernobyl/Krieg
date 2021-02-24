@@ -29,10 +29,22 @@ Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     AnimData animData = { images, animFrameData };
     animation->SetAnimData(animData);
     animation->SetAnimFPS(10.0f);
-    animation->ChangeAnim(Idle);
+    animation->ChangeAnim(Run, SDL_FLIP_HORIZONTAL);
 
     input = new MovementComponent(this);
     input->SetSpeed(200.0f);
 
     SetScale(1.5f);
+}
+
+void Hero::ActorInput(const uint8_t* keyState) {
+    // SDL_RendererFlip direction = SDL_FLIP_NONE;
+    // if (keyState[SDL_SCANCODE_LEFT]) {
+    // 	direction = SDL_FLIP_HORIZONTAL;
+    // 	animation->ChangeAnim(Run, direction);
+    // } else if (keyState[SDL_SCANCODE_RIGHT]) {
+    // 	animation->ChangeAnim(Run, direction);
+    // } else {
+    // 	animation->ChangeAnim(Idle, direction);
+    // }
 }
