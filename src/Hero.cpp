@@ -29,10 +29,35 @@ Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     AnimData animData = { images, animFrameData };
     animation->SetAnimData(animData);
     animation->SetAnimFPS(10.0f);
-    animation->ChangeAnim(Run, SDL_FLIP_HORIZONTAL);
+    animation->ChangeAnim(Idle);
 
-    input = new MovementComponent(this);
-    input->SetSpeed(200.0f);
+    movement = new MovementComponent(this);
+    movement->SetSpeed(200.0f);
 
     SetScale(1.5f);
+}
+
+void Hero::ActorInput(const InputState& inputState) {
+    switch (animState) {
+    case Idle:
+	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {
+	    animState = Run;
+	    animation->ChangeAnim(animState, SDL_FLIP_HORIZONTAL);
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
+	    animState = Run;
+	    animation->ChangeAnim(animState);
+	}
+	break;
+    case Run:
+	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Released) {
+	    animState = Idle;
+	    animation->ChangeAnim(animState, SDL_FLIP_HORIZONTAL);
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Released) {
+	    animState = Idle;
+	    animation->ChangeAnim(animState);
+	}
+	break;
+    case Attack:
+	break;
+    }
 }

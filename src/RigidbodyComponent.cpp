@@ -6,8 +6,9 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, int updateOrder)
 
 void RigidbodyComponent::Update(float deltaTime) {
     acceleration.x = force.x / mass;
-    acceleration.y = force.y / mass;
+    acceleration.y = (force.y + gravity) / mass;
     velocity += acceleration * deltaTime;
     position += velocity * deltaTime;
     owner->SetPosition(owner->GetPosition() + position);
+    force = Vector2::Zero;
 }

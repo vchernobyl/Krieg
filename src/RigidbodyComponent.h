@@ -15,6 +15,9 @@ public:
     float GetMass() const { return mass; }
     void SetMass(float mass) { this->mass = mass; }
 
+    float GetGravity() const { return gravity; }
+    void SetGravity(float gravity) { this->gravity = gravity; }
+
     const Vector2& GetVelocity() const { return velocity; }
     void SetVelocity(Vector2 velocity) { this->velocity = velocity; }
 private:
