@@ -9,6 +9,7 @@
 Game::Game() :
     window(nullptr),
     renderer(nullptr),
+    inputSystem(nullptr),
     isRunning(true),
     updatingActors(false) {}
 
@@ -35,6 +36,12 @@ bool Game::Initialize() {
 	return false;
     }
 
+    inputSystem = new InputSystem();
+    if (!inputSystem->Initialize()) {
+	SDL_Log("Unable to initialize input system");
+	return false;
+    }
+
     Random::Init();
     LoadData();
     ticks = SDL_GetTicks();
@@ -50,6 +57,7 @@ void Game::RunLoop() {
 }
 
 void Game::Shutdown() {
+    inputSystem->Shutdown();
     UnloadData();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -128,6 +136,8 @@ SDL_Texture* Game::GetTexture(const std::string& filename) {
 }
 
 void Game::ProcessInput() {
+    inputSystem->PrepareForUpdate();
+
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
 	switch (event.type) {
@@ -137,8 +147,10 @@ void Game::ProcessInput() {
 	}
     }
 
-    const Uint8* state = SDL_GetKeyboardState(NULL);
-    if (state[SDL_SCANCODE_ESCAPE]) {
+    inputSystem->Update();
+    const InputState& state = inputSystem->GetState();
+    
+    if (state.Keyboard.GetKeyState(SDL_SCANCODE_ESCAPE) == Released) {
 	isRunning = false;
     }
 

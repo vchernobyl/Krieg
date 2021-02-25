@@ -19,16 +19,16 @@ Actor::~Actor() {
     }
 }
 
-void Actor::ProcessInput(const uint8_t* keyState) {
+void Actor::ProcessInput(const InputState& inputState) {
     if (state == Active) {
 	for (auto comp : components) {
-	    comp->ProcessInput(keyState);
+	    comp->ProcessInput(inputState);
 	}
-	ActorInput(keyState);
+	ActorInput(inputState);
     }
 }
 
-void Actor::ActorInput(const uint8_t* keyState) {}
+void Actor::ActorInput(const InputState& inputState) {}
 
 void Actor::Update(float deltaTime) {
     if (state == Active) {

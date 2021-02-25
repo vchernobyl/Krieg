@@ -36,15 +36,3 @@ Hero::Hero(Game* game) : Actor(game), animState(Idle) {
 
     SetScale(1.5f);
 }
-
-void Hero::ActorInput(const uint8_t* keyState) {
-    // SDL_RendererFlip direction = SDL_FLIP_NONE;
-    // if (keyState[SDL_SCANCODE_LEFT]) {
-    // 	direction = SDL_FLIP_HORIZONTAL;
-    // 	animation->ChangeAnim(Run, direction);
-    // } else if (keyState[SDL_SCANCODE_RIGHT]) {
-    // 	animation->ChangeAnim(Run, direction);
-    // } else {
-    // 	animation->ChangeAnim(Idle, direction);
-    // }
-}

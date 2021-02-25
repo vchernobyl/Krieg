@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cstdint>
+#include "InputSystem.h"
 
 class Component {
 public:
@@ -8,7 +9,7 @@ public:
     virtual ~Component();
 
     virtual void Update(float deltaTime);
-    virtual void ProcessInput(const uint8_t* keyState);
+    virtual void ProcessInput(const InputState& inputState);
 
     int GetUpdateOrder() const { return updateOrder; }
 

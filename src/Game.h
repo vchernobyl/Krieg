@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SDL.h"
+#include "InputSystem.h"
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -39,6 +40,7 @@ private:
 
     SDL_Window* window;
     SDL_Renderer* renderer;
+    InputSystem* inputSystem;
 
     bool isRunning;
     bool updatingActors;

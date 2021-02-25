@@ -2,13 +2,18 @@
 
 #include "Math.h"
 #include "Game.h"
+#include "InputSystem.h"
 #include "Component.h"
 #include <vector>
 #include <cstdint>
 
 class Actor {
 public:
-    enum State { Active, Paused, Dead };
+    enum State {
+	Active,
+	Paused,
+	Dead
+    };
 
     Actor(class Game* g);
     virtual ~Actor();
@@ -29,8 +34,8 @@ public:
 
     class Game* GetGame() const { return game; }
 
-    void ProcessInput(const uint8_t* keyState);
-    virtual void ActorInput(const uint8_t* keyState);
+    void ProcessInput(const InputState& inputState);
+    virtual void ActorInput(const InputState& inputState);
 
     void Update(float deltaTime);
     void UpdateComponents(float deltaTime);

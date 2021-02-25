@@ -3,10 +3,10 @@
 MovementComponent::MovementComponent(Actor* owner, int updateOrder)
     : Component(owner, updateOrder) {}
 
-void MovementComponent::ProcessInput(const uint8_t* keyState) {
-    velocity = 0;
-    if (keyState[SDL_SCANCODE_RIGHT]) velocity += 1;
-    if (keyState[SDL_SCANCODE_LEFT]) velocity -= 1;
+void MovementComponent::ProcessInput(const InputState& inputState) {
+    // velocity = 0;
+    // if (keyState[SDL_SCANCODE_RIGHT]) velocity += 1;
+    // if (keyState[SDL_SCANCODE_LEFT]) velocity -= 1;
 }
 
 void MovementComponent::Update(float deltaTime) {
