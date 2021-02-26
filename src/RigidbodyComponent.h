@@ -20,6 +20,8 @@ public:
 
     const Vector2& GetVelocity() const { return velocity; }
     void SetVelocity(Vector2 velocity) { this->velocity = velocity; }
+
+    Vector2 GetPosition() const { return position; }
 private:
     Vector2 force;
     Vector2 velocity;

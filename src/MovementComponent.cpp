@@ -11,6 +11,6 @@ void MovementComponent::ProcessInput(const InputState& inputState) {
 
 void MovementComponent::Update(float deltaTime) {
     float x = owner->GetPosition().x + (velocity * speed * deltaTime);
-    float y = owner->GetPosition().y;
+    float y = owner->GetPosition().y > 150.0f ? 150.0f : owner->GetPosition().y;
     owner->SetPosition(Vector2(x, y));
 }

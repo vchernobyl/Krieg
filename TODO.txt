@@ -11,4 +11,5 @@ February:
 3. Add support for SDL_RendererFlip flag to the SpriteComponent. [DONE]
 4. Add support for flipped animations. [DONE]
 5. Implement input system to detect key up and key down events. [DONE]
-6. Implement hero basic animation changes based on the keyboard input. [IN PROGRESS]
+6. Implement hero basic animation changes based on the keyboard input. [DONE]
+7. Implement jumping. [IN PROGRESS]
