@@ -37,26 +37,15 @@ Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     animation->ChangeAnim(Idle);
 
     movement = new MovementComponent(this);
-    movement->SetSpeed(200.0f);
-
-    rigidbody = new RigidbodyComponent(this);
-    rigidbody->SetGravity(10.0f);
+    movement->SetMaxSpeed(200.0f);
 
     SetScale(1.5f);
 }
 
 void Hero::UpdateActor(float deltaTime) {
-    float x = GetPosition().x;
-    float y = GetPosition().y > 150.0f ? 150.0f : GetPosition().y;
-    SetPosition(Vector2(x, y));
 }
 
 void Hero::ActorInput(const InputState& inputState) {
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == Pressed) {
-	animState = Jump;
-	animation->ChangeAnim(animState);
-	rigidbody->AddForce(Vector2::NegUnitY * 2000.0f);
-    }
     switch (animState) {
     case Idle:
 	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {

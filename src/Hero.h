@@ -15,6 +15,5 @@ public:
 private:
     AnimSpriteComponent* animation;
     MovementComponent* movement;
-    RigidbodyComponent* rigidbody;
     AnimState animState;
 };

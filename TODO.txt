@@ -12,4 +12,6 @@ February:
 4. Add support for flipped animations. [DONE]
 5. Implement input system to detect key up and key down events. [DONE]
 6. Implement hero basic animation changes based on the keyboard input. [DONE]
-7. Implement jumping. [IN PROGRESS]
+7. Implement accelerated movement. [IN PROGRESS]
+8. Implement decelerated movement.
+9. Implement basic jumping.
