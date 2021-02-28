@@ -82,8 +82,8 @@ public:
     }
 
     static const Vector2 Zero;
-    static const Vector2 UnitX;
-    static const Vector2 UnitY;
-    static const Vector2 NegUnitX;
-    static const Vector2 NegUnitY;
+    static const Vector2 Up;
+    static const Vector2 Down;
+    static const Vector2 Left;
+    static const Vector2 Right;
 };
