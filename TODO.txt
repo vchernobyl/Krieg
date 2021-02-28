@@ -12,6 +12,13 @@ February:
 4. Add support for flipped animations. [DONE]
 5. Implement input system to detect key up and key down events. [DONE]
 6. Implement hero basic animation changes based on the keyboard input. [DONE]
-7. Implement accelerated movement. [IN PROGRESS]
-8. Implement decelerated movement.
+7. Implement accelerated movement. [DONE]
+8. Implement decelerated movement. [DONE]
 9. Implement basic jumping.
+10. Find out how to make Makefile to compile and run in a single command.
+
+How be brutally effective:
+--------------------------
+1. Get things done quickly
+2. Get things done robustly
+3. Make things simple

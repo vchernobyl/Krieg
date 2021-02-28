@@ -12,8 +12,9 @@ public:
     void Update(float deltaTime) override;
     void SetMaxSpeed(float maxSpeed) { this->maxSpeed = maxSpeed; }
 private:
+    Vector2 input;
     Vector2 velocity;
-    float speed, maxSpeed;
+    float maxSpeed;
 };
 
     

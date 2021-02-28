@@ -25,6 +25,14 @@ namespace Math {
     inline float Fmod(float number, float denom) {
 	return fmod(number, denom);
     }
+
+    inline float Abs(float number) {
+	return fabs(number);
+    }
+
+    inline float Lerp(float a, float b, float t) {
+	return a + t * (b - a);
+    }
 }
 
 class Vector2 {
