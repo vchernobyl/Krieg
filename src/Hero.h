@@ -4,6 +4,7 @@
 #include "InputSystem.h"
 #include "AnimSpriteComponent.h"
 #include "MoveComponent.h"
+#include "JumpComponent.h"
 
 class Hero : public Actor {
 public:
@@ -13,6 +14,7 @@ public:
     void UpdateActor(float deltaTime) override;
 private:
     AnimSpriteComponent* animation;
-    MoveComponent* movement;
+    MoveComponent* move;
+    JumpComponent* jump;
     AnimState animState;
 };
