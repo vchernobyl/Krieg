@@ -31,6 +31,8 @@ namespace Math {
     }
 
     inline float Lerp(float a, float b, float t) {
+	if (t > 1.0f) return b;
+	if (t < 0.0f) return a;
 	return a + t * (b - a);
     }
 }

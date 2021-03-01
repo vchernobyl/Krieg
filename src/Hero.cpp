@@ -36,7 +36,7 @@ Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     animation->SetAnimFPS(10.0f);
     animation->ChangeAnim(Idle);
 
-    movement = new MovementComponent(this);
+    movement = new MoveComponent(this);
     movement->SetMaxSpeed(200.0f);
 
     SetScale(1.5f);
@@ -64,8 +64,6 @@ void Hero::ActorInput(const InputState& inputState) {
 	    animState = Idle;
 	    animation->ChangeAnim(animState);
 	}
-	break;
-    case Attack:
 	break;
     }
 }

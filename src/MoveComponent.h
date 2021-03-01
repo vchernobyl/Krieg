@@ -5,9 +5,9 @@
 #include "InputSystem.h"
 #include "Math.h"
 
-class MovementComponent : public Component {
+class MoveComponent : public Component {
 public:
-    MovementComponent(Actor* owner, int updateOrder = 100);
+    MoveComponent(Actor* owner, int updateOrder = 100);
     void ProcessInput(const InputState& inputState) override;
     void Update(float deltaTime) override;
     void SetMaxSpeed(float maxSpeed) { this->maxSpeed = maxSpeed; }
