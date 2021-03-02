@@ -15,7 +15,8 @@ February:
 7. Implement accelerated movement. [DONE]
 8. Implement decelerated movement. [DONE]
 9. Implement basic jumping. [DONE]
-10. Fix animations to not be looping all the time.
+10. Implement non-looping animations.
+11. Fix hero run animation transition.
 
 How be brutally effective:
 --------------------------

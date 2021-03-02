@@ -1,14 +1,15 @@
 #include "JumpComponent.h"
 
-const float MAX_HEIGHT = 75.0f;
-const float PEAK_TIME = 0.5f;
-const float JUMP_VELOCITY = -(2 * MAX_HEIGHT) / PEAK_TIME;
-const float GRAVITY = (2 * MAX_HEIGHT) / (PEAK_TIME * PEAK_TIME);
-
+// TODO: Think about saner defaults here.
+// It probably makes sense to set position to owners position.
+// Also some defaults for time to peak and max height probably
+// make sense in this case.
 JumpComponent::JumpComponent(Actor* owner, int updateOrder)
     : Component(owner, updateOrder),
-      position(0),
-      time(0),
+      position(0.0f),
+      time(0.0f),
+      timeToPeak(0.0f),
+      maxHeight(0.0f),
       isJumping(false) {}
 
 void JumpComponent::ProcessInput(const InputState& inputState) {
@@ -20,11 +21,13 @@ void JumpComponent::ProcessInput(const InputState& inputState) {
 void JumpComponent::Update(float deltaTime) {
     if (isJumping) {
 	time += deltaTime;
-	if (time >= PEAK_TIME * 2) {
+	if (time >= timeToPeak * 2) {
 	    isJumping = false;
 	    time = 0.0f;
 	}
-	float h = 0.5f * GRAVITY * (time * time) + JUMP_VELOCITY * time + position;
-	owner->SetPositionY(h);
+	float velocity = -(2 * maxHeight) / timeToPeak;
+	float gravity = (2 * maxHeight) / (timeToPeak * timeToPeak);
+	float height = 0.5f * gravity * (time * time) + velocity * time + position;
+	owner->SetPositionY(height);
     }
 }

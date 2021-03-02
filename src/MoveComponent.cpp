@@ -1,5 +1,9 @@
 #include "MoveComponent.h"
 
+// TODO: Currently the lerping from current velocity to the
+// target velocity is done linearly. Take a look if this component
+// can be juiced up by introducing some sort of acceleration or
+// time to reach the maximum speed.
 MoveComponent::MoveComponent(Actor* owner, int updateOrder)
     : Component(owner, updateOrder),
       maxSpeed(0) {}

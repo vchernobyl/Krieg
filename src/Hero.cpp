@@ -37,14 +37,15 @@ Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     animation->ChangeAnim(Idle);
 
     SetPosition(Vector2(150, 300));
-
+    SetScale(1.5f);
+    
     move = new MoveComponent(this);
     move->SetMaxSpeed(200.0f);
 
     jump = new JumpComponent(this);
     jump->SetInitialPosition(GetPosition().y);
-
-    SetScale(1.5f);
+    jump->SetMaxHeight(75.0f);
+    jump->SetTimeToPeak(0.5f);
 }
 
 void Hero::UpdateActor(float deltaTime) {
