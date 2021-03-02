@@ -11,7 +11,6 @@ public:
     enum AnimState { Idle = 0, Run = 1 };
     Hero(class Game* game);
     void ActorInput(const InputState& inputState) override;
-    void UpdateActor(float deltaTime) override;
 private:
     AnimSpriteComponent* animation;
     MoveComponent* move;

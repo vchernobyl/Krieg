@@ -48,27 +48,34 @@ Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     jump->SetTimeToPeak(0.5f);
 }
 
-void Hero::UpdateActor(float deltaTime) {
-}
-
 void Hero::ActorInput(const InputState& inputState) {
     switch (animState) {
     case Idle:
 	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {
 	    animState = Run;
 	    animation->ChangeAnim(animState, SDL_FLIP_HORIZONTAL);
+	    SDL_Log("Transition from Idle to Run Left");
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
 	    animState = Run;
 	    animation->ChangeAnim(animState);
+	    SDL_Log("Transition from Idle to Run Right");
 	}
 	break;
     case Run:
-	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Released) {
+	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {
+	    animation->ChangeAnim(animState, SDL_FLIP_HORIZONTAL);
+	    SDL_Log("Transitiom from Run to Run Left");
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
+	    animation->ChangeAnim(animState);
+	    SDL_Log("Transitiom from Run to Run Right");
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Released) {
 	    animState = Idle;
 	    animation->ChangeAnim(animState, SDL_FLIP_HORIZONTAL);
+	    SDL_Log("Transition from Run Left to Idle");
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Released) {
 	    animState = Idle;
 	    animation->ChangeAnim(animState);
+	    SDL_Log("Transition from Run Right to Idle");
 	}
 	break;
     }
