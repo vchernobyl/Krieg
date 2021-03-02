@@ -21,6 +21,9 @@ public:
     const Vector2& GetPosition() const { return position; }
     void SetPosition(const Vector2& v) { position = v; }
 
+    void SetPositionX(float x) { position.x = x; }
+    void SetPositionY(float y) { position.y = y; }
+
     void TranslateX(float x) { position.x += x; }
     void TranslateY(float y) { position.y += y; }
     void Translate(float x, float y) { position.x += x; position.y += y; }

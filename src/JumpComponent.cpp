@@ -1,7 +1,9 @@
 #include "JumpComponent.h"
 
-const float JUMP_VELOCITY = -15.0f;
-const float GRAVITY = 8.0f;
+const float MAX_HEIGHT = 75.0f;
+const float PEAK_TIME = 0.5f;
+const float JUMP_VELOCITY = -(2 * MAX_HEIGHT) / PEAK_TIME;
+const float GRAVITY = (2 * MAX_HEIGHT) / (PEAK_TIME * PEAK_TIME);
 
 JumpComponent::JumpComponent(Actor* owner, int updateOrder)
     : Component(owner, updateOrder),
@@ -17,6 +19,14 @@ void JumpComponent::ProcessInput(const InputState& inputState) {
 
 void JumpComponent::Update(float deltaTime) {
     time += deltaTime;
+
+    if (time >= PEAK_TIME * 2) {
+	time = 0.0f;
+    }
+
     float h = 0.5f * GRAVITY * (time * time) + JUMP_VELOCITY * time + position;
+    if (h > position) h = position;
+    owner->SetPositionY(h);
+
     SDL_Log("h = %f", h);
 }
