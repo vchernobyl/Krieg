@@ -203,8 +203,7 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
-    Hero* hero = new Hero(this);
-    hero->SetPosition(Vector2(150.0f, 100.0f));
+    new Hero(this);
 }
 
 void Game::UnloadData() {

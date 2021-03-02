@@ -36,11 +36,13 @@ Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     animation->SetAnimFPS(10.0f);
     animation->ChangeAnim(Idle);
 
+    SetPosition(Vector2(150, 300));
+
     move = new MoveComponent(this);
     move->SetMaxSpeed(200.0f);
 
     jump = new JumpComponent(this);
-    jump->SetInitialPosition(150.0f);
+    jump->SetInitialPosition(GetPosition().y);
 
     SetScale(1.5f);
 }

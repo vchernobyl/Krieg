@@ -14,7 +14,7 @@ February:
 6. Implement hero basic animation changes based on the keyboard input. [DONE]
 7. Implement accelerated movement. [DONE]
 8. Implement decelerated movement. [DONE]
-9. Implement basic jumping. [IN PROGRESS]
+9. Implement basic jumping. [DONE]
 10. Fix animations to not be looping all the time.
 
 How be brutally effective:

@@ -5,9 +5,9 @@
 #include "InputSystem.h"
 
 class JumpComponent : public Component {
-    float velocity;
     float position;
     float time;
+    bool isJumping;
 public:
     JumpComponent(Actor* owner, int updateOrder = 100);
     void ProcessInput(const InputState& inputState) override;
