@@ -20,6 +20,7 @@ public:
     AnimSpriteComponent(Actor* owner);
     void SetAnimData(const AnimData& animData) { this->animData = animData; }
     void SetAnimFPS(float animFPS) { this->animFPS = animFPS; }
+    void SetAnimFlip(SDL_RendererFlip flip) { this->flip = flip; }
     void Update(float deltaTime) override;
     void ChangeAnim(int num, SDL_RendererFlip flip = SDL_FLIP_NONE);
 private:
