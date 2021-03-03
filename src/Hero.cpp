@@ -6,10 +6,10 @@
 Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     animation = new AnimSpriteComponent(this);
     std::vector<AnimFrameData> animFrameData = {
-	{ 0, 3 },
-	{ 3, 6 },
-	{ 9, 5 },
-	{ 14, 4 },
+	{ 0, 3, true },
+	{ 3, 6, true },
+	{ 9, 5, false },
+	{ 14, 4, false },
     };
     std::vector<SDL_Texture*> images = {
 	game->GetTexture("assets/adventurer-idle-00.png"),
@@ -56,6 +56,9 @@ void Hero::ActorInput(const InputState& inputState) {
 	    animation->ChangeAnim(animState, SDL_FLIP_HORIZONTAL);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
 	    animState = Run;
+	    animation->ChangeAnim(animState);
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == Pressed) {
+	    animState = Attack;
 	    animation->ChangeAnim(animState);
 	}
 	break;

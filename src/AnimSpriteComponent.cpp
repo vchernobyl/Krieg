@@ -12,7 +12,9 @@ void AnimSpriteComponent::Update(float deltaTime) {
     if (frameTime > (1.0f / animFPS)) {
 	frameNum += frameTime * animFPS;
 	if (frameNum >= animData.frameInfo[animNum].numFrames) {
-	    frameNum = frameNum % animData.frameInfo[animNum].numFrames;
+	    // Continue tomorrow from here.
+	    if (animData.frameInfo[animNum].isLooping)
+		frameNum = frameNum % animData.frameInfo[animNum].numFrames;
 	}
 	int imageNum = animData.frameInfo[animNum].startFrame + frameNum;
 	SetTexture(animData.images[imageNum], flip);
@@ -20,9 +22,9 @@ void AnimSpriteComponent::Update(float deltaTime) {
     }
 }
 
-void AnimSpriteComponent::ChangeAnim(int num, SDL_RendererFlip flip) {
+void AnimSpriteComponent::ChangeAnim(int animNum, SDL_RendererFlip flip) {
+    this->animNum = animNum;
     this->flip = flip;
-    animNum = num;
     frameNum = 0;
     frameTime = 0.0f;
     int imageNum = animData.frameInfo[animNum].startFrame;
