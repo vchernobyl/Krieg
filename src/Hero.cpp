@@ -53,7 +53,7 @@ void Hero::ActorInput(const InputState& inputState) {
     case Idle:
 	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {
 	    animState = Run;
-	    animation->ChangeAnim(animState, SDL_FLIP_HORIZONTAL);
+	    animation->ChangeAnim(animState, Left);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
 	    animState = Run;
 	    animation->ChangeAnim(animState);
@@ -64,13 +64,13 @@ void Hero::ActorInput(const InputState& inputState) {
 	break;
     case Run:
 	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {
-	    animation->SetAnimFlip(SDL_FLIP_HORIZONTAL);
+	    animation->SetAnimDirection(Left);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
-	    animation->SetAnimFlip(SDL_FLIP_NONE);
+	    animation->SetAnimDirection(Right);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Released &&
 		   inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == None) {
 	    animState = Idle;
-	    animation->ChangeAnim(animState, SDL_FLIP_HORIZONTAL);
+	    animation->ChangeAnim(animState, Left);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Released &&
 		   inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == None) {
 	    animState = Idle;

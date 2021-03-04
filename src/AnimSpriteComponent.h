@@ -16,17 +16,22 @@ struct AnimData {
     std::vector<AnimFrameData> frameInfo;
 };
 
+enum AnimDirection {
+    Left = SDL_FLIP_HORIZONTAL,
+    Right = SDL_FLIP_NONE
+};
+
 class AnimSpriteComponent : public SpriteComponent {
 public:
     AnimSpriteComponent(Actor* owner);
     void SetAnimData(const AnimData& animData) { this->animData = animData; }
     void SetAnimFPS(float animFPS) { this->animFPS = animFPS; }
-    void SetAnimFlip(SDL_RendererFlip flip) { this->flip = flip; }
+    void SetAnimDirection(AnimDirection direction) { this->direction = direction; }
     void Update(float deltaTime) override;
-    void ChangeAnim(int animNum, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void ChangeAnim(int animNum, AnimDirection direction = Right);
 private:
     AnimData animData;
-    SDL_RendererFlip flip;
+    AnimDirection direction;
     int animNum, frameNum;
     float frameTime, animFPS;
 };
