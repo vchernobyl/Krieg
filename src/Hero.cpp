@@ -37,7 +37,7 @@ Hero::Hero(Game* game) : Actor(game), animState(Idle) {
     animation->ChangeAnim(Idle);
 
     SetPosition(Vector2(150, 300));
-    SetScale(1.5f);
+    SetScale(1.75f);
     
     move = new MoveComponent(this);
     move->SetMaxSpeed(200.0f);
@@ -53,34 +53,59 @@ void Hero::ActorInput(const InputState& inputState) {
     case Idle:
 	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {
 	    animState = Run;
-	    animation->ChangeAnim(animState, Left);
+	    direction = Left;
+	    animation->ChangeAnim(animState, direction);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
 	    animState = Run;
-	    animation->ChangeAnim(animState);
+	    direction = Right;
+	    animation->ChangeAnim(animState, direction);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == Pressed) {
 	    animState = Attack;
-	    animation->ChangeAnim(animState);
+	    animation->ChangeAnim(animState, direction);
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == Pressed) {
+	    animState = Jump;
+	    animation->ChangeAnim(animState, direction);
 	}
 	break;
     case Run:
 	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {
-	    animation->SetAnimDirection(Left);
+	    direction = Left;
+	    animation->SetAnimDirection(direction);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
-	    animation->SetAnimDirection(Right);
+	    direction = Right;
+	    animation->SetAnimDirection(direction);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Released &&
 		   inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == None) {
 	    animState = Idle;
-	    animation->ChangeAnim(animState, Left);
+	    direction = Left;
+	    animation->ChangeAnim(animState, direction);
 	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Released &&
 		   inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == None) {
 	    animState = Idle;
-	    animation->ChangeAnim(animState);
-	}  
+	    direction = Right;
+	    animation->ChangeAnim(animState, direction);
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == Pressed) {
+	    animState = Jump;
+	    animation->ChangeAnim(animState, direction);
+	}
 	break;
     case Attack:
 	if (animation->Finished(Attack)) {
 	    animState = Idle;
-	    animation->ChangeAnim(animState);
+	    animation->ChangeAnim(animState, direction);
 	}
+	break;
+    case Jump:
+	if (animation->Finished(Jump) && jump->IsOnGround()) {
+	    animState = Idle;
+	    animation->ChangeAnim(animState, direction);
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {
+	    direction = Left;
+	    animation->SetAnimDirection(direction);
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
+	    direction = Right;
+	    animation->SetAnimDirection(direction);
+	}
+	break;
     }
 }

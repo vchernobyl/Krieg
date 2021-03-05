@@ -12,6 +12,7 @@ public:
     void SetInitialPosition(float y) { position = y; }
     void SetTimeToPeak(float time) { timeToPeak = time; }
     void SetMaxHeight(float height) { maxHeight = height; }
+    bool IsOnGround() const { return !isJumping; }
 private:
     float position;
     float time;

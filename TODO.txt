@@ -21,8 +21,10 @@ March:
 1. Fix hero run animation transition. [DONE]
 2. Implement non-looping animations. [DONE]
 3. Implement method to check if given animation is finished. [DONE]
-4. Implement jumping animation.
-5. Implement falling animation.
+4. Implement basic jumping animation. [DONE]
+5. Add flag to track hero's direction. [DONE]
+6. Refactor switch-case state handling into a state wrapper. [IN PROGRESS]
+7. Coordinate animation transitions with movement and jumping components.
 
 (?) Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 This will allow to hide the implementation details of SDL_RendererFlip and use this enum not only

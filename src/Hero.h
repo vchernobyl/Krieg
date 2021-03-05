@@ -8,7 +8,7 @@
 
 class Hero : public Actor {
 public:
-    enum AnimState { Idle = 0, Run = 1, Attack = 2 };
+    enum AnimState { Idle, Run, Attack, Jump };
     Hero(class Game* game);
     void ActorInput(const InputState& inputState) override;
 private:
@@ -16,4 +16,5 @@ private:
     MoveComponent* move;
     JumpComponent* jump;
     AnimState animState;
+    AnimDirection direction;
 };
