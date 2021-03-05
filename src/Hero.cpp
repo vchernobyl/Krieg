@@ -77,5 +77,17 @@ void Hero::ActorInput(const InputState& inputState) {
 	    animation->ChangeAnim(animState);
 	}  
 	break;
+    case Attack:
+	if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == Pressed) {
+	    animState = Run;
+	    animation->ChangeAnim(animState, Left);
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == Pressed) {
+	    animState = Run;
+	    animation->ChangeAnim(animState);
+	} else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == Pressed) {
+	    animState = Attack;
+	    animation->ChangeAnim(animState);
+	}
+	break;
     }
 }

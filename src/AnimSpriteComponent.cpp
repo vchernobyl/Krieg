@@ -15,9 +15,6 @@ void AnimSpriteComponent::Update(float deltaTime) {
 	    if (animData.frameInfo[animNum].isLooping) {
 		frameNum = frameNum % animData.frameInfo[animNum].numFrames;
 	    } else {
-		// for some reason frameNum keeps going up in this branch...
-		SDL_Log("frameNum = %d, frameTime = %f", frameNum, frameTime);
-		frameTime = 0.0f;
 		return;
 	    }
 	}
