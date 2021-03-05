@@ -20,8 +20,9 @@ March:
 ------
 1. Fix hero run animation transition. [DONE]
 2. Implement non-looping animations. [DONE]
-3. Implement jumping animation.
-4. Implement falling animation.
+3. Implement method to check if given animation is finished. [DONE]
+4. Implement jumping animation.
+5. Implement falling animation.
 
 (?) Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 This will allow to hide the implementation details of SDL_RendererFlip and use this enum not only

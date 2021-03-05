@@ -32,3 +32,10 @@ void AnimSpriteComponent::ChangeAnim(int animNum, AnimDirection direction) {
     int imageNum = animData.frameInfo[animNum].startFrame;
     SetTexture(animData.images[imageNum], (SDL_RendererFlip) direction);
 }
+
+bool AnimSpriteComponent::Finished(int animNum) {
+    if (this->animNum == animNum) {
+	return frameNum >= animData.frameInfo[animNum].numFrames;
+    }
+    return false;
+}
