@@ -2,7 +2,7 @@
 
 #include "HeroState.h"
 
-class IdleState : public HeroState {
+class RunningState : public HeroState {
 public:
     HeroState* ProcessInput(Hero& hero, const InputState& input) override;
     void Enter(Hero& hero) override;

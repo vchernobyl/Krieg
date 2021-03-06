@@ -51,7 +51,10 @@ Hero::Hero(Game* game) : Actor(game), state(new IdleState)  {
 }
 
 void Hero::ActorInput(const InputState& inputState) {
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
-	this->SetState(ActorState::Dead);
+    HeroState* newState = state->ProcessInput(*this, inputState);
+    if (newState) {
+	delete state;
+	state = newState;
+	state->Enter(*this);
     }
 }
