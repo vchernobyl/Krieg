@@ -9,7 +9,7 @@
 
 class Actor {
 public:
-    enum State {
+    enum ActorState {
 	Active,
 	Paused,
 	Dead
@@ -34,8 +34,8 @@ public:
     float GetRotation() const { return rotation; }
     void SetRotation(float r) { rotation = r; }
 
-    State GetState() const { return state; }
-    void SetState(State s) { state = s; }
+    ActorState GetState() const { return actorState; }
+    void SetState(ActorState s) { actorState = s; }
 
     Vector2 GetForward() const { return Vector2(Math::Cos(rotation), -Math::Sin(rotation)); }
 
@@ -52,7 +52,7 @@ public:
     void RemoveComponent(class Component* component);
 
 private:
-    State state;
+    ActorState actorState;
     Vector2 position;
     float scale;
     float rotation;

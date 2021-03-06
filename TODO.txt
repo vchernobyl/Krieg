@@ -25,6 +25,7 @@ March:
 5. Add flag to track hero's direction. [DONE]
 6. Refactor switch-case state handling into a state wrapper. [IN PROGRESS]
 7. Coordinate animation transitions with movement and jumping components.
+8. Play movement animations based on players velocity.
 
 (?) Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 This will allow to hide the implementation details of SDL_RendererFlip and use this enum not only
