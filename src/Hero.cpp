@@ -41,8 +41,8 @@ Hero::Hero(Game* game) : Actor(game), state(new IdleState)  {
     SetPosition(Vector2(150, 300));
     SetScale(1.75f);
     
-    // move = new MoveComponent(this);
-    // move->SetMaxSpeed(200.0f);
+    move = new MoveComponent(this);
+    move->SetMaxSpeed(200.0f);
 
     // jump = new JumpComponent(this);
     // jump->SetInitialPosition(GetPosition().y);
