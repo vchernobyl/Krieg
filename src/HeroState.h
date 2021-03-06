@@ -5,7 +5,7 @@
 class HeroState {
 public:
     virtual ~HeroState() {}
-    virtual HeroState* ProcessInput(class Hero& hero, const InputState& input) = 0;
-    virtual void Update(class Hero& hero) {}
+    virtual HeroState* ProcessInput(class Hero& hero, const InputState& input) { return nullptr; }
+    virtual HeroState* Update(class Hero& hero) { return nullptr; }
     virtual void Enter(class Hero& hero) {}
 };

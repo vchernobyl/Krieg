@@ -11,6 +11,7 @@ public:
     void ProcessInput(const InputState& inputState) override;
     void Update(float deltaTime) override;
     void SetMaxSpeed(float maxSpeed) { this->maxSpeed = maxSpeed; }
+    float GetVelocity() const { return input.x; }
 private:
     Vector2 input;
     Vector2 velocity;

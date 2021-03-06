@@ -3,21 +3,13 @@
 #include "AnimSpriteComponent.h"
 #include "Hero.h"
 
-HeroState* IdleState::ProcessInput(Hero& hero, const InputState& input) {
-    if (input.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == ButtonState::Pressed) {
-	hero.SetDirection(AnimDirection::Left);
-	return new RunningState();
-    }
-    if (input.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Pressed) {
+HeroState* IdleState::Update(Hero& hero) {
+    if (move->GetVelocity() > 0) {
 	hero.SetDirection(AnimDirection::Right);
 	return new RunningState();
     }
-    if (input.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == ButtonState::Held) {
+    if (move->GetVelocity() < 0) {
 	hero.SetDirection(AnimDirection::Left);
-	return new RunningState();
-    }
-    if (input.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Held) {
-	hero.SetDirection(AnimDirection::Right);
 	return new RunningState();
     }
     return nullptr;
@@ -26,4 +18,5 @@ HeroState* IdleState::ProcessInput(Hero& hero, const InputState& input) {
 void IdleState::Enter(Hero& hero) {
     auto anim = hero.GetComponent<AnimSpriteComponent>();
     anim->ChangeAnim(0, hero.GetDirection());
+    move = hero.GetComponent<MoveComponent>();
 }

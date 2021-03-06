@@ -12,7 +12,7 @@ public:
     Hero(class Game* game);
     ~Hero() { delete state; }
     void ActorInput(const InputState& inputState) override;
-    void UpdateActor(float deltaTime) override { state->Update(*this); }
+    void UpdateActor(float deltaTime) override;
     AnimDirection GetDirection() const { return direction; }
     void SetDirection(AnimDirection direction) { this->direction = direction; }
 private:
