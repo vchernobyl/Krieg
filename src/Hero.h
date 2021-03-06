@@ -2,19 +2,20 @@
 
 #include "Actor.h"
 #include "InputSystem.h"
+#include "HeroState.h"
 #include "AnimSpriteComponent.h"
 #include "MoveComponent.h"
 #include "JumpComponent.h"
 
 class Hero : public Actor {
 public:
-    enum AnimState { Idle, Run, Attack, Jump };
     Hero(class Game* game);
+    ~Hero() { delete state; }
     void ActorInput(const InputState& inputState) override;
 private:
     AnimSpriteComponent* animation;
     MoveComponent* move;
     JumpComponent* jump;
-    AnimState animState;
+    HeroState* state;
     AnimDirection direction;
 };

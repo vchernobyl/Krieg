@@ -51,6 +51,15 @@ public:
     void AddComponent(class Component* component);
     void RemoveComponent(class Component* component);
 
+    template <class T> T* GetComponent() {
+	for (auto component : components) {
+	    if (dynamic_cast<T*>(component)) {
+		return dynamic_cast<T*>(component);
+	    }
+	}
+	return nullptr;
+    }
+
 private:
     ActorState actorState;
     Vector2 position;
