@@ -9,11 +9,18 @@ HeroState* RunningState::ProcessInput(Hero& hero, const InputState& input) {
     if (input.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Released) {
 	return new IdleState();
     }
+    if (input.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == ButtonState::Pressed) {
+	hero.SetDirection(AnimDirection::Left);
+	anim->ChangeAnim(1, hero.GetDirection());
+    }
+    if (input.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Pressed) {
+	hero.SetDirection(AnimDirection::Right);
+	anim->ChangeAnim(1, hero.GetDirection());
+    }
     return nullptr;
 }
 
 void RunningState::Update(Hero& hero) {
-    SDL_Log("Updating running state");
 }
 
 void RunningState::Enter(Hero& hero) {

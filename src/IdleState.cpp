@@ -12,6 +12,14 @@ HeroState* IdleState::ProcessInput(Hero& hero, const InputState& input) {
 	hero.SetDirection(AnimDirection::Right);
 	return new RunningState();
     }
+    if (input.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == ButtonState::Held) {
+	hero.SetDirection(AnimDirection::Left);
+	return new RunningState();
+    }
+    if (input.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Held) {
+	hero.SetDirection(AnimDirection::Right);
+	return new RunningState();
+    }
     return nullptr;
 }
 
