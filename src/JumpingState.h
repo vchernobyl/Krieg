@@ -1,16 +1,16 @@
 #pragma once
 
 #include "HeroState.h"
-#include "AnimSpriteComponent.h"
-#include "MoveComponent.h"
 #include "JumpComponent.h"
+#include "MoveComponent.h"
+#include "AnimSpriteComponent.h"
 
-class RunningState : public HeroState {
+class JumpingState : public HeroState {
 public:
     HeroState* Update(Hero& hero) override;
     void Enter(Hero& hero) override;
 private:
-    AnimSpriteComponent* anim;
-    MoveComponent* move;
     JumpComponent* jump;
+    MoveComponent* move;
+    AnimSpriteComponent* anim;
 };

@@ -2,6 +2,7 @@
 
 #include "HeroState.h"
 #include "MoveComponent.h"
+#include "JumpComponent.h"
 
 class IdleState : public HeroState {
 public:
@@ -9,4 +10,5 @@ public:
     void Enter(Hero& hero) override;
 private:
     MoveComponent* move;
+    JumpComponent* jump;
 };

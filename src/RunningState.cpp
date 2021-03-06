@@ -1,5 +1,6 @@
 #include "RunningState.h"
 #include "IdleState.h"
+#include "JumpingState.h"
 #include "Hero.h"
 
 HeroState* RunningState::Update(Hero& hero) {
@@ -14,6 +15,9 @@ HeroState* RunningState::Update(Hero& hero) {
 	hero.SetDirection(AnimDirection::Right);
 	anim->ChangeAnim(1, hero.GetDirection());
     }
+    if (jump->IsJumping()) {
+	return new JumpingState();
+    }
     return nullptr;
 }
 
@@ -21,4 +25,5 @@ void RunningState::Enter(Hero& hero) {
     anim = hero.GetComponent<AnimSpriteComponent>();
     anim->ChangeAnim(1, hero.GetDirection());
     move = hero.GetComponent<MoveComponent>();
+    jump = hero.GetComponent<JumpComponent>();
 }

@@ -29,6 +29,7 @@ public:
     void SetAnimDirection(AnimDirection direction) { this->direction = direction; }
     void Update(float deltaTime) override;
     void ChangeAnim(int animNum, AnimDirection direction = Right);
+    void SetDirection(AnimDirection direction) { this->direction = direction; }
     bool Finished(int animNum);
 private:
     AnimData animData;

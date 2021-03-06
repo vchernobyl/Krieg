@@ -27,6 +27,7 @@ March:
 7. Implement new idle and running state transition. [DONE]
 8. Play movement animations based on players velocity. [DONE]
 9. Implement jumping state and animation. [IN PROGRESS]
+10. Add static asserts to check if all components are attached in player states.
 
 (?) Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 This will allow to hide the implementation details of SDL_RendererFlip and use this enum not only
