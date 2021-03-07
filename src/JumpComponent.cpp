@@ -1,15 +1,11 @@
 #include "JumpComponent.h"
 
-// TODO: Think about saner defaults here.
-// It probably makes sense to set position to owners position.
-// Also some defaults for time to peak and max height probably
-// make sense in this case.
 JumpComponent::JumpComponent(Actor* owner, int updateOrder)
     : Component(owner, updateOrder),
       position(0.0f),
       time(0.0f),
-      timeToPeak(0.0f),
-      maxHeight(0.0f),
+      timeToPeak(0.5f),
+      maxHeight(50.0f),
       isJumping(false) {}
 
 void JumpComponent::ProcessInput(const InputState& inputState) {

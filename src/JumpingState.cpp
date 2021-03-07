@@ -3,11 +3,11 @@
 #include "Hero.h"
 
 HeroState* JumpingState::ProcessInput(Hero& hero, const InputState& input) {
-    if (input.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == ButtonState::Pressed) {
+    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT) && hero.GetDirection() != AnimDirection::Left) {
 	hero.SetDirection(AnimDirection::Left);
 	anim->SetDirection(hero.GetDirection());
     }
-    if (input.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Pressed) {
+    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT) && hero.GetDirection() != AnimDirection::Right) {
 	hero.SetDirection(AnimDirection::Right);
 	anim->SetDirection(hero.GetDirection());
     }
