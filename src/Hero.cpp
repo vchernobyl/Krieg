@@ -51,6 +51,12 @@ Hero::Hero(Game* game) : Actor(game), state(new IdleState)  {
 }
 
 void Hero::ActorInput(const InputState& inputState) {
+    HeroState* newState = state->ProcessInput(*this, inputState);
+    if (newState) {
+	delete state;
+	state = newState;
+	state->Enter(*this);
+    }
 }
 
 void Hero::UpdateActor(float deltaTime) {

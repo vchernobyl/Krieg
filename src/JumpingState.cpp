@@ -2,15 +2,21 @@
 #include "IdleState.h"
 #include "Hero.h"
 
+HeroState* JumpingState::ProcessInput(Hero& hero, const InputState& input) {
+    if (input.Keyboard.GetKeyState(SDL_SCANCODE_LEFT) == ButtonState::Pressed) {
+	hero.SetDirection(AnimDirection::Left);
+	anim->SetDirection(hero.GetDirection());
+    }
+    if (input.Keyboard.GetKeyState(SDL_SCANCODE_RIGHT) == ButtonState::Pressed) {
+	hero.SetDirection(AnimDirection::Right);
+	anim->SetDirection(hero.GetDirection());
+    }
+    return nullptr;
+}
+
 HeroState* JumpingState::Update(Hero& hero) {
     if (jump->IsOnGround()) {
 	return new IdleState();
-    }
-    if (move->GetVelocity() > 0 && hero.GetDirection() != AnimDirection::Right) {
-	anim->SetDirection(AnimDirection::Right);
-    }
-    if (move->GetVelocity() < 0 && hero.GetDirection() != AnimDirection::Left) {
-	anim->SetDirection(AnimDirection::Left);
     }
     return nullptr;
 }

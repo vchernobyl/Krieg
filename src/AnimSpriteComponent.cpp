@@ -15,7 +15,7 @@ void AnimSpriteComponent::Update(float deltaTime) {
 	    if (animData.frameInfo[animNum].isLooping) {
 		frameNum = frameNum % animData.frameInfo[animNum].numFrames;
 	    } else {
-		return;
+		frameNum = animData.frameInfo[animNum].numFrames - 1;
 	    }
 	}
 	int imageNum = animData.frameInfo[animNum].startFrame + frameNum;
