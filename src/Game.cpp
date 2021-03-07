@@ -204,8 +204,10 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
-    new BackgroundComponent(new Actor(this));
-    new Hero(this);
+    Actor* hero = new Hero(this);
+    hero->SetPosition(Vector2(150, 300));
+    hero->SetScale(1.75f);
+    new BackgroundComponent(hero);
 }
 
 void Game::UnloadData() {
