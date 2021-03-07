@@ -27,6 +27,8 @@ March:
 7. Implement new idle and running state transition. [DONE]
 8. Play movement animations based on players velocity. [DONE]
 9. Implement jumping state and animation. [DONE]
+10. Add static game background component. [DONE]
+11. Implement player camera with scrolling. [IN PROGRESS]
 
 Improvement: Add static asserts to check if all components are attached in player states.
 Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.

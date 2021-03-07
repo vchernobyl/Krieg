@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Actor.h"
 #include "SpriteComponent.h"
+#include "BackgroundComponent.h"
 #include "Hero.h"
 #include "Random.h"
 #include "SDL_image.h"
@@ -203,6 +204,7 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
+    new BackgroundComponent(new Actor(this));
     new Hero(this);
 }
 
