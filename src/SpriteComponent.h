@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "Camera.h"
 #include "SDL.h"
 
 class SpriteComponent : public Component {
@@ -15,6 +16,7 @@ public:
 protected:
     SDL_Texture* texture;
     SDL_RendererFlip flip;
+    Camera* camera;
     int drawOrder;
     int texWidth;
     int texHeight;

@@ -7,10 +7,14 @@
 #include "SDL_image.h"
 #include <algorithm>
 
+static const int ScreenWidth = 1024;
+static const int ScreenHeight = 768;
+
 Game::Game() :
     window(nullptr),
     renderer(nullptr),
     inputSystem(nullptr),
+    camera(nullptr),
     isRunning(true),
     updatingActors(false) {}
 
@@ -20,7 +24,7 @@ bool Game::Initialize() {
 	return false;
     }
 
-    window = SDL_CreateWindow("Game", 100, 100, 1024, 768, 0);
+    window = SDL_CreateWindow("Game", 100, 100, ScreenWidth, ScreenHeight, 0);
     if (!window) {
 	SDL_Log("Unable to create a window: %s", SDL_GetError());
 	return false;
@@ -43,9 +47,12 @@ bool Game::Initialize() {
 	return false;
     }
 
+    camera = new Camera(ScreenWidth, ScreenHeight);
     Random::Init();
     LoadData();
+
     ticks = SDL_GetTicks();
+
     return true;
 }
 
@@ -60,6 +67,7 @@ void Game::RunLoop() {
 void Game::Shutdown() {
     inputSystem->Shutdown();
     delete inputSystem;
+    delete camera;
     UnloadData();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -197,7 +205,8 @@ void Game::LoadData() {
     Actor* hero = new Hero(this);
     hero->SetPosition(Vector2(150, 300));
     hero->SetScale(1.75f);
-    new BackgroundComponent(hero);
+    SpriteComponent* bg = new SpriteComponent(new Actor(this));
+    bg->SetTexture(GetTexture("assets/background.png"));
 }
 
 void Game::UnloadData() {

@@ -8,6 +8,7 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
       texWidth(0),
       texHeight(0) {
     owner->GetGame()->AddSprite(this);
+    camera = owner->GetGame()->GetCamera();
 }
 
 SpriteComponent::~SpriteComponent() {
@@ -16,11 +17,12 @@ SpriteComponent::~SpriteComponent() {
 
 void SpriteComponent::Draw(SDL_Renderer* renderer) {
     if (texture) {
+	Vector2 camPos = camera->GetPosition();
 	SDL_Rect rect;
 	rect.w = static_cast<int>(texWidth * owner->GetScale());
 	rect.h = static_cast<int>(texHeight * owner->GetScale());
-	rect.x = static_cast<int>(owner->GetPosition().x - rect.w / 2);
-	rect.y = static_cast<int>(owner->GetPosition().y - rect.h / 2);
+	rect.x = static_cast<int>(owner->GetPosition().x - rect.w / 2 - camPos.x);
+	rect.y = static_cast<int>(owner->GetPosition().y - rect.h / 2 - camPos.y);
 	SDL_RenderCopyEx(renderer, texture, nullptr, &rect, -Math::ToDegrees(owner->GetRotation()), nullptr, flip);
     }
 }
