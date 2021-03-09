@@ -207,7 +207,7 @@ void Game::GenerateOutput() {
 void Game::LoadData() {
     new Hero(this);
     Actor* world = new Actor(this);
-    world->SetPosition(Vector2(WorldWidth / 2, WorldHeight / 2));
+    world->SetPosition(Vector2(0, 0));
     SpriteComponent* bg = new SpriteComponent(world);
     bg->SetTexture(GetTexture("assets/background.png"));
 }

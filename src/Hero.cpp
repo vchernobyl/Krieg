@@ -37,7 +37,7 @@ Hero::Hero(Game* game) : Actor(game), state(new IdleState)  {
     animation->SetAnimData(animData);
     animation->SetAnimFPS(10.0f);
 
-    SetPosition(Vector2(150, 300));
+    SetPosition(Vector2(150, 600));
     SetScale(1.75f);
 
     move = new MoveComponent(this);
