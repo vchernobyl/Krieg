@@ -12,20 +12,11 @@ public:
     bool Initialize();
     void RunLoop();
     void Shutdown();
-
     void AddActor(class Actor* actor);
     void RemoveActor(class Actor* actor);
-
     void AddSprite(class SpriteComponent* sprite);
     void RemoveSprite(class SpriteComponent* sprite);
-
     SDL_Texture* GetTexture(const std::string& filename);
-
-    // Game specific
-    void AddAsteroid(class Asteroid* asteroid);
-    void RemoveAsteroid(class Asteroid* asteroid);
-    std::vector<class Asteroid*>& GetAsteroids() { return asteroids; }
-
 private:
     void ProcessInput();
     void UpdateGame();
@@ -45,8 +36,4 @@ private:
     bool isRunning;
     bool updatingActors;
     Uint32 ticks;
-
-    // Game specific fields
-    class Ship* ship;
-    std::vector<class Asteroid*> asteroids;
 };
