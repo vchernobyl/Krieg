@@ -59,6 +59,7 @@ void Game::RunLoop() {
 
 void Game::Shutdown() {
     inputSystem->Shutdown();
+    delete inputSystem;
     UnloadData();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
