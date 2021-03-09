@@ -11,6 +11,7 @@ public:
     void TranslateX(float dx) { this->position.x += dx; }
     void TranslateY(float dy) { this->position.y += dy; }
     void Follow(class Actor* owner);
+    void SetWorldSize(Vector2 worldSize) { this->worldSize = worldSize; }
     const SDL_Rect& GetViewport() const { return viewport; }
     const Vector2& GetPosition() const { return position; }
 private:
@@ -18,4 +19,5 @@ private:
     int viewportHeight;
     SDL_Rect viewport;
     Vector2 position;
+    Vector2 worldSize;
 };

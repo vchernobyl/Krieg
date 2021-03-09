@@ -29,6 +29,8 @@ March:
 9. Implement jumping state and animation. [DONE]
 10. Add static game background component. [DONE]
 11. Implement player camera with scrolling. [IN PROGRESS]
+12. Fix jump glitch. [DONE]
+13. Fix sprite component draw method to draw at origin instead of the center.
 
 Improvement: Add static asserts to check if all components are attached in player states.
 Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.

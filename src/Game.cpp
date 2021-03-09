@@ -9,6 +9,8 @@
 
 static const int ScreenWidth = 1024;
 static const int ScreenHeight = 768;
+static const int WorldWidth = 1728;
+static const int WorldHeight = 1080;
 
 Game::Game() :
     window(nullptr),
@@ -48,6 +50,7 @@ bool Game::Initialize() {
     }
 
     camera = new Camera(ScreenWidth, ScreenHeight);
+    camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
     Random::Init();
     LoadData();
 
@@ -202,10 +205,10 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
-    Actor* hero = new Hero(this);
-    hero->SetPosition(Vector2(150, 300));
-    hero->SetScale(1.75f);
-    SpriteComponent* bg = new SpriteComponent(new Actor(this));
+    new Hero(this);
+    Actor* world = new Actor(this);
+    world->SetPosition(Vector2(WorldWidth / 2, WorldHeight / 2));
+    SpriteComponent* bg = new SpriteComponent(world);
     bg->SetTexture(GetTexture("assets/background.png"));
 }
 
