@@ -31,6 +31,7 @@ March:
 11. Implement player camera with scrolling. [DONE]
 12. Fix jump glitch. [DONE]
 13. Fix sprite component draw method to draw at origin instead of the center. [DONE]
+14. Basic tile drawing. [IN PROGRESS]
 
 Improvement: Add static asserts to check if all components are attached in player states.
 Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.

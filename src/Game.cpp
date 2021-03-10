@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "SpriteComponent.h"
 #include "BackgroundComponent.h"
+#include "TileMapComponent.h"
 #include "Hero.h"
 #include "Random.h"
 #include "SDL_image.h"
@@ -208,8 +209,7 @@ void Game::LoadData() {
     new Hero(this);
     Actor* world = new Actor(this);
     world->SetPosition(Vector2(0, 0));
-    SpriteComponent* bg = new SpriteComponent(world);
-    bg->SetTexture(GetTexture("assets/background.png"));
+    new TileMapComponent(world);
 }
 
 void Game::UnloadData() {
