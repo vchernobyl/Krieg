@@ -3,22 +3,29 @@
 const int TileWidth = 32;
 const int TileHeight = 32;
 
+struct TileSet {
+    int rows;
+    int cols;
+};
+
 TileMapComponent::TileMapComponent(Actor* owner)
     : SpriteComponent(owner) {
-    tileset = owner->GetGame()->GetTexture("assets/tileset.png");
+    tileset = owner->GetGame()->GetTexture("assets/Tiles.png");
 }
 
 void TileMapComponent::Draw(SDL_Renderer* renderer) {
     int map[] = {
+	2, 3, 2, 3, 2, 3, 2, 3, 2, 3,
+	1, 48, 1, 48, 1, 48, 1, 48, 1, 48,
 	0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
 	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-	0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+	2, 5, 2, 5, 2, 5, 2, 5, 2, 5,
 	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-	0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-	0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+	0, 3, 0, 3, 0, 3, 0, 3, 0, 3,
 	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
     };
+
+    TileSet tileSet { 24, 8 };
 
     const int height = 8;
     const int width = 10;
@@ -30,8 +37,10 @@ void TileMapComponent::Draw(SDL_Renderer* renderer) {
     int renderedObjects = 0;
     for (int y = 0; y < height; y++) {
 	for (int x = 0; x < width; x++) {
-	    int tile = map[x + y * width];
-	    const SDL_Rect src { TileWidth * tile, TileHeight, TileWidth, TileHeight };
+	    int tileId = map[x + y * width];
+	    int row = tileId / tileSet.rows;
+	    int col = tileId % tileSet.rows;
+	    const SDL_Rect src { TileWidth * col, TileHeight * row, TileWidth, TileHeight };
 	    const SDL_Rect dst { x * TileWidth - camX, y * TileHeight - camY, TileWidth, TileHeight };
 	    if (SDL_HasIntersection(&dst, &camera->GetViewport())) {
 		++renderedObjects;
