@@ -9,20 +9,36 @@ TileMapComponent::TileMapComponent(Actor* owner)
 }
 
 void TileMapComponent::Draw(SDL_Renderer* renderer) {
-    int map[] = { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 };
-    int x = 0;
-    int y = 0;
-    int cameraX = camera->GetPosition().x;
-    int cameraY = camera->GetPosition().y;
-    int tiles = 0;
-    for (int tile : map) {
-	SDL_Rect srcrect { TileWidth * tile, TileHeight, TileWidth, TileHeight };
-	SDL_Rect dstrect { x - cameraX, y - cameraY, TileWidth, TileHeight };
-	if (SDL_HasIntersection(&dstrect, &camera->GetViewport())) {
-	    SDL_RenderCopy(renderer, tileset, &srcrect, &dstrect);
-	    tiles++;
+    int map[] = {
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+	0, 1, 0, 1, 0, 1, 0, 1, 0, 1,
+	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
+    };
+
+    const int height = 8;
+    const int width = 10;
+    const Camera* camera = owner->GetGame()->GetCamera();
+    const Vector2 camPos = camera->GetPosition();
+    const int camX = camPos.x;
+    const int camY = camPos.y;
+
+    int renderedObjects = 0;
+    for (int y = 0; y < height; y++) {
+	for (int x = 0; x < width; x++) {
+	    int tile = map[x + y * width];
+	    const SDL_Rect src { TileWidth * tile, TileHeight, TileWidth, TileHeight };
+	    const SDL_Rect dst { x * TileWidth - camX, y * TileHeight - camY, TileWidth, TileHeight };
+	    if (SDL_HasIntersection(&dst, &camera->GetViewport())) {
+		++renderedObjects;
+		SDL_RenderCopy(renderer, tileset, &src, &dst);
+	    }
 	}
-	x += TileWidth;
     }
-    SDL_Log("rendered %d tiles", tiles);
+
+    SDL_Log("Rendered %d objects", renderedObjects);
 }
