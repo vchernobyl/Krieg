@@ -209,7 +209,8 @@ void Game::LoadData() {
     new Hero(this);
     Actor* world = new Actor(this);
     world->SetPosition(Vector2(0, 0));
-    new TileMapComponent(world);
+    TileMapComponent* map = new TileMapComponent(world);
+    map->LoadMap("assets/map.csv");
 }
 
 void Game::UnloadData() {
