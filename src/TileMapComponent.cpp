@@ -4,6 +4,8 @@ TileMapComponent::TileMapComponent(Actor* owner)
     : SpriteComponent(owner) {
     SDL_Texture* texture = owner->GetGame()->GetTexture("assets/Tiles.png");
     tileSet = TileSet(texture, 24, 8);
+    tileWidth = tileSet.GetTileWidth();
+    tileHeight = tileSet.GetTileHeight();
 }
 
 void TileMapComponent::Draw(SDL_Renderer* renderer) {
@@ -31,10 +33,10 @@ void TileMapComponent::Draw(SDL_Renderer* renderer) {
 	    int tileId = map[x + y * width];
 	    const SDL_Rect src = tileSet.GetTile(tileId);
 	    const SDL_Rect dst {
-		x * tileSet.GetTileWidth() - camX,
-		y * tileSet.GetTileHeight() - camY,
-		tileSet.GetTileWidth(),
-		tileSet.GetTileHeight()
+		x * tileWidth - camX,
+		y * tileHeight - camY,
+		tileWidth,
+		tileHeight
 	    };
 	    if (SDL_HasIntersection(&dst, &camera->GetViewport())) {
 		++renderedObjects;

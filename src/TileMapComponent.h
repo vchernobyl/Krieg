@@ -9,4 +9,6 @@ public:
     void Draw(SDL_Renderer* renderer) override;
 private:
     TileSet tileSet;
+    int tileWidth;
+    int tileHeight;
 };
