@@ -1,4 +1,6 @@
 #include "TileMapComponent.h"
+#include <fstream>
+#include <iostream>
 
 TileMapComponent::TileMapComponent(Actor* owner)
     : SpriteComponent(owner),
@@ -41,4 +43,10 @@ void TileMapComponent::LoadMap(const std::string& mapFile) {
     };
     mapCols = 10;
     mapRows = 8;
+
+    std::ifstream file(mapFile);
+    std::string line;
+    while (std::getline(file, line)) {
+	std::cout << line << std::endl;
+    }
 }
