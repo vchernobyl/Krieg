@@ -33,7 +33,9 @@ March:
 13. Fix sprite component draw method to draw at origin instead of the center. [DONE]
 14. Basic tile drawing. [DONE]
 15. Draw different types of tiles based on the tile id. [DONE]
-16. Load csv map from a file. [IN PROGRESS]
+16. Load csv map from a file.
+17. Implement tile set class. [DONE]
+18. Implement tile map class. [IN PROGRESS]
 
 Improvement: Add static asserts to check if all components are attached in player states.
 Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
