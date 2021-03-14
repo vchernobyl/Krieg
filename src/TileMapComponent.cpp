@@ -2,8 +2,6 @@
 #include <fstream>
 #include <sstream>
 
-TileSet::TileSet() : texture(nullptr), rows(0), cols(0), tileWidth(0), tileHeight(0) {}
-
 TileSet::TileSet(SDL_Texture* texture, int tileWidth, int tileHeight)
     : texture(texture),
       tileWidth(tileWidth), tileHeight(tileHeight) {

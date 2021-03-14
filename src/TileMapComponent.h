@@ -6,7 +6,6 @@
 
 class TileSet {
 public:
-    TileSet();
     TileSet(SDL_Texture* texture, int rows, int cols);
     SDL_Texture* GetTexture() const { return texture; }
     const SDL_Rect GetTile(int id) const;
