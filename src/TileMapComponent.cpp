@@ -8,7 +8,7 @@ TileMapComponent::TileMapComponent(Actor* owner)
       mapCols(0),
       mapRows(0) {
     texture = owner->GetGame()->GetTexture("assets/Tiles.png");
-    tileSet = TileSet(texture, 24, 8);
+    tileSet = TileSet(texture, 32, 32);
     tileWidth = tileSet.GetTileWidth();
     tileHeight = tileSet.GetTileHeight();
 }
