@@ -3,7 +3,6 @@
 #include "SpriteComponent.h"
 #include "BackgroundComponent.h"
 #include "TileMapComponent.h"
-#include "TileSet.h"
 #include "Hero.h"
 #include "Random.h"
 #include "SDL_image.h"
