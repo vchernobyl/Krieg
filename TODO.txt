@@ -38,7 +38,8 @@ March:
 18. Implement tile map class. [DONE]
 19. Refactor csv map loading. [DONE]
 20. Refactor tile set class. [DONE]
-21. Implement multiple map layer drawing.
+21. Implement multiple map layer drawing. [DONE]
+22. Sort layers by their order. [IN PROGRESS]
 
 Improvement: Add static asserts to check if all components are attached in player states.
 Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
