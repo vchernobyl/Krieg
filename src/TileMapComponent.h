@@ -14,7 +14,5 @@ private:
     TileSet tileSet;
     int tileWidth;
     int tileHeight;
-    std::vector<int> tiles;
-    int mapCols;
-    int mapRows;
+    std::vector<std::vector<int> > tiles;
 };
