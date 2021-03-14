@@ -209,8 +209,15 @@ void Game::LoadData() {
     new Hero(this);
     Actor* world = new Actor(this);
     world->SetPosition(Vector2(0, 0));
-    TileMapComponent* map = new TileMapComponent(world);
-    map->LoadMap({ "assets/MapLayer3.csv", "assets/MapLayer2.csv", "assets/MapLayer1.csv" });
+
+    TileMapComponent* foreground = new TileMapComponent(world, 102);
+    foreground->LoadMap("assets/MapLayer1.csv");
+
+    TileMapComponent* midground = new TileMapComponent(world, 101);
+    midground->LoadMap("assets/MapLayer2.csv");
+
+    TileMapComponent* background = new TileMapComponent(world);
+    background->LoadMap("assets/MapLayer3.csv");
 }
 
 void Game::UnloadData() {

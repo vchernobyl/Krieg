@@ -5,16 +5,14 @@
 #include <string>
 #include <vector>
 
-using MapLayer = std::vector<std::vector<int> >;
-
 class TileMapComponent : public SpriteComponent {
 public:
-    TileMapComponent(Actor* owner);
+    TileMapComponent(Actor* owner, int drawOrder = 100);
     void Draw(SDL_Renderer* renderer) override;
-    void LoadMap(const std::vector<std::string>& files);
+    void LoadMap(const std::string& mapFile);
 private:
     TileSet tileSet;
     int tileWidth;
     int tileHeight;
-    std::vector<MapLayer> layers;
+    std::vector<std::vector<int> > tiles;
 };

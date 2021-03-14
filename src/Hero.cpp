@@ -6,7 +6,7 @@
 #include <vector>
 
 Hero::Hero(Game* game) : Actor(game), state(new IdleState)  {
-    animation = new AnimSpriteComponent(this);
+    animation = new AnimSpriteComponent(this, 200);
     std::vector<AnimFrameData> animFrameData = {
 	{ 0, 3, true },
 	{ 3, 6, true },

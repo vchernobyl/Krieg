@@ -23,7 +23,7 @@ enum AnimDirection {
 
 class AnimSpriteComponent : public SpriteComponent {
 public:
-    AnimSpriteComponent(Actor* owner);
+    AnimSpriteComponent(Actor* owner, int drawOrder = 100);
     void SetAnimData(const AnimData& animData) { this->animData = animData; }
     void SetAnimFPS(float animFPS) { this->animFPS = animFPS; }
     void Update(float deltaTime) override;

@@ -1,8 +1,8 @@
 #include "AnimSpriteComponent.h"
 #include "Math.h"
 
-AnimSpriteComponent::AnimSpriteComponent(Actor* owner)
-    : SpriteComponent(owner),
+AnimSpriteComponent::AnimSpriteComponent(Actor* owner, int drawOrder)
+    : SpriteComponent(owner, drawOrder),
       direction(Right),
       animNum(0), frameNum(0),
       frameTime(0.0f), animFPS(24.0f) {}
