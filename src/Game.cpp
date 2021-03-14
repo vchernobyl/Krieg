@@ -3,6 +3,7 @@
 #include "SpriteComponent.h"
 #include "BackgroundComponent.h"
 #include "TileMapComponent.h"
+#include "TileSet.h"
 #include "Hero.h"
 #include "Random.h"
 #include "SDL_image.h"
@@ -210,13 +211,16 @@ void Game::LoadData() {
     Actor* world = new Actor(this);
     world->SetPosition(Vector2(0, 0));
 
-    TileMapComponent* foreground = new TileMapComponent(world, 102);
+    TileSet tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32);
+    TileMapComponent* foreground = new TileMapComponent(world, tileSet, 102);
     foreground->LoadMap("assets/MapLayer1.csv");
 
-    TileMapComponent* midground = new TileMapComponent(world, 101);
+    TileMapComponent* midground = new TileMapComponent(world, tileSet, 101);
+    midground->SetScrollSpeed(0.7f);
     midground->LoadMap("assets/MapLayer2.csv");
 
-    TileMapComponent* background = new TileMapComponent(world);
+    TileMapComponent* background = new TileMapComponent(world, tileSet, 100);
+    background->SetScrollSpeed(0.5f);
     background->LoadMap("assets/MapLayer3.csv");
 }
 

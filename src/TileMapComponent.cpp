@@ -2,13 +2,12 @@
 #include <fstream>
 #include <sstream>
 
-TileMapComponent::TileMapComponent(Actor* owner, int drawOrder)
-    : SpriteComponent(owner, drawOrder) {
-    texture = owner->GetGame()->GetTexture("assets/Tiles.png");
-    tileSet = TileSet(texture, 32, 32);
-    tileWidth = tileSet.GetTileWidth();
-    tileHeight = tileSet.GetTileHeight();
-}
+TileMapComponent::TileMapComponent(Actor* owner, TileSet& tileSet, int drawOrder)
+    : SpriteComponent(owner, drawOrder),
+      tileSet(tileSet),
+      tileWidth(tileSet.GetTileWidth()),
+      tileHeight(tileSet.GetTileHeight()),
+      scrollSpeed(1.0f) {}
 
 void TileMapComponent::Draw(SDL_Renderer* renderer) {
     const Camera* camera = owner->GetGame()->GetCamera();
@@ -23,9 +22,14 @@ void TileMapComponent::Draw(SDL_Renderer* renderer) {
 	    x++;
 	    if (tileId < 0) continue;
 	    const SDL_Rect src = tileSet.GetTile(tileId);
-	    const SDL_Rect dst { x * tileWidth - camX, y * tileHeight - camY, tileWidth, tileHeight };
+	    const SDL_Rect dst {
+		x * tileWidth - static_cast<int>(camX * scrollSpeed),
+		y * tileHeight - static_cast<int>(camY * scrollSpeed),
+		tileWidth,
+		tileHeight
+	    };
 	    if (SDL_HasIntersection(&dst, &camera->GetViewport())) {
-		SDL_RenderCopy(renderer, texture, &src, &dst);
+		SDL_RenderCopy(renderer, tileSet.GetTexture(), &src, &dst);
 	    }
 	}
 	y++;
