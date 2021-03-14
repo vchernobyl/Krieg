@@ -1,5 +1,6 @@
 #include "TileMapComponent.h"
 #include <fstream>
+#include <sstream>
 #include <iostream>
 
 TileMapComponent::TileMapComponent(Actor* owner)
@@ -20,7 +21,8 @@ void TileMapComponent::Draw(SDL_Renderer* renderer) {
 
     for (int y = 0; y < mapRows; y++) {
 	for (int x = 0; x < mapCols; x++) {
-	    int tileId = tiles[x + y * mapRows];
+	    int tileId = tiles[x + y * mapCols];
+	    if (tileId < 0) continue;
 	    const SDL_Rect src = tileSet.GetTile(tileId);
 	    const SDL_Rect dst { x * tileWidth - camX, y * tileHeight - camY, tileWidth, tileHeight };
 	    if (SDL_HasIntersection(&dst, &camera->GetViewport())) {
@@ -31,22 +33,21 @@ void TileMapComponent::Draw(SDL_Renderer* renderer) {
 }
 
 void TileMapComponent::LoadMap(const std::string& mapFile) {
-    tiles = {
-	5, 3, 2, 3, 2, 3, 2, 3, 2, 3,
-	48, 48, 1, 48, 1, 48, 1, 48, 1, 48,
-	100, 1, 0, 1, 0, 1, 0, 1, 0, 1,
-	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-	2, 5, 2, 5, 2, 5, 2, 5, 2, 5,
-	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-	0, 3, 0, 3, 0, 3, 0, 3, 0, 3,
-	1, 0, 1, 0, 1, 0, 1, 0, 1, 0,
-    };
-    mapCols = 10;
-    mapRows = 8;
-
+    // TODO: Refactor!!!
+    int height = 0;
+    int width = 0;
     std::ifstream file(mapFile);
     std::string line;
     while (std::getline(file, line)) {
-	std::cout << line << std::endl;
+	height++;
+	std::stringstream ss(line);
+	std::string str;
+	while (std::getline(ss, str, ',')) {
+	    tiles.push_back(std::stoi(str));
+	    width++;
+	}
     }
+
+    mapCols = width / height;
+    mapRows = height;
 }

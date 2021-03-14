@@ -2,6 +2,7 @@
 
 TileSet::TileSet() : texture(nullptr), rows(0), cols(0), tileWidth(0), tileHeight(0) {}
 
+// TODO: provide tile size instead
 TileSet::TileSet(SDL_Texture* texture, int rows, int cols)
     : texture(texture), rows(rows), cols(cols) {
     int textureWidth, textureHeight;
@@ -11,7 +12,7 @@ TileSet::TileSet(SDL_Texture* texture, int rows, int cols)
 }
 
 const SDL_Rect TileSet::GetTile(int id) const {
-    const int row = id / rows;
-    const int col = id % rows;
+    const int row = id / cols;
+    const int col = id % cols;
     return SDL_Rect { col * tileWidth, row * tileHeight, tileWidth, tileHeight };
 }
