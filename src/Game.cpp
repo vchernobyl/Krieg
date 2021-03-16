@@ -208,7 +208,6 @@ void Game::GenerateOutput() {
 void Game::LoadData() {
     new Hero(this);
     Actor* world = new Actor(this);
-    world->SetPosition(Vector2(0, 0));
 
     TileSet tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32);
     TileMapComponent* foreground = new TileMapComponent(world, tileSet, 102);
