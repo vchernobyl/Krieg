@@ -26,7 +26,7 @@ namespace Math {
 	return fmod(number, denom);
     }
 
-    inline float Abs(float number) {
+    inline float Fabs(float number) {
 	return fabs(number);
     }
 

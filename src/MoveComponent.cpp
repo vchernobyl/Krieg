@@ -18,5 +18,5 @@ void MoveComponent::Update(float deltaTime) {
     float target = maxSpeed * input.x;
     float t = 4.0f * deltaTime;
     velocity.x = Math::Lerp(velocity.x, target, t);
-    owner->TranslateX(velocity.x * deltaTime);
+    owner->Translate(velocity.x * deltaTime, 0);
 }

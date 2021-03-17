@@ -24,8 +24,6 @@ public:
     void SetPositionX(float x) { position.x = x; }
     void SetPositionY(float y) { position.y = y; }
 
-    void TranslateX(float x) { position.x += x; }
-    void TranslateY(float y) { position.y += y; }
     void Translate(float x, float y) { position.x += x; position.y += y; }
 
     float GetScale() const { return scale; }
