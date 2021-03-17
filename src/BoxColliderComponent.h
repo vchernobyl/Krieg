@@ -9,8 +9,9 @@ public:
     Manifold Intersects(ColliderComponent* other) override;
     void ResolveOverlap(const Manifold& manifold) override;
 
-    void SetCollidable(const SDL_Rect& collidable) { this->collidable = collidable; }
-    const SDL_Rect& GetCollidable() const { return collidable; }
+    void SetCollidable(const SDL_Rect& collidable);
+    const SDL_Rect& GetCollidable();
 private:
+    void SetPosition();
     SDL_Rect collidable;
 };

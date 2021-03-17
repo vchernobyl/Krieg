@@ -46,3 +46,19 @@ void BoxColliderComponent::ResolveOverlap(const Manifold& manifold) {
 	owner->Translate(0, resolve);
     }
 }
+
+void BoxColliderComponent::SetCollidable(const SDL_Rect& collidable) {
+    this->collidable = collidable;
+    SetPosition();
+}
+
+const SDL_Rect& BoxColliderComponent::GetCollidable() {
+    SetPosition();
+    return collidable;
+}
+
+void BoxColliderComponent::SetPosition() {
+    const auto& pos = owner->GetPosition();
+    collidable.x = pos.x;
+    collidable.y = pos.y;
+}
