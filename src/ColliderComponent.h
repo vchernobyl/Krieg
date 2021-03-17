@@ -9,7 +9,7 @@ enum class CollisionLayer {
     Tile = 3
 };
 
-struct CollisionInfo {
+struct Manifold {
     bool colliding = false;
     const SDL_Rect* other;
 };
@@ -19,8 +19,8 @@ public:
     ColliderComponent(Actor* owner);
     ~ColliderComponent() {}
 
-    virtual CollisionInfo Intersects(ColliderComponent* other) = 0;
-    virtual void ResolveOverlap(const CollisionInfo& info) = 0;
+    virtual Manifold Intersects(ColliderComponent* other) = 0;
+    virtual void ResolveOverlap(const Manifold& manifold) = 0;
 
     CollisionLayer GetLayer() const { return layer; }
     void SetLayer(CollisionLayer layer) { this->layer = layer; }

@@ -37,6 +37,9 @@ public:
     ActorState GetState() const { return actorState; }
     void SetState(ActorState s) { actorState = s; }
 
+    bool IsStatic() const { return isStatic; }
+    void SetIsStatic(bool isStatic) { this->isStatic = isStatic; }
+
     Vector2 GetForward() const { return Vector2(Math::Cos(rotation), -Math::Sin(rotation)); }
 
     class Game* GetGame() const { return game; }
@@ -65,6 +68,7 @@ private:
     Vector2 position;
     float scale;
     float rotation;
+    bool isStatic;
     std::vector<class Component*> components;
     class Game* game;
 };
