@@ -17,7 +17,7 @@ struct Manifold {
 class ColliderComponent : public Component {
 public:
     ColliderComponent(Actor* owner);
-    ~ColliderComponent() {}
+    ~ColliderComponent();
 
     virtual Manifold Intersects(ColliderComponent* other) = 0;
     virtual void ResolveOverlap(const Manifold& manifold) = 0;

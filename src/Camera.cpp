@@ -1,4 +1,5 @@
 #include "Camera.h"
+#include "Actor.h"
 
 Camera::Camera(int viewportWidth, int viewportHeight)
     : viewportWidth(viewportWidth),

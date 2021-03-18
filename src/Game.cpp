@@ -1,10 +1,9 @@
 #include "Game.h"
 #include "Actor.h"
+#include "PhysicsWorld.h"
 #include "SpriteComponent.h"
-#include "BackgroundComponent.h"
 #include "TileMapComponent.h"
 #include "Hero.h"
-#include "Random.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -52,7 +51,6 @@ bool Game::Initialize() {
 
     camera = new Camera(ScreenWidth, ScreenHeight);
     camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
-    Random::Init();
     LoadData();
 
     ticks = SDL_GetTicks();

@@ -2,7 +2,6 @@
 
 #include "SDL.h"
 #include "Math.h"
-#include "Actor.h"
 
 class Camera {
 public:
