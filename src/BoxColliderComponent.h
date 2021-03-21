@@ -1,11 +1,11 @@
 #pragma once
 
 #include "ColliderComponent.h"
-#include "Actor.h"
+#include "SDL.h"
 
 class BoxColliderComponent : public ColliderComponent {
 public:
-    BoxColliderComponent(Actor* owner);
+    BoxColliderComponent(class Actor* owner);
     
     Manifold Intersects(ColliderComponent* other) override;
     void ResolveOverlap(const Manifold& manifold) override;

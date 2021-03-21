@@ -1,4 +1,5 @@
 #include "BoxColliderComponent.h"
+#include "Actor.h"
 #include "Math.h"
 
 BoxColliderComponent::BoxColliderComponent(Actor* owner)

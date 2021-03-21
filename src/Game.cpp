@@ -72,9 +72,9 @@ void Game::RunLoop() {
 void Game::Shutdown() {
     inputSystem->Shutdown();
     delete inputSystem;
-    delete physicsWorld;
     delete camera;
     UnloadData();
+    delete physicsWorld;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
@@ -209,8 +209,6 @@ void Game::GenerateOutput() {
 
 void Game::LoadData() {
     Hero* hero = new Hero(this);
-    new BoxColliderComponent(hero);
-    new BoxColliderComponent(hero);
     new BoxColliderComponent(hero);
     
     Actor* world = new Actor(this);

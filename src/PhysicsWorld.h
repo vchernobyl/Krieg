@@ -4,7 +4,6 @@
 
 class PhysicsWorld {
 public:
-    PhysicsWorld();
     void AddCollider(class ColliderComponent* collider);
     void RemoveCollider(class ColliderComponent* collider);
 private:
