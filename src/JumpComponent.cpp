@@ -10,7 +10,7 @@ JumpComponent::JumpComponent(Actor* owner, int updateOrder)
 
 void JumpComponent::ProcessInput(const InputState& inputState) {
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == Pressed) {
-	isJumping = true;
+	// isJumping = true;
     }
 }
 

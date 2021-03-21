@@ -214,9 +214,9 @@ void Game::LoadData() {
 
     Actor* block = new Actor(this);
     block->SetIsStatic(true);
-    block->SetPosition(Vector2(300, 300));
+    block->SetPosition(Vector2(300, 250));
     BoxColliderComponent* blockCollider = new BoxColliderComponent(block);
-    blockCollider->SetCollidable(SDL_Rect { 300, 300, 32, 32 });
+    blockCollider->SetCollidable(SDL_Rect { 300, 250, 32, 32 });
     SpriteComponent* blockSprite = new SpriteComponent(block);
     blockSprite->SetTexture(GetTexture("assets/block.png"));
 
