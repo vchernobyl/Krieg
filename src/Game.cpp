@@ -204,7 +204,12 @@ void Game::GenerateOutput() {
 	sprite->Draw(renderer);
     }
 
-    physicsWorld.Draw(renderer);
+    for (auto collider : physicsWorld.GetColliders()) {
+	if (auto box = static_cast<BoxColliderComponent*>(collider)) {
+	    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+	    SDL_RenderDrawRect(renderer, &box->GetCollidable());
+	}
+    }
 
     SDL_RenderPresent(renderer);
 }
@@ -219,7 +224,8 @@ void Game::LoadData() {
 
     Actor* block = new Actor(this);
     block->SetIsStatic(true);
-    // block->SetPosition(Vector2(300, 250));
+    block->SetPosition(Vector2(500, 300));
+
     BoxColliderComponent* blockCollider = new BoxColliderComponent(block);
     blockCollider->SetCollidable(SDL_Rect { 0, 0, 32, 32 });
     SpriteComponent* blockSprite = new SpriteComponent(block);
