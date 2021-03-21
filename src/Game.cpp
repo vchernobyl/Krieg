@@ -204,19 +204,24 @@ void Game::GenerateOutput() {
 	sprite->Draw(renderer);
     }
 
+    physicsWorld.Draw(renderer);
+
     SDL_RenderPresent(renderer);
 }
 
 void Game::LoadData() {
     Hero* hero = new Hero(this);
+    hero->SetPosition(Vector2(300, 150));
+    hero->SetScale(1.5f);
+
     BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
-    heroCollider->SetCollidable(SDL_Rect { 150, 300, 50, 37 });
+    heroCollider->SetCollidable(SDL_Rect { 0, 0, static_cast<int>(50 * hero->GetScale()), static_cast<int>(37 * hero->GetScale()) });
 
     Actor* block = new Actor(this);
     block->SetIsStatic(true);
-    block->SetPosition(Vector2(300, 250));
+    // block->SetPosition(Vector2(300, 250));
     BoxColliderComponent* blockCollider = new BoxColliderComponent(block);
-    blockCollider->SetCollidable(SDL_Rect { 300, 250, 32, 32 });
+    blockCollider->SetCollidable(SDL_Rect { 0, 0, 32, 32 });
     SpriteComponent* blockSprite = new SpriteComponent(block);
     blockSprite->SetTexture(GetTexture("assets/block.png"));
 

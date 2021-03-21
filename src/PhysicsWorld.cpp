@@ -1,7 +1,15 @@
 #include "PhysicsWorld.h"
 #include "ColliderComponent.h"
+#include "BoxColliderComponent.h"
 #include "SDL.h"
 #include <algorithm>
+
+void PhysicsWorld::Draw(SDL_Renderer* renderer) {
+    for (auto collider : colliders) {
+	auto box = static_cast<BoxColliderComponent*>(collider);
+	box->Draw(renderer);
+    }
+}   
 
 void PhysicsWorld::Update(float deltaTime) {
     for (auto i = colliders.begin(); i != colliders.end(); ++i) {

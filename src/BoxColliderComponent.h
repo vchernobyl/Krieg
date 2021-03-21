@@ -7,6 +7,7 @@ class BoxColliderComponent : public ColliderComponent {
 public:
     BoxColliderComponent(class Actor* owner);
     
+    void Draw(SDL_Renderer* renderer);
     Manifold Intersects(ColliderComponent* other) override;
     void ResolveOverlap(const Manifold& manifold) override;
 

@@ -5,6 +5,11 @@
 BoxColliderComponent::BoxColliderComponent(Actor* owner)
     : ColliderComponent(owner) {}
 
+void BoxColliderComponent::Draw(SDL_Renderer* renderer) {
+    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    SDL_RenderDrawRect(renderer, &collidable);
+}
+
 Manifold BoxColliderComponent::Intersects(ColliderComponent* other) {
     Manifold manifold;
     if (auto boxCollider = dynamic_cast<BoxColliderComponent*>(other)) {
@@ -31,22 +36,18 @@ void BoxColliderComponent::ResolveOverlap(const Manifold& manifold) {
 	if (xDiff > 0) {
 	    // Colliding from the left, move this object to the right.
 	    resolve = (rect2->x + rect2->w) - rect1.x;
-	    SDL_Log("Colliding from left, resolve = %f", resolve);
 	} else {
 	    // Colliding from the right, move this object to the left.
 	    resolve = - ((rect1.x + rect1.w) - rect2->x);
-	    SDL_Log("Colliding from right, resolve = %f", resolve);
 	}
 	owner->Translate(resolve, 0);
     } else {
 	if (yDiff > 0) {
 	    // Colliding from the top, move this object down.
 	    resolve = (rect2->y + rect2->h) - rect1.y;
-	    SDL_Log("Colliding from top, resolve = %f", resolve);
 	} else {
 	    // Colliding from the bottom, move this object up.
 	    resolve = -((rect1.y + rect1.h) - rect2->y);
-	    SDL_Log("Colliding from bottom, resolve = %f", resolve);
 	}
 	owner->Translate(0, resolve);
     }
@@ -64,6 +65,6 @@ const SDL_Rect& BoxColliderComponent::GetCollidable() {
 
 void BoxColliderComponent::SetPosition() {
     const auto& pos = owner->GetPosition();
-    collidable.x = pos.x - collidable.w / 2;
-    collidable.y = pos.y - collidable.h / 2;
+    collidable.x = pos.x;
+    collidable.y = pos.y;
 }
