@@ -2,6 +2,7 @@
 
 #include "ColliderComponent.h"
 #include "SDL.h"
+#include "Math.h"
 
 class BoxColliderComponent : public ColliderComponent {
 public:
@@ -16,4 +17,5 @@ public:
 private:
     void SetPosition();
     SDL_Rect collidable;
+    Vector2 offset;
 };

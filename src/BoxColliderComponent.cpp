@@ -1,9 +1,8 @@
 #include "BoxColliderComponent.h"
 #include "Actor.h"
-#include "Math.h"
 
 BoxColliderComponent::BoxColliderComponent(Actor* owner)
-    : ColliderComponent(owner) {}
+    : ColliderComponent(owner), offset(Vector2::Zero) {}
 
 void BoxColliderComponent::Draw(SDL_Renderer* renderer) {
     SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
@@ -55,6 +54,8 @@ void BoxColliderComponent::ResolveOverlap(const Manifold& manifold) {
 
 void BoxColliderComponent::SetCollidable(const SDL_Rect& collidable) {
     this->collidable = collidable;
+    this->offset.x = collidable.x;
+    this->offset.y = collidable.y;
     SetPosition();
 }
 
@@ -65,6 +66,6 @@ const SDL_Rect& BoxColliderComponent::GetCollidable() {
 
 void BoxColliderComponent::SetPosition() {
     const auto& pos = owner->GetPosition();
-    collidable.x = pos.x;
-    collidable.y = pos.y;
+    collidable.x = pos.x + offset.x;
+    collidable.y = pos.y + offset.y;
 }
