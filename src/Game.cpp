@@ -177,6 +177,8 @@ void Game::UpdateGame() {
     }
     updatingActors = false;
 
+    physicsWorld.Update(deltaTime);
+
     for (auto pending : pendingActors) {
 	actors.emplace_back(pending);
     }
@@ -207,8 +209,17 @@ void Game::GenerateOutput() {
 
 void Game::LoadData() {
     Hero* hero = new Hero(this);
-    new BoxColliderComponent(hero);
-    
+    BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
+    heroCollider->SetCollidable(SDL_Rect { 150, 300, 50, 37 });
+
+    Actor* block = new Actor(this);
+    block->SetIsStatic(true);
+    block->SetPosition(Vector2(300, 300));
+    BoxColliderComponent* blockCollider = new BoxColliderComponent(block);
+    blockCollider->SetCollidable(SDL_Rect { 300, 300, 32, 32 });
+    SpriteComponent* blockSprite = new SpriteComponent(block);
+    blockSprite->SetTexture(GetTexture("assets/block.png"));
+
     Actor* world = new Actor(this);
 
     TileSet tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32);
