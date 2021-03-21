@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Component.h"
-#include "Actor.h"
 
 enum class CollisionLayer {
     Default = 1,
@@ -16,8 +15,8 @@ struct Manifold {
 
 class ColliderComponent : public Component {
 public:
-    ColliderComponent(Actor* owner);
-    ~ColliderComponent() {}
+    ColliderComponent(class Actor* owner);
+    ~ColliderComponent();
 
     virtual Manifold Intersects(ColliderComponent* other) = 0;
     virtual void ResolveOverlap(const Manifold& manifold) = 0;

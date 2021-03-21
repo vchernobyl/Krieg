@@ -1,10 +1,10 @@
 #include "Game.h"
 #include "Actor.h"
+#include "PhysicsWorld.h"
 #include "SpriteComponent.h"
-#include "BackgroundComponent.h"
+#include "BoxColliderComponent.h"
 #include "TileMapComponent.h"
 #include "Hero.h"
-#include "Random.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -44,6 +44,7 @@ bool Game::Initialize() {
 	return false;
     }
 
+    physicsWorld = PhysicsWorld();
     inputSystem = new InputSystem();
     if (!inputSystem->Initialize()) {
 	SDL_Log("Unable to initialize input system");
@@ -52,7 +53,6 @@ bool Game::Initialize() {
 
     camera = new Camera(ScreenWidth, ScreenHeight);
     camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
-    Random::Init();
     LoadData();
 
     ticks = SDL_GetTicks();
@@ -177,6 +177,8 @@ void Game::UpdateGame() {
     }
     updatingActors = false;
 
+    physicsWorld.Update(deltaTime);
+
     for (auto pending : pendingActors) {
 	actors.emplace_back(pending);
     }
@@ -202,11 +204,33 @@ void Game::GenerateOutput() {
 	sprite->Draw(renderer);
     }
 
+    for (auto collider : physicsWorld.GetColliders()) {
+	if (auto box = static_cast<BoxColliderComponent*>(collider)) {
+	    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+	    SDL_RenderDrawRect(renderer, &box->GetCollidable());
+	}
+    }
+
     SDL_RenderPresent(renderer);
 }
 
 void Game::LoadData() {
-    new Hero(this);
+    Hero* hero = new Hero(this);
+    hero->SetPosition(Vector2(300, 150));
+    hero->SetScale(1.5f);
+
+    BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
+    heroCollider->SetCollidable(SDL_Rect { 0, 0, static_cast<int>(50 * hero->GetScale()), static_cast<int>(37 * hero->GetScale()) });
+
+    Actor* block = new Actor(this);
+    block->SetIsStatic(true);
+    block->SetPosition(Vector2(500, 300));
+
+    BoxColliderComponent* blockCollider = new BoxColliderComponent(block);
+    blockCollider->SetCollidable(SDL_Rect { 0, 0, 32, 32 });
+    SpriteComponent* blockSprite = new SpriteComponent(block);
+    blockSprite->SetTexture(GetTexture("assets/block.png"));
+
     Actor* world = new Actor(this);
 
     TileSet tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32);

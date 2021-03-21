@@ -2,6 +2,7 @@
 
 #include "SDL.h"
 #include "InputSystem.h"
+#include "PhysicsWorld.h"
 #include "Camera.h"
 #include <unordered_map>
 #include <string>
@@ -18,7 +19,8 @@ public:
     void AddSprite(class SpriteComponent* sprite);
     void RemoveSprite(class SpriteComponent* sprite);
     SDL_Texture* GetTexture(const std::string& filename);
-    class Camera* GetCamera() const { return camera; }
+    Camera* GetCamera() const { return camera; }
+    PhysicsWorld& GetPhysicsWorld() { return physicsWorld; }
 private:
     void ProcessInput();
     void UpdateGame();
@@ -34,6 +36,7 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     InputSystem* inputSystem;
+    PhysicsWorld physicsWorld;
     Camera* camera;
 
     bool isRunning;

@@ -1,10 +1,12 @@
 #pragma once
 
 #include "ColliderComponent.h"
+#include "SDL.h"
+#include "Math.h"
 
 class BoxColliderComponent : public ColliderComponent {
 public:
-    BoxColliderComponent(Actor* owner);
+    BoxColliderComponent(class Actor* owner);
     
     Manifold Intersects(ColliderComponent* other) override;
     void ResolveOverlap(const Manifold& manifold) override;
@@ -14,4 +16,5 @@ public:
 private:
     void SetPosition();
     SDL_Rect collidable;
+    Vector2 offset;
 };
