@@ -44,7 +44,7 @@ March:
 24. Implement basic box collider component. [DONE]
 25. Implement physics world that checks collider collisions. [DONE]
 26. Add collider drawing. [DONE]
-27. Fix box collider position bug when scrolling the camera. [IN PROGRESS]
+27. Fix box collider position bug when scrolling the camera. [DONE]
 
 Improvement: Add static asserts to check if all components are attached in player states.
 Improvement: Implement SpriteDirection instead of AnimDirection and pass that on to animations.

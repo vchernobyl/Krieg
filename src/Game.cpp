@@ -207,7 +207,10 @@ void Game::GenerateOutput() {
     for (auto collider : physicsWorld.GetColliders()) {
 	if (auto box = static_cast<BoxColliderComponent*>(collider)) {
 	    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-	    SDL_RenderDrawRect(renderer, &box->GetCollidable());
+	    auto collidable = box->GetCollidable();
+	    collidable.x -= camera->GetPosition().x;
+	    collidable.y -= camera->GetPosition().y;
+	    SDL_RenderDrawRect(renderer, &collidable);
 	}
     }
 
