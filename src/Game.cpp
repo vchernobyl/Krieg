@@ -17,7 +17,6 @@ Game::Game() :
     window(nullptr),
     renderer(nullptr),
     inputSystem(nullptr),
-    physicsWorld(nullptr),
     camera(nullptr),
     isRunning(true),
     updatingActors(false) {}
@@ -45,13 +44,13 @@ bool Game::Initialize() {
 	return false;
     }
 
+    physicsWorld = PhysicsWorld();
     inputSystem = new InputSystem();
     if (!inputSystem->Initialize()) {
 	SDL_Log("Unable to initialize input system");
 	return false;
     }
 
-    physicsWorld = new PhysicsWorld();
     camera = new Camera(ScreenWidth, ScreenHeight);
     camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
     LoadData();
@@ -74,7 +73,6 @@ void Game::Shutdown() {
     delete inputSystem;
     delete camera;
     UnloadData();
-    delete physicsWorld;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     SDL_Quit();
