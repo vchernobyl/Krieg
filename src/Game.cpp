@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "PhysicsWorld.h"
 #include "SpriteComponent.h"
+#include "BoxColliderComponent.h"
 #include "TileMapComponent.h"
 #include "Hero.h"
 #include "SDL_image.h"
@@ -16,6 +17,7 @@ Game::Game() :
     window(nullptr),
     renderer(nullptr),
     inputSystem(nullptr),
+    physicsWorld(nullptr),
     camera(nullptr),
     isRunning(true),
     updatingActors(false) {}
@@ -49,6 +51,7 @@ bool Game::Initialize() {
 	return false;
     }
 
+    physicsWorld = new PhysicsWorld();
     camera = new Camera(ScreenWidth, ScreenHeight);
     camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
     LoadData();
@@ -69,6 +72,7 @@ void Game::RunLoop() {
 void Game::Shutdown() {
     inputSystem->Shutdown();
     delete inputSystem;
+    delete physicsWorld;
     delete camera;
     UnloadData();
     SDL_DestroyRenderer(renderer);
@@ -204,7 +208,11 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
-    new Hero(this);
+    Hero* hero = new Hero(this);
+    new BoxColliderComponent(hero);
+    new BoxColliderComponent(hero);
+    new BoxColliderComponent(hero);
+    
     Actor* world = new Actor(this);
 
     TileSet tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32);

@@ -1,4 +1,5 @@
 #include "Game.h"
+#include <iostream>
 
 int main(int argc, char** argv) {
     Game game;
@@ -6,5 +7,6 @@ int main(int argc, char** argv) {
 	game.RunLoop();
     }
     game.Shutdown();
+    std::cin.get();
     return 0;
 }
