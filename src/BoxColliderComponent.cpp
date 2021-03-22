@@ -4,6 +4,8 @@
 BoxColliderComponent::BoxColliderComponent(Actor* owner)
     : ColliderComponent(owner), offset(Vector2::Zero) {}
 
+BoxColliderComponent::~BoxColliderComponent() {}
+
 Manifold BoxColliderComponent::Intersects(ColliderComponent* other) {
     Manifold manifold;
     if (auto boxCollider = dynamic_cast<BoxColliderComponent*>(other)) {

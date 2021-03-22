@@ -1,4 +1,5 @@
 #include "TileMapComponent.h"
+#include "Actor.h"
 #include <fstream>
 #include <sstream>
 
