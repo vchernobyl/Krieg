@@ -17,7 +17,7 @@ struct Tile {
     int y;
 };
 
-struct TileSet {
+struct TileSheet {
     SDL_Texture* texture;
     Vector2 imageSize;
     int columns;
@@ -28,4 +28,13 @@ struct TileSet {
 struct Layer {
     std::vector<Tile*> tiles;
     bool isVisible;
+};
+
+class TileMapParser {
+public:
+    TileMapParser(class Game* game);
+    std::vector<class Actor*> Parse(const std::string& fileName);
+private:
+    std::vector<int> ParseTileIds(const std::string& fileName);
+    class Game* game;
 };
