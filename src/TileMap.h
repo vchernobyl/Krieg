@@ -5,36 +5,32 @@
 #include "SDL.h"
 #include "Math.h"
 
-struct TileInfo {
-    int tileId;
-    std::string& texture;
-    SDL_Rect tileSrc;
+struct Tile {
+    int id;
+    SDL_Rect textureSrc;
 };
 
-struct Tile {
-    TileInfo* props;
+struct Cell {
     int x;
     int y;
-};
-
-struct TileSheet {
-    SDL_Texture* texture;
-    Vector2 imageSize;
-    int columns;
-    int rows;
-    Vector2 tileSize;
+    Tile tile;
 };
 
 struct Layer {
-    std::vector<Tile*> tiles;
+    std::string name;
+    std::vector<Tile> tiles;
     bool isVisible;
 };
 
-class TileMapParser {
+class TileMap {
 public:
-    TileMapParser(class Game* game);
-    std::vector<class Actor*> Parse(const std::string& fileName);
+    Layer& GetLayer(const std::string& name);
+    Layer& GetLayer(int index);
 private:
-    std::vector<int> ParseTileIds(const std::string& fileName);
-    class Game* game;
+    std::vector<Layer> layers;
+};
+
+class TileMapLoader {
+public:
+    TileMap Load(const std::string& fileName);
 };
