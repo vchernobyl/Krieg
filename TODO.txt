@@ -45,8 +45,9 @@ March:
 25. Implement physics world that checks collider collisions. [DONE]
 26. Add collider drawing. [DONE]
 27. Fix box collider position bug when scrolling the camera. [DONE]
-28. Add box colliders to the map tiles. [IN PROGRESS]
-29. Add vector2 as a gravity to the physics world which applies this to the bodies.
+28. Add XML parsing library. [IN PROGRESS]
+?. Add box colliders to the map tiles.
+?. Add vector2 as a gravity to the physics world which applies this to the bodies.
 
 Refactor: In SpriteComponent add an overridable GetSourceRect() method that draws section of the texture.
 By default it will draw the whole texture.

@@ -5,32 +5,56 @@
 #include "SDL.h"
 #include "Math.h"
 
-struct Tile {
+struct TileInfo {
     int id;
+    SDL_Texture* texture;
     SDL_Rect textureSrc;
 };
 
-struct Cell {
+// Tiles are shared by the cells. There should be no more tiles than there are
+// in the tile set.
+struct Tile {
     int x;
     int y;
-    Tile tile;
+    TileInfo* tile;
 };
 
-struct Layer {
-    std::string name;
+struct TileMapLayer {
+    TileMapLayer(int width, int height) : width(width), height(height) {}
+
     std::vector<Tile> tiles;
+    int width;
+    int height;
     bool isVisible;
 };
 
 class TileMap {
 public:
-    Layer& GetLayer(const std::string& name);
-    Layer& GetLayer(int index);
+    TileMapLayer& GetLayer(const std::string& name);
+    TileMapLayer& GetLayer(int index);
+    const std::vector<TileMapLayer>& GetLayers() const { return layers; }
 private:
-    std::vector<Layer> layers;
+    const std::vector<TileMapLayer> layers;
+};
+
+struct TileSet {
+    SDL_Texture* tileSheet;
+    Vector2 tileSheetSize;
+    Vector2 tileSize;
+    int columns;
+    int rows;
+};
+
+struct TileMapConfig {
+    int width;
+    int height;
+    std::string fileName;
+    TileSet tileSet;
 };
 
 class TileMapLoader {
 public:
-    TileMap Load(const std::string& fileName);
+    TileMap Load(const TileMapConfig& config);
+private:
+    const std::vector<int> LoadTileIds(const std::string& fileName);
 };
