@@ -11,8 +11,6 @@ struct TileInfo {
     SDL_Rect textureSrc;
 };
 
-// Tiles are shared by the cells. There should be no more tiles than there are
-// in the tile set.
 struct Tile {
     int x;
     int y;
@@ -20,12 +18,18 @@ struct Tile {
 };
 
 struct TileMapLayer {
-    TileMapLayer(int width, int height) : width(width), height(height) {}
-
     std::vector<Tile> tiles;
     int width;
     int height;
     bool isVisible;
+};
+
+struct TileSet {
+    const char* imageName;
+    int tileWidth;
+    int tileHeight;
+    int tileCount;
+    int columns;
 };
 
 class TileMap {
@@ -37,24 +41,9 @@ private:
     const std::vector<TileMapLayer> layers;
 };
 
-struct TileSet {
-    SDL_Texture* tileSheet;
-    Vector2 tileSheetSize;
-    Vector2 tileSize;
-    int columns;
-    int rows;
-};
-
-struct TileMapConfig {
-    int width;
-    int height;
-    std::string fileName;
-    TileSet tileSet;
-};
-
 class TileMapLoader {
 public:
-    TileMap Load(const TileMapConfig& config);
+    TileMap Load(const char* fileName);
 private:
     const std::vector<int> LoadTileIds(const std::string& fileName);
 };

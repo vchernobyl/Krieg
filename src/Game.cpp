@@ -3,7 +3,7 @@
 #include "PhysicsWorld.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
-#include "TileMapComponent.h"
+#include "TileMap.h"
 #include "Hero.h"
 #include "SDL_image.h"
 #include <algorithm>
@@ -218,6 +218,9 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
+    TileMapLoader mapLoader;
+    mapLoader.Load("assets/test.tmx");
+
     Hero* hero = new Hero(this);
     hero->SetPosition(Vector2(300, 150));
     hero->SetScale(1.5f);
@@ -234,19 +237,19 @@ void Game::LoadData() {
     SpriteComponent* blockSprite = new SpriteComponent(block);
     blockSprite->SetTexture(GetTexture("assets/block.png"));
 
-    Actor* world = new Actor(this);
+    // Actor* world = new Actor(this);
 
-    TileSet tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32);
-    TileMapComponent* foreground = new TileMapComponent(world, tileSet, 102);
-    foreground->LoadMap("assets/MapLayer1.csv");
+    // TileSet tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32);
+    // TileMapComponent* foreground = new TileMapComponent(world, tileSet, 102);
+    // foreground->LoadMap("assets/MapLayer1.csv");
 
-    TileMapComponent* midground = new TileMapComponent(world, tileSet, 101);
-    midground->SetScrollSpeed(0.7f);
-    midground->LoadMap("assets/MapLayer2.csv");
+    // TileMapComponent* midground = new TileMapComponent(world, tileSet, 101);
+    // midground->SetScrollSpeed(0.7f);
+    // midground->LoadMap("assets/MapLayer2.csv");
 
-    TileMapComponent* background = new TileMapComponent(world, tileSet, 100);
-    background->SetScrollSpeed(0.5f);
-    background->LoadMap("assets/MapLayer3.csv");
+    // TileMapComponent* background = new TileMapComponent(world, tileSet, 100);
+    // background->SetScrollSpeed(0.5f);
+    // background->LoadMap("assets/MapLayer3.csv");
 }
 
 void Game::UnloadData() {

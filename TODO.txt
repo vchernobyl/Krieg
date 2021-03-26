@@ -45,7 +45,10 @@ March:
 25. Implement physics world that checks collider collisions. [DONE]
 26. Add collider drawing. [DONE]
 27. Fix box collider position bug when scrolling the camera. [DONE]
-28. Add XML parsing library. [IN PROGRESS]
+28. Add XML parsing library. [DONE]
+29. Parse tiled xml map and save tile set data into a struct. [DONE]
+30. Parse tiled xml map and save layer dat into a struct/class. [IN PROGRESS]
+
 ?. Add box colliders to the map tiles.
 ?. Add vector2 as a gravity to the physics world which applies this to the bodies.
 
@@ -62,3 +65,4 @@ How be brutally effective:
 1. Get things done quickly
 2. Get things done robustly
 3. Make things simple
+4. Finish things!
