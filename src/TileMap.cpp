@@ -1,5 +1,4 @@
 #include "TileMap.h"
-#include "pugixml.hpp"
 
 #include <fstream>
 #include <sstream>
@@ -13,19 +12,21 @@ TileMap TileMapLoader::Load(const char* fileName) {
 	SDL_Log("Failed to load map: %s", fileName);
     }
 
-    pugi::xml_node mapNode = doc.child("map");
-    std::vector<TileSet> tileSets;
-    for (pugi::xml_node node = mapNode.child("tileset"); node; node = node.next_sibling("tileset")) {
-	TileSet tileSet;
-	tileSet.imageName = node.child("image").attribute("source").value();
-	tileSet.tileWidth = node.attribute("tilewidth").as_int();
-	tileSet.tileHeight = node.attribute("tileheight").as_int();
-	tileSet.tileCount = node.attribute("tilecount").as_int();
-	tileSet.columns = node.attribute("columns").as_int();
-	tileSets.push_back(tileSet);
-    }
+    TileSet tileSet = CreateTileSet(doc.child("map"));
+    std::cout << tileSet.imageName;
 
     return map;
+}
+
+TileSet TileMapLoader::CreateTileSet(pugi::xml_node root) {
+    pugi::xml_node node = root.child("tileset");
+    TileSet tileSet;
+    tileSet.imageName = node.child("image").attribute("source").value();
+    tileSet.tileWidth = node.attribute("tilewidth").as_int();
+    tileSet.tileHeight = node.attribute("tileheight").as_int();
+    tileSet.tileCount = node.attribute("tilecount").as_int();
+    tileSet.columns = node.attribute("columns").as_int();
+    return tileSet;
 }
 
 const std::vector<int> TileMapLoader::LoadTileIds(const std::string& fileName) {

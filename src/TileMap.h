@@ -4,6 +4,7 @@
 #include <vector>
 #include "SDL.h"
 #include "Math.h"
+#include "pugixml.hpp"
 
 struct TileInfo {
     int id;
@@ -45,5 +46,6 @@ class TileMapLoader {
 public:
     TileMap Load(const char* fileName);
 private:
+    TileSet CreateTileSet(pugi::xml_node root);
     const std::vector<int> LoadTileIds(const std::string& fileName);
 };
