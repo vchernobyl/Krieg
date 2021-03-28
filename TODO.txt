@@ -47,7 +47,8 @@ March:
 27. Fix box collider position bug when scrolling the camera. [DONE]
 28. Add XML parsing library. [DONE]
 29. Parse tiled xml map and save tile set data into a struct. [DONE]
-30. Parse tiled xml map and save layer dat into a struct/class. [IN PROGRESS]
+30. Parse tiled xml map and save layer data into a struct/class. [DONE]
+31. Parse tile ids and create tile structs. [IN PROGRESS]
 
 ?. Add box colliders to the map tiles.
 ?. Add vector2 as a gravity to the physics world which applies this to the bodies.

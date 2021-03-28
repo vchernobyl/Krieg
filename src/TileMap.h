@@ -19,14 +19,15 @@ struct Tile {
 };
 
 struct TileMapLayer {
+    std::string name;
     std::vector<Tile> tiles;
     int width;
     int height;
-    bool isVisible;
+    bool isVisible = true;
 };
 
 struct TileSet {
-    const char* imageName;
+    std::string imageName;
     int tileWidth;
     int tileHeight;
     int tileCount;
@@ -44,8 +45,9 @@ private:
 
 class TileMapLoader {
 public:
-    TileMap Load(const char* fileName);
+    TileMap Load(const std::string& fileName);
 private:
     TileSet CreateTileSet(pugi::xml_node root);
-    const std::vector<int> LoadTileIds(const std::string& fileName);
+    TileMapLayer CreateTileMapLayer(pugi::xml_node root);
+    const std::vector<int> ParseTileIds(const std::string& fileName);
 };
