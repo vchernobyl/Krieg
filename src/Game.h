@@ -3,7 +3,6 @@
 #include "SDL.h"
 #include "InputSystem.h"
 #include "PhysicsWorld.h"
-#include "TileMap.h"
 #include "Camera.h"
 #include <unordered_map>
 #include <string>
@@ -44,5 +43,5 @@ private:
     bool updatingActors;
     Uint32 ticks;
 
-    TileMap map;
+    class TileMap* map;
 };

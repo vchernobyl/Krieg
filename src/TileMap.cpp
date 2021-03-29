@@ -16,7 +16,15 @@ TileSet::TileSet(SDL_Texture* image, int tileWidth, int tileHeight, int tileCoun
     }
 }
 
-TileMap TileMapLoader::Load(const std::string& fileName) {
+TileMap::~TileMap() {
+    for (auto layer : layers) {	delete layer; }
+    for (auto tileSet : tileSets) { delete tileSet; }
+    layers.clear();
+    tileSets.clear();
+    SDL_Log("TileMap destroyed");
+}
+
+TileMap* TileMapLoader::Load(const std::string& fileName) {
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(fileName.c_str());
 
@@ -24,46 +32,44 @@ TileMap TileMapLoader::Load(const std::string& fileName) {
 	SDL_Log("Failed to load map: %s", fileName.c_str());
     }
 
-    // TODO(Bugfix): tile infos don't exist after this method scope is out!
+    auto map = new TileMap();
     auto tileSet = CreateTileSet(doc.child("map"));
     auto layer = CreateTileMapLayer(doc.child("map"), tileSet);
-    auto map = TileMap(layer);
+    map->AddLayer(layer);
+    map->AddTileSet(tileSet);
 
     return map;
 }
 
-TileSet TileMapLoader::CreateTileSet(pugi::xml_node root) {
+TileSet* TileMapLoader::CreateTileSet(pugi::xml_node root) {
     auto tileSetNode = root.child("tileset");
-    auto imageName = tileSetNode.child("image").attribute("source").value();
-    TileSet tileSet {
-	game->GetTexture(imageName),
-	tileSetNode.attribute("tilewidth").as_int(),
-	tileSetNode.attribute("tileheight").as_int(),
-	tileSetNode.attribute("tilecount").as_int(),
-	tileSetNode.attribute("columns").as_int(),
-    };
-    return tileSet;
+    // auto imageName = tileSetNode.child("image").attribute("source").value();
+    return new TileSet(game->GetTexture("assets/Tiles.png"),
+		       tileSetNode.attribute("tilewidth").as_int(),
+		       tileSetNode.attribute("tileheight").as_int(),
+		       tileSetNode.attribute("tilecount").as_int(),
+		       tileSetNode.attribute("columns").as_int());
 }
 
-TileMapLayer TileMapLoader::CreateTileMapLayer(pugi::xml_node root, const TileSet& tileSet) {
-    TileMapLayer layer;
+TileMapLayer* TileMapLoader::CreateTileMapLayer(pugi::xml_node root, TileSet* tileSet) {
     auto layerNode = root.child("layer");
-    layer.name = layerNode.attribute("name").value();
-    layer.width = layerNode.attribute("width").as_int();
-    layer.height = layerNode.attribute("height").as_int();
+    auto name = layerNode.attribute("name").value();
+    auto width = layerNode.attribute("width").as_int();
+    auto height = layerNode.attribute("height").as_int();
     auto tileIds = ParseTileIds(layerNode.child_value("data"));
-    layer.tiles = CreateTiles(tileIds, tileSet, layer.width, layer.height);
-    return layer;
+    auto tiles = CreateTiles(tileIds, tileSet, width, height);
+    return new TileMapLayer(name, width, height, tiles);
 }
 
-std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, const TileSet& tileSet,
+std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, TileSet* tileSet,
 					     int layerWidth, int layerHeight) {
     std::vector<Tile> tiles;
     for (int row = 0; row < layerHeight; ++row) {
 	for (int col = 0; col < layerWidth; ++col) {
-	    int x = col * tileSet.tileWidth;
-	    int y = row * tileSet.tileHeight;
-	    auto tileInfo = tileSet.GetTileInfo(row * col + col);
+	    int x = col * tileSet->tileWidth;
+	    int y = row * tileSet->tileHeight;
+	    int id = tileIds[row * col + col];
+	    auto tileInfo = tileSet->GetTileInfo(id);
 	    auto tile = Tile(x, y, tileInfo);
 	    tiles.push_back(tile);
 	}

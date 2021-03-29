@@ -15,23 +15,6 @@ struct TileInfo {
     SDL_Rect rect;
 };
 
-struct Tile {
-    Tile(int x, int y, const TileInfo* tileInfo)
-	: x(x), y(y), tileInfo(tileInfo) {}
-
-    int x;
-    int y;
-    const TileInfo* tileInfo;
-};
-
-struct TileMapLayer {
-    std::string name;
-    std::vector<Tile> tiles;
-    int width;
-    int height;
-    bool isVisible = true;
-};
-
 struct TileSet {
     TileSet(SDL_Texture* image, int tileWidth, int tileHeight, int tileCount, int columns);
     const TileInfo* GetTileInfo(int id) const { return &tileInfos[id]; }
@@ -43,27 +26,49 @@ struct TileSet {
     std::vector<TileInfo> tileInfos;
 };
 
+struct Tile {
+    Tile(int x, int y, const TileInfo* tileInfo)
+	: x(x), y(y), tileInfo(tileInfo) {}
+
+    int x;
+    int y;
+    const TileInfo* tileInfo;
+};
+
+struct TileMapLayer {
+    TileMapLayer(const std::string& name, int width, int height, std::vector<Tile> tiles)
+	: name(name), width(width), height(height), tiles(tiles) {}
+
+    std::string name;
+    int width;
+    int height;
+    bool isVisible = true;
+    std::vector<Tile> tiles;
+};
+
 class TileMap {
 public:
     TileMap() {}
-    TileMap(TileMapLayer layer) { layers.push_back(layer); }
-    const TileMapLayer& GetLayer() const { return layers.front(); }
-private:
-    std::vector<TileMapLayer> layers;
-    std::vector<TileSet> tileSets;
+    ~TileMap();
+    void AddLayer(TileMapLayer* layer) { layers.push_back(layer); }
+    void AddTileSet(TileSet* tileSet) { tileSets.push_back(tileSet); }
+    TileMapLayer* GetLayer() { return layers.front(); }
+//private:
+    std::vector<TileMapLayer*> layers;
+    std::vector<TileSet*> tileSets;
 };
 
 // TODO(Refactor): This doesn't need a class, can just be a regular function instead!
 class TileMapLoader {
 public:
     TileMapLoader(class Game* game) : game(game) {}
-    TileMap Load(const std::string& fileName);
+    TileMap* Load(const std::string& fileName);
 private:
     // TODO(Refactor): Just do everything in a single Load() method, wtf!
-    TileSet CreateTileSet(pugi::xml_node root);
-    TileMapLayer CreateTileMapLayer(pugi::xml_node root, const TileSet& tileSet);
+    TileSet* CreateTileSet(pugi::xml_node root);
+    TileMapLayer* CreateTileMapLayer(pugi::xml_node root, TileSet* tileSet);
     const std::vector<int> ParseTileIds(const std::string& fileName);
-    std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, const TileSet& tileSet,
+    std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, TileSet* tileSet,
 				  int layerWidth, int layerHeight);
     class Game* game;
 };

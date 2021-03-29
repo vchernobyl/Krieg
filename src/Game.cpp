@@ -3,7 +3,7 @@
 #include "PhysicsWorld.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
-//#include "TileMap.h"
+#include "TileMap.h"
 #include "Hero.h"
 #include "SDL_image.h"
 #include <algorithm>
@@ -19,7 +19,8 @@ Game::Game() :
     inputSystem(nullptr),
     camera(nullptr),
     isRunning(true),
-    updatingActors(false) {}
+    updatingActors(false),
+    map(nullptr) {}
 
 bool Game::Initialize() {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
@@ -72,6 +73,7 @@ void Game::Shutdown() {
     inputSystem->Shutdown();
     delete inputSystem;
     delete camera;
+    delete map;
     UnloadData();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -204,17 +206,6 @@ void Game::GenerateOutput() {
 	sprite->Draw(renderer);
     }
 
-    auto layer = map.GetLayer();
-    for (auto tile : layer.tiles) {
-	auto tileInfo = tile.tileInfo;
-	SDL_Log("tile info id = %d", tileInfo->id);
-	// if (!tileInfo->texture) {
-	//     SDL_Log("texture not set");
-	// }
-	// SDL_Rect dst = SDL_Rect { tile.x, tile.y, 32, 32, };
-	// SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
-    }
-
     for (auto collider : physicsWorld.GetColliders()) {
 	if (auto box = static_cast<BoxColliderComponent*>(collider)) {
 	    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
@@ -231,6 +222,9 @@ void Game::GenerateOutput() {
 void Game::LoadData() {
     TileMapLoader mapLoader(this);
     map = mapLoader.Load("assets/test.tmx");
+
+    SDL_Log("layers = %d, tile sets = %d", map->layers.size(), map->tileSets.size());
+    SDL_Log("Layer name = %s", map->layers.front()->name.c_str());
 
     Hero* hero = new Hero(this);
     hero->SetPosition(Vector2(300, 150));
