@@ -218,7 +218,7 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
-    TileMapLoader mapLoader;
+    TileMapLoader mapLoader(this);
     mapLoader.Load("assets/test.tmx");
 
     Hero* hero = new Hero(this);

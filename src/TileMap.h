@@ -7,9 +7,12 @@
 #include "pugixml.hpp"
 
 struct TileInfo {
+    TileInfo(int id, SDL_Texture* texture, SDL_Rect rect)
+	: id(id), texture(texture), rect(rect) {}
+
     int id;
     SDL_Texture* texture;
-    SDL_Rect textureSrc;
+    SDL_Rect rect;
 };
 
 struct Tile {
@@ -26,12 +29,17 @@ struct TileMapLayer {
     bool isVisible = true;
 };
 
-struct TileSet {
-    std::string imageName;
+class TileSet {
+public:
+    TileSet(SDL_Texture* image, int tileWidth, int tileHeight, int tileCount, int columns);
+    const TileInfo* GetTileInfo(int id) const { return &tileInfos[id]; }
+private:
+    SDL_Texture* image;
     int tileWidth;
     int tileHeight;
     int tileCount;
     int columns;
+    std::vector<TileInfo> tileInfos;
 };
 
 class TileMap {
@@ -45,9 +53,12 @@ private:
 
 class TileMapLoader {
 public:
+    TileMapLoader(class Game* game) : game(game) {}
     TileMap Load(const std::string& fileName);
 private:
     TileSet CreateTileSet(pugi::xml_node root);
-    TileMapLayer CreateTileMapLayer(pugi::xml_node root);
+    TileMapLayer CreateTileMapLayer(pugi::xml_node root, const TileSet& tileSet);
     const std::vector<int> ParseTileIds(const std::string& fileName);
+    std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, const TileSet& tileSet);
+    class Game* game;
 };
