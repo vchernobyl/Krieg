@@ -25,16 +25,19 @@ TileMap::~TileMap() {
 
 TileMap* TileMapLoader::Load(const std::string& fileName) {
     pugi::xml_document doc;
-    pugi::xml_parse_result result = doc.load_file(fileName.c_str());
+    pugi::xml_parse_result success = doc.load_file(fileName.c_str());
 
-    if (!result) {
+    if (!success) {
 	SDL_Log("Failed to load map: %s", fileName.c_str());
+	return nullptr;
     }
 
     auto map = new TileMap();
     auto tileSet = CreateTileSet(doc.child("map"));
-    auto layer = CreateTileMapLayer(doc.child("map"), tileSet);
-    map->AddLayer(layer);
+    auto layers = CreateTileMapLayers(doc.child("map"), tileSet);
+    for (auto layer : layers) {
+	map->AddLayer(layer);
+    }
     map->AddTileSet(tileSet);
 
     return map;
@@ -50,14 +53,17 @@ TileSet* TileMapLoader::CreateTileSet(pugi::xml_node root) {
 		       tileSetNode.attribute("columns").as_int());
 }
 
-TileMapLayer* TileMapLoader::CreateTileMapLayer(pugi::xml_node root, TileSet* tileSet) {
-    auto layerNode = root.child("layer");
-    auto name = layerNode.attribute("name").value();
-    auto width = layerNode.attribute("width").as_int();
-    auto height = layerNode.attribute("height").as_int();
-    auto tileIds = ParseTileIds(layerNode.child_value("data"));
-    auto tiles = CreateTiles(tileIds, tileSet, width, height);
-    return new TileMapLayer(name, width, height, tiles);
+std::vector<TileMapLayer*> TileMapLoader::CreateTileMapLayers(pugi::xml_node root, TileSet* tileSet) {
+    std::vector<TileMapLayer*> layers;
+    for (pugi::xml_node layerNode : root.children("layer")) {
+	auto name = layerNode.attribute("name").value();
+	auto width = layerNode.attribute("width").as_int();
+	auto height = layerNode.attribute("height").as_int();
+	auto tileIds = ParseTileIds(layerNode.child_value("data"));
+	auto tiles = CreateTiles(tileIds, tileSet, width, height);
+	layers.push_back(new TileMapLayer(name, width, height, tiles));
+    }
+    return layers;
 }
 
 std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, TileSet* tileSet,

@@ -202,16 +202,17 @@ void Game::GenerateOutput() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    for (auto sprite : sprites) {
-	sprite->Draw(renderer);
+    for (auto layer : map->GetLayers()) {
+	for (auto tile : layer->tiles) {
+	    auto tileInfo = tile.tileInfo;
+	    SDL_Rect dst = SDL_Rect { tile.x - camera->GetPosition().x,
+		tile.y - camera->GetPosition().y, 32, 32 };
+	    SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
+	}
     }
 
-    auto layer = map->GetLayer();
-    for (auto tile : layer->tiles) {
-	auto tileInfo = tile.tileInfo;
-	SDL_Rect dst = SDL_Rect { tile.x - camera->GetPosition().x,
-	    tile.y - camera->GetPosition().y, 32, 32 };
-	SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
+    for (auto sprite : sprites) {
+	sprite->Draw(renderer);
     }
 
     for (auto collider : physicsWorld.GetColliders()) {
@@ -230,9 +231,6 @@ void Game::GenerateOutput() {
 void Game::LoadData() {
     TileMapLoader mapLoader(this);
     map = mapLoader.Load("assets/test.tmx");
-
-    SDL_Log("layers = %d, tile sets = %d", map->layers.size(), map->tileSets.size());
-    SDL_Log("Layer name = %s", map->layers.front()->name.c_str());
 
     Hero* hero = new Hero(this);
     hero->SetPosition(Vector2(300, 150));

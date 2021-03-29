@@ -50,6 +50,8 @@ March:
 30. Parse tiled xml map and save layer data into a struct/class. [DONE]
 31. Parse tile ids and create tile structs. [DONE]
 32. Render multiple tile map layers. [IN PROGRESS]
+33. Fix tile set image loading error.
+34. Refactor tile map load function.
 
 ?. Add box colliders to the map tiles.
 ?. Add vector2 as a gravity to the physics world which applies this to the bodies.

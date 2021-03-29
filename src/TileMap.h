@@ -51,8 +51,8 @@ public:
     ~TileMap();
     void AddLayer(TileMapLayer* layer) { layers.push_back(layer); }
     void AddTileSet(TileSet* tileSet) { tileSets.push_back(tileSet); }
-    TileMapLayer* GetLayer() { return layers.front(); }
-//private:
+    std::vector<TileMapLayer*> GetLayers() { return layers; }
+private:
     std::vector<TileMapLayer*> layers;
     std::vector<TileSet*> tileSets;
 };
@@ -65,7 +65,7 @@ public:
 private:
     // TODO(Refactor): Just do everything in a single Load() method, wtf!
     TileSet* CreateTileSet(pugi::xml_node root);
-    TileMapLayer* CreateTileMapLayer(pugi::xml_node root, TileSet* tileSet);
+    std::vector<TileMapLayer*> CreateTileMapLayers(pugi::xml_node root, TileSet* tileSet);
     const std::vector<int> ParseTileIds(const std::string& fileName);
     std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, TileSet* tileSet,
 				  int layerWidth, int layerHeight);
