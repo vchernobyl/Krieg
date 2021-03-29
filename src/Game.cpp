@@ -206,6 +206,14 @@ void Game::GenerateOutput() {
 	sprite->Draw(renderer);
     }
 
+    auto layer = map->GetLayer();
+    for (auto tile : layer->tiles) {
+	auto tileInfo = tile.tileInfo;
+	SDL_Rect dst = SDL_Rect { tile.x - camera->GetPosition().x,
+	    tile.y - camera->GetPosition().y, 32, 32 };
+	SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
+    }
+
     for (auto collider : physicsWorld.GetColliders()) {
 	if (auto box = static_cast<BoxColliderComponent*>(collider)) {
 	    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);

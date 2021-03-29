@@ -48,7 +48,8 @@ March:
 28. Add XML parsing library. [DONE]
 29. Parse tiled xml map and save tile set data into a struct. [DONE]
 30. Parse tiled xml map and save layer data into a struct/class. [DONE]
-31. Parse tile ids and create tile structs. [IN PROGRESS]
+31. Parse tile ids and create tile structs. [DONE]
+32. Render multiple tile map layers. [IN PROGRESS]
 
 ?. Add box colliders to the map tiles.
 ?. Add vector2 as a gravity to the physics world which applies this to the bodies.

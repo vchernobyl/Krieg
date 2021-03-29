@@ -48,7 +48,6 @@ struct TileMapLayer {
 
 class TileMap {
 public:
-    TileMap() {}
     ~TileMap();
     void AddLayer(TileMapLayer* layer) { layers.push_back(layer); }
     void AddTileSet(TileSet* tileSet) { tileSets.push_back(tileSet); }

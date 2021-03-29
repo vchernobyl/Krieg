@@ -21,7 +21,6 @@ TileMap::~TileMap() {
     for (auto tileSet : tileSets) { delete tileSet; }
     layers.clear();
     tileSets.clear();
-    SDL_Log("TileMap destroyed");
 }
 
 TileMap* TileMapLoader::Load(const std::string& fileName) {
@@ -68,10 +67,13 @@ std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, Ti
 	for (int col = 0; col < layerWidth; ++col) {
 	    int x = col * tileSet->tileWidth;
 	    int y = row * tileSet->tileHeight;
-	    int id = tileIds[row * col + col];
-	    auto tileInfo = tileSet->GetTileInfo(id);
-	    auto tile = Tile(x, y, tileInfo);
-	    tiles.push_back(tile);
+	    int index = row * layerWidth + col;
+	    int id = tileIds[index] - 1; // -1 because tilegid == 1
+	    if (id > 0) {
+		auto tileInfo = tileSet->GetTileInfo(id);
+		auto tile = Tile(x, y, tileInfo);
+		tiles.push_back(tile);
+	    }
 	}
     }
     return tiles;
