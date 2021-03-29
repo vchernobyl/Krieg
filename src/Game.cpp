@@ -204,6 +204,12 @@ void Game::GenerateOutput() {
 	sprite->Draw(renderer);
     }
 
+    auto tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32, 192, 8);
+    auto tileInfo = tileSet.GetTileInfo(1);
+    auto src = tileInfo->rect;
+    auto dst = SDL_Rect { 0, 0, src.w, src.h };
+    SDL_RenderCopy(renderer, tileInfo->texture, &src, &dst);
+
     for (auto collider : physicsWorld.GetColliders()) {
 	if (auto box = static_cast<BoxColliderComponent*>(collider)) {
 	    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);

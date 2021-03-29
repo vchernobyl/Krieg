@@ -16,9 +16,12 @@ struct TileInfo {
 };
 
 struct Tile {
+    Tile(int x, int y, const TileInfo* tileInfo)
+	: x(x), y(y), tileInfo(tileInfo) {}
+
     int x;
     int y;
-    TileInfo* tile;
+    const TileInfo* tileInfo;
 };
 
 struct TileMapLayer {
@@ -29,11 +32,9 @@ struct TileMapLayer {
     bool isVisible = true;
 };
 
-class TileSet {
-public:
+struct TileSet {
     TileSet(SDL_Texture* image, int tileWidth, int tileHeight, int tileCount, int columns);
     const TileInfo* GetTileInfo(int id) const { return &tileInfos[id]; }
-private:
     SDL_Texture* image;
     int tileWidth;
     int tileHeight;
@@ -44,11 +45,9 @@ private:
 
 class TileMap {
 public:
-    TileMapLayer& GetLayer(const std::string& name);
-    TileMapLayer& GetLayer(int index);
-    const std::vector<TileMapLayer>& GetLayers() const { return layers; }
+    TileMap(TileMapLayer layer) { layers.push_back(layer); }
 private:
-    const std::vector<TileMapLayer> layers;
+    std::vector<TileMapLayer> layers;
 };
 
 class TileMapLoader {
@@ -56,9 +55,11 @@ public:
     TileMapLoader(class Game* game) : game(game) {}
     TileMap Load(const std::string& fileName);
 private:
+    // TODO: Just do everything in a single Load() method, wtf!
     TileSet CreateTileSet(pugi::xml_node root);
     TileMapLayer CreateTileMapLayer(pugi::xml_node root, const TileSet& tileSet);
     const std::vector<int> ParseTileIds(const std::string& fileName);
-    std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, const TileSet& tileSet);
+    std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, const TileSet& tileSet,
+				  int layerWidth, int layerHeight);
     class Game* game;
 };

@@ -7,18 +7,16 @@ TileSet::TileSet(SDL_Texture* image, int tileWidth, int tileHeight, int tileCoun
     : image(image), tileWidth(tileWidth), tileHeight(tileHeight),
       tileCount(tileCount), columns(columns) {
     const int rows = tileCount / columns;
-    int id = 0; // == row * rows + col
     for (int row = 0; row < rows; ++row) {
 	for (int col = 0; col < columns; ++col) {
 	    SDL_Rect rect { col * tileWidth, row * tileHeight, tileWidth, tileHeight };
-	    TileInfo tileInfo { id++, image, rect };
+	    TileInfo tileInfo { row * columns + col, image, rect };
 	    tileInfos.push_back(tileInfo);
 	}
     }
 }
 
 TileMap TileMapLoader::Load(const std::string& fileName) {
-    TileMap map;
     pugi::xml_document doc;
     pugi::xml_parse_result result = doc.load_file(fileName.c_str());
 
@@ -28,6 +26,7 @@ TileMap TileMapLoader::Load(const std::string& fileName) {
 
     auto tileSet = CreateTileSet(doc.child("map"));
     auto layer = CreateTileMapLayer(doc.child("map"), tileSet);
+    auto map = TileMap(layer);
 
     return map;
 }
@@ -51,18 +50,24 @@ TileMapLayer TileMapLoader::CreateTileMapLayer(pugi::xml_node root, const TileSe
     layer.name = layerNode.attribute("name").value();
     layer.width = layerNode.attribute("width").as_int();
     layer.height = layerNode.attribute("height").as_int();
-    layer.tiles = {}; // TODO: Parse csv data and create tiles
     auto tileIds = ParseTileIds(layerNode.child_value("data"));
+    layer.tiles = CreateTiles(tileIds, tileSet, layer.width, layer.height);
     return layer;
 }
 
-std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, const TileSet& tileSet) {
-    std::vector<Tile> result;
-    // for (int row = 0; y < layerHeight; ++y) {
-    // 	for (int col = 0; y < layerWidth; ++x) {
-    // 	    int x = col * tileSet.tileWidth;
-    // 	    int y = row * tileSet.tileHeight;
-    return result;
+std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, const TileSet& tileSet,
+					     int layerWidth, int layerHeight) {
+    std::vector<Tile> tiles;
+    for (int row = 0; row < layerHeight; ++row) {
+	for (int col = 0; col < layerWidth; ++col) {
+	    int x = col * tileSet.tileWidth;
+	    int y = row * tileSet.tileHeight;
+	    auto tileInfo = tileSet.GetTileInfo(row * col + col);
+	    auto tile = Tile(x, y, tileInfo);
+	    tiles.push_back(tile);
+	}
+    }
+    return tiles;
 }
 
 const std::vector<int> TileMapLoader::ParseTileIds(const std::string& data) {
