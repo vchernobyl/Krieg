@@ -1,4 +1,4 @@
-OBJS = src\Main.cpp src\Game.cpp src\Actor.cpp src\Component.cpp src\SpriteComponent.cpp src\AnimSpriteComponent.cpp src\Random.cpp src\CircleComponent.cpp src\RigidbodyComponent.cpp src\Math.cpp src\Hero.cpp src\MoveComponent.cpp src\InputSystem.cpp src\JumpComponent.cpp src\IdleState.cpp src\RunningState.cpp src\JumpingState.cpp src\BackgroundComponent.cpp src\Camera.cpp src\TileMapComponent.cpp src\ColliderComponent.cpp src\BoxColliderComponent.cpp src\PhysicsWorld.cpp src\TileMap.cpp src\pugixml.cpp
+OBJS = src\Main.cpp src\Game.cpp src\Actor.cpp src\Component.cpp src\SpriteComponent.cpp src\AnimSpriteComponent.cpp src\Random.cpp src\CircleComponent.cpp src\RigidbodyComponent.cpp src\Math.cpp src\Hero.cpp src\MoveComponent.cpp src\InputSystem.cpp src\JumpComponent.cpp src\IdleState.cpp src\RunningState.cpp src\JumpingState.cpp src\BackgroundComponent.cpp src\Camera.cpp src\ColliderComponent.cpp src\BoxColliderComponent.cpp src\PhysicsWorld.cpp src\TileMap.cpp src\pugixml.cpp
 
 CC = g++
 

@@ -45,17 +45,21 @@ struct TileSet {
 
 class TileMap {
 public:
+    TileMap() {}
     TileMap(TileMapLayer layer) { layers.push_back(layer); }
+    const TileMapLayer& GetLayer() const { return layers.front(); }
 private:
     std::vector<TileMapLayer> layers;
+    std::vector<TileSet> tileSets;
 };
 
+// TODO(Refactor): This doesn't need a class, can just be a regular function instead!
 class TileMapLoader {
 public:
     TileMapLoader(class Game* game) : game(game) {}
     TileMap Load(const std::string& fileName);
 private:
-    // TODO: Just do everything in a single Load() method, wtf!
+    // TODO(Refactor): Just do everything in a single Load() method, wtf!
     TileSet CreateTileSet(pugi::xml_node root);
     TileMapLayer CreateTileMapLayer(pugi::xml_node root, const TileSet& tileSet);
     const std::vector<int> ParseTileIds(const std::string& fileName);

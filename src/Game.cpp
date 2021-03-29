@@ -3,7 +3,7 @@
 #include "PhysicsWorld.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
-#include "TileMap.h"
+//#include "TileMap.h"
 #include "Hero.h"
 #include "SDL_image.h"
 #include <algorithm>
@@ -204,11 +204,16 @@ void Game::GenerateOutput() {
 	sprite->Draw(renderer);
     }
 
-    auto tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32, 192, 8);
-    auto tileInfo = tileSet.GetTileInfo(1);
-    auto src = tileInfo->rect;
-    auto dst = SDL_Rect { 0, 0, src.w, src.h };
-    SDL_RenderCopy(renderer, tileInfo->texture, &src, &dst);
+    auto layer = map.GetLayer();
+    for (auto tile : layer.tiles) {
+	auto tileInfo = tile.tileInfo;
+	SDL_Log("tile info id = %d", tileInfo->id);
+	// if (!tileInfo->texture) {
+	//     SDL_Log("texture not set");
+	// }
+	// SDL_Rect dst = SDL_Rect { tile.x, tile.y, 32, 32, };
+	// SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
+    }
 
     for (auto collider : physicsWorld.GetColliders()) {
 	if (auto box = static_cast<BoxColliderComponent*>(collider)) {
@@ -225,7 +230,7 @@ void Game::GenerateOutput() {
 
 void Game::LoadData() {
     TileMapLoader mapLoader(this);
-    mapLoader.Load("assets/test.tmx");
+    map = mapLoader.Load("assets/test.tmx");
 
     Hero* hero = new Hero(this);
     hero->SetPosition(Vector2(300, 150));

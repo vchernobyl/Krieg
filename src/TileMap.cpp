@@ -24,6 +24,7 @@ TileMap TileMapLoader::Load(const std::string& fileName) {
 	SDL_Log("Failed to load map: %s", fileName.c_str());
     }
 
+    // TODO(Bugfix): tile infos don't exist after this method scope is out!
     auto tileSet = CreateTileSet(doc.child("map"));
     auto layer = CreateTileMapLayer(doc.child("map"), tileSet);
     auto map = TileMap(layer);
