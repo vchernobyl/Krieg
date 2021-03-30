@@ -16,6 +16,7 @@ static const int WorldHeight = 1080;
 Game::Game() :
     window(nullptr),
     renderer(nullptr),
+    debugRenderer(nullptr),
     inputSystem(nullptr),
     camera(nullptr),
     isRunning(true),
@@ -54,6 +55,9 @@ bool Game::Initialize() {
 
     camera = new Camera(ScreenWidth, ScreenHeight);
     camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
+
+    debugRenderer = new DebugRenderer(&physicsWorld, camera);
+
     LoadData();
 
     ticks = SDL_GetTicks();
@@ -65,7 +69,7 @@ void Game::RunLoop() {
     while (isRunning) {
 	ProcessInput();
 	UpdateGame();
-	GenerateOutput();
+	DrawGame();
     }
 }
 
@@ -74,6 +78,7 @@ void Game::Shutdown() {
     delete inputSystem;
     delete camera;
     delete map;
+    delete debugRenderer;
     UnloadData();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
@@ -198,7 +203,7 @@ void Game::UpdateGame() {
     }
 }
 
-void Game::GenerateOutput() {
+void Game::DrawGame() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
@@ -219,15 +224,7 @@ void Game::GenerateOutput() {
 	sprite->Draw(renderer);
     }
 
-    for (auto collider : physicsWorld.GetColliders()) {
-	if (auto box = static_cast<BoxColliderComponent*>(collider)) {
-	    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-	    auto collidable = box->GetCollidable();
-	    collidable.x -= camera->GetPosition().x;
-	    collidable.y -= camera->GetPosition().y;
-	    SDL_RenderDrawRect(renderer, &collidable);
-	}
-    }
+    debugRenderer->Draw(renderer);
 
     SDL_RenderPresent(renderer);
 }

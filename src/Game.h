@@ -3,6 +3,7 @@
 #include "SDL.h"
 #include "InputSystem.h"
 #include "PhysicsWorld.h"
+#include "DebugRenderer.h"
 #include "Camera.h"
 #include <unordered_map>
 #include <string>
@@ -24,7 +25,7 @@ public:
 private:
     void ProcessInput();
     void UpdateGame();
-    void GenerateOutput();
+    void DrawGame();
     void LoadData();
     void UnloadData();
 
@@ -35,6 +36,7 @@ private:
 
     SDL_Window* window;
     SDL_Renderer* renderer;
+    DebugRenderer* debugRenderer;
     InputSystem* inputSystem;
     PhysicsWorld physicsWorld;
     Camera* camera;

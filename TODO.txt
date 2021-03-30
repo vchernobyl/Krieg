@@ -56,7 +56,7 @@ March:
 36. Fix collision bug. Collisions are not correctly resolved in a lot of instances.
 37. Fix player getting stuck in between two rect colliders.
 38. Allow tile map to contain information about colliders. [DONE]
-39. Implement debug renderer for object outline and collider box rendering.
+39. Implement debug renderer for object outline and collider box rendering. [DONE]
 
 Refactor: Implement Renderer class which takes care of unprojecting camera and sprite rendering.
 Refactor: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
