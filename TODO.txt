@@ -53,9 +53,9 @@ March:
 33. Add colliders to the ground layer. [DONE]
 34. Fix tile set image loading error.
 35. Refactor tile map load function.
-36. Fix collision order bug.
+36. Fix collision bug. Collisions are not correctly resolved in a lot of instances.
 37. Fix player getting stuck in between two rect colliders.
-38. Allow tile map to contain information about colliders.
+38. Allow tile map to contain information about colliders. [DONE]
 39. Implement debug renderer for object outline and collider box rendering.
 
 Refactor: Implement Renderer class which takes care of unprojecting camera and sprite rendering.

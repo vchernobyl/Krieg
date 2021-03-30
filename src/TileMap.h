@@ -46,15 +46,26 @@ struct TileMapLayer {
     std::vector<Tile> tiles;
 };
 
+struct ObjectGroup {
+    ObjectGroup(const std::string& name, std::vector<SDL_Rect> objects)
+	: name(name), objects(objects) {}
+
+    std::string name;
+    std::vector<SDL_Rect> objects;
+};
+
 class TileMap {
 public:
     ~TileMap();
     void AddLayer(TileMapLayer* layer) { layers.push_back(layer); }
     void AddTileSet(TileSet* tileSet) { tileSets.push_back(tileSet); }
-    std::vector<TileMapLayer*> GetLayers() { return layers; }
+    void AddObjectGroup(ObjectGroup* objectGroup) { objectGroups.push_back(objectGroup); }
+    const std::vector<TileMapLayer*>& GetLayers() { return layers; }
+    const std::vector<ObjectGroup*>& GetObjectGroups() { return objectGroups; }
 private:
     std::vector<TileMapLayer*> layers;
     std::vector<TileSet*> tileSets;
+    std::vector<ObjectGroup*> objectGroups;
 };
 
 class TileMapLoader {
@@ -63,9 +74,10 @@ public:
     TileMap* Load(const std::string& fileName);
 private:
     TileSet* CreateTileSet(pugi::xml_node root);
-    std::vector<TileMapLayer*> CreateTileMapLayers(pugi::xml_node root, TileSet* tileSet);
-    const std::vector<int> ParseTileIds(const std::string& fileName);
-    std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, TileSet* tileSet,
+    const std::vector<TileMapLayer*> CreateTileMapLayers(pugi::xml_node root, TileSet* tileSet);
+    const std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, TileSet* tileSet,
 				  int layerWidth, int layerHeight);
+    const std::vector<ObjectGroup*> CreateObjectGroups(pugi::xml_node root);
+    const std::vector<int> ParseTileIds(const std::string& fileName);
     class Game* game;
 };

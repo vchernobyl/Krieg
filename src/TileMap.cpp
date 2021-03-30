@@ -18,9 +18,13 @@ TileSet::TileSet(SDL_Texture* image, int tileWidth, int tileHeight, int tileCoun
 
 TileMap::~TileMap() {
     for (auto layer : layers) {	delete layer; }
-    for (auto tileSet : tileSets) { delete tileSet; }
     layers.clear();
+
+    for (auto tileSet : tileSets) { delete tileSet; }
     tileSets.clear();
+
+    for (auto objectGroup : objectGroups) { delete objectGroup; }
+    objectGroups.clear();
 }
 
 TileMap* TileMapLoader::Load(const std::string& fileName) {
@@ -34,11 +38,17 @@ TileMap* TileMapLoader::Load(const std::string& fileName) {
 
     auto map = new TileMap();
     auto tileSet = CreateTileSet(doc.child("map"));
+    map->AddTileSet(tileSet);
+
     auto layers = CreateTileMapLayers(doc.child("map"), tileSet);
     for (auto layer : layers) {
 	map->AddLayer(layer);
     }
-    map->AddTileSet(tileSet);
+
+    auto objectGroups = CreateObjectGroups(doc.child("map"));
+    for (auto group : objectGroups) {
+	map->AddObjectGroup(group);
+    }
 
     return map;
 }
@@ -53,7 +63,7 @@ TileSet* TileMapLoader::CreateTileSet(pugi::xml_node root) {
 		       tileSetNode.attribute("columns").as_int());
 }
 
-std::vector<TileMapLayer*> TileMapLoader::CreateTileMapLayers(pugi::xml_node root, TileSet* tileSet) {
+const std::vector<TileMapLayer*> TileMapLoader::CreateTileMapLayers(pugi::xml_node root, TileSet* tileSet) {
     std::vector<TileMapLayer*> layers;
     for (pugi::xml_node layerNode : root.children("layer")) {
 	auto name = layerNode.attribute("name").value();
@@ -66,7 +76,7 @@ std::vector<TileMapLayer*> TileMapLoader::CreateTileMapLayers(pugi::xml_node roo
     return layers;
 }
 
-std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, TileSet* tileSet,
+const std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, TileSet* tileSet,
 					     int layerWidth, int layerHeight) {
     std::vector<Tile> tiles;
     for (int row = 0; row < layerHeight; ++row) {
@@ -83,6 +93,24 @@ std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, Ti
 	}
     }
     return tiles;
+}
+
+const std::vector<ObjectGroup*> TileMapLoader::CreateObjectGroups(pugi::xml_node root) {
+    std::vector<ObjectGroup*> groups;
+    for (pugi::xml_node objectGroupNode : root.children("objectgroup")) {
+	std::vector<SDL_Rect> objects;
+	for (pugi::xml_node objectNode : objectGroupNode.children("object")) {
+	    auto x = objectNode.attribute("x").as_int();
+	    auto y = objectNode.attribute("y").as_int();
+	    auto width = objectNode.attribute("width").as_int();
+	    auto height = objectNode.attribute("height").as_int();
+	    auto rect = SDL_Rect { x, y, width, height };
+	    objects.push_back(rect);
+	}
+	auto name = objectGroupNode.attribute("name").value();
+	groups.push_back(new ObjectGroup(name, objects));
+    }
+    return groups;
 }
 
 const std::vector<int> TileMapLoader::ParseTileIds(const std::string& data) {

@@ -251,14 +251,17 @@ void Game::LoadData() {
     
     TileMapLoader mapLoader(this);
     map = mapLoader.Load("assets/test.tmx");
-    auto groundLayer = map->GetLayers()[2];
-    for (auto tile : groundLayer->tiles) {
-	auto tileActor = new Actor(this);
-	tileActor->SetIsStatic(true);
-	tileActor->SetPosition(Vector2(tile.x, tile.y));
+    auto objectGroups = map->GetObjectGroups();
+    for (auto objectGroup : objectGroups) {
+	for (auto object : objectGroup->objects) {
+	    auto objectActor = new Actor(this);
+	    objectActor->SetIsStatic(true);
+	    objectActor->SetPosition(Vector2(object.x, object.y));
 
-	auto tileCollider = new BoxColliderComponent(tileActor);
-	tileCollider->SetCollidable(SDL_Rect { 0, 0, 32, 32 });
+	    auto objectCollider = new BoxColliderComponent(objectActor);
+	    auto collidable = SDL_Rect { 0, 0, object.w, object.h };
+	    objectCollider->SetCollidable(collidable);
+	}
     }
 }
 
