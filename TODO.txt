@@ -49,17 +49,15 @@ March:
 29. Parse tiled xml map and save tile set data into a struct. [DONE]
 30. Parse tiled xml map and save layer data into a struct/class. [DONE]
 31. Parse tile ids and create tile structs. [DONE]
-32. Render multiple tile map layers. [IN PROGRESS]
-33. Fix tile set image loading error.
-34. Refactor tile map load function.
+32. Render multiple tile map layers. [DONE]
+33. Add colliders to the ground layer. [DONE]
+34. Fix tile set image loading error.
+35. Refactor tile map load function.
+36. Fix collision order bug.
+37. Fix player getting stuck in between two rect colliders.
+38. Allow tile map to contain information about colliders.
 
-?. Add box colliders to the map tiles.
-?. Add vector2 as a gravity to the physics world which applies this to the bodies.
-
-Refactor: In SpriteComponent add an overridable GetSourceRect() method that draws section of the texture.
-By default it will draw the whole texture.
 Refactor: Implement Renderer class which takes care of unprojecting camera and sprite rendering.
-Improvement: Add static asserts to check if all components are attached in player states.
 Refactor: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 This will allow to hide the implementation details of SDL_RendererFlip and use this enum not only
 for animation components but also for sprite components.

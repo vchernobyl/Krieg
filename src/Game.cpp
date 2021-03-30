@@ -205,8 +205,12 @@ void Game::GenerateOutput() {
     for (auto layer : map->GetLayers()) {
 	for (auto tile : layer->tiles) {
 	    auto tileInfo = tile.tileInfo;
-	    SDL_Rect dst = SDL_Rect { tile.x - camera->GetPosition().x,
-		tile.y - camera->GetPosition().y, 32, 32 };
+	    SDL_Rect dst = SDL_Rect {
+		static_cast<int>(tile.x - camera->GetPosition().x),
+		static_cast<int>(tile.y - camera->GetPosition().y),
+		32,
+		32
+	    };
 	    SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
 	}
     }
@@ -229,9 +233,6 @@ void Game::GenerateOutput() {
 }
 
 void Game::LoadData() {
-    TileMapLoader mapLoader(this);
-    map = mapLoader.Load("assets/test.tmx");
-
     Hero* hero = new Hero(this);
     hero->SetPosition(Vector2(300, 150));
     hero->SetScale(1.5f);
@@ -247,20 +248,18 @@ void Game::LoadData() {
     blockCollider->SetCollidable(SDL_Rect { 0, 0, 32, 32 });
     SpriteComponent* blockSprite = new SpriteComponent(block);
     blockSprite->SetTexture(GetTexture("assets/block.png"));
+    
+    TileMapLoader mapLoader(this);
+    map = mapLoader.Load("assets/test.tmx");
+    auto groundLayer = map->GetLayers()[2];
+    for (auto tile : groundLayer->tiles) {
+	auto tileActor = new Actor(this);
+	tileActor->SetIsStatic(true);
+	tileActor->SetPosition(Vector2(tile.x, tile.y));
 
-    // Actor* world = new Actor(this);
-
-    // TileSet tileSet = TileSet(GetTexture("assets/Tiles.png"), 32, 32);
-    // TileMapComponent* foreground = new TileMapComponent(world, tileSet, 102);
-    // foreground->LoadMap("assets/MapLayer1.csv");
-
-    // TileMapComponent* midground = new TileMapComponent(world, tileSet, 101);
-    // midground->SetScrollSpeed(0.7f);
-    // midground->LoadMap("assets/MapLayer2.csv");
-
-    // TileMapComponent* background = new TileMapComponent(world, tileSet, 100);
-    // background->SetScrollSpeed(0.5f);
-    // background->LoadMap("assets/MapLayer3.csv");
+	auto tileCollider = new BoxColliderComponent(tileActor);
+	tileCollider->SetCollidable(SDL_Rect { 0, 0, 32, 32 });
+    }
 }
 
 void Game::UnloadData() {
