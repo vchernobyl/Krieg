@@ -237,15 +237,6 @@ void Game::LoadData() {
     BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
     heroCollider->SetCollidable(SDL_Rect { 0, 0, static_cast<int>(50 * hero->GetScale()), static_cast<int>(37 * hero->GetScale()) });
 
-    Actor* block = new Actor(this);
-    block->SetIsStatic(true);
-    block->SetPosition(Vector2(500, 300));
-
-    BoxColliderComponent* blockCollider = new BoxColliderComponent(block);
-    blockCollider->SetCollidable(SDL_Rect { 0, 0, 32, 32 });
-    SpriteComponent* blockSprite = new SpriteComponent(block);
-    blockSprite->SetTexture(GetTexture("assets/block.png"));
-    
     TileMapLoader mapLoader(this);
     map = mapLoader.Load("assets/test.tmx");
     auto objectGroups = map->GetObjectGroups();

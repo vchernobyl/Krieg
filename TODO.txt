@@ -51,7 +51,7 @@ March:
 31. Parse tile ids and create tile structs. [DONE]
 32. Render multiple tile map layers. [DONE]
 33. Add colliders to the ground layer. [DONE]
-34. Fix tile set image loading error.
+34. Fix tile set image loading error. [DONE]
 35. Refactor tile map load function.
 36. Fix collision bug. Collisions are not correctly resolved in a lot of instances.
 37. Fix player getting stuck in between two rect colliders.

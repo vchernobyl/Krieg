@@ -55,8 +55,10 @@ TileMap* TileMapLoader::Load(const std::string& fileName) {
 
 TileSet* TileMapLoader::CreateTileSet(pugi::xml_node root) {
     auto tileSetNode = root.child("tileset");
-    // auto imageName = tileSetNode.child("image").attribute("source").value();
-    return new TileSet(game->GetTexture("assets/Tiles.png"),
+    auto imageName = tileSetNode.child("image").attribute("source").value();
+    std::stringstream imagePath;
+    imagePath << "assets/" << imageName;
+    return new TileSet(game->GetTexture(imagePath.str()),
 		       tileSetNode.attribute("tilewidth").as_int(),
 		       tileSetNode.attribute("tileheight").as_int(),
 		       tileSetNode.attribute("tilecount").as_int(),
