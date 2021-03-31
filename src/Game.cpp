@@ -241,7 +241,7 @@ void Game::LoadData() {
     map = mapLoader.Load("assets/test.tmx");
     auto objectGroups = map->GetObjectGroups();
     for (auto objectGroup : objectGroups) {
-	for (auto object : objectGroup->objects) {
+	for (const auto& object : objectGroup->objects) {
 	    auto objectActor = new Actor(this);
 	    objectActor->SetIsStatic(true);
 	    objectActor->SetPosition(Vector2(object.x, object.y));
