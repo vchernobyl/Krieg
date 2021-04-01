@@ -21,29 +21,30 @@ Manifold BoxColliderComponent::Intersects(ColliderComponent* other) {
 
 void BoxColliderComponent::ResolveOverlap(const Manifold& manifold) {
     if (owner->IsStatic()) { return; }
-    const auto& rect1 = GetCollidable();
-    const auto rect2 = manifold.other;
+
+    const auto& own = GetCollidable();
+    const auto other = manifold.other;
 
     float resolve = 0;
-    float xDiff = (rect1.x + (rect1.w * 0.5f)) - (rect2->x + (rect2->w * 0.5f));
-    float yDiff = (rect1.y + (rect1.h * 0.5f)) - (rect2->y + (rect2->h * 0.5f));
+    const float xDiff = (own.x + (own.w * 0.5f)) - (other->x + (other->w * 0.5f));
+    const float yDiff = (own.y + (own.h * 0.5f)) - (other->y + (other->h * 0.5f));
 
     if (Math::Fabs(xDiff) > Math::Fabs(yDiff)) {
 	if (xDiff > 0) {
 	    // Colliding from the left, move this object to the right.
-	    resolve = (rect2->x + rect2->w) - rect1.x;
+	    resolve = (other->x + other->w) - own.x;
 	} else {
 	    // Colliding from the right, move this object to the left.
-	    resolve = - ((rect1.x + rect1.w) - rect2->x);
+	    resolve = -((own.x + own.w) - other->x);
 	}
 	owner->Translate(resolve, 0);
     } else {
 	if (yDiff > 0) {
 	    // Colliding from the top, move this object down.
-	    resolve = (rect2->y + rect2->h) - rect1.y;
+	    resolve = (other->y + other->h) - own.y;
 	} else {
 	    // Colliding from the bottom, move this object up.
-	    resolve = -((rect1.y + rect1.h) - rect2->y);
+	    resolve = -((own.y + own.h) - other->y);
 	}
 	owner->Translate(0, resolve);
     }

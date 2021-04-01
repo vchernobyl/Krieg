@@ -12,7 +12,3 @@ private:
     PhysicsWorld* world;
     Camera* camera;
 };
-
-    
-    
-    

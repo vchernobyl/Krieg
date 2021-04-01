@@ -52,13 +52,19 @@ March:
 32. Render multiple tile map layers. [DONE]
 33. Add colliders to the ground layer. [DONE]
 34. Fix tile set image loading error. [DONE]
-35. Fix collision bug. Collisions are not correctly resolved in a lot of instances.
-36. Fix player getting stuck in between two rect colliders.
-37. Allow tile map to contain information about colliders. [DONE]
-38. Implement debug renderer for object outline and collider box rendering. [DONE]
-39. Implement tile map renderer.
+35. Allow tile map to contain information about colliders. [DONE]
+36. Implement debug renderer for object outline and collider box rendering. [DONE]
+
+April
+-----
+1. Implement ray vs rect collision function. [IN PROGRESS]
+?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
+?. Implement tile map renderer.
+?. collision bug. Collisions are not correctly resolved in a lot of instances.
+?. Fix player getting stuck in between two rect colliders.
 
 Refactor: Tile map load function.
+Refactor: Tile map structs/classes.
 Refactor: Put all player states in a single file.
 Refactor: Implement Renderer class which takes care of unprojecting camera and sprite rendering.
 Refactor: Implement SpriteDirection instead of AnimDirection and pass that on to animations.

@@ -3,6 +3,7 @@
 #include "PhysicsWorld.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
+#include "Collisions.h"
 #include "TileMap.h"
 #include "Hero.h"
 #include "SDL_image.h"
@@ -159,7 +160,7 @@ void Game::ProcessInput() {
 
     inputSystem->Update();
     const InputState& state = inputSystem->GetState();
-    
+
     if (state.Keyboard.GetKeyState(SDL_SCANCODE_ESCAPE) == Released) {
 	isRunning = false;
     }
@@ -223,6 +224,41 @@ void Game::DrawGame() {
     for (auto sprite : sprites) {
 	sprite->Draw(renderer);
     }
+
+    // Ray vs Rect collision test
+
+    int x, y;
+    SDL_GetMouseState(&x, &y);
+    Vector2 mousePosition = Vector2(x, y);
+
+    Vector2 rayOrigin = Vector2(150, 250);
+    Vector2 rayDirection = mousePosition - rayOrigin;
+
+    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+    SDL_RenderDrawLine(renderer, rayOrigin.x, rayOrigin.y, mousePosition.x, mousePosition.y);
+
+    const SDL_Rect rect = { 500, 350, 150, 280 };
+    Rect targetRect = { Vector2(rect.x, rect.y), Vector2(rect.w, rect.h) };
+
+    Vector2 contactPoint, contactNormal;
+    float t;
+
+    if (Collisions::RayIntersects(rayOrigin, rayDirection, targetRect, contactPoint, contactNormal, t) && t < 1.0f) {
+	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
+	SDL_Rect contact = { contactPoint.x - 3, contactPoint.y - 3, 6, 6 };
+	SDL_RenderFillRect(renderer, &contact);
+	SDL_RenderDrawRect(renderer, &contact);
+	SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
+	SDL_RenderDrawLine(renderer, contactPoint.x, contactPoint.y,
+			   contactPoint.x + contactNormal.x * 20,
+			   contactPoint.y + contactNormal.y * 20);
+    } else {
+	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    }	
+
+    SDL_RenderDrawRect(renderer, &rect);
+
+    // Test end
 
     debugRenderer->Draw(renderer);
 

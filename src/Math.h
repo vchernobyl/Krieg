@@ -89,3 +89,8 @@ public:
     static const Vector2 Left;
     static const Vector2 Right;
 };
+
+struct Rect {
+    Vector2 position;
+    Vector2 size;
+};
