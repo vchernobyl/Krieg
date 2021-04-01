@@ -58,6 +58,7 @@ March:
 April
 -----
 1. Implement ray vs rect collision function. [IN PROGRESS]
+2. Implement a custom Rectangle struct/class.
 ?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 ?. Implement tile map renderer.
 ?. collision bug. Collisions are not correctly resolved in a lot of instances.

@@ -227,36 +227,25 @@ void Game::DrawGame() {
 
     // Ray vs Rect collision test
 
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-    Vector2 mousePosition = Vector2(x, y);
+    // int x, y;
+    // SDL_GetMouseState(&x, &y);
+    // Vector2 mousePosition = Vector2(x, y);
 
-    Vector2 rayOrigin = Vector2(150, 250);
-    Vector2 rayDirection = mousePosition - rayOrigin;
+    // Vector2 rayOrigin = Vector2(150, 250);
+    // Vector2 rayDirection = mousePosition - rayOrigin;
+    // rayDirection.Normalize();
 
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawLine(renderer, rayOrigin.x, rayOrigin.y, mousePosition.x, mousePosition.y);
+    // Rect player = { Vector2(mousePosition.x, mousePosition.y), Vector2(50, 50), Vector2::Zero };
+    // player.velocity += rayDirection * 10.0f;
+    // player.position += player.velocity;
 
-    const SDL_Rect rect = { 500, 350, 150, 280 };
-    Rect targetRect = { Vector2(rect.x, rect.y), Vector2(rect.w, rect.h) };
+    // const SDL_Rect rect = { 500, 350, 150, 280 };
+    // const SDL_Rect playerRect = { player.position.x, player.position.y, player.size.x, player.size.y };
+    // Rect targetRect = { Vector2(rect.x, rect.y), Vector2(rect.w, rect.h) };
 
-    Vector2 contactPoint, contactNormal;
-    float t;
-
-    if (Collisions::RayIntersects(rayOrigin, rayDirection, targetRect, contactPoint, contactNormal, t) && t < 1.0f) {
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	SDL_Rect contact = { contactPoint.x - 3, contactPoint.y - 3, 6, 6 };
-	SDL_RenderFillRect(renderer, &contact);
-	SDL_RenderDrawRect(renderer, &contact);
-	SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-	SDL_RenderDrawLine(renderer, contactPoint.x, contactPoint.y,
-			   contactPoint.x + contactNormal.x * 20,
-			   contactPoint.y + contactNormal.y * 20);
-    } else {
-	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    }	
-
-    SDL_RenderDrawRect(renderer, &rect);
+    // SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
+    // SDL_RenderDrawRect(renderer, &rect);
+    // SDL_RenderDrawRect(renderer, &playerRect);
 
     // Test end
 
@@ -271,7 +260,7 @@ void Game::LoadData() {
     hero->SetScale(1.5f);
 
     BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
-    heroCollider->SetCollidable(SDL_Rect { 0, 0, static_cast<int>(50 * hero->GetScale()), static_cast<int>(37 * hero->GetScale()) });
+    heroCollider->SetCollidable( { 0, 0, 50 * hero->GetScale(), 37 * hero->GetScale() });
 
     TileMapLoader mapLoader(this);
     map = mapLoader.Load("assets/test.tmx");
@@ -283,7 +272,7 @@ void Game::LoadData() {
 	    objectActor->SetPosition(Vector2(object.x, object.y));
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    auto collidable = SDL_Rect { 0, 0, object.w, object.h };
+	    auto collidable = Rect { 0, 0, object.w, object.h };
 	    objectCollider->SetCollidable(collidable);
 	}
     }

@@ -4,18 +4,6 @@
 #include <algorithm>
 
 namespace Collisions {    
-    bool PointIntersects(const Vector2& p, const Rect& r) {
-	return (p.x >= r.position.x && p.y >= r.position.y &&
-		p.x < r.position.x + r.size.x && p.y < r.position.y + r.size.y);
-    }
-
-    bool RectsIntersect(const Rect& r1, const Rect& r2) {
-	return (r1.position.x < r2.position.x + r2.size.x &&
-		r1.position.x + r1.size.x > r2.position.x &&
-		r1.position.y < r2.position.y + r2.size.y &&
-		r1.position.y + r1.size.y > r2.position.y);
-    }
-
     bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& target,
 		       Vector2& contactPoint, Vector2& contactNormal, float& tHitNear) {
 	Vector2 tNear = (target.position - rayOrigin) / rayDir;
@@ -26,6 +14,7 @@ namespace Collisions {
 
 	if (tNear.x > tFar.y || tNear.y > tFar.x) return false;
 
+	// Replace min/max with the one from Math namespace
 	tHitNear = std::max(tNear.x, tNear.y);
 	float tHitFar = std::min(tFar.x, tFar.y);
 
@@ -48,5 +37,25 @@ namespace Collisions {
 	}
 
 	return true;
+    }
+
+    bool DynamicRectsIntersect(const Rect& src, const Rect& target, Vector2& contactPoint,
+			       Vector2& contactNormal, float& contactTime, float deltaTime) {
+	if (src.velocity.x == 0 && src.velocity.y == 0) {
+	    return false;
+	}
+
+	Rect expandedTarget;
+	expandedTarget.position = target.position - src.size / 2;
+	expandedTarget.size = target.size + src.size;
+
+	if (RayIntersects(src.position + src.size / 2, src.velocity * deltaTime,
+			  expandedTarget, contactPoint, contactNormal, contactTime)) {
+	    if (contactTime <= 1.0f) {
+		return true;
+	    }
+	}
+
+	return false;
     }
 }

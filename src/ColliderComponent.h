@@ -10,7 +10,7 @@ enum class CollisionLayer {
 
 struct Manifold {
     bool colliding = false;
-    const SDL_Rect* other;
+    const class Rect* other;
 };
 
 class ColliderComponent : public Component {
