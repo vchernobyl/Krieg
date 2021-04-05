@@ -114,29 +114,14 @@ public:
     static const Vector2 Right;
 };
 
-// TODO use x, y, width, height instead of vectors. super confusing
 struct Rect {
     Vector2 position;
     Vector2 size;
     Vector2 velocity;
 
-    Rect(float x, float y, float width, float height)
-	: position(Vector2(x, y)),
-	  size(Vector2(width, height)),
-	  velocity(Vector2::Zero) {}
-
+    Rect(float x, float y, float width, float height);
     Rect() {}
 
-    // TODO move these out of the header
-    bool Contains(const Vector2& p) const {
-	return (p.x >= position.x && p.y >= position.y &&
-		p.x < position.x + size.x && p.y < position.y + size.y);
-    }
-
-    bool Intersects(const Rect& rect) const {
-	return (position.x < rect.position.x + rect.size.x &&
-		position.x + size.x > rect.position.x &&
-		position.y < rect.position.y + rect.size.y &&
-		position.y + size.y > rect.position.y);
-    }
+    bool Contains(const Vector2& p) const;
+    bool Intersects(const Rect& rect) const;
 };
