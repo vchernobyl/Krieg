@@ -5,6 +5,7 @@
 #include "BoxColliderComponent.h"
 #include "TileMap.h"
 #include "Hero.h"
+#include "Player.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -231,12 +232,13 @@ void Game::DrawGame() {
 }
 
 void Game::LoadData() {
-    Hero* hero = new Hero(this);
-    hero->SetPosition(Vector2(300, 150));
-    hero->SetScale(1.5f);
+    // Hero* hero = new Hero(this);
+    // hero->SetPosition(Vector2(300, 150));
+    // hero->SetScale(1.5f);
 
-    BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
-    heroCollider->SetCollidable( { 0, 0, 50 * hero->GetScale(), 37 * hero->GetScale() });
+    // BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
+    // heroCollider->SetCollidable( { 0, 0, 50 * hero->GetScale(), 37 * hero->GetScale() });
+    new Player(this);
 
     TileMapLoader mapLoader(this);
     map = mapLoader.Load("assets/test.tmx");
