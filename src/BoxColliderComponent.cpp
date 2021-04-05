@@ -1,4 +1,5 @@
 #include "BoxColliderComponent.h"
+#include "Collisions.h"
 #include "Actor.h"
 
 BoxColliderComponent::BoxColliderComponent(Actor* owner)
@@ -6,12 +7,13 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner)
 
 BoxColliderComponent::~BoxColliderComponent() {}
 
-Manifold BoxColliderComponent::Intersects(ColliderComponent* other) {
+Manifold BoxColliderComponent::Intersects(ColliderComponent* other, float deltaTime) {
     Manifold manifold;
     if (auto boxCollider = dynamic_cast<BoxColliderComponent*>(other)) {
-	const auto& rect1 = GetCollidable();
-	const auto& rect2 = boxCollider->GetCollidable();
-	if (rect1.Intersects(rect2)) {
+	auto& rect1 = GetCollidable();
+	auto& rect2 = boxCollider->GetCollidable();
+	if (DynamicRectsIntersect(rect1, rect2, manifold.contactPoint,
+					      manifold.contactNormal, manifold.contactTime, deltaTime)) {
 	    manifold.colliding = true;
 	    manifold.other = &rect2;
 	}
@@ -23,14 +25,14 @@ void BoxColliderComponent::ResolveOverlap(const Manifold& manifold) {
     if (owner->IsStatic()) return;
 }
 
-void BoxColliderComponent::SetCollidable(const Rect& rect) {
+void BoxColliderComponent::SetCollidable(Rect rect) {
     this->rect = rect;
     this->offset.x = rect.position.x;
     this->offset.y = rect.position.y;
     SetPosition();
 }
 
-const Rect& BoxColliderComponent::GetCollidable() {
+Rect& BoxColliderComponent::GetCollidable() {
     SetPosition();
     return rect;
 }

@@ -8,11 +8,11 @@ public:
     BoxColliderComponent(class Actor* owner);
     ~BoxColliderComponent();
     
-    Manifold Intersects(ColliderComponent* other) override;
+    Manifold Intersects(ColliderComponent* other, float deltaTime) override;
     void ResolveOverlap(const Manifold& manifold) override;
 
-    void SetCollidable(const Rect& rect);
-    const Rect& GetCollidable();
+    void SetCollidable(Rect rect);
+    Rect& GetCollidable();
 private:
     void SetPosition();
     Rect rect;

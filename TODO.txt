@@ -62,7 +62,7 @@ April
 3. Implement very simple Rigidbody which contains velocity. This is used for dynamic box collision detection.
 4. collision bug. Collisions are not correctly resolved in a lot of instances. [DONE]
 5. Fix player getting stuck in between two rect colliders. [DONE]
-6. Move collision detection and resolution to the physics world class.
+6. Move collision detection and resolution to the physics world class. [IN PROGRESS]
 ?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 ?. Implement tile map renderer.
 

@@ -1,7 +1,6 @@
 #include "Game.h"
 #include "Actor.h"
 #include "PhysicsWorld.h"
-#include "Collisions.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
 #include "TileMap.h"
@@ -13,8 +12,6 @@ static const int ScreenWidth = 1024;
 static const int ScreenHeight = 768;
 static const int WorldWidth = 1728;
 static const int WorldHeight = 1080;
-
-std::vector<Rect> objects;
 
 Game::Game() :
     window(nullptr),
@@ -163,13 +160,6 @@ void Game::ProcessInput() {
     inputSystem->Update();
     const InputState& state = inputSystem->GetState();
 
-    auto& playerRect = objects.front();
-
-    if (state.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) playerRect.velocity.x -= 10.0f;
-    if (state.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) playerRect.velocity.x += 10.0f;
-    if (state.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) playerRect.velocity.y -= 10.0f;
-    if (state.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) playerRect.velocity.y += 10.0f;
-
     if (state.Keyboard.GetKeyState(SDL_SCANCODE_ESCAPE) == Released) {
 	isRunning = false;
     }
@@ -187,31 +177,6 @@ void Game::UpdateGame() {
     float deltaTime = (SDL_GetTicks() - ticks) / 1000.0f;
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
-
-    Vector2 cp, cn;
-    float ct = 0.0f;
-    auto& playerRect = objects.front();
-
-    std::vector<std::pair<int, float>> z;
-    
-    for (unsigned i = 1; i < objects.size(); i++) {
-	if (Collisions::DynamicRectsIntersect(playerRect, objects[i], cp, cn, ct, deltaTime)) {
-	    SDL_Log("ct=%f", ct);
-	    z.push_back({ i, ct });
-	}
-    }
-
-    std::sort(z.begin(), z.end(), [](const std::pair<int, float>& a, const std::pair<int, float>& b) {
-	return a.second < b.second;
-    });
-
-    for (const auto& j : z) {
-	if (Collisions::DynamicRectsIntersect(playerRect, objects[j.first], cp, cn, ct, deltaTime)) {
-	    playerRect.velocity += cn * Vector2(Math::Fabs(playerRect.velocity.x), Math::Fabs(playerRect.velocity.y)) * (1.0f - ct);
-	}
-    }
-
-    playerRect.position += playerRect.velocity * deltaTime;
 
     updatingActors = true;
     for (auto actor : actors) {
@@ -242,32 +207,22 @@ void Game::DrawGame() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
 
-    // for (auto layer : map->GetLayers()) {
-    // 	for (auto tile : layer->tiles) {
-    // 	    auto tileInfo = tile.tileInfo;
-    // 	    SDL_Rect dst = SDL_Rect {
-    // 		static_cast<int>(tile.x - camera->GetPosition().x),
-    // 		static_cast<int>(tile.y - camera->GetPosition().y),
-    // 		32,
-    // 		32
-    // 	    };
-    // 	    SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
-    // 	}
-    // }
+    for (auto layer : map->GetLayers()) {
+	for (auto tile : layer->tiles) {
+	    auto tileInfo = tile.tileInfo;
+	    SDL_Rect dst = SDL_Rect {
+		static_cast<int>(tile.x - camera->GetPosition().x),
+		static_cast<int>(tile.y - camera->GetPosition().y),
+		32,
+		32
+	    };
+	    SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
+	}
+    }
 
     for (auto sprite : sprites) {
 	sprite->Draw(renderer);
     }
-
-    // Ray vs Rect collision test
-
-    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    for (const auto& rect : objects) {
-	const SDL_Rect r = { (int) rect.position.x, (int) rect.position.y, (int) rect.size.x, (int) rect.size.y };
-	SDL_RenderDrawRect(renderer, &r);
-    }
-
-    // Test end
 
     debugRenderer->Draw(renderer);
 
@@ -275,47 +230,27 @@ void Game::DrawGame() {
 }
 
 void Game::LoadData() {
-    objects.push_back({ 10, 10, 10, 30 });
-    objects.push_back({ 10, 200, 20, 20 });
-    objects.push_back({ 30, 200, 20, 20 });
-    objects.push_back({ 50, 200, 20, 20});
-    objects.push_back({ 70, 200, 20, 20 });
-    objects.push_back({ 90, 200, 20, 20 });
-    objects.push_back({ 110, 200, 20, 20 });
-    objects.push_back({ 130, 200, 20, 20 });
-    objects.push_back({ 150, 200, 20, 20 });
-    objects.push_back({ 170, 200, 20, 20 });
-    objects.push_back({ 190, 200, 20, 20 });
+    Hero* hero = new Hero(this);
+    hero->SetPosition(Vector2(300, 150));
+    hero->SetScale(1.5f);
 
-    objects.push_back({ 5, 150, 5, 70 });
-    objects.push_back({ 210, 150, 5, 70 });
+    BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
+    heroCollider->SetCollidable( { 0, 0, 50 * hero->GetScale(), 37 * hero->GetScale() });
 
-    objects.push_back({ 100, 20, 30, 100 });
-    objects.push_back({ 50, 70, 100, 30 });
+    TileMapLoader mapLoader(this);
+    map = mapLoader.Load("assets/test.tmx");
+    auto objectGroups = map->GetObjectGroups();
+    for (auto objectGroup : objectGroups) {
+	for (const auto& object : objectGroup->objects) {
+	    auto objectActor = new Actor(this);
+	    objectActor->SetIsStatic(true);
+	    objectActor->SetPosition(Vector2(object.x, object.y));
 
-    objects.push_back({ 150, 30, 5, 5 });
-
-    // Hero* hero = new Hero(this);
-    // hero->SetPosition(Vector2(300, 150));
-    // hero->SetScale(1.5f);
-
-    // BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
-    // heroCollider->SetCollidable( { 0, 0, 50 * hero->GetScale(), 37 * hero->GetScale() });
-
-    // TileMapLoader mapLoader(this);
-    // map = mapLoader.Load("assets/test.tmx");
-    // auto objectGroups = map->GetObjectGroups();
-    // for (auto objectGroup : objectGroups) {
-    // 	for (const auto& object : objectGroup->objects) {
-    // 	    auto objectActor = new Actor(this);
-    // 	    objectActor->SetIsStatic(true);
-    // 	    objectActor->SetPosition(Vector2(object.x, object.y));
-
-    // 	    auto objectCollider = new BoxColliderComponent(objectActor);
-    // 	    auto collidable = Rect { 0, 0, object.w, object.h };
-    // 	    objectCollider->SetCollidable(collidable);
-    // 	}
-    // }
+	    auto objectCollider = new BoxColliderComponent(objectActor);
+	    auto collidable = Rect { 0, 0, object.w, object.h };
+	    objectCollider->SetCollidable(collidable);
+	}
+    }
 }
 
 void Game::UnloadData() {
