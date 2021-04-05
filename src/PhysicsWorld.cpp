@@ -28,9 +28,10 @@ void PhysicsWorld::Update(float deltaTime) {
 
     for (auto& manifold : toResolve) {
 	if (DynamicRectsIntersect(playerRect, *manifold.other, manifold.contactPoint, manifold.contactNormal, manifold.contactTime, deltaTime)) {
+	    SDL_Log("[before] vx=%f, vy=%f", playerRect.velocity.x, playerRect.velocity.y);
 	    auto d = manifold.contactNormal * Vector2(Math::Fabs(playerRect.velocity.x), Math::Fabs(playerRect.velocity.y)) * (1.0f - manifold.contactTime);
-	    SDL_Log("dx=%f, dy=%f", d.x, d.y);
 	    playerRect.velocity += d;
+	    SDL_Log("[after] vx=%f, vy=%f\n", playerRect.velocity.x, playerRect.velocity.y);
 	}
     }
 }
