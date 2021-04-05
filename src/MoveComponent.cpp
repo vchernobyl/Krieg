@@ -1,4 +1,5 @@
 #include "MoveComponent.h"
+#include "BoxColliderComponent.h"
 
 // TODO: Currently the lerping from current velocity to the
 // target velocity is done linearly. Take a look if this component
@@ -17,10 +18,10 @@ void MoveComponent::ProcessInput(const InputState& inputState) {
 }
 
 void MoveComponent::Update(float deltaTime) {
-    // float target = maxSpeed * input.x;
-    // float t = 4.0f * deltaTime;
-    // velocity.x = Math::Lerp(velocity.x, target, t);
-    velocity.x = input.x * maxSpeed * deltaTime;
-    velocity.y = input.y * maxSpeed * deltaTime;
-    owner->Translate(velocity.x, velocity.y);
+    if (auto box = owner->GetComponent<BoxColliderComponent>()) {
+	auto& playerRect = box->GetCollidable();
+	playerRect.velocity.x = input.x * maxSpeed * deltaTime;
+	playerRect.velocity.y = input.y * maxSpeed * deltaTime;
+	owner->Translate(playerRect.velocity.x, playerRect.velocity.y);
+    }
 }

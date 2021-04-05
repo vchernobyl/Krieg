@@ -17,10 +17,8 @@ void PhysicsWorld::Update(float deltaTime) {
     for (auto i = colliders.begin() + 1; i != colliders.end(); i++) {
 	auto manifold = player->Intersects(*i, deltaTime);
 	if (manifold.colliding) {
-	    SDL_Log("player is colliding");
 	    toResolve.push_back(manifold);
-	} else {
-	    SDL_Log("player is not colliding");
+	    SDL_Log("colliding, ct=%f", manifold.contactTime);
 	}
     }
 
@@ -30,7 +28,9 @@ void PhysicsWorld::Update(float deltaTime) {
 
     for (auto& manifold : toResolve) {
 	if (DynamicRectsIntersect(playerRect, *manifold.other, manifold.contactPoint, manifold.contactNormal, manifold.contactTime, deltaTime)) {
-	    playerRect.velocity += manifold.contactNormal * Vector2(Math::Fabs(playerRect.velocity.x), Math::Fabs(playerRect.velocity.y)) * (1.0f - manifold.contactTime);
+	    auto d = manifold.contactNormal * Vector2(Math::Fabs(playerRect.velocity.x), Math::Fabs(playerRect.velocity.y)) * (1.0f - manifold.contactTime);
+	    SDL_Log("dx=%f, dy=%f", d.x, d.y);
+	    playerRect.velocity += d;
 	}
     }
 }

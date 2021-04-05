@@ -50,7 +50,7 @@ bool DynamicRectsIntersect(const Rect& in, const Rect& target, Vector2& contactP
     expandedTarget.position = target.position - in.size / 2;
     expandedTarget.size = target.size + in.size;
 
-    if (RayIntersects(in.position + in.size / 2, in.velocity * deltaTime,
+    if (RayIntersects(in.position + in.size / 2, in.velocity, // TODO: use rigidbody velocity here.
 		      expandedTarget, contactPoint, contactNormal, contactTime)) {
 	if (contactTime >= 0.0f && contactTime < 1.0f) {
 	    return true;
