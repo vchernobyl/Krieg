@@ -191,10 +191,22 @@ void Game::UpdateGame() {
     Vector2 cp, cn;
     float ct = 0.0f;
     auto& playerRect = objects.front();
+
+    std::vector<std::pair<int, float>> z;
     
     for (unsigned i = 1; i < objects.size(); i++) {
 	if (Collisions::DynamicRectsIntersect(playerRect, objects[i], cp, cn, ct, deltaTime)) {
 	    SDL_Log("ct=%f", ct);
+	    z.push_back({ i, ct });
+	}
+    }
+
+    std::sort(z.begin(), z.end(), [](const std::pair<int, float>& a, const std::pair<int, float>& b) {
+	return a.second < b.second;
+    });
+
+    for (const auto& j : z) {
+	if (Collisions::DynamicRectsIntersect(playerRect, objects[j.first], cp, cn, ct, deltaTime)) {
 	    playerRect.velocity += cn * Vector2(Math::Fabs(playerRect.velocity.x), Math::Fabs(playerRect.velocity.y)) * (1.0f - ct);
 	}
     }
@@ -275,7 +287,7 @@ void Game::LoadData() {
     objects.push_back({ 170, 200, 20, 20 });
     objects.push_back({ 190, 200, 20, 20 });
 
-    objects.push_back({ 50, 150, 7, 70 });
+    objects.push_back({ 5, 150, 5, 70 });
     objects.push_back({ 210, 150, 5, 70 });
 
     objects.push_back({ 100, 20, 30, 100 });
