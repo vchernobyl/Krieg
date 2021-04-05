@@ -2,6 +2,7 @@
 
 #include "Math.h"
 #include <algorithm>
+#include <cmath>
 
 namespace Collisions {    
     bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& target,
@@ -9,6 +10,9 @@ namespace Collisions {
 	Vector2 tNear = (target.position - rayOrigin) / rayDir;
 	Vector2 tFar = (target.position + target.size - rayOrigin) / rayDir;
 
+	if (std::isnan(tFar.y) || std::isnan(tFar.x)) return false;
+	if (std::isnan(tNear.y) || std::isnan(tNear.x)) return false;
+	
 	if (tNear.x > tFar.x) std::swap(tNear.x, tFar.x);
 	if (tNear.y > tFar.y) std::swap(tNear.y, tFar.y);
 
@@ -20,38 +24,38 @@ namespace Collisions {
 
 	if (tHitFar < 0) return false;
 
-	contactPoint = rayOrigin + rayDir * tHitNear;
+	contactPoint = rayOrigin + tHitNear * rayDir;
 
 	if (tNear.x > tNear.y) {
 	    if (rayDir.x < 0) {
-		contactNormal = Vector2(1, 0);
+		contactNormal = Vector2::Right;
 	    } else {
-		contactNormal = Vector2(-1, 0);
+		contactNormal = Vector2::Left;
 	    }
 	} else if (tNear.x < tNear.y) {
 	    if (rayDir.y < 0) {
-		contactNormal = Vector2(0, 1);
+		contactNormal = Vector2::Down;
 	    } else {
-		contactNormal = Vector2(0, -1);
+		contactNormal = Vector2::Up;
 	    }
 	}
 
 	return true;
     }
 
-    bool DynamicRectsIntersect(const Rect& src, const Rect& target, Vector2& contactPoint,
+    bool DynamicRectsIntersect(const Rect& in, const Rect& target, Vector2& contactPoint,
 			       Vector2& contactNormal, float& contactTime, float deltaTime) {
-	if (src.velocity.x == 0 && src.velocity.y == 0) {
+	if (in.velocity.x == 0 && in.velocity.y == 0) {
 	    return false;
 	}
 
 	Rect expandedTarget;
-	expandedTarget.position = target.position - src.size / 2;
-	expandedTarget.size = target.size + src.size;
+	expandedTarget.position = target.position - in.size / 2;
+	expandedTarget.size = target.size + in.size;
 
-	if (RayIntersects(src.position + src.size / 2, src.velocity * deltaTime,
+	if (RayIntersects(in.position + in.size / 2, in.velocity * deltaTime,
 			  expandedTarget, contactPoint, contactNormal, contactTime)) {
-	    if (contactTime <= 1.0f) {
+	    if (contactTime >= 0.0f && contactTime < 1.0f) {
 		return true;
 	    }
 	}

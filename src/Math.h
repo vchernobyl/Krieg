@@ -127,6 +127,7 @@ struct Rect {
 
     Rect() {}
 
+    // TODO move these out of the header
     bool Contains(const Vector2& p) const {
 	return (p.x >= position.x && p.y >= position.y &&
 		p.x < position.x + size.x && p.y < position.y + size.y);
