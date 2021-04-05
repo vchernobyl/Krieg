@@ -263,8 +263,25 @@ void Game::DrawGame() {
 }
 
 void Game::LoadData() {
-    objects.push_back({ 10, 10, 30, 20 });
-    objects.push_back({ 100, 100, 80, 50 });
+    objects.push_back({ 10, 10, 10, 30 });
+    objects.push_back({ 10, 200, 20, 20 });
+    objects.push_back({ 30, 200, 20, 20 });
+    objects.push_back({ 50, 200, 20, 20});
+    objects.push_back({ 70, 200, 20, 20 });
+    objects.push_back({ 90, 200, 20, 20 });
+    objects.push_back({ 110, 200, 20, 20 });
+    objects.push_back({ 130, 200, 20, 20 });
+    objects.push_back({ 150, 200, 20, 20 });
+    objects.push_back({ 170, 200, 20, 20 });
+    objects.push_back({ 190, 200, 20, 20 });
+
+    objects.push_back({ 50, 150, 7, 70 });
+    objects.push_back({ 210, 150, 5, 70 });
+
+    objects.push_back({ 100, 20, 30, 100 });
+    objects.push_back({ 50, 70, 100, 30 });
+
+    objects.push_back({ 150, 30, 5, 5 });
 
     // Hero* hero = new Hero(this);
     // hero->SetPosition(Vector2(300, 150));
