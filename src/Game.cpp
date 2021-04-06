@@ -187,7 +187,6 @@ void Game::UpdateGame() {
     }
     updatingActors = false;
 
-
     for (auto pending : pendingActors) {
 	actors.emplace_back(pending);
     }
@@ -232,12 +231,6 @@ void Game::DrawGame() {
 }
 
 void Game::LoadData() {
-    // Hero* hero = new Hero(this);
-    // hero->SetPosition(Vector2(300, 150));
-    // hero->SetScale(1.5f);
-
-    // BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
-    // heroCollider->SetCollidable( { 0, 0, 50 * hero->GetScale(), 37 * hero->GetScale() });
     new Player(this);
 
     TileMapLoader mapLoader(this);
@@ -250,7 +243,7 @@ void Game::LoadData() {
 	    objectActor->SetPosition(Vector2(object.x, object.y));
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    auto collidable = Rect { 0, 0, object.w, object.h };
+	    auto collidable = Rect { 0, 0, static_cast<float>(object.w), static_cast<float>(object.h) };
 	    objectCollider->SetCollidable(collidable);
 	}
     }

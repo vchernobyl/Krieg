@@ -3,6 +3,7 @@
 #include "Collisions.h"
 #include "BoxColliderComponent.h"
 #include "SDL.h"
+#include "Actor.h"
 #include <algorithm>
 #include <vector>
 
@@ -17,8 +18,8 @@ void PhysicsWorld::Update(float deltaTime) {
     for (auto i = colliders.begin() + 1; i != colliders.end(); i++) {
 	auto manifold = player->Intersects(*i, deltaTime);
 	if (manifold.colliding) {
+	    SDL_Log("colliding");
 	    toResolve.push_back(manifold);
-	    SDL_Log("colliding, ct=%f", manifold.contactTime);
 	}
     }
 
@@ -28,10 +29,9 @@ void PhysicsWorld::Update(float deltaTime) {
 
     for (auto& manifold : toResolve) {
 	if (DynamicRectsIntersect(playerRect, *manifold.other, manifold.contactPoint, manifold.contactNormal, manifold.contactTime, deltaTime)) {
-	    SDL_Log("[before] vx=%f, vy=%f", playerRect.velocity.x, playerRect.velocity.y);
-	    auto d = manifold.contactNormal * Vector2(Math::Fabs(playerRect.velocity.x), Math::Fabs(playerRect.velocity.y)) * (1.0f - manifold.contactTime);
-	    playerRect.velocity += d;
-	    SDL_Log("[after] vx=%f, vy=%f\n", playerRect.velocity.x, playerRect.velocity.y);
+	    playerRect.velocity += manifold.contactNormal *
+		Vector2(Math::Fabs(playerRect.velocity.x),
+			Math::Fabs(playerRect.velocity.y)) * (1.0f - manifold.contactTime);
 	}
     }
 }
