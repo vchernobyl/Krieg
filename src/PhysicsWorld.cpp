@@ -2,13 +2,12 @@
 #include "ColliderComponent.h"
 #include "Collisions.h"
 #include "BoxColliderComponent.h"
-#include "SDL.h"
 #include "Actor.h"
 #include <algorithm>
 #include <vector>
 
 void PhysicsWorld::Update(float deltaTime) {
-    std::vector<Manifold> toResolve;
+    std::vector<Manifold> collisions;
 
     if (colliders.size() == 0) return;
 
@@ -18,16 +17,15 @@ void PhysicsWorld::Update(float deltaTime) {
     for (auto i = colliders.begin() + 1; i != colliders.end(); i++) {
 	auto manifold = player->Intersects(*i, deltaTime);
 	if (manifold.colliding) {
-	    SDL_Log("colliding");
-	    toResolve.push_back(manifold);
+	    collisions.push_back(manifold);
 	}
     }
 
-    std::sort(toResolve.begin(), toResolve.end(), [](const Manifold& a, const Manifold& b) {
+    std::sort(collisions.begin(), collisions.end(), [](const Manifold& a, const Manifold& b) {
 	return a.contactTime < b.contactTime;
     });
 
-    for (auto& manifold : toResolve) {
+    for (auto& manifold : collisions) {
 	if (DynamicRectsIntersect(playerRect, *manifold.other, manifold.contactPoint, manifold.contactNormal, manifold.contactTime, deltaTime)) {
 	    playerRect.velocity += manifold.contactNormal *
 		Vector2(Math::Fabs(playerRect.velocity.x),
