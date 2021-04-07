@@ -65,7 +65,7 @@ April
 6. Move collision detection and resolution to the physics world class. [DONE]
 7. Remove player-only collision detection and detect collision with arbitrary objects.
 8. Make physics world to be a pointer in the game. [DONE]
-9. Clean up the Game.h headers.
+9. Clean up the Game.h headers. [DONE]
 ?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 ?. Implement tile map renderer.
 

@@ -1,6 +1,7 @@
 #include "PhysicsWorld.h"
-#include "ColliderComponent.h"
 #include "Collisions.h"
+#include "ColliderComponent.h"
+#include "RigidbodyComponent.h"
 #include "BoxColliderComponent.h"
 #include "Actor.h"
 #include <algorithm>
@@ -43,5 +44,17 @@ void PhysicsWorld::RemoveCollider(ColliderComponent* collider) {
     if (iter != colliders.end()) {
 	std::iter_swap(iter, colliders.end() - 1);
 	colliders.pop_back();
+    }
+}
+
+void PhysicsWorld::AddRigidbody(RigidbodyComponent* rigidbody) {
+    rigidbodies.push_back(rigidbody);
+}
+
+void PhysicsWorld::RemoveRigidbody(RigidbodyComponent* rigidbody) {
+    auto iter = std::find(rigidbodies.begin(), rigidbodies.end(), rigidbody);
+    if (iter != rigidbodies.end()) {
+	std::iter_swap(iter, rigidbodies.end() - 1);
+	rigidbodies.pop_back();
     }
 }
