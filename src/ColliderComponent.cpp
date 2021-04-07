@@ -1,4 +1,5 @@
 #include "ColliderComponent.h"
+#include "PhysicsWorld.h"
 #include "Actor.h"
 
 ColliderComponent::ColliderComponent(Actor* owner)
