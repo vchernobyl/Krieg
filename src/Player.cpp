@@ -33,6 +33,6 @@ void Player::UpdateActor(float deltaTime) {
     GetGame()->GetCamera()->Follow(this);
     if (auto box = GetComponent<BoxColliderComponent>()) {
 	auto& playerRect = box->GetCollidable();
-	Translate(playerRect.velocity.x * deltaTime, playerRect.velocity.y * deltaTime);
+	Translate(playerRect.velocity * deltaTime);
     }
 }

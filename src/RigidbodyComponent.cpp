@@ -9,3 +9,7 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner) : Component(owner) {
 RigidbodyComponent::~RigidbodyComponent() {
     owner->GetGame()->GetPhysicsWorld()->RemoveRigidbody(this);
 }
+
+void RigidbodyComponent::Update(float deltaTime) {
+    owner->Translate(velocity * deltaTime);
+}
