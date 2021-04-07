@@ -21,7 +21,7 @@ public:
     void RemoveSprite(class SpriteComponent* sprite);
     SDL_Texture* GetTexture(const std::string& filename);
     Camera* GetCamera() const { return camera; }
-    PhysicsWorld& GetPhysicsWorld() { return physicsWorld; }
+    PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
 private:
     void ProcessInput();
     void UpdateGame();
@@ -38,7 +38,7 @@ private:
     SDL_Renderer* renderer;
     DebugRenderer* debugRenderer;
     InputSystem* inputSystem;
-    PhysicsWorld physicsWorld;
+    PhysicsWorld* physicsWorld;
     Camera* camera;
 
     bool isRunning;

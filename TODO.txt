@@ -58,11 +58,14 @@ March:
 April
 -----
 1. Implement ray vs rect collision function. [DONE]
-2. Implement a custom Rectangle struct/class.
-3. Implement very simple Rigidbody which contains velocity. This is used for dynamic box collision detection.
+2. Implement very simple Rigidbody which contains velocity. This is used for dynamic box collision detection. [IN PROGRESS]
+3. Implement a custom Rectangle struct/class.
 4. collision bug. Collisions are not correctly resolved in a lot of instances. [DONE]
 5. Fix player getting stuck in between two rect colliders. [DONE]
-6. Move collision detection and resolution to the physics world class. [IN PROGRESS]
+6. Move collision detection and resolution to the physics world class. [DONE]
+7. Remove player-only collision detection and detect collision with arbitrary objects.
+8. Make physics world to be a pointer in the game. [DONE]
+9. Clean up the Game.h headers.
 ?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 ?. Implement tile map renderer.
 

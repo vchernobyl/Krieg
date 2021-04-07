@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "Actor.h"
-#include "PhysicsWorld.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
 #include "TileMap.h"
@@ -19,6 +18,7 @@ Game::Game() :
     renderer(nullptr),
     debugRenderer(nullptr),
     inputSystem(nullptr),
+    physicsWorld(nullptr),
     camera(nullptr),
     isRunning(true),
     updatingActors(false),
@@ -47,7 +47,8 @@ bool Game::Initialize() {
 	return false;
     }
 
-    physicsWorld = PhysicsWorld();
+    physicsWorld = new PhysicsWorld();
+    
     inputSystem = new InputSystem();
     if (!inputSystem->Initialize()) {
 	SDL_Log("Unable to initialize input system");
@@ -57,7 +58,7 @@ bool Game::Initialize() {
     camera = new Camera(ScreenWidth, ScreenHeight);
     camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
 
-    debugRenderer = new DebugRenderer(&physicsWorld, camera);
+    debugRenderer = new DebugRenderer(physicsWorld, camera);
 
     LoadData();
 
@@ -179,7 +180,7 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
-    physicsWorld.Update(deltaTime);
+    physicsWorld->Update(deltaTime);
 
     updatingActors = true;
     for (auto actor : actors) {
