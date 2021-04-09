@@ -8,7 +8,13 @@ void DebugRenderer::Draw(SDL_Renderer* renderer) {
     for (auto collider : world->GetColliders()) {
 	if (auto box = static_cast<BoxColliderComponent*>(collider)) {
 	    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-	    auto collidable = box->GetCollidable();
+	    auto rect = box->GetCollidable();
+	    auto collidable = SDL_Rect {
+		static_cast<int>(rect.position.x),
+		static_cast<int>(rect.position.y),
+		static_cast<int>(rect.size.x),
+		static_cast<int>(rect.size.y)
+	    };
 	    collidable.x -= camera->GetPosition().x;
 	    collidable.y -= camera->GetPosition().y;
 	    SDL_RenderDrawRect(renderer, &collidable);

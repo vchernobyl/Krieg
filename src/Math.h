@@ -35,6 +35,10 @@ namespace Math {
 	if (t < 0.0f) return a;
 	return a + t * (b - a);
     }
+
+    inline float Sqrt(float value) {
+	return sqrtf(value);
+    }
 }
 
 class Vector2 {
@@ -67,6 +71,16 @@ public:
 	return Vector2(right.x * scalar, right.y * scalar);
     }
 
+    friend Vector2 operator/(const Vector2& left, float scalar) {
+	return Vector2(left.x / scalar, left.y / scalar);
+    }
+
+    Vector2& operator*=(const Vector2& v) {
+	x *= v.x;
+	y *= v.y;
+	return *this;
+    }
+
     Vector2& operator+=(const Vector2& v) {
 	x += v.x;
 	y += v.y;
@@ -83,6 +97,16 @@ public:
 	return x * x + y * y;
     }
 
+    float Length() const {
+	return Math::Sqrt(LengthSq());
+    }
+
+    void Normalize() {
+	float length = Length();
+	x /= length;
+	y /= length;
+    }
+
     static const Vector2 Zero;
     static const Vector2 Up;
     static const Vector2 Down;
@@ -93,4 +117,10 @@ public:
 struct Rect {
     Vector2 position;
     Vector2 size;
+    
+    Rect(float x, float y, float width, float height);
+    Rect() {}
+
+    bool Contains(const Vector2& p) const;
+    bool Intersects(const Rect& rect) const;
 };

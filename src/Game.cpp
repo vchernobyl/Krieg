@@ -1,11 +1,14 @@
 #include "Game.h"
 #include "Actor.h"
+#include "InputSystem.h"
 #include "PhysicsWorld.h"
+#include "DebugRenderer.h"
+#include "Camera.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
-#include "Collisions.h"
 #include "TileMap.h"
 #include "Hero.h"
+#include "Player.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -19,6 +22,7 @@ Game::Game() :
     renderer(nullptr),
     debugRenderer(nullptr),
     inputSystem(nullptr),
+    physicsWorld(nullptr),
     camera(nullptr),
     isRunning(true),
     updatingActors(false),
@@ -47,7 +51,8 @@ bool Game::Initialize() {
 	return false;
     }
 
-    physicsWorld = PhysicsWorld();
+    physicsWorld = new PhysicsWorld();
+    
     inputSystem = new InputSystem();
     if (!inputSystem->Initialize()) {
 	SDL_Log("Unable to initialize input system");
@@ -57,7 +62,7 @@ bool Game::Initialize() {
     camera = new Camera(ScreenWidth, ScreenHeight);
     camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
 
-    debugRenderer = new DebugRenderer(&physicsWorld, camera);
+    debugRenderer = new DebugRenderer(physicsWorld, camera);
 
     LoadData();
 
@@ -179,13 +184,13 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
+    physicsWorld->Update(deltaTime);
+
     updatingActors = true;
     for (auto actor : actors) {
 	actor->Update(deltaTime);
     }
     updatingActors = false;
-
-    physicsWorld.Update(deltaTime);
 
     for (auto pending : pendingActors) {
 	actors.emplace_back(pending);
@@ -225,53 +230,13 @@ void Game::DrawGame() {
 	sprite->Draw(renderer);
     }
 
-    // Ray vs Rect collision test
-
-    int x, y;
-    SDL_GetMouseState(&x, &y);
-    Vector2 mousePosition = Vector2(x, y);
-
-    Vector2 rayOrigin = Vector2(150, 250);
-    Vector2 rayDirection = mousePosition - rayOrigin;
-
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-    SDL_RenderDrawLine(renderer, rayOrigin.x, rayOrigin.y, mousePosition.x, mousePosition.y);
-
-    const SDL_Rect rect = { 500, 350, 150, 280 };
-    Rect targetRect = { Vector2(rect.x, rect.y), Vector2(rect.w, rect.h) };
-
-    Vector2 contactPoint, contactNormal;
-    float t;
-
-    if (Collisions::RayIntersects(rayOrigin, rayDirection, targetRect, contactPoint, contactNormal, t) && t < 1.0f) {
-	SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255);
-	SDL_Rect contact = { contactPoint.x - 3, contactPoint.y - 3, 6, 6 };
-	SDL_RenderFillRect(renderer, &contact);
-	SDL_RenderDrawRect(renderer, &contact);
-	SDL_SetRenderDrawColor(renderer, 255, 255, 0, 255);
-	SDL_RenderDrawLine(renderer, contactPoint.x, contactPoint.y,
-			   contactPoint.x + contactNormal.x * 20,
-			   contactPoint.y + contactNormal.y * 20);
-    } else {
-	SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-    }	
-
-    SDL_RenderDrawRect(renderer, &rect);
-
-    // Test end
-
     debugRenderer->Draw(renderer);
 
     SDL_RenderPresent(renderer);
 }
 
 void Game::LoadData() {
-    Hero* hero = new Hero(this);
-    hero->SetPosition(Vector2(300, 150));
-    hero->SetScale(1.5f);
-
-    BoxColliderComponent* heroCollider = new BoxColliderComponent(hero);
-    heroCollider->SetCollidable(SDL_Rect { 0, 0, static_cast<int>(50 * hero->GetScale()), static_cast<int>(37 * hero->GetScale()) });
+    new Player(this);
 
     TileMapLoader mapLoader(this);
     map = mapLoader.Load("assets/test.tmx");
@@ -283,7 +248,7 @@ void Game::LoadData() {
 	    objectActor->SetPosition(Vector2(object.x, object.y));
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    auto collidable = SDL_Rect { 0, 0, object.w, object.h };
+	    auto collidable = Rect { 0, 0, static_cast<float>(object.w), static_cast<float>(object.h) };
 	    objectCollider->SetCollidable(collidable);
 	}
     }

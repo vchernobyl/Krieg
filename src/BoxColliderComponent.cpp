@@ -1,4 +1,6 @@
 #include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
+#include "Collisions.h"
 #include "Actor.h"
 
 BoxColliderComponent::BoxColliderComponent(Actor* owner)
@@ -6,12 +8,17 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner)
 
 BoxColliderComponent::~BoxColliderComponent() {}
 
-Manifold BoxColliderComponent::Intersects(ColliderComponent* other) {
+Manifold BoxColliderComponent::Intersects(ColliderComponent* other, float deltaTime) {
     Manifold manifold;
     if (auto boxCollider = dynamic_cast<BoxColliderComponent*>(other)) {
-	const auto& rect1 = GetCollidable();
-	const auto& rect2 = boxCollider->GetCollidable();
-	if (SDL_HasIntersection(&rect1, &rect2)) {
+	auto& rect1 = GetCollidable();
+	auto& rect2 = boxCollider->GetCollidable();
+	auto& velocity = GetAttachedRigidbody()->velocity;
+	if (DynamicRectsIntersect(rect1, velocity, rect2,
+				  manifold.contactPoint,
+				  manifold.contactNormal,
+				  manifold.contactTime,
+				  deltaTime)) {
 	    manifold.colliding = true;
 	    manifold.other = &rect2;
 	}
@@ -20,50 +27,23 @@ Manifold BoxColliderComponent::Intersects(ColliderComponent* other) {
 }
 
 void BoxColliderComponent::ResolveOverlap(const Manifold& manifold) {
-    if (owner->IsStatic()) { return; }
-
-    const auto& own = GetCollidable();
-    const auto other = manifold.other;
-
-    float resolve = 0;
-    const float xDiff = (own.x + (own.w * 0.5f)) - (other->x + (other->w * 0.5f));
-    const float yDiff = (own.y + (own.h * 0.5f)) - (other->y + (other->h * 0.5f));
-
-    if (Math::Fabs(xDiff) > Math::Fabs(yDiff)) {
-	if (xDiff > 0) {
-	    // Colliding from the left, move this object to the right.
-	    resolve = (other->x + other->w) - own.x;
-	} else {
-	    // Colliding from the right, move this object to the left.
-	    resolve = -((own.x + own.w) - other->x);
-	}
-	owner->Translate(resolve, 0);
-    } else {
-	if (yDiff > 0) {
-	    // Colliding from the top, move this object down.
-	    resolve = (other->y + other->h) - own.y;
-	} else {
-	    // Colliding from the bottom, move this object up.
-	    resolve = -((own.y + own.h) - other->y);
-	}
-	owner->Translate(0, resolve);
-    }
+    if (owner->IsStatic()) return;
 }
 
-void BoxColliderComponent::SetCollidable(const SDL_Rect& collidable) {
-    this->collidable = collidable;
-    this->offset.x = collidable.x;
-    this->offset.y = collidable.y;
+void BoxColliderComponent::SetCollidable(Rect rect) {
+    this->rect = rect;
+    this->offset.x = rect.position.x;
+    this->offset.y = rect.position.y;
     SetPosition();
 }
 
-const SDL_Rect& BoxColliderComponent::GetCollidable() {
+Rect& BoxColliderComponent::GetCollidable() {
     SetPosition();
-    return collidable;
+    return rect;
 }
 
 void BoxColliderComponent::SetPosition() {
     const auto& pos = owner->GetPosition();
-    collidable.x = pos.x + offset.x;
-    collidable.y = pos.y + offset.y;
+    rect.position.x = pos.x + offset.x;
+    rect.position.y = pos.y + offset.y;
 }

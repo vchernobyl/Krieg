@@ -1,9 +1,6 @@
 #include "MoveComponent.h"
+#include "BoxColliderComponent.h"
 
-// TODO: Currently the lerping from current velocity to the
-// target velocity is done linearly. Take a look if this component
-// can be juiced up by introducing some sort of acceleration or
-// time to reach the maximum speed.
 MoveComponent::MoveComponent(Actor* owner, int updateOrder)
     : Component(owner, updateOrder),
       maxSpeed(0) {}
@@ -17,10 +14,4 @@ void MoveComponent::ProcessInput(const InputState& inputState) {
 }
 
 void MoveComponent::Update(float deltaTime) {
-    // float target = maxSpeed * input.x;
-    // float t = 4.0f * deltaTime;
-    // velocity.x = Math::Lerp(velocity.x, target, t);
-    velocity.x = input.x * maxSpeed * deltaTime;
-    velocity.y = input.y * maxSpeed * deltaTime;
-    owner->Translate(velocity.x, velocity.y);
 }

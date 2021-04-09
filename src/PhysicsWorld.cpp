@@ -1,15 +1,38 @@
 #include "PhysicsWorld.h"
+#include "Collisions.h"
 #include "ColliderComponent.h"
+#include "RigidbodyComponent.h"
 #include "BoxColliderComponent.h"
-#include "SDL.h"
+#include "Actor.h"
 #include <algorithm>
+#include <vector>
 
 void PhysicsWorld::Update(float deltaTime) {
-    for (auto i = colliders.begin(); i != colliders.end(); ++i) {
-	for (auto j = i + 1; j != colliders.end(); ++j) {
-	    auto manifold = (*i)->Intersects(*j);
-	    if (manifold.colliding) {
-		(*i)->ResolveOverlap(manifold);
+    std::vector<Manifold> collisions;
+
+    if (colliders.size() == 0) return;
+
+    const auto player = dynamic_cast<BoxColliderComponent*>(colliders.front());
+    auto& playerRect = player->GetCollidable();
+    
+    for (auto i = colliders.begin() + 1; i != colliders.end(); i++) {
+	auto manifold = player->Intersects(*i, deltaTime);
+	if (manifold.colliding) {
+	    collisions.push_back(manifold);
+	}
+    }
+
+    std::sort(collisions.begin(), collisions.end(), [](const Manifold& a, const Manifold& b) {
+	return a.contactTime < b.contactTime;
+    });
+
+    for (auto& manifold : collisions) {
+	auto& velocity = player->GetAttachedRigidbody()->velocity;
+	if (DynamicRectsIntersect(playerRect, velocity, *manifold.other, manifold.contactPoint, manifold.contactNormal, manifold.contactTime, deltaTime)) {
+	    if (auto rigidbody = player->GetOwner()->GetComponent<RigidbodyComponent>()) {
+		rigidbody->velocity += manifold.contactNormal *
+		    Vector2(Math::Fabs(rigidbody->velocity.x),
+			    Math::Fabs(rigidbody->velocity.y)) * (1.0f - manifold.contactTime);
 	    }
 	}
     }
@@ -24,5 +47,17 @@ void PhysicsWorld::RemoveCollider(ColliderComponent* collider) {
     if (iter != colliders.end()) {
 	std::iter_swap(iter, colliders.end() - 1);
 	colliders.pop_back();
+    }
+}
+
+void PhysicsWorld::AddRigidbody(RigidbodyComponent* rigidbody) {
+    rigidbodies.push_back(rigidbody);
+}
+
+void PhysicsWorld::RemoveRigidbody(RigidbodyComponent* rigidbody) {
+    auto iter = std::find(rigidbodies.begin(), rigidbodies.end(), rigidbody);
+    if (iter != rigidbodies.end()) {
+	std::iter_swap(iter, rigidbodies.end() - 1);
+	rigidbodies.pop_back();
     }
 }

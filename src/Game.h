@@ -1,10 +1,6 @@
 #pragma once
 
 #include "SDL.h"
-#include "InputSystem.h"
-#include "PhysicsWorld.h"
-#include "DebugRenderer.h"
-#include "Camera.h"
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -20,8 +16,8 @@ public:
     void AddSprite(class SpriteComponent* sprite);
     void RemoveSprite(class SpriteComponent* sprite);
     SDL_Texture* GetTexture(const std::string& filename);
-    Camera* GetCamera() const { return camera; }
-    PhysicsWorld& GetPhysicsWorld() { return physicsWorld; }
+    class Camera* GetCamera() const { return camera; }
+    class PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
 private:
     void ProcessInput();
     void UpdateGame();
@@ -36,10 +32,11 @@ private:
 
     SDL_Window* window;
     SDL_Renderer* renderer;
-    DebugRenderer* debugRenderer;
-    InputSystem* inputSystem;
-    PhysicsWorld physicsWorld;
-    Camera* camera;
+
+    class DebugRenderer* debugRenderer;
+    class InputSystem* inputSystem;
+    class PhysicsWorld* physicsWorld;
+    class Camera* camera;
 
     bool isRunning;
     bool updatingActors;
