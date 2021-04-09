@@ -4,7 +4,7 @@
 #include "Actor.h"
 
 BoxColliderComponent::BoxColliderComponent(Actor* owner)
-    : ColliderComponent(owner), offset(Vector2::Zero) {}
+    : ColliderComponent(owner) {}
 
 BoxColliderComponent::~BoxColliderComponent() {}
 

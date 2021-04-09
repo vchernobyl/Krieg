@@ -118,9 +118,9 @@ struct Rect {
     Vector2 position;
     Vector2 size;
     
-    Rect(float x, float y, float width, float height);
-    Rect() {}
+    Rect(float x = 0, float y = 0, float width = 0, float height = 0);
+    Rect(Vector2 position, Vector2 size);
 
-    bool Contains(const Vector2& p) const;
+    bool Contains(const Vector2& point) const;
     bool Intersects(const Rect& rect) const;
 };

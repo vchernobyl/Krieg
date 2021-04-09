@@ -10,9 +10,12 @@ Rect::Rect(float x, float y, float width, float height)
     : position(Vector2(x, y)),
       size(Vector2(width, height)) {}
 
-bool Rect::Contains(const Vector2& p) const {
-    return (p.x >= position.x && p.y >= position.y &&
-	    p.x < position.x + size.x && p.y < position.y + size.y);
+Rect::Rect(Vector2 position, Vector2 size)
+    : position(position), size(size) {}
+
+bool Rect::Contains(const Vector2& point) const {
+    return (point.x >= position.x && point.y >= position.y &&
+	    point.x < position.x + size.x && point.y < position.y + size.y);
 }
 
 bool Rect::Intersects(const Rect& rect) const {
