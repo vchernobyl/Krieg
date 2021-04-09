@@ -1,4 +1,7 @@
 #include "Collisions.h"
+#include "ColliderComponent.h"
+#include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
 #include <algorithm>
 #include <cmath>
 
@@ -59,4 +62,13 @@ bool DynamicRectsIntersect(const Rect& in, const Vector2& vel,
     }
 
     return false;
+}
+
+bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b,
+			   Manifold& info, float deltaTime) {
+    const auto& in = a->GetCollidable();
+    const auto& vel = a->GetAttachedRigidbody()->velocity;
+    const auto& target = b->GetCollidable();
+    return DynamicRectsIntersect(in, vel, target,
+				 info.contactPoint, info.contactNormal, info.contactTime, deltaTime);
 }

@@ -12,10 +12,10 @@ void PhysicsWorld::Update(float deltaTime) {
 
     if (colliders.size() == 0) return;
 
-    const auto player = dynamic_cast<BoxColliderComponent*>(colliders.front());
+    const auto playerCollider = dynamic_cast<BoxColliderComponent*>(colliders.front());
     
     for (auto i = colliders.begin() + 1; i != colliders.end(); i++) {
-	auto manifold = player->Intersects(*i, deltaTime);
+	auto manifold = playerCollider->Intersects(*i, deltaTime);
 	if (manifold.colliding) {
 	    collisions.push_back(manifold);
 	}
@@ -26,9 +26,10 @@ void PhysicsWorld::Update(float deltaTime) {
     });
 
     for (auto& manifold : collisions) {
-	if (auto rigidbody = player->GetOwner()->GetComponent<RigidbodyComponent>()) {
-	    rigidbody->velocity += manifold.contactNormal * Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y)) * (1.0f - manifold.contactTime);
-	}
+	auto rigidbody = playerCollider->GetAttachedRigidbody();
+	rigidbody->velocity += manifold.contactNormal
+	    * Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
+	    * (1.0f - manifold.contactTime);
     }
 }
 

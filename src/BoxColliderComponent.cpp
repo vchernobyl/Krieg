@@ -11,16 +11,9 @@ BoxColliderComponent::~BoxColliderComponent() {}
 Manifold BoxColliderComponent::Intersects(ColliderComponent* other, float deltaTime) {
     Manifold manifold;
     if (auto boxCollider = dynamic_cast<BoxColliderComponent*>(other)) {
-	auto& rect1 = GetCollidable();
-	auto& rect2 = boxCollider->GetCollidable();
-	auto& velocity = GetAttachedRigidbody()->velocity;
-	if (DynamicRectsIntersect(rect1, velocity, rect2,
-				  manifold.contactPoint,
-				  manifold.contactNormal,
-				  manifold.contactTime,
-				  deltaTime)) {
+	if (BoxCollidersIntersect(this, boxCollider, manifold, deltaTime)) {
 	    manifold.colliding = true;
-	    manifold.other = &rect2;
+	    manifold.other = &(boxCollider->GetCollidable());
 	}
     }
     return manifold;
