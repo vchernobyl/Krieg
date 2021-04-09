@@ -27,6 +27,8 @@ public:
 
     CollisionLayer GetLayer() const { return layer; }
     void SetLayer(CollisionLayer layer) { this->layer = layer; }
+
+    class RigidbodyComponent* GetAttachedRigidbody() const;
 private:
     CollisionLayer layer;
 };

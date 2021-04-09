@@ -117,8 +117,7 @@ public:
 struct Rect {
     Vector2 position;
     Vector2 size;
-    Vector2 velocity;
-
+    
     Rect(float x, float y, float width, float height);
     Rect() {}
 

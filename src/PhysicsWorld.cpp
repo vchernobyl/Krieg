@@ -27,10 +27,13 @@ void PhysicsWorld::Update(float deltaTime) {
     });
 
     for (auto& manifold : collisions) {
-	if (DynamicRectsIntersect(playerRect, *manifold.other, manifold.contactPoint, manifold.contactNormal, manifold.contactTime, deltaTime)) {
-	    playerRect.velocity += manifold.contactNormal *
-		Vector2(Math::Fabs(playerRect.velocity.x),
-			Math::Fabs(playerRect.velocity.y)) * (1.0f - manifold.contactTime);
+	auto& velocity = player->GetAttachedRigidbody()->velocity;
+	if (DynamicRectsIntersect(playerRect, velocity, *manifold.other, manifold.contactPoint, manifold.contactNormal, manifold.contactTime, deltaTime)) {
+	    if (auto rigidbody = player->GetOwner()->GetComponent<RigidbodyComponent>()) {
+		rigidbody->velocity += manifold.contactNormal *
+		    Vector2(Math::Fabs(rigidbody->velocity.x),
+			    Math::Fabs(rigidbody->velocity.y)) * (1.0f - manifold.contactTime);
+	    }
 	}
     }
 }

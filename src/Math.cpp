@@ -8,8 +8,7 @@ const Vector2 Vector2::Right(1.0f, 0.0f);
 
 Rect::Rect(float x, float y, float width, float height)
     : position(Vector2(x, y)),
-      size(Vector2(width, height)),
-      velocity(Vector2::Zero) {}
+      size(Vector2(width, height)) {}
 
 bool Rect::Contains(const Vector2& p) const {
     return (p.x >= position.x && p.y >= position.y &&

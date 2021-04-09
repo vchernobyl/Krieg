@@ -1,4 +1,5 @@
 #include "ColliderComponent.h"
+#include "RigidbodyComponent.h"
 #include "PhysicsWorld.h"
 #include "Actor.h"
 
@@ -9,4 +10,8 @@ ColliderComponent::ColliderComponent(Actor* owner)
 
 ColliderComponent::~ColliderComponent() {
     owner->GetGame()->GetPhysicsWorld()->RemoveCollider(this);
+}
+
+RigidbodyComponent* ColliderComponent::GetAttachedRigidbody() const {
+    return owner->GetComponent<RigidbodyComponent>();
 }

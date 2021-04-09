@@ -14,10 +14,4 @@ void MoveComponent::ProcessInput(const InputState& inputState) {
 }
 
 void MoveComponent::Update(float deltaTime) {
-    if (auto box = owner->GetComponent<BoxColliderComponent>()) {
-	auto& playerRect = box->GetCollidable();
-	playerRect.velocity.x = input.x * maxSpeed * deltaTime;
-	playerRect.velocity.y = input.y * maxSpeed * deltaTime;
-	owner->Translate(playerRect.velocity.x, playerRect.velocity.y);
-    }
 }

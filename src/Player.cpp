@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
 
 Player::Player(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this);
@@ -12,6 +13,8 @@ Player::Player(Game* game) : Actor(game) {
     
     auto collider = new BoxColliderComponent(this);
     collider->SetCollidable( { 0, 0, 50 * GetScale(), 37 * GetScale() });
+
+    rigidbody = new RigidbodyComponent(this);
 }
 
 void Player::ActorInput(const InputState& inputState) {
@@ -22,17 +25,10 @@ void Player::ActorInput(const InputState& inputState) {
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) velocity.y -= 10.0f;
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) velocity.y += 10.0f;
 
-    if (auto box = GetComponent<BoxColliderComponent>()) {
-	auto& playerRect = box->GetCollidable();
-	playerRect.velocity.x += velocity.x;
-	playerRect.velocity.y += velocity.y;
-    }
+    rigidbody->velocity.x += velocity.x;
+    rigidbody->velocity.y += velocity.y;
 }
 
 void Player::UpdateActor(float deltaTime) {
     GetGame()->GetCamera()->Follow(this);
-    if (auto box = GetComponent<BoxColliderComponent>()) {
-	auto& playerRect = box->GetCollidable();
-	Translate(playerRect.velocity * deltaTime);
-    }
 }
