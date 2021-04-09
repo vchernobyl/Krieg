@@ -66,8 +66,7 @@ April
 7. Remove player-only collision detection and detect collision with arbitrary objects.
 8. Make physics world to be a pointer in the game. [DONE]
 9. Clean up the Game.h headers. [DONE]
-10. Clean up the Collisions API.
-11. Refactor Manifold/ContactInfo.
+10. Clean up the Collisions API and refactor Manifold/ContactInfo. [IN PROGRESS]
 ?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 ?. Implement tile map renderer.
 
