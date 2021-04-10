@@ -43,9 +43,12 @@ bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& 
     return true;
 }
 
-bool DynamicRectsIntersect(const Rect& in, const Vector2& vel,
-			   const Rect& target, Vector2& contactPoint,
-			   Vector2& contactNormal, float& contactTime, float deltaTime) {
+bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b,
+			   CollisionInfo& info, float deltaTime) {
+    const auto& in = a->GetBox();
+    const auto& vel = a->GetAttachedRigidbody()->velocity;
+    const auto& target = b->GetBox();
+
     if (vel.x == 0 && vel.y == 0) {
 	return false;
     }
@@ -54,21 +57,11 @@ bool DynamicRectsIntersect(const Rect& in, const Vector2& vel,
     expandedTarget.position = target.position - in.size / 2;
     expandedTarget.size = target.size + in.size;
 
-    if (RayIntersects(in.position + in.size / 2, vel * deltaTime,
-		      expandedTarget, contactPoint, contactNormal, contactTime)) {
-	if (contactTime >= 0.0f && contactTime < 1.0f) {
+    if (RayIntersects(in.position + in.size / 2, vel * deltaTime, expandedTarget, info.contactPoint, info.contactNormal, info.contactTime)) {
+	if (info.contactTime >= 0.0f && info.contactTime < 1.0f) {
 	    return true;
 	}
     }
 
     return false;
-}
-
-bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b,
-			   CollisionInfo& info, float deltaTime) {
-    const auto& in = a->GetBox();
-    const auto& vel = a->GetAttachedRigidbody()->velocity;
-    const auto& target = b->GetBox();
-    return DynamicRectsIntersect(in, vel, target,
-				 info.contactPoint, info.contactNormal, info.contactTime, deltaTime);
 }

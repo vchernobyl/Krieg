@@ -14,8 +14,8 @@ void PhysicsWorld::Update(float deltaTime) {
 
     const auto playerCollider = dynamic_cast<BoxColliderComponent*>(colliders.front());
     
-    for (auto i = colliders.begin() + 1; i != colliders.end(); i++) {
-	auto info = playerCollider->Intersects(*i, deltaTime);
+    for (auto iter = colliders.begin() + 1; iter != colliders.end(); iter++) {
+	auto info = playerCollider->Intersects(*iter, deltaTime);
 	if (info.colliding) {
 	    collisions.push_back(info);
 	}
@@ -26,12 +26,9 @@ void PhysicsWorld::Update(float deltaTime) {
     });
 
     for (auto& info : collisions) {
-	auto rigidbody = playerCollider->GetAttachedRigidbody();
 	auto otherCollider = dynamic_cast<BoxColliderComponent*>(info.other);
 	if (BoxCollidersIntersect(playerCollider, otherCollider, info, deltaTime)) {
-	    rigidbody->velocity += info.contactNormal
-		* Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
-		* (1.0f - info.contactTime);
+	    playerCollider->ResolveCollision(info);
 	}
     }
 }

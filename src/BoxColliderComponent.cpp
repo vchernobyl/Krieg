@@ -19,9 +19,12 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 }
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
-    // TODO: Resolve collision with other box collider here. Apply velocity to this collider's
-    // rigidbody. If not static.
     if (owner->IsStatic()) return;
+
+    auto rigidbody = GetAttachedRigidbody();
+    rigidbody->velocity += info.contactNormal
+	* Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
+	* (1.0f - info.contactTime);
 }
 
 Rect& BoxColliderComponent::GetBox() {
