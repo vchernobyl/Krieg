@@ -14,8 +14,8 @@
 
 static const int ScreenWidth = 1024;
 static const int ScreenHeight = 768;
-static const int WorldWidth = 1728;
-static const int WorldHeight = 1080;
+static const int WorldWidth = 1536;
+static const int WorldHeight = 768;
 
 Game::Game() :
     window(nullptr),
