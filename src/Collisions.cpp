@@ -65,7 +65,7 @@ bool DynamicRectsIntersect(const Rect& in, const Vector2& vel,
 }
 
 bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b,
-			   Manifold& info, float deltaTime) {
+			   CollisionInfo& info, float deltaTime) {
     const auto& in = a->GetBox();
     const auto& vel = a->GetAttachedRigidbody()->velocity;
     const auto& target = b->GetBox();

@@ -7,18 +7,18 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner) : ColliderComponent(own
 
 BoxColliderComponent::~BoxColliderComponent() {}
 
-Manifold BoxColliderComponent::Intersects(ColliderComponent* other, float deltaTime) {
-    Manifold manifold;
+CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float deltaTime) {
+    CollisionInfo info;
     if (auto boxCollider = dynamic_cast<BoxColliderComponent*>(other)) {
-	if (BoxCollidersIntersect(this, boxCollider, manifold, deltaTime)) {
-	    manifold.colliding = true;
-	    manifold.other = &(boxCollider->GetBox());
+	if (BoxCollidersIntersect(this, boxCollider, info, deltaTime)) {
+	    info.colliding = true;
+	    info.other = other;
 	}
     }
-    return manifold;
+    return info;
 }
 
-void BoxColliderComponent::ResolveOverlap(const Manifold& manifold) {
+void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
     // TODO: Resolve collision with other box collider here. Apply velocity to this collider's
     // rigidbody. If not static.
     if (owner->IsStatic()) return;

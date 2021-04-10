@@ -10,4 +10,4 @@ bool DynamicRectsIntersect(const Rect& in, const Vector2& vel,
 			   Vector2& contactNormal, float& contactTime, float deltaTime);
 
 bool BoxCollidersIntersect(class BoxColliderComponent* a, class BoxColliderComponent* b,
-			   class Manifold& info, float deltaTime);
+			   class CollisionInfo& info, float deltaTime);

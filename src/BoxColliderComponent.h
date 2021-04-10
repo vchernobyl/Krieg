@@ -8,8 +8,8 @@ public:
     BoxColliderComponent(Actor* owner);
     ~BoxColliderComponent();
     
-    Manifold Intersects(ColliderComponent* other, float deltaTime) override;
-    void ResolveOverlap(const Manifold& manifold) override;
+    CollisionInfo Intersects(ColliderComponent* other, float deltaTime) override;
+    void ResolveCollision(const CollisionInfo& info) override;
 
     void SetOffset(Vector2 offset) { this->offset = offset; }
     void SetSize(Vector2 size) { this->size = size; }

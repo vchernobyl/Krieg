@@ -8,34 +8,34 @@
 #include <vector>
 
 void PhysicsWorld::Update(float deltaTime) {
-    std::vector<Manifold> collisions;
+    std::vector<CollisionInfo> collisions;
 
     if (colliders.size() == 0) return;
 
     const auto playerCollider = dynamic_cast<BoxColliderComponent*>(colliders.front());
     
     for (auto i = colliders.begin() + 1; i != colliders.end(); i++) {
-	auto manifold = playerCollider->Intersects(*i, deltaTime);
-	if (manifold.colliding) {
-	    collisions.push_back(manifold);
+	auto info = playerCollider->Intersects(*i, deltaTime);
+	if (info.colliding) {
+	    collisions.push_back(info);
 	}
     }
 
-    std::sort(collisions.begin(), collisions.end(), [](const Manifold& a, const Manifold& b) {
+    std::sort(collisions.begin(), collisions.end(), [](const CollisionInfo& a, const CollisionInfo& b) {
 	return a.contactTime < b.contactTime;
     });
 
-    for (auto& manifold : collisions) {
+    for (auto& info : collisions) {
 	auto rigidbody = playerCollider->GetAttachedRigidbody();
-	rigidbody->velocity += manifold.contactNormal
+	rigidbody->velocity += info.contactNormal
 	    * Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
-	    * (1.0f - manifold.contactTime);
+	    * (1.0f - info.contactTime);
 
 	// THIS SECOND CHECK IS NEEDED AFTER ALL!
-	// if (BoxCollidersIntersect(playerCollider, manifold.other, manifold, deltaTime)) {
-	//     rigidbody->velocity += manifold.contactNormal
+	// if (BoxCollidersIntersect(playerCollider, info.other, info, deltaTime)) {
+	//     rigidbody->velocity += info.contactNormal
 	// 	* Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
-	// 	* (1.0f - manifold.contactTime);
+	// 	* (1.0f - info.contactTime);
 	// }
     }
 }
