@@ -27,16 +27,12 @@ void PhysicsWorld::Update(float deltaTime) {
 
     for (auto& info : collisions) {
 	auto rigidbody = playerCollider->GetAttachedRigidbody();
-	rigidbody->velocity += info.contactNormal
-	    * Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
-	    * (1.0f - info.contactTime);
-
-	// THIS SECOND CHECK IS NEEDED AFTER ALL!
-	// if (BoxCollidersIntersect(playerCollider, info.other, info, deltaTime)) {
-	//     rigidbody->velocity += info.contactNormal
-	// 	* Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
-	// 	* (1.0f - info.contactTime);
-	// }
+	auto otherCollider = dynamic_cast<BoxColliderComponent*>(info.other);
+	if (BoxCollidersIntersect(playerCollider, otherCollider, info, deltaTime)) {
+	    rigidbody->velocity += info.contactNormal
+		* Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
+		* (1.0f - info.contactTime);
+	}
     }
 }
 
