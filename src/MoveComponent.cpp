@@ -1,17 +1,19 @@
 #include "MoveComponent.h"
 #include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
+#include "Actor.h"
 
 MoveComponent::MoveComponent(Actor* owner, int updateOrder)
     : Component(owner, updateOrder),
       maxSpeed(0) {}
 
 void MoveComponent::ProcessInput(const InputState& inputState) {
-    input = Vector2::Zero;
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) input.x += 1;
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) input.x -= 1;
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) input.y -= 1;
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) input.y += 1;
-}
+    velocity = Vector2::Zero;
 
-void MoveComponent::Update(float deltaTime) {
+    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) velocity.x = maxSpeed;
+    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) velocity.x = -maxSpeed;
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == Pressed) velocity.y = -350.0f;
+    
+    auto rigidbody = owner->GetComponent<RigidbodyComponent>();
+    rigidbody->velocity = Vector2(velocity.x, rigidbody->velocity.y + velocity.y);
 }

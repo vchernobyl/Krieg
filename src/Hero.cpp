@@ -4,6 +4,8 @@
 #include "IdleState.h"
 #include "Math.h"
 #include <vector>
+#include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
 
 Hero::Hero(Game* game) : Actor(game), state(new IdleState)  {
     animation = new AnimSpriteComponent(this, 200);
@@ -44,6 +46,10 @@ Hero::Hero(Game* game) : Actor(game), state(new IdleState)  {
     jump->SetInitialPosition(GetPosition().y);
     jump->SetMaxHeight(75.0f);
     jump->SetTimeToPeak(0.5f);
+
+    auto collider = new BoxColliderComponent(this);
+    collider->SetSize(Vector2(50 * GetScale(), 37 * GetScale()));
+    new RigidbodyComponent(this);
 
     state->Enter(*this);
 }

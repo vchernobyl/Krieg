@@ -8,7 +8,6 @@
 #include "BoxColliderComponent.h"
 #include "TileMap.h"
 #include "Hero.h"
-#include "Player.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -236,7 +235,7 @@ void Game::DrawGame() {
 }
 
 void Game::LoadData() {
-    new Player(this);
+    new Hero(this);
 
     TileMapLoader mapLoader(this);
     map = mapLoader.Load("assets/test.tmx");
