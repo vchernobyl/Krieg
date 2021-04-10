@@ -12,7 +12,7 @@ Player::Player(Game* game) : Actor(game) {
     SetScale(1.5f);
     
     auto collider = new BoxColliderComponent(this);
-    collider->SetCollidable( { 0, 0, 50 * GetScale(), 37 * GetScale() });
+    collider->SetSize(Vector2(50 * GetScale(), 37 * GetScale()));
 
     rigidbody = new RigidbodyComponent(this);
 }

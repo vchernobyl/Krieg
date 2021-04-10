@@ -17,6 +17,13 @@ struct Manifold {
     Rect* other;
 };
 
+struct CollisionInfo {
+    Vector2 contactPoint;
+    Vector2 contactNormal;
+    Vector2 contactTime;
+    class ColliderComponent* other;
+};
+
 class ColliderComponent : public Component {
 public:
     ColliderComponent(class Actor* owner);

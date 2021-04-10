@@ -30,6 +30,13 @@ void PhysicsWorld::Update(float deltaTime) {
 	rigidbody->velocity += manifold.contactNormal
 	    * Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
 	    * (1.0f - manifold.contactTime);
+
+	// THIS SECOND CHECK IS NEEDED AFTER ALL!
+	// if (BoxCollidersIntersect(playerCollider, manifold.other, manifold, deltaTime)) {
+	//     rigidbody->velocity += manifold.contactNormal
+	// 	* Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
+	// 	* (1.0f - manifold.contactTime);
+	// }
     }
 }
 

@@ -248,8 +248,7 @@ void Game::LoadData() {
 	    objectActor->SetPosition(Vector2(object.x, object.y));
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    auto collidable = Rect { 0, 0, static_cast<float>(object.w), static_cast<float>(object.h) };
-	    objectCollider->SetCollidable(collidable);
+	    objectCollider->SetSize(Vector2(object.w, object.h));
 	}
     }
 }

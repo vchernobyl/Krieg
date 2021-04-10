@@ -3,8 +3,7 @@
 #include "Collisions.h"
 #include "Actor.h"
 
-BoxColliderComponent::BoxColliderComponent(Actor* owner)
-    : ColliderComponent(owner) {}
+BoxColliderComponent::BoxColliderComponent(Actor* owner) : ColliderComponent(owner) {}
 
 BoxColliderComponent::~BoxColliderComponent() {}
 
@@ -13,30 +12,20 @@ Manifold BoxColliderComponent::Intersects(ColliderComponent* other, float deltaT
     if (auto boxCollider = dynamic_cast<BoxColliderComponent*>(other)) {
 	if (BoxCollidersIntersect(this, boxCollider, manifold, deltaTime)) {
 	    manifold.colliding = true;
-	    manifold.other = &(boxCollider->GetCollidable());
+	    manifold.other = &(boxCollider->GetBox());
 	}
     }
     return manifold;
 }
 
 void BoxColliderComponent::ResolveOverlap(const Manifold& manifold) {
+    // TODO: Resolve collision with other box collider here. Apply velocity to this collider's
+    // rigidbody. If not static.
     if (owner->IsStatic()) return;
 }
 
-void BoxColliderComponent::SetCollidable(Rect rect) {
-    this->rect = rect;
-    this->offset.x = rect.position.x;
-    this->offset.y = rect.position.y;
-    SetPosition();
-}
-
-Rect& BoxColliderComponent::GetCollidable() {
-    SetPosition();
-    return rect;
-}
-
-void BoxColliderComponent::SetPosition() {
-    const auto& pos = owner->GetPosition();
-    rect.position.x = pos.x + offset.x;
-    rect.position.y = pos.y + offset.y;
+Rect& BoxColliderComponent::GetBox() {
+    box.position = owner->GetPosition() + offset;
+    box.size = size;
+    return box;
 }

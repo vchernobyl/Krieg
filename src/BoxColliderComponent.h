@@ -5,16 +5,17 @@
 
 class BoxColliderComponent : public ColliderComponent {
 public:
-    BoxColliderComponent(class Actor* owner);
+    BoxColliderComponent(Actor* owner);
     ~BoxColliderComponent();
     
     Manifold Intersects(ColliderComponent* other, float deltaTime) override;
     void ResolveOverlap(const Manifold& manifold) override;
 
-    void SetCollidable(Rect rect);
-    Rect& GetCollidable();
+    void SetOffset(Vector2 offset) { this->offset = offset; }
+    void SetSize(Vector2 size) { this->size = size; }
+    Rect& GetBox();
 private:
-    void SetPosition();
-    Rect rect;
     Vector2 offset;
+    Vector2 size;
+    Rect box;
 };
