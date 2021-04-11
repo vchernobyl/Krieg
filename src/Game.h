@@ -13,9 +13,8 @@ public:
     void Shutdown();
     void AddActor(class Actor* actor);
     void RemoveActor(class Actor* actor);
-    void AddSprite(class SpriteComponent* sprite);
-    void RemoveSprite(class SpriteComponent* sprite);
     SDL_Texture* GetTexture(const std::string& filename);
+    class Renderer* GetRenderer() const { return renderer; }
     class Camera* GetCamera() const { return camera; }
     class PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
 private:
@@ -30,10 +29,7 @@ private:
     std::vector<class Actor*> pendingActors;
     std::vector<class SpriteComponent*> sprites;
 
-    SDL_Window* window;
-    SDL_Renderer* renderer;
-
-    class DebugRenderer* debugRenderer;
+    class Renderer* renderer;
     class InputSystem* inputSystem;
     class PhysicsWorld* physicsWorld;
     class Camera* camera;
@@ -41,6 +37,4 @@ private:
     bool isRunning;
     bool updatingActors;
     Uint32 ticks;
-
-    class TileMap* map;
 };

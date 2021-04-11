@@ -1,5 +1,6 @@
 #include "Actor.h"
 #include "SpriteComponent.h"
+#include "Renderer.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
@@ -7,12 +8,12 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
       drawOrder(drawOrder),
       texWidth(0),
       texHeight(0) {
-    owner->GetGame()->AddSprite(this);
+    owner->GetGame()->GetRenderer()->AddSprite(this);
     camera = owner->GetGame()->GetCamera();
 }
 
 SpriteComponent::~SpriteComponent() {
-    owner->GetGame()->RemoveSprite(this);
+    owner->GetGame()->GetRenderer()->RemoveSprite(this);
 }
 
 void SpriteComponent::Draw(SDL_Renderer* renderer) {

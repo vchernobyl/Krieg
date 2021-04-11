@@ -15,6 +15,7 @@ Player::Player(Game* game) : Actor(game) {
     collider->SetSize(Vector2(50 * GetScale(), 37 * GetScale()));
 
     rigidbody = new RigidbodyComponent(this);
+    rigidbody->isKinematic = true;
 }
 
 void Player::ActorInput(const InputState& inputState) {

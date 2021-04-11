@@ -14,7 +14,9 @@ void PhysicsWorld::Update(float deltaTime) {
     if (colliders.size() == 0) return;
 
     for (auto rb : rigidbodies) {
-	rb->velocity.y += Gravity;
+	if (!rb->isKinematic) {
+	    rb->velocity.y += Gravity;
+	}
     }
 
     const auto playerCollider = dynamic_cast<BoxColliderComponent*>(colliders.front());
