@@ -6,7 +6,7 @@
 struct RigidbodyComponent : public Component {
     RigidbodyComponent(class Actor* owner);
     ~RigidbodyComponent();
-
     void Update(float deltaTime) override;
+
     Vector2 velocity;
 };

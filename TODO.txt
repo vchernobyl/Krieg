@@ -68,7 +68,7 @@ April
 9. Clean up the Game.h headers. [DONE]
 10. Clean up the Collisions API and refactor Manifold/ContactInfo. [DONE]
 11. Refactor box collider component. [DONE]
-12. Put Collisions checking into the box collider component. [IN PROGRESS]
+12. Put Collisions checking into the box collider component. [DONE]
 13. Implement tile map parallax.
 ?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 ?. Implement tile map renderer.

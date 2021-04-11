@@ -6,14 +6,15 @@
 #include <algorithm>
 #include <vector>
 
+const float Gravity = 9.81f;
+
 void PhysicsWorld::Update(float deltaTime) {
     std::vector<CollisionInfo> collisions;
 
     if (colliders.size() == 0) return;
 
-    // Gravity
     for (auto rb : rigidbodies) {
-	rb->velocity.y += 9.81f;
+	rb->velocity.y += Gravity;
     }
 
     const auto playerCollider = dynamic_cast<BoxColliderComponent*>(colliders.front());
