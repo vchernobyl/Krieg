@@ -69,14 +69,15 @@ April
 10. Clean up the Collisions API and refactor Manifold/ContactInfo. [DONE]
 11. Refactor box collider component. [DONE]
 12. Put Collisions checking into the box collider component. [DONE]
-13. Implement tile map parallax.
+13. Implement Renderer class which takes care of unprojecting camera and sprite rendering.
+14. Implement tile map parallax.
+
 ?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 ?. Implement tile map renderer.
 
 Refactor: Tile map load function.
 Refactor: Tile map structs/classes.
 Refactor: Put all player states in a single file.
-Refactor: Implement Renderer class which takes care of unprojecting camera and sprite rendering.
 Refactor: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 
 How be brutally effective:
