@@ -1,5 +1,6 @@
 #include "Actor.h"
 #include "SpriteComponent.h"
+#include "Camera.h"
 #include "Renderer.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
@@ -9,21 +10,21 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
       texWidth(0),
       texHeight(0) {
     owner->GetGame()->GetRenderer()->AddSprite(this);
-    camera = owner->GetGame()->GetRenderer()->GetCamera();
 }
 
 SpriteComponent::~SpriteComponent() {
     owner->GetGame()->GetRenderer()->RemoveSprite(this);
 }
 
-void SpriteComponent::Draw(SDL_Renderer* renderer) {
+void SpriteComponent::Draw(Renderer* renderer) {
     if (texture) {
-	SDL_Rect rect;
-	rect.w = static_cast<int>(texWidth * owner->GetScale());
-	rect.h = static_cast<int>(texHeight * owner->GetScale());
-	rect.x = static_cast<int>(owner->GetPosition().x - camera->GetPosition().x);
-	rect.y = static_cast<int>(owner->GetPosition().y - camera->GetPosition().y);
-	SDL_RenderCopyEx(renderer, texture, nullptr, &rect, -Math::ToDegrees(owner->GetRotation()), nullptr, flip);
+	SDL_Rect dst;
+	dst.w = static_cast<int>(texWidth * owner->GetScale());
+	dst.h = static_cast<int>(texHeight * owner->GetScale());
+	dst.x = static_cast<int>(owner->GetPosition().x);
+	dst.y = static_cast<int>(owner->GetPosition().y);
+	renderer->GetCamera()->ToScreenSpace(dst);
+	renderer->DrawTexture(texture, &dst, flip);
     }
 }
 

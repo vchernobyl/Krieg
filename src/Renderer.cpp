@@ -76,8 +76,12 @@ void Renderer::Draw() {
     }
 
     for (auto sprite : sprites) {
-	sprite->Draw(renderer);
+	sprite->Draw(this);
     }
+}
+
+void Renderer::DrawTexture(SDL_Texture* texture, SDL_Rect* dst, SDL_RendererFlip flip) {
+    SDL_RenderCopyEx(renderer, texture, nullptr, dst, 0, nullptr, flip);
 }
 
 void Renderer::End() {

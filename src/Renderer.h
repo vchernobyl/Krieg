@@ -1,5 +1,6 @@
 #pragma once
 
+#include "SDL.h"
 #include <vector>
 
 class Renderer {
@@ -9,14 +10,15 @@ public:
     void Shutdown();
     void Begin();
     void Draw();
+    void DrawTexture(SDL_Texture* texture, SDL_Rect* dst, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void End();
     void AddSprite(class SpriteComponent* sprite);
     void RemoveSprite(class SpriteComponent* sprite);
-    class SDL_Renderer* GetSDLRenderer() const { return renderer; }
+    SDL_Renderer* GetSDLRenderer() const { return renderer; }
     class Camera* GetCamera() const { return camera; }
 private:
-    class SDL_Window* window;
-    class SDL_Renderer* renderer;
+    SDL_Window* window;
+    SDL_Renderer* renderer;
     std::vector<class SpriteComponent*> sprites;
     class Game* game;
     class Camera* camera;

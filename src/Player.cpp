@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "Game.h"
 #include "Renderer.h"
+#include "Camera.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
