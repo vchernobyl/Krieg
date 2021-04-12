@@ -33,8 +33,8 @@ void PhysicsWorld::Update(float deltaTime) {
     });
 
     for (auto& info : collisions) {
-	auto otherCollider = dynamic_cast<BoxColliderComponent*>(info.other);
-	if (BoxCollidersIntersect(playerCollider, otherCollider, info, deltaTime)) {
+	auto other = dynamic_cast<BoxColliderComponent*>(info.other);
+	if (BoxCollidersIntersect(playerCollider, other, info, deltaTime)) {
 	    playerCollider->ResolveCollision(info);
 	}
     }
