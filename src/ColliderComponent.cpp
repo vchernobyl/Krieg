@@ -3,8 +3,7 @@
 #include "PhysicsWorld.h"
 #include "Actor.h"
 
-ColliderComponent::ColliderComponent(Actor* owner)
-    : Component(owner), layer(CollisionLayer::Default) {
+ColliderComponent::ColliderComponent(Actor* owner) : Component(owner) {
     owner->GetGame()->GetPhysicsWorld()->AddCollider(this);
 }
 
