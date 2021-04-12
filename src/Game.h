@@ -15,7 +15,6 @@ public:
     void RemoveActor(class Actor* actor);
     SDL_Texture* GetTexture(const std::string& filename);
     class Renderer* GetRenderer() const { return renderer; }
-    class Camera* GetCamera() const { return camera; }
     class PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
 private:
     void ProcessInput();
@@ -32,7 +31,6 @@ private:
     class DebugRenderer* debugRenderer;
     class InputSystem* inputSystem;
     class PhysicsWorld* physicsWorld;
-    class Camera* camera;
 
     bool isRunning;
     bool updatingActors;

@@ -9,7 +9,7 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
       texWidth(0),
       texHeight(0) {
     owner->GetGame()->GetRenderer()->AddSprite(this);
-    camera = owner->GetGame()->GetCamera();
+    camera = owner->GetGame()->GetRenderer()->GetCamera();
 }
 
 SpriteComponent::~SpriteComponent() {

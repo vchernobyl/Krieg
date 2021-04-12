@@ -1,5 +1,6 @@
 #include "Hero.h"
 #include "Game.h"
+#include "Renderer.h"
 #include "Camera.h"
 #include "IdleState.h"
 #include "Math.h"
@@ -71,6 +72,6 @@ void Hero::UpdateActor(float deltaTime) {
 	state->Enter(*this);
     }
 
-    Camera* cam = GetGame()->GetCamera();
+    Camera* cam = GetGame()->GetRenderer()->GetCamera();
     cam->Follow(this);
 }

@@ -13,24 +13,17 @@
 #include "SDL_image.h"
 #include <algorithm>
 
-static const int ScreenWidth = 1024;
-static const int ScreenHeight = 768;
-static const int WorldWidth = 1536;
-static const int WorldHeight = 768;
+const int ScreenWidth = 1024;
+const int ScreenHeight = 768;
 
 Game::Game() :
     renderer(nullptr),
     inputSystem(nullptr),
     physicsWorld(nullptr),
-    camera(nullptr),
     isRunning(true),
     updatingActors(false) {}
 
 bool Game::Initialize() {
-    // TODO: Move this into the renderer itself.
-    camera = new Camera(ScreenWidth, ScreenHeight);
-    camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
-
     renderer = new Renderer(this);
     if (!renderer->Initialize(ScreenWidth, ScreenHeight)) {
 	SDL_Log("Unable to initialize renderer");
@@ -44,7 +37,7 @@ bool Game::Initialize() {
     }
 
     physicsWorld = new PhysicsWorld();
-    debugRenderer = new DebugRenderer(physicsWorld, camera);
+    debugRenderer = new DebugRenderer(physicsWorld, renderer->GetCamera());
 
     LoadData();
 
@@ -64,7 +57,6 @@ void Game::RunLoop() {
 void Game::Shutdown() {
     inputSystem->Shutdown();
     delete inputSystem;
-    delete camera;
     UnloadData();
     renderer->Shutdown();
     SDL_Quit();

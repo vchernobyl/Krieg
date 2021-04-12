@@ -11,7 +11,10 @@
 #include "SDL_image.h"
 #include <algorithm>
 
-Renderer::Renderer(Game* game) : game(game), camera(game->GetCamera()) {}
+const int WorldWidth = 1536;
+const int WorldHeight = 768;
+
+Renderer::Renderer(Game* game) : game(game) {}
 
 bool Renderer::Initialize(int screenWidth, int screenHeight) {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
@@ -36,6 +39,9 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 	return false;
     }
 
+    camera = new Camera(screenWidth, screenHeight);
+    camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
+
     // TODO: This is just for testing purposes. Move this out of here later.
     TileMapLoader mapLoader(game);
     map = mapLoader.Load("assets/test.tmx");
@@ -44,6 +50,7 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 }
 
 void Renderer::Shutdown() {
+    delete camera;
     delete map;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
