@@ -2,55 +2,33 @@
 #include "Actor.h"
 #include "InputSystem.h"
 #include "PhysicsWorld.h"
+#include "Renderer.h"
 #include "DebugRenderer.h"
 #include "Camera.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
 #include "TileMap.h"
 #include "Hero.h"
+#include "Player.h"
 #include "SDL_image.h"
 #include <algorithm>
 
-static const int ScreenWidth = 1024;
-static const int ScreenHeight = 768;
-static const int WorldWidth = 1536;
-static const int WorldHeight = 768;
+const int ScreenWidth = 1024;
+const int ScreenHeight = 768;
 
 Game::Game() :
-    window(nullptr),
     renderer(nullptr),
-    debugRenderer(nullptr),
     inputSystem(nullptr),
     physicsWorld(nullptr),
-    camera(nullptr),
     isRunning(true),
-    updatingActors(false),
-    map(nullptr) {}
+    updatingActors(false) {}
 
 bool Game::Initialize() {
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
-	SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
+    renderer = new Renderer(this);
+    if (!renderer->Initialize(ScreenWidth, ScreenHeight)) {
+	SDL_Log("Unable to initialize renderer");
 	return false;
     }
-
-    window = SDL_CreateWindow("Game", 100, 100, ScreenWidth, ScreenHeight, 0);
-    if (!window) {
-	SDL_Log("Unable to create a window: %s", SDL_GetError());
-	return false;
-    }
-
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!renderer) {
-	SDL_Log("Unable to create a renderer: %s", SDL_GetError());
-	return false;
-    }
-
-    if (IMG_Init(IMG_INIT_PNG) == 0) {
-	SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
-	return false;
-    }
-
-    physicsWorld = new PhysicsWorld();
     
     inputSystem = new InputSystem();
     if (!inputSystem->Initialize()) {
@@ -58,10 +36,8 @@ bool Game::Initialize() {
 	return false;
     }
 
-    camera = new Camera(ScreenWidth, ScreenHeight);
-    camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
-
-    debugRenderer = new DebugRenderer(physicsWorld, camera);
+    physicsWorld = new PhysicsWorld();
+    debugRenderer = new DebugRenderer(physicsWorld, renderer->GetCamera());
 
     LoadData();
 
@@ -81,12 +57,8 @@ void Game::RunLoop() {
 void Game::Shutdown() {
     inputSystem->Shutdown();
     delete inputSystem;
-    delete camera;
-    delete map;
-    delete debugRenderer;
     UnloadData();
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
+    renderer->Shutdown();
     SDL_Quit();
 }
 
@@ -112,22 +84,6 @@ void Game::RemoveActor(Actor* actor) {
     }
 }
 
-void Game::AddSprite(SpriteComponent* sprite) {
-    int drawOrder = sprite->GetDrawOrder();
-    auto iter = sprites.begin();
-    while (iter != sprites.end() && drawOrder > (*iter)->GetDrawOrder()) {
-	++iter;
-    }
-    sprites.insert(iter, sprite);
-}
-
-void Game::RemoveSprite(SpriteComponent* sprite) {
-    auto iter = std::find(sprites.begin(), sprites.end(), sprite);
-    if (iter != sprites.end()) {
-	sprites.erase(iter);
-    }
-}
-
 SDL_Texture* Game::GetTexture(const std::string& filename) {
     SDL_Texture* tex = nullptr;
     auto iter = textures.find(filename);
@@ -139,7 +95,7 @@ SDL_Texture* Game::GetTexture(const std::string& filename) {
 	    SDL_Log("Failed to load texture file %s", filename.c_str());
 	    return nullptr;
 	}
-	tex = SDL_CreateTextureFromSurface(renderer, surf);
+	tex = SDL_CreateTextureFromSurface(renderer->GetSDLRenderer(), surf);
 	SDL_FreeSurface(surf);
 	if (!tex) {
 	    SDL_Log("Failed to convert surface to texture for %s", filename.c_str());
@@ -209,36 +165,17 @@ void Game::UpdateGame() {
 }
 
 void Game::DrawGame() {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
-
-    for (auto layer : map->GetLayers()) {
-	for (auto tile : layer->tiles) {
-	    auto tileInfo = tile.tileInfo;
-	    SDL_Rect dst = SDL_Rect {
-		static_cast<int>(tile.x - camera->GetPosition().x),
-		static_cast<int>(tile.y - camera->GetPosition().y),
-		32,
-		32
-	    };
-	    SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
-	}
-    }
-
-    for (auto sprite : sprites) {
-	sprite->Draw(renderer);
-    }
-
-    debugRenderer->Draw(renderer);
-
-    SDL_RenderPresent(renderer);
+    renderer->Begin();
+    renderer->Draw();
+    debugRenderer->Draw(renderer->GetSDLRenderer());
+    renderer->End();
 }
 
 void Game::LoadData() {
     new Hero(this);
 
     TileMapLoader mapLoader(this);
-    map = mapLoader.Load("assets/test.tmx");
+    auto map = mapLoader.Load("assets/test.tmx");
     auto objectGroups = map->GetObjectGroups();
     for (auto objectGroup : objectGroups) {
 	for (const auto& object : objectGroup->objects) {
@@ -250,6 +187,7 @@ void Game::LoadData() {
 	    objectCollider->SetSize(Vector2(object.w, object.h));
 	}
     }
+    delete map;
 }
 
 void Game::UnloadData() {

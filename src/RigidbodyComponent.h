@@ -9,4 +9,5 @@ struct RigidbodyComponent : public Component {
     void Update(float deltaTime) override;
 
     Vector2 velocity;
+    bool isKinematic = false;
 };
