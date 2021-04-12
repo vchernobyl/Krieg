@@ -27,9 +27,9 @@ private:
     std::unordered_map<std::string, SDL_Texture*> textures;
     std::vector<class Actor*> actors;
     std::vector<class Actor*> pendingActors;
-    std::vector<class SpriteComponent*> sprites;
 
     class Renderer* renderer;
+    class DebugRenderer* debugRenderer;
     class InputSystem* inputSystem;
     class PhysicsWorld* physicsWorld;
     class Camera* camera;

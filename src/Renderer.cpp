@@ -40,22 +40,21 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
     TileMapLoader mapLoader(game);
     map = mapLoader.Load("assets/test.tmx");
 
-    debugRenderer = new DebugRenderer(game->GetPhysicsWorld(), camera);
-
     return true;
 }
 
 void Renderer::Shutdown() {
-    delete debugRenderer;
     delete map;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 }
 
-void Renderer::Draw() {
+void Renderer::Begin() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
+}
 
+void Renderer::Draw() {
     for (auto layer : map->GetLayers()) {
 	for (auto tile : layer->tiles) {
 	    auto tileInfo = tile.tileInfo;
@@ -72,10 +71,9 @@ void Renderer::Draw() {
     for (auto sprite : sprites) {
 	sprite->Draw(renderer);
     }
+}
 
-    // TODO: this crashes because debug renderer was initialized with physics world that is null.
-    debugRenderer->Draw(renderer);
-
+void Renderer::End() {
     SDL_RenderPresent(renderer);
 }
 
