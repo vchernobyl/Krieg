@@ -65,12 +65,8 @@ void Renderer::Draw() {
     for (auto layer : map->GetLayers()) {
 	for (auto tile : layer->tiles) {
 	    auto tileInfo = tile.tileInfo;
-	    SDL_Rect dst = SDL_Rect {
-		static_cast<int>(tile.x - camera->GetPosition().x),
-		static_cast<int>(tile.y - camera->GetPosition().y),
-		32,
-		32
-	    };
+	    auto dst = SDL_Rect { static_cast<int>(tile.x), static_cast<int>(tile.y), 32, 32 };
+	    camera->ToScreenSpace(dst);
 	    SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
 	}
     }

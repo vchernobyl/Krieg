@@ -37,7 +37,7 @@ bool Game::Initialize() {
     }
 
     physicsWorld = new PhysicsWorld();
-    debugRenderer = new DebugRenderer(physicsWorld, renderer->GetCamera());
+    debugRenderer = new DebugRenderer(physicsWorld);
 
     LoadData();
 
@@ -167,7 +167,7 @@ void Game::UpdateGame() {
 void Game::DrawGame() {
     renderer->Begin();
     renderer->Draw();
-    debugRenderer->Draw(renderer->GetSDLRenderer());
+    debugRenderer->Draw(renderer);
     renderer->End();
 }
 
