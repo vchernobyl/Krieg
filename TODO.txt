@@ -73,6 +73,7 @@ April
 14. Implement tile map parallax.
 15. Implement basic scene manager.
 16. Extract resource handling into a separate resource manager.
+17. Implement sprite component drawing from source region if given.
 
 ?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 ?. Implement tile map renderer.

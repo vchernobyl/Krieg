@@ -10,6 +10,7 @@
 #include "TileMap.h"
 #include "Hero.h"
 #include "Player.h"
+#include "Enemy.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -173,6 +174,7 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Hero(this);
+    new Enemy(this);
 
     TileMapLoader mapLoader(this);
     auto map = mapLoader.Load("assets/test.tmx");
