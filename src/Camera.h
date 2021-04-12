@@ -12,6 +12,7 @@ public:
     void TranslateY(float dy) { this->position.y += dy; }
     void Follow(class Actor* owner);
     void SetWorldSize(Vector2 worldSize) { this->worldSize = worldSize; }
+    void ToScreenSpace(SDL_Rect& dst) const;
     const SDL_Rect& GetViewport() const { return viewport; }
     const Vector2& GetPosition() const { return position; }
 private:

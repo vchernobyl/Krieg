@@ -1,14 +1,13 @@
 #pragma once
 
 #include "Component.h"
-#include "Camera.h"
 #include "SDL.h"
 
 class SpriteComponent : public Component {
 public:
     SpriteComponent(class Actor* owner, int drawOrder = 100);
     ~SpriteComponent();
-    virtual void Draw(SDL_Renderer* renderer);
+    virtual void Draw(class Renderer* renderer);
     virtual void SetTexture(SDL_Texture* texture, SDL_RendererFlip flip = SDL_FLIP_NONE);
     int GetDrawOrder() const { return drawOrder; }
     int GetTexWidth() const { return texWidth; }
@@ -16,7 +15,6 @@ public:
 protected:
     SDL_Texture* texture;
     SDL_RendererFlip flip;
-    Camera* camera;
     int drawOrder;
     int texWidth;
     int texHeight;

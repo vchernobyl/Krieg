@@ -24,3 +24,8 @@ void Camera::Follow(Actor* owner) {
 
     MoveTo(target);
 }
+
+void Camera::ToScreenSpace(SDL_Rect& dst) const {
+    dst.x -= position.x;
+    dst.y -= position.y;
+}
