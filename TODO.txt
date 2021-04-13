@@ -70,19 +70,21 @@ April
 11. Refactor box collider component. [DONE]
 12. Put Collisions checking into the box collider component. [DONE]
 13. Implement Renderer class and move camera class inside of it. [DONE]
-14. Implement tile map parallax.
-15. Implement basic scene manager.
-16. Extract resource handling into a separate resource manager.
-17. Implement sprite component drawing from source region if given.
-18. Detect collisions between two moving objects.
+14. Log crash information in the console before closing. [IN PROGRESS]
 
-?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
-?. Implement tile map renderer.
-
-Refactor: Tile map load function.
-Refactor: Tile map structs/classes.
-Refactor: Put all player states in a single file.
-Refactor: Implement SpriteDirection instead of AnimDirection and pass that on to animations.
+Backlog
+-------
+1. Implement tile map parallax.
+2. Implement basic scene manager.
+3. Extract resource handling into a separate resource manager.
+4. Implement sprite component drawing from source region if given.
+5. Detect collisions between two moving objects.
+6. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
+7. Implement tile map renderer.
+8. Refactor Tile map load function.
+9. Refactor Tile map structs/classes.
+10. Put all player states in a single file.
+11. Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 
 How be brutally effective:
 --------------------------

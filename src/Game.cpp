@@ -7,6 +7,7 @@
 #include "Camera.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
 #include "TileMap.h"
 #include "Hero.h"
 #include "Player.h"
@@ -187,6 +188,8 @@ void Game::LoadData() {
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
 	    objectCollider->SetSize(Vector2(object.w, object.h));
+
+	    new RigidbodyComponent(objectActor);
 	}
     }
     delete map;

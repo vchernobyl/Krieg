@@ -13,7 +13,7 @@ void PhysicsWorld::Update(float deltaTime) {
 
     for (auto rb : rigidbodies) {
 	if (!rb->isKinematic) {
-	    rb->velocity.y += Gravity;
+	    // rb->velocity.y += Gravity;
 	}
     }
 

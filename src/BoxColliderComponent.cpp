@@ -76,8 +76,6 @@ bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& 
 
 bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b,
 			   CollisionInfo& info, float deltaTime) {
-    if (a->GetAttachedRigidbody() == nullptr) return false;
-
     const auto& in = a->GetBox();
     const auto& vel = a->GetAttachedRigidbody()->velocity;
     const auto& target = b->GetBox();

@@ -52,6 +52,8 @@ Hero::Hero(Game* game) : Actor(game), state(new IdleState)  {
     collider->SetSize(Vector2(50 * GetScale(), 37 * GetScale()));
     new RigidbodyComponent(this);
 
+    SetPosition(Vector2(1100, 600));
+
     state->Enter(*this);
 }
 
