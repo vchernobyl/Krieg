@@ -9,8 +9,6 @@
 const float Gravity = 9.81f;
 
 void PhysicsWorld::Update(float deltaTime) {
-    std::vector<CollisionInfo> collisions;
-
     if (colliders.size() == 0) return;
 
     for (auto rb : rigidbodies) {
@@ -19,25 +17,29 @@ void PhysicsWorld::Update(float deltaTime) {
 	}
     }
 
-    const auto playerCollider = dynamic_cast<BoxColliderComponent*>(colliders.front());
-    
-    for (auto iter = colliders.begin() + 1; iter != colliders.end(); iter++) {
-	auto info = playerCollider->Intersects(*iter, deltaTime);
-	if (info.colliding) {
-	    collisions.push_back(info);
+    for (auto i = colliders.begin(); i != colliders.end(); i++) {
+	for (auto j = colliders.begin(); j != colliders.end(); j++) {
+	    if (i == j) continue;
+	    auto info = (*i)->Intersects(*j, deltaTime);
+	    if (info.colliding) {
+		activeCollisions.push_back(info);
+	    }
 	}
     }
 
-    std::sort(collisions.begin(), collisions.end(), [](const CollisionInfo& a, const CollisionInfo& b) {
+    std::sort(activeCollisions.begin(), activeCollisions.end(), [](const CollisionInfo& a, const CollisionInfo& b) {
 	return a.contactTime < b.contactTime;
     });
 
-    for (auto& info : collisions) {
+    for (auto& info : activeCollisions) {
 	auto other = dynamic_cast<BoxColliderComponent*>(info.other);
-	if (BoxCollidersIntersect(playerCollider, other, info, deltaTime)) {
-	    playerCollider->ResolveCollision(info);
+	auto current = dynamic_cast<BoxColliderComponent*>(info.current);
+	if (BoxCollidersIntersect(current, other, info, deltaTime)) {
+	    current->ResolveCollision(info);
 	}
     }
+
+    activeCollisions.clear();
 }
 
 void PhysicsWorld::AddCollider(ColliderComponent* collider) {

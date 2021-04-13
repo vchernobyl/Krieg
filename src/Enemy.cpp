@@ -14,6 +14,16 @@ Enemy::Enemy(Game* game) : Actor(game) {
     auto collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(32, 64));
 
-    auto rigidbody = new RigidbodyComponent(this);
+    rigidbody = new RigidbodyComponent(this);
     rigidbody->isKinematic = false;
+}
+
+void Enemy::ActorInput(const InputState& input) {
+    velocity = Vector2::Zero;
+    
+    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_D)) velocity.x = 100.0f;
+    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_A)) velocity.x = -100.0f;
+    if (input.Keyboard.GetKeyState(SDL_SCANCODE_W) == Pressed) velocity.y = -350.0f;
+    
+    rigidbody->velocity = Vector2(velocity.x, rigidbody->velocity.y + velocity.y);
 }
