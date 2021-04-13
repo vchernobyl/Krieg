@@ -9,6 +9,7 @@ struct CollisionInfo {
     Vector2 contactNormal;
     float contactTime;
     class ColliderComponent* other;
+    class ColliderComponent* current;
 };
 
 struct ColliderComponent : public Component {

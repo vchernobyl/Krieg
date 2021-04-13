@@ -13,6 +13,7 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
     if (auto boxCollider = dynamic_cast<BoxColliderComponent*>(other)) {
 	if (BoxCollidersIntersect(this, boxCollider, info, deltaTime)) {
 	    info.colliding = true;
+	    info.current = this;
 	    info.other = other;
 	}
     }
@@ -21,6 +22,7 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
     if (owner->IsStatic()) return;
+    if (GetAttachedRigidbody()->isKinematic) return;
 
     auto rigidbody = GetAttachedRigidbody();
     rigidbody->velocity += info.contactNormal
@@ -74,6 +76,8 @@ bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& 
 
 bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b,
 			   CollisionInfo& info, float deltaTime) {
+    if (a->GetAttachedRigidbody() == nullptr) return false;
+
     const auto& in = a->GetBox();
     const auto& vel = a->GetAttachedRigidbody()->velocity;
     const auto& target = b->GetBox();

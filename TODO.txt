@@ -63,7 +63,7 @@ April
 4. Fix collision bug. Collisions are not correctly resolved in a lot of instances. [DONE]
 5. Fix player getting stuck in between two rect colliders. [DONE]
 6. Move collision detection and resolution to the physics world class. [DONE]
-7. Remove player-only collision detection and detect collision with arbitrary objects. [IN PROGRESS]
+7. Remove player-only collision detection and detect collision with arbitrary objects. [DONE]
 8. Make physics world to be a pointer in the game. [DONE]
 9. Clean up the Game.h headers. [DONE]
 10. Clean up the Collisions API and refactor Manifold/ContactInfo. [DONE]
@@ -73,6 +73,8 @@ April
 14. Implement tile map parallax.
 15. Implement basic scene manager.
 16. Extract resource handling into a separate resource manager.
+17. Implement sprite component drawing from source region if given.
+18. Detect collisions between two moving objects.
 
 ?. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 ?. Implement tile map renderer.
