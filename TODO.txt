@@ -71,7 +71,7 @@ April
 12. Put Collisions checking into the box collider component. [DONE]
 13. Implement Renderer class and move camera class inside of it. [DONE]
 14. Log crash information in the console before closing. [DONE]
-15. Compile to an output directory with a single executable.
+15. Compile to an output directory with a single executable. [DONE]
 16. Allow VS debugger to attach and inspect running code.
 
 Backlog
