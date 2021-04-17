@@ -27,7 +27,7 @@ public:
     void SetAnimData(const AnimData& animData) { this->animData = animData; }
     void SetAnimFPS(float animFPS) { this->animFPS = animFPS; }
     void Update(float deltaTime) override;
-    void ChangeAnim(int animNum, AnimDirection direction = Right);
+    void ChangeAnim(int animNum, AnimDirection direction = AnimDirection::Right);
     void SetDirection(AnimDirection direction);
     bool Finished(int animNum);
 private:

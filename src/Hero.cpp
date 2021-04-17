@@ -8,7 +8,7 @@
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 
-Hero::Hero(Game* game) : Actor(game), state(new IdleState)  {
+Hero::Hero(Game* game) : Actor(game), state(new IdleState), direction(AnimDirection::Right) {
     animation = new AnimSpriteComponent(this, 200);
     std::vector<AnimFrameData> animFrameData = {
 	{ 0, 3, true },
