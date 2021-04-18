@@ -15,7 +15,6 @@ Enemy::Enemy(Game* game) : Actor(game) {
     collider->SetSize(Vector2(32, 64));
 
     rigidbody = new RigidbodyComponent(this);
-    rigidbody->isKinematic = false;
 }
 
 void Enemy::ActorInput(const InputState& input) {
@@ -24,6 +23,9 @@ void Enemy::ActorInput(const InputState& input) {
     if (input.Keyboard.GetKeyValue(SDL_SCANCODE_D)) velocity.x = 100.0f;
     if (input.Keyboard.GetKeyValue(SDL_SCANCODE_A)) velocity.x = -100.0f;
     if (input.Keyboard.GetKeyState(SDL_SCANCODE_W) == Pressed) velocity.y = -350.0f;
-    
-    rigidbody->velocity = Vector2(velocity.x, rigidbody->velocity.y + velocity.y);
+}
+
+void Enemy::UpdateActor(float deltaTime) {
+    rigidbody->velocity.x = velocity.x * deltaTime;
+    rigidbody->velocity.y += velocity.y * deltaTime;
 }

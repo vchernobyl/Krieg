@@ -12,8 +12,12 @@ void MoveComponent::ProcessInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) velocity.x = maxSpeed;
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) velocity.x = -maxSpeed;
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == Pressed) velocity.y = -350.0f;
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == Pressed) velocity.y = -350.0f;
     
+}
+
+void MoveComponent::Update(float deltaTime) {
     auto rigidbody = owner->GetComponent<RigidbodyComponent>();
-    rigidbody->velocity = Vector2(velocity.x, rigidbody->velocity.y + velocity.y);
+    rigidbody->velocity.x = velocity.x * deltaTime;
+    rigidbody->velocity.y += velocity.y * deltaTime;
 }

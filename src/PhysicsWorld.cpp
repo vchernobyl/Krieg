@@ -12,15 +12,15 @@ void PhysicsWorld::Update(float deltaTime) {
     if (colliders.size() == 0) return;
 
     for (auto rb : rigidbodies) {
-	if (!rb->isKinematic) {
-	    // rb->velocity.y += Gravity;
+	if (rb->IsDynamic()) {
+	    rb->velocity.y += (Gravity * deltaTime);
 	}
     }
 
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
 	for (auto j = colliders.begin(); j != colliders.end(); j++) {
 	    if (i == j) continue;
-	    auto info = (*i)->Intersects(*j, deltaTime);
+	    auto info = (*i)->Intersects(*j);
 	    if (info.colliding) {
 		activeCollisions.push_back(info);
 	    }
@@ -34,7 +34,7 @@ void PhysicsWorld::Update(float deltaTime) {
     for (auto& info : activeCollisions) {
 	auto other = dynamic_cast<BoxColliderComponent*>(info.other);
 	auto current = dynamic_cast<BoxColliderComponent*>(info.current);
-	if (BoxCollidersIntersect(current, other, info, deltaTime)) {
+	if (BoxCollidersIntersect(current, other, info)) {
 	    current->ResolveCollision(info);
 	}
     }

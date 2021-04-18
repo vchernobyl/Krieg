@@ -2,7 +2,9 @@
 #include "Actor.h"
 #include "PhysicsWorld.h"
 
-RigidbodyComponent::RigidbodyComponent(Actor* owner) : Component(owner) {
+RigidbodyComponent::RigidbodyComponent(Actor* owner)
+    : Component(owner),
+      bodyType(BodyType::Dynamic) {
     owner->GetGame()->GetPhysicsWorld()->AddRigidbody(this);
 }
 
@@ -11,5 +13,5 @@ RigidbodyComponent::~RigidbodyComponent() {
 }
 
 void RigidbodyComponent::Update(float deltaTime) {
-    owner->Translate(velocity * deltaTime);
+    owner->Translate(velocity);
 }

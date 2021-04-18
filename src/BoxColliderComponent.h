@@ -8,7 +8,7 @@ public:
     BoxColliderComponent(Actor* owner);
     ~BoxColliderComponent();
     
-    CollisionInfo Intersects(ColliderComponent* other, float deltaTime) override;
+    CollisionInfo Intersects(ColliderComponent* other) override;
     void ResolveCollision(const CollisionInfo& info) override;
 
     void SetOffset(Vector2 offset) { this->offset = offset; }
@@ -24,4 +24,4 @@ bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& 
 		   Vector2& contactPoint, Vector2& contactNormal, float& tHitNear);
 
 bool BoxCollidersIntersect(class BoxColliderComponent* a, class BoxColliderComponent* b,
-			   class CollisionInfo& info, float deltaTime);
+			   class CollisionInfo& info);

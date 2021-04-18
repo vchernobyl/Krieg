@@ -73,8 +73,8 @@ April
 14. Log crash information in the console before closing. [DONE]
 15. Compile to an output directory with a single executable. [DONE]
 16. Allow VS debugger to attach and inspect running code. [DONE]
-17. Clean up the SDL main initialization: https://wiki.libsdl.org/SDL_SetMainReady
-18. Implement multiple dynamic box collisions (enemy vs player).
+17. Implement multiple dynamic box collisions (enemy vs player). [IN PROGRESS]
+18. Implement global static debug renderer for all shapes.
 
 Backlog
 -------
@@ -89,6 +89,7 @@ Backlog
 9. Refactor Tile map structs/classes.
 10. Put all player states in a single file.
 11. Implement SpriteDirection instead of AnimDirection and pass that on to animations.
+12. Clean up the SDL main initialization: https://wiki.libsdl.org/SDL_SetMainReady
 
 How be brutally effective:
 --------------------------

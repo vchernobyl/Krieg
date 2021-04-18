@@ -189,7 +189,8 @@ void Game::LoadData() {
 	    auto objectCollider = new BoxColliderComponent(objectActor);
 	    objectCollider->SetSize(Vector2(object.w, object.h));
 
-	    new RigidbodyComponent(objectActor);
+	    auto rigidbody = new RigidbodyComponent(objectActor);
+	    rigidbody->bodyType = BodyType::Kinematic;
 	}
     }
     delete map;

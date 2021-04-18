@@ -16,7 +16,7 @@ struct ColliderComponent : public Component {
     ColliderComponent(class Actor* owner);
     ~ColliderComponent();
 
-    virtual CollisionInfo Intersects(ColliderComponent* other, float deltaTime) = 0;
+    virtual CollisionInfo Intersects(ColliderComponent* other) = 0;
     virtual void ResolveCollision(const CollisionInfo& info) = 0;
 
     class RigidbodyComponent* GetAttachedRigidbody() const;

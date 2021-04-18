@@ -9,10 +9,10 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner) : ColliderComponent(own
 
 BoxColliderComponent::~BoxColliderComponent() {}
 
-CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float deltaTime) {
+CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other) {
     CollisionInfo info;
     if (auto boxCollider = dynamic_cast<BoxColliderComponent*>(other)) {
-	if (BoxCollidersIntersect(this, boxCollider, info, deltaTime)) {
+	if (BoxCollidersIntersect(this, boxCollider, info)) {
 	    info.colliding = true;
 	    info.current = this;
 	    info.other = other;
@@ -23,9 +23,10 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
     if (owner->IsStatic()) return;
-    if (GetAttachedRigidbody()->isKinematic) return;
+    if (!GetAttachedRigidbody()->IsDynamic()) return;
 
     auto rigidbody = GetAttachedRigidbody();
+    auto otherRigidbody = info.other->GetAttachedRigidbody();
     rigidbody->velocity += info.contactNormal
 	* Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
 	* (1.0f - info.contactTime);
@@ -75,10 +76,8 @@ bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& 
     return true;
 }
 
-bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b,
-			   CollisionInfo& info, float deltaTime) {
+bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b, CollisionInfo& info) {
     assert(a->GetAttachedRigidbody() != nullptr);
-    assert(b->GetAttachedRigidbody() != nullptr);
 
     const auto& in = a->GetBox();
     const auto& vel = a->GetAttachedRigidbody()->velocity;
@@ -92,7 +91,7 @@ bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b,
     expandedTarget.position = target.position - in.size / 2;
     expandedTarget.size = target.size + in.size;
 
-    if (RayIntersects(in.position + in.size / 2, vel * deltaTime, expandedTarget, info.contactPoint, info.contactNormal, info.contactTime)) {
+    if (RayIntersects(in.position + in.size / 2, vel, expandedTarget, info.contactPoint, info.contactNormal, info.contactTime)) {
 	if (info.contactTime >= 0.0f && info.contactTime < 1.0f) {
 	    return true;
 	}
