@@ -1,5 +1,6 @@
 #include "RigidbodyComponent.h"
 #include "Actor.h"
+#include "Game.h"
 #include "PhysicsWorld.h"
 
 RigidbodyComponent::RigidbodyComponent(Actor* owner)

@@ -2,6 +2,7 @@
 #include "SpriteComponent.h"
 #include "Camera.h"
 #include "Renderer.h"
+#include "Game.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),

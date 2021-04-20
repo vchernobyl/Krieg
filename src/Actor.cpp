@@ -1,6 +1,8 @@
 #include "Actor.h"
 #include "Math.h"
 #include "Game.h"
+#include "Component.h"
+#include "InputSystem.h"
 #include <algorithm>
 
 Actor::Actor(Game* g)

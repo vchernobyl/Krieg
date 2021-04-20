@@ -1,11 +1,7 @@
 #pragma once
 
 #include "Math.h"
-#include "Game.h"
-#include "InputSystem.h"
-#include "Component.h"
 #include <vector>
-#include <cstdint>
 
 class Actor {
 public:
@@ -42,8 +38,8 @@ public:
 
     class Game* GetGame() const { return game; }
 
-    void ProcessInput(const InputState& inputState);
-    virtual void ActorInput(const InputState& inputState);
+    void ProcessInput(const class InputState& inputState);
+    virtual void ActorInput(const class InputState& inputState);
 
     void Update(float deltaTime);
     void UpdateComponents(float deltaTime);

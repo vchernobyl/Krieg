@@ -4,15 +4,11 @@
 #include "PhysicsWorld.h"
 #include "Renderer.h"
 #include "DebugRenderer.h"
-#include "Camera.h"
-#include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "TileMap.h"
 #include "TileMapRenderer.h"
 #include "Hero.h"
-#include "Player.h"
-#include "Enemy.h"
 #include "SDL_image.h"
 #include <algorithm>
 

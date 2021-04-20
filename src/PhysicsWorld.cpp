@@ -2,9 +2,7 @@
 #include "ColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "BoxColliderComponent.h"
-#include "Actor.h"
 #include <algorithm>
-#include <vector>
 
 const float Gravity = 9.81f;
 

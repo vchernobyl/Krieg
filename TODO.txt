@@ -75,10 +75,10 @@ April
 16. Allow VS debugger to attach and inspect running code. [DONE]
 17. Implement multiple dynamic box collisions (enemy vs player).
 18. Implement global static debug renderer for all shapes.
-19. Make a prototype map.
+19. Make a prototype map. [DONE]
 20. Make a prototype character.
 21. Implement tile map renderer. [DONE]
-22. Clean up the included headers. [IN PROGRESS]
+22. Clean up the included headers. [DONE]
 
 Backlog
 -------

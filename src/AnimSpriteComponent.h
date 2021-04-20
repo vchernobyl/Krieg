@@ -1,7 +1,5 @@
 #pragma once
 
-#include "Actor.h"
-#include "Component.h"
 #include "SpriteComponent.h"
 #include <vector>
 
@@ -23,7 +21,7 @@ enum AnimDirection {
 
 class AnimSpriteComponent : public SpriteComponent {
 public:
-    AnimSpriteComponent(Actor* owner, int drawOrder = 100);
+    AnimSpriteComponent(class Actor* owner, int drawOrder = 100);
     void SetAnimData(const AnimData& animData) { this->animData = animData; }
     void SetAnimFPS(float animFPS) { this->animFPS = animFPS; }
     void Update(float deltaTime) override;

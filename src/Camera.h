@@ -3,7 +3,6 @@
 #include "SDL.h"
 #include "Math.h"
 
-// TODO: Add world to screen calculation functions.
 class Camera {
 public:
     Camera(int viewportWidth, int viewportHeight);
