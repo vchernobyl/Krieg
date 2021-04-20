@@ -9,25 +9,25 @@
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "TileMap.h"
+#include "TileMapRenderer.h"
 #include "Hero.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "SDL_image.h"
 #include <algorithm>
 
-const int ScreenWidth = 1024;
-const int ScreenHeight = 768;
-
 Game::Game() :
     renderer(nullptr),
     inputSystem(nullptr),
     physicsWorld(nullptr),
+    tileMapRenderer(nullptr),
+    tileMap(nullptr),
     isRunning(true),
     updatingActors(false) {}
 
 bool Game::Initialize() {
     renderer = new Renderer(this);
-    if (!renderer->Initialize(ScreenWidth, ScreenHeight)) {
+    if (!renderer->Initialize(1024, 768)) {
 	SDL_Log("Unable to initialize renderer");
 	return false;
     }
@@ -59,8 +59,13 @@ void Game::RunLoop() {
 void Game::Shutdown() {
     inputSystem->Shutdown();
     delete inputSystem;
-    UnloadData();
+
     renderer->Shutdown();
+    delete renderer;
+    delete tileMapRenderer;
+    delete tileMap;
+
+    UnloadData();
     SDL_Quit();
 }
 
@@ -168,6 +173,7 @@ void Game::UpdateGame() {
 
 void Game::DrawGame() {
     renderer->Begin();
+    tileMapRenderer->Draw(renderer);
     renderer->Draw();
     debugRenderer->Draw(renderer);
     renderer->End();
@@ -175,11 +181,12 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Hero(this);
-    new Enemy(this);
 
-    TileMapLoader mapLoader(this);
-    auto map = mapLoader.Load("assets/test.tmx");
-    auto objectGroups = map->GetObjectGroups();
+    TileMapLoader tileMapLoader(this);
+    tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
+    tileMapRenderer = new TileMapRenderer(tileMap);
+
+    auto objectGroups = tileMap->GetObjectGroups();
     for (auto objectGroup : objectGroups) {
 	for (const auto& object : objectGroup->objects) {
 	    auto objectActor = new Actor(this);
@@ -193,7 +200,6 @@ void Game::LoadData() {
 	    rigidbody->bodyType = BodyType::Kinematic;
 	}
     }
-    delete map;
 }
 
 void Game::UnloadData() {

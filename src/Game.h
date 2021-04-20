@@ -32,6 +32,10 @@ private:
     class InputSystem* inputSystem;
     class PhysicsWorld* physicsWorld;
 
+    // Game specific - will be in a Scene later on
+    class TileMapRenderer* tileMapRenderer;
+    class TileMap* tileMap;
+
     bool isRunning;
     bool updatingActors;
     Uint32 ticks;

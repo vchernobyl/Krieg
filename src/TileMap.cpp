@@ -31,12 +31,13 @@ TileMap* TileMapLoader::Load(const std::string& fileName) {
     pugi::xml_document doc;
     pugi::xml_parse_result success = doc.load_file(fileName.c_str());
 
+    auto map = new TileMap();
+
     if (!success) {
 	SDL_Log("Failed to load map: %s", fileName.c_str());
-	return nullptr;
+	return map;
     }
 
-    auto map = new TileMap();
     auto tileSet = CreateTileSet(doc.child("map"));
     map->AddTileSet(tileSet);
 

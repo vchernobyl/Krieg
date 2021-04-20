@@ -12,8 +12,7 @@ void MoveComponent::ProcessInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) velocity.x = maxSpeed;
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) velocity.x = -maxSpeed;
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == Pressed) velocity.y = -350.0f;
-    
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) velocity.y = -350.0f;
 }
 
 void MoveComponent::Update(float deltaTime) {

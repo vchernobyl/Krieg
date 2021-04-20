@@ -11,6 +11,7 @@ public:
     void Begin();
     void Draw();
     void DrawTexture(SDL_Texture* texture, SDL_Rect* dst, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void DrawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void End();
     void AddSprite(class SpriteComponent* sprite);
     void RemoveSprite(class SpriteComponent* sprite);
@@ -22,5 +23,4 @@ private:
     std::vector<class SpriteComponent*> sprites;
     class Game* game;
     class Camera* camera;
-    class TileMap* map;
 };

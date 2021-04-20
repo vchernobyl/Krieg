@@ -48,6 +48,8 @@ Hero::Hero(Game* game) : Actor(game), state(new IdleState), direction(AnimDirect
     jump->SetMaxHeight(75.0f);
     jump->SetTimeToPeak(0.5f);
 
+    SetScale(1.5f);
+
     auto collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(50 * GetScale(), 37 * GetScale()));
     new RigidbodyComponent(this);

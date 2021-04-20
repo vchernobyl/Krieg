@@ -1,6 +1,7 @@
 #include "DebugRenderer.h"
 #include "Renderer.h"
 #include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
 #include "PhysicsWorld.h"
 #include "Camera.h"
 #include "SDL.h"

@@ -73,8 +73,12 @@ April
 14. Log crash information in the console before closing. [DONE]
 15. Compile to an output directory with a single executable. [DONE]
 16. Allow VS debugger to attach and inspect running code. [DONE]
-17. Implement multiple dynamic box collisions (enemy vs player). [IN PROGRESS]
+17. Implement multiple dynamic box collisions (enemy vs player).
 18. Implement global static debug renderer for all shapes.
+19. Make a prototype map.
+20. Make a prototype character.
+21. Implement tile map renderer. [DONE]
+22. Clean up the included headers. [IN PROGRESS]
 
 Backlog
 -------
@@ -84,12 +88,11 @@ Backlog
 4. Implement sprite component drawing from source region if given.
 5. Detect collisions between two moving objects.
 6. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
-7. Implement tile map renderer.
-8. Refactor Tile map load function.
-9. Refactor Tile map structs/classes.
-10. Put all player states in a single file.
-11. Implement SpriteDirection instead of AnimDirection and pass that on to animations.
-12. Clean up the SDL main initialization: https://wiki.libsdl.org/SDL_SetMainReady
+7. Refactor Tile map load function.
+8. Refactor Tile map structs/classes.
+9. Put all player states in a single file.
+10. Implement SpriteDirection instead of AnimDirection and pass that on to animations.
+11. Clean up the SDL main initialization: https://wiki.libsdl.org/SDL_SetMainReady
 
 How be brutally effective:
 --------------------------

@@ -22,10 +22,11 @@ void Enemy::ActorInput(const InputState& input) {
     
     if (input.Keyboard.GetKeyValue(SDL_SCANCODE_D)) velocity.x = 100.0f;
     if (input.Keyboard.GetKeyValue(SDL_SCANCODE_A)) velocity.x = -100.0f;
-    if (input.Keyboard.GetKeyState(SDL_SCANCODE_W) == Pressed) velocity.y = -350.0f;
+    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_W)) velocity.y = -350.0f;
+    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_S)) velocity.y = 350.0f;
 }
 
 void Enemy::UpdateActor(float deltaTime) {
     rigidbody->velocity.x = velocity.x * deltaTime;
-    rigidbody->velocity.y += velocity.y * deltaTime;
+    rigidbody->velocity.y = velocity.y * deltaTime;
 }

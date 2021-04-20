@@ -1,18 +1,12 @@
 #include "Renderer.h"
-#include "DebugRenderer.h"
 #include "SpriteComponent.h"
-#include "BoxColliderComponent.h"
-#include "TileMap.h"
 #include "Game.h"
 #include "Camera.h"
-#include "Actor.h"
-#include "Math.h"
-#include "SDL.h"
 #include "SDL_image.h"
 #include <algorithm>
 
-const int WorldWidth = 1536;
-const int WorldHeight = 768;
+const int WorldWidth = 32 * 42;
+const int WorldHeight = 32 * 32;
 
 Renderer::Renderer(Game* game) : game(game) {}
 
@@ -40,18 +34,13 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
     }
 
     camera = new Camera(screenWidth, screenHeight);
-    camera->SetWorldSize(Vector2(WorldWidth, WorldHeight));
-
-    // TODO: This is just for testing purposes. Move this out of here later.
-    TileMapLoader mapLoader(game);
-    map = mapLoader.Load("assets/test.tmx");
+    camera->SetWorldSize(WorldWidth, WorldHeight);
 
     return true;
 }
 
 void Renderer::Shutdown() {
     delete camera;
-    delete map;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 }
@@ -62,15 +51,6 @@ void Renderer::Begin() {
 }
 
 void Renderer::Draw() {
-    for (auto layer : map->GetLayers()) {
-	for (auto tile : layer->tiles) {
-	    auto tileInfo = tile.tileInfo;
-	    auto dst = SDL_Rect { static_cast<int>(tile.x), static_cast<int>(tile.y), 32, 32 };
-	    camera->ToScreenSpace(dst);
-	    SDL_RenderCopy(renderer, tileInfo->texture, &(tileInfo->rect), &dst);
-	}
-    }
-
     for (auto sprite : sprites) {
 	sprite->Draw(this);
     }
@@ -78,6 +58,10 @@ void Renderer::Draw() {
 
 void Renderer::DrawTexture(SDL_Texture* texture, SDL_Rect* dst, SDL_RendererFlip flip) {
     SDL_RenderCopyEx(renderer, texture, nullptr, dst, 0, nullptr, flip);
+}
+
+void Renderer::DrawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst, SDL_RendererFlip flip) {
+    SDL_RenderCopyEx(renderer, texture, src, dst, 0, nullptr, flip);
 }
 
 void Renderer::End() {
