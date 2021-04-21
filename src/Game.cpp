@@ -8,7 +8,7 @@
 #include "RigidbodyComponent.h"
 #include "TileMap.h"
 #include "TileMapRenderer.h"
-#include "Hero.h"
+#include "Player.h"
 #include "SDL_image.h"
 #include <algorithm>
 
@@ -176,7 +176,7 @@ void Game::DrawGame() {
 }
 
 void Game::LoadData() {
-    new Hero(this);
+    new Player(this);
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");

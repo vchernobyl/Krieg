@@ -76,7 +76,7 @@ April
 17. Implement multiple dynamic box collisions (enemy vs player).
 18. Implement global static debug renderer for all shapes.
 19. Make a prototype map. [DONE]
-20. Make a prototype character.
+20. Make a prototype character. [DONE]
 21. Implement tile map renderer. [DONE]
 22. Clean up the included headers. [DONE]
 

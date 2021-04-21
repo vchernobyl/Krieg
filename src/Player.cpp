@@ -6,32 +6,33 @@
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 
+const float MoveVelocity = 200.0f;
+const float JumpVelocity = 300.0f;
+
 Player::Player(Game* game) : Actor(game) {
-    auto sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetTexture("assets/adventurer-idle-00.png"));
-    
     SetPosition(Vector2(300, 150));
-    SetScale(1.5f);
+    SetScale(2.0f);
+
+    auto sprite = new SpriteComponent(this);
+    sprite->SetTexture(game->GetTexture("assets/KriegGuy.png"));
     
     auto collider = new BoxColliderComponent(this);
-    collider->SetSize(Vector2(50 * GetScale(), 37 * GetScale()));
+    collider->SetSize(Vector2(sprite->GetTexWidth(), sprite->GetTexHeight()) * GetScale());
 
     rigidbody = new RigidbodyComponent(this);
-    rigidbody->bodyType = BodyType::Kinematic;
 }
 
 void Player::ActorInput(const InputState& inputState) {
     velocity = Vector2::Zero;
 
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) velocity.x += 10.0f;
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) velocity.x -= 10.0f;
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) velocity.y -= 10.0f;
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) velocity.y += 10.0f;
-
-    rigidbody->velocity.x += velocity.x;
-    rigidbody->velocity.y += velocity.y;
+    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) velocity.x = MoveVelocity;
+    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) velocity.x = -MoveVelocity;
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) velocity.y = -JumpVelocity;
 }
 
 void Player::UpdateActor(float deltaTime) {
+    rigidbody->velocity.x = velocity.x * deltaTime;
+    rigidbody->velocity.y += velocity.y * deltaTime;
+
     GetGame()->GetRenderer()->GetCamera()->Follow(this);
 }
