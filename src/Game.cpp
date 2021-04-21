@@ -171,7 +171,11 @@ void Game::DrawGame() {
     renderer->Begin();
     tileMapRenderer->Draw(renderer);
     renderer->Draw();
+
+#ifdef DEBUG
     debugRenderer->Draw(renderer);
+#endif
+
     renderer->End();
 }
 

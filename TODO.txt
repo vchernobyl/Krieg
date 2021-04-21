@@ -79,6 +79,7 @@ April
 20. Make a prototype character. [DONE]
 21. Implement tile map renderer. [DONE]
 22. Clean up the included headers. [DONE]
+23. Add compiler flag to enable/disable debug rendering. [DONE]
 
 Backlog
 -------
