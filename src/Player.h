@@ -3,6 +3,14 @@
 #include "Actor.h"
 #include "InputSystem.h"
 
+class Bullet : public Actor {
+public:
+    Bullet(class Game* game);
+private:
+    class RigidbodyComponent* rigidbody;
+    class BoxColliderComponent* collider;
+};
+
 class Player : public Actor {
 public:
     Player(class Game* game);
