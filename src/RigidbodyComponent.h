@@ -8,7 +8,8 @@ enum class BodyType {
     Kinematic
 };
 
-struct RigidbodyComponent : public Component {
+class RigidbodyComponent : public Component {
+public:
     RigidbodyComponent(class Actor* owner);
     ~RigidbodyComponent();
     void Update(float deltaTime) override;

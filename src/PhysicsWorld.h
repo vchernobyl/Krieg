@@ -10,12 +10,12 @@ public:
     void RemoveCollider(class ColliderComponent* collider);
     const std::vector<class ColliderComponent*>& GetColliders() const { return colliders; }
 
-    void AddRigidbody(struct RigidbodyComponent* rigidbody);
-    void RemoveRigidbody(struct RigidbodyComponent* rigidbody);
-    const std::vector<struct RigidbodyComponent*>& GetRigidbodies() const { return rigidbodies; }
+    void AddRigidbody(class RigidbodyComponent* rigidbody);
+    void RemoveRigidbody(class RigidbodyComponent* rigidbody);
+    const std::vector<class RigidbodyComponent*>& GetRigidbodies() const { return rigidbodies; }
 
 private:
     std::vector<class ColliderComponent*> colliders;
-    std::vector<struct RigidbodyComponent*> rigidbodies;
+    std::vector<class RigidbodyComponent*> rigidbodies;
     std::vector<struct CollisionInfo> activeCollisions;
 };

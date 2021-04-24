@@ -12,12 +12,16 @@ struct CollisionInfo {
     class ColliderComponent* current;
 };
 
-struct ColliderComponent : public Component {
+class ColliderComponent : public Component {
+public:
     ColliderComponent(class Actor* owner);
     ~ColliderComponent();
 
     virtual CollisionInfo Intersects(ColliderComponent* other) = 0;
     virtual void ResolveCollision(const CollisionInfo& info) = 0;
+
+    virtual void OnCollisionEnter(ColliderComponent* other) {}
+    virtual void OnCollisionExit(ColliderComponent* other) {}
 
     class RigidbodyComponent* GetAttachedRigidbody() const;
 };
