@@ -12,7 +12,7 @@ void PhysicsWorld::Update(float deltaTime) {
     if (colliders.size() == 0) return;
 
     for (auto rb : rigidbodies) {
-	if (rb->IsDynamic()) {
+	if (!rb->isKinematic) {
 	    rb->velocity.y += (Gravity * deltaTime);
 	}
     }

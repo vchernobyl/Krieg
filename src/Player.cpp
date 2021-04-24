@@ -14,11 +14,12 @@ Bullet::Bullet(Game* game) : Actor(game) {
     sprite->SetTexture(game->GetTexture("assets/Bullet.png"));
 
     rigidbody = new RigidbodyComponent(this);
-    rigidbody->bodyType = BodyType::Kinematic;
+    rigidbody->isKinematic = true;
     rigidbody->velocity.x = 10.0f;
 
     collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(sprite->GetTexWidth(), sprite->GetTexHeight()) * GetScale());
+    collider->isTrigger = true;
 }
 
 void Bullet::OnCollisionEnter(ColliderComponent* other) {

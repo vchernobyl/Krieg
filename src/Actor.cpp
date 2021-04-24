@@ -10,7 +10,6 @@ Actor::Actor(Game* game)
       position(Vector2::Zero),
       scale(1.0f),
       rotation(0.0f),
-      isStatic(false),
       game(game) {
     game->AddActor(this);
 }

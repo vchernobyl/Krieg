@@ -4,8 +4,7 @@
 #include "PhysicsWorld.h"
 
 RigidbodyComponent::RigidbodyComponent(Actor* owner)
-    : Component(owner),
-      bodyType(BodyType::Dynamic) {
+    : Component(owner), isKinematic(false) {
     owner->GetGame()->GetPhysicsWorld()->AddRigidbody(this);
 }
 

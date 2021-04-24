@@ -25,9 +25,6 @@ public:
     void SetState(ActorState s) { actorState = s; }
     void Destroy() { actorState = ActorState::Dead; }
 
-    bool IsStatic() const { return isStatic; }
-    void SetIsStatic(bool isStatic) { this->isStatic = isStatic; }
-
     class Game* GetGame() const { return game; }
 
     void ProcessInput(const class InputState& inputState);
@@ -56,7 +53,6 @@ private:
     Vector2 position;
     float scale;
     float rotation;
-    bool isStatic;
     std::vector<class Component*> components;
     class Game* game;
 };

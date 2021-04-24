@@ -23,8 +23,8 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other) {
 }
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
-    if (owner->IsStatic()) return;
-    if (!GetAttachedRigidbody()->IsDynamic()) return;
+    if (GetAttachedRigidbody()->isKinematic) return;
+    if (info.other->isTrigger) return;
 
     auto rigidbody = GetAttachedRigidbody();
     auto otherRigidbody = info.other->GetAttachedRigidbody();

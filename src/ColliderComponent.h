@@ -21,4 +21,6 @@ public:
     virtual void ResolveCollision(const CollisionInfo& info) = 0;
 
     class RigidbodyComponent* GetAttachedRigidbody() const;
+
+    bool isTrigger = false;
 };

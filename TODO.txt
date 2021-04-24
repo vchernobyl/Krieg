@@ -81,7 +81,8 @@ April
 22. Clean up the included headers. [DONE]
 23. Add compiler flag to enable/disable debug rendering. [DONE]
 24. Add simple bullet shooting. [DONE]
-25. Destroy bullets on impact. [IN PROGRESS]
+25. Destroy bullets on impact. [DONE]
+26. Fix stutterings when shooting and moving forward. [DONE]
 
 Backlog
 -------
