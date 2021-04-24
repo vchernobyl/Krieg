@@ -2,6 +2,8 @@
 #include "ColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "BoxColliderComponent.h"
+#include "Actor.h"
+
 #include <algorithm>
 
 const float Gravity = 9.81f;
@@ -33,6 +35,7 @@ void PhysicsWorld::Update(float deltaTime) {
 	auto other = dynamic_cast<BoxColliderComponent*>(info.other);
 	auto current = dynamic_cast<BoxColliderComponent*>(info.current);
 	if (BoxCollidersIntersect(current, other, info)) {
+	    current->GetOwner()->OnCollisionEnter(other);
 	    current->ResolveCollision(info);
 	}
     }

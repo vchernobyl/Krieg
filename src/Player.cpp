@@ -3,11 +3,9 @@
 #include "Renderer.h"
 #include "Camera.h"
 #include "SpriteComponent.h"
+#include "ColliderComponent.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
-
-const float MoveVelocity = 200.0f;
-const float JumpVelocity = 300.0f;
 
 Bullet::Bullet(Game* game) : Actor(game) {
     SetScale(0.75f);
@@ -22,6 +20,13 @@ Bullet::Bullet(Game* game) : Actor(game) {
     collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(sprite->GetTexWidth(), sprite->GetTexHeight()) * GetScale());
 }
+
+void Bullet::OnCollisionEnter(ColliderComponent* other) {
+    Destroy();
+}
+
+const float MoveVelocity = 200.0f;
+const float JumpVelocity = 300.0f;
 
 Player::Player(Game* game) : Actor(game) {
     SetPosition(Vector2(300, 150));

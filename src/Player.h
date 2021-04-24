@@ -6,6 +6,7 @@
 class Bullet : public Actor {
 public:
     Bullet(class Game* game);
+    void OnCollisionEnter(class ColliderComponent* other) override;
 private:
     class RigidbodyComponent* rigidbody;
     class BoxColliderComponent* collider;

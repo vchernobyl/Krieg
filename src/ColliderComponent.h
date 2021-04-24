@@ -20,8 +20,5 @@ public:
     virtual CollisionInfo Intersects(ColliderComponent* other) = 0;
     virtual void ResolveCollision(const CollisionInfo& info) = 0;
 
-    virtual void OnCollisionEnter(ColliderComponent* other) {}
-    virtual void OnCollisionExit(ColliderComponent* other) {}
-
     class RigidbodyComponent* GetAttachedRigidbody() const;
 };

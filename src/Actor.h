@@ -30,6 +30,7 @@ public:
 
     ActorState GetState() const { return actorState; }
     void SetState(ActorState s) { actorState = s; }
+    void Destroy() { actorState = ActorState::Dead; }
 
     bool IsStatic() const { return isStatic; }
     void SetIsStatic(bool isStatic) { this->isStatic = isStatic; }
@@ -45,6 +46,8 @@ public:
 
     void AddComponent(class Component* component);
     void RemoveComponent(class Component* component);
+
+    virtual void OnCollisionEnter(class ColliderComponent* other) {}
 
     template <class T> T* GetComponent() {
 	for (auto component : components) {
