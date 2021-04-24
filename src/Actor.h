@@ -11,7 +11,7 @@ public:
 	Dead
     };
 
-    Actor(class Game* g);
+    Actor(class Game* game);
     virtual ~Actor();
 
     const Vector2& GetPosition() const { return position; }
@@ -33,8 +33,6 @@ public:
 
     bool IsStatic() const { return isStatic; }
     void SetIsStatic(bool isStatic) { this->isStatic = isStatic; }
-
-    Vector2 GetForward() const { return Vector2(Math::Cos(rotation), -Math::Sin(rotation)); }
 
     class Game* GetGame() const { return game; }
 

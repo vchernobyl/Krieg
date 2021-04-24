@@ -5,13 +5,13 @@
 #include "InputSystem.h"
 #include <algorithm>
 
-Actor::Actor(Game* g)
+Actor::Actor(Game* game)
     : actorState(Active),
-      position(Vector2(0.0f, 0.0f)),
+      position(Vector2::Zero),
       scale(1.0f),
       rotation(0.0f),
       isStatic(false),
-      game(g) {
+      game(game) {
     game->AddActor(this);
 }
 
