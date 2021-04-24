@@ -24,6 +24,6 @@ void JumpComponent::Update(float deltaTime) {
 	float velocity = -(2 * maxHeight) / timeToPeak;
 	float gravity = (2 * maxHeight) / (timeToPeak * timeToPeak);
 	float height = 0.5f * gravity * (time * time) + velocity * time + position;
-	owner->SetPositionY(height);
+	owner->SetPosition(Vector2(0, height));
     }
 }
