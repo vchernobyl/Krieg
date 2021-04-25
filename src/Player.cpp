@@ -6,6 +6,7 @@
 #include "ColliderComponent.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
+#include "InputSystem.h"
 
 Bullet::Bullet(Game* game) : Actor(game) {
     SetScale(0.75f);

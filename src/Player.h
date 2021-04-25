@@ -1,23 +1,27 @@
 #pragma once
 
 #include "Actor.h"
-#include "InputSystem.h"
+
+class ColliderComponent;
+class RigidbodyComponent;
+class BoxColliderComponent;
+class InputSystem;
 
 class Bullet : public Actor {
 public:
-    Bullet(class Game* game);
-    void OnCollisionEnter(class ColliderComponent* other) override;
+    Bullet(Game* game);
+    void OnCollisionEnter(ColliderComponent* other) override;
 private:
-    class RigidbodyComponent* rigidbody;
-    class BoxColliderComponent* collider;
+    RigidbodyComponent* rigidbody;
+    BoxColliderComponent* collider;
 };
 
 class Player : public Actor {
 public:
-    Player(class Game* game);
+    Player(Game* game);
     void ActorInput(const InputState& inputState) override;
     void UpdateActor(float deltaTime) override;
 private:
-    class RigidbodyComponent* rigidbody;
+    RigidbodyComponent* rigidbody;
     Vector2 velocity;
 };
