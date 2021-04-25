@@ -7,15 +7,17 @@ class SpriteComponent : public Component {
 public:
     SpriteComponent(class Actor* owner, int drawOrder = 100);
     ~SpriteComponent();
+
     virtual void Draw(class Renderer* renderer);
     virtual void SetTexture(SDL_Texture* texture, SDL_RendererFlip flip = SDL_FLIP_NONE);
+
     int GetDrawOrder() const { return drawOrder; }
-    int GetTexWidth() const { return texWidth; }
-    int GetTexHeight() const { return texHeight; }
+    int GetWidth() const { return width; }
+    int GetHeight() const { return height; }
 protected:
     SDL_Texture* texture;
     SDL_RendererFlip flip;
     int drawOrder;
-    int texWidth;
-    int texHeight;
+    int width;
+    int height;
 };

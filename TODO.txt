@@ -83,6 +83,7 @@ April
 24. Add simple bullet shooting. [DONE]
 25. Destroy bullets on impact. [DONE]
 26. Fix stutterings when shooting and moving forward. [DONE]
+27. Implement texture region drawing. [IN PROGRESS]
 
 Backlog
 -------

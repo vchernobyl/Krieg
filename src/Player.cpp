@@ -19,7 +19,7 @@ Bullet::Bullet(Game* game) : Actor(game) {
     rigidbody->velocity.x = 10.0f;
 
     collider = new BoxColliderComponent(this);
-    collider->SetSize(Vector2(sprite->GetTexWidth(), sprite->GetTexHeight()) * GetScale());
+    collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());
     collider->isTrigger = true;
 }
 
@@ -35,10 +35,10 @@ Player::Player(Game* game) : Actor(game) {
     SetScale(2.5f);
 
     auto sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetTexture("assets/KriegGuy.png"));
+    sprite->SetTexture(game->GetTexture("assets/CharacterSpritesheet.png"));
     
     auto collider = new BoxColliderComponent(this);
-    collider->SetSize(Vector2(sprite->GetTexWidth(), sprite->GetTexHeight()) * GetScale());
+    collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());
 
     rigidbody = new RigidbodyComponent(this);
 }
