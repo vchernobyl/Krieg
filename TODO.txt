@@ -84,6 +84,7 @@ April
 25. Destroy bullets on impact. [DONE]
 26. Fix stutterings when shooting and moving forward. [DONE]
 27. Implement texture region drawing. [IN PROGRESS]
+28. Improve Rect API.
 
 Backlog
 -------

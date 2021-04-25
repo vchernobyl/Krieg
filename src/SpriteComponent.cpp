@@ -20,12 +20,12 @@ SpriteComponent::~SpriteComponent() {
 void SpriteComponent::Draw(Renderer* renderer) {
     if (texture) {
 	SDL_Rect dst;
-	dst.w = static_cast<int>(width * owner->GetScale());
-	dst.h = static_cast<int>(height * owner->GetScale());
+	dst.w = static_cast<int>(region.w * owner->GetScale());
+	dst.h = static_cast<int>(region.h * owner->GetScale());
 	dst.x = static_cast<int>(owner->GetPosition().x);
 	dst.y = static_cast<int>(owner->GetPosition().y);
 	renderer->GetCamera()->ToScreenSpace(dst);
-	renderer->DrawTexture(texture, &dst, flip);
+	renderer->DrawTexture(texture, &region, &dst, flip);
     }
 }
 
@@ -33,4 +33,5 @@ void SpriteComponent::SetTexture(SDL_Texture* texture, SDL_RendererFlip flip) {
     this->texture = texture;
     this->flip = flip;
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
+    this->region = { 0, 0, width, height };
 }

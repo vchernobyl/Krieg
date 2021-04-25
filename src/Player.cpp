@@ -36,9 +36,10 @@ Player::Player(Game* game) : Actor(game) {
 
     auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetTexture("assets/CharacterSpritesheet.png"));
-    
+    sprite->SetRegion({ 0, 0, 16, 16});
+
     auto collider = new BoxColliderComponent(this);
-    collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());
+    collider->SetSize(Vector2(16, 16) * GetScale());
 
     rigidbody = new RigidbodyComponent(this);
 }
