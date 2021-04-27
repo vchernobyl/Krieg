@@ -1,6 +1,7 @@
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "Actor.h"
+#include "Debug.h"
 
 #include <algorithm>
 #include <cmath>
@@ -91,6 +92,9 @@ bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b, Col
     Rect expandedTarget;
     expandedTarget.position = target.position - in.size / 2;
     expandedTarget.size = target.size + in.size;
+
+    Debug::DrawRect(in);
+    Debug::DrawRect(expandedTarget);
 
     if (RayIntersects(in.position + in.size / 2, vel, expandedTarget, info.contactPoint, info.contactNormal, info.contactTime)) {
 	if (info.contactTime >= 0.0f && info.contactTime < 1.0f) {

@@ -74,7 +74,7 @@ April
 15. Compile to an output directory with a single executable. [DONE]
 16. Allow VS debugger to attach and inspect running code. [DONE]
 17. Implement multiple dynamic box collisions (enemy vs player).
-18. Implement global static debug renderer for all shapes.
+18. Implement global static debug renderer for all shapes. [DONE]
 19. Make a prototype map. [DONE]
 20. Make a prototype character. [DONE]
 21. Implement tile map renderer. [DONE]
@@ -83,7 +83,7 @@ April
 24. Add simple bullet shooting. [DONE]
 25. Destroy bullets on impact. [DONE]
 26. Fix stutterings when shooting and moving forward. [DONE]
-27. Implement texture region drawing. [IN PROGRESS]
+27. Implement texture region drawing. [DONE]
 28. Improve Rect API.
 
 Backlog

@@ -3,7 +3,6 @@
 #include "InputSystem.h"
 #include "PhysicsWorld.h"
 #include "Renderer.h"
-#include "DebugRenderer.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "TileMap.h"
@@ -11,6 +10,7 @@
 #include "Player.h"
 #include "SDL_image.h"
 #include <algorithm>
+#include "Debug.h"
 
 Game::Game() :
     renderer(nullptr),
@@ -35,7 +35,6 @@ bool Game::Initialize() {
     }
 
     physicsWorld = new PhysicsWorld();
-    debugRenderer = new DebugRenderer(physicsWorld);
 
     LoadData();
 
@@ -173,7 +172,7 @@ void Game::DrawGame() {
     renderer->Draw();
 
 #ifdef DEBUG
-    debugRenderer->Draw(renderer);
+    Debug::Draw(renderer);
 #endif
 
     renderer->End();

@@ -28,7 +28,6 @@ private:
     std::vector<class Actor*> pendingActors;
 
     class Renderer* renderer;
-    class DebugRenderer* debugRenderer;
     class InputSystem* inputSystem;
     class PhysicsWorld* physicsWorld;
 
