@@ -9,8 +9,10 @@
 #include "TileMapRenderer.h"
 #include "Player.h"
 #include "SDL_image.h"
-#include <algorithm>
 #include "Debug.h"
+#include "Enemy.h"
+
+#include <algorithm>
 
 Game::Game() :
     renderer(nullptr),
@@ -180,6 +182,7 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Player(this);
+    new Enemy(this);
     
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");

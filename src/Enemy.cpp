@@ -5,28 +5,25 @@
 #include "RigidbodyComponent.h"
 
 Enemy::Enemy(Game* game) : Actor(game) {
-    SetScale(0.5f);
+    SetScale(2.5f);
     SetPosition(Vector2(900, 600));
 
     auto sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetTexture("assets/Enemy.png"));
+    sprite->SetTexture(game->GetTexture("assets/SpriteSheet.png"));
+    sprite->SetRegion({ 0, 16, 16, 16 });
 
     auto collider = new BoxColliderComponent(this);
-    collider->SetSize(Vector2(32, 64));
+    collider->SetSize(Vector2(16, 16) * GetScale());
 
     rigidbody = new RigidbodyComponent(this);
 }
 
-void Enemy::ActorInput(const InputState& input) {
-    velocity = Vector2::Zero;
-    
-    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_D)) velocity.x = 100.0f;
-    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_A)) velocity.x = -100.0f;
-    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_W)) velocity.y = -350.0f;
-    if (input.Keyboard.GetKeyValue(SDL_SCANCODE_S)) velocity.y = 350.0f;
-}
-
 void Enemy::UpdateActor(float deltaTime) {
-    rigidbody->velocity.x = velocity.x * deltaTime;
-    rigidbody->velocity.y = velocity.y * deltaTime;
+    time += deltaTime;
+    rigidbody->velocity.x = velocity * deltaTime;
+
+    if (time > 4.0f) {
+	time = 0.0f;
+	velocity = -velocity;
+    }
 }

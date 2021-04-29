@@ -79,7 +79,7 @@ bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& 
 }
 
 bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b, CollisionInfo& info) {
-    assert(a->GetAttachedRigidbody() != nullptr);
+    assert(a->GetAttachedRigidbody());
 
     const auto& in = a->GetBox();
     const auto& vel = a->GetAttachedRigidbody()->velocity;

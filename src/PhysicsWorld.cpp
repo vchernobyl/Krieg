@@ -20,7 +20,17 @@ void PhysicsWorld::Update(float deltaTime) {
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
 	for (auto j = colliders.begin(); j != colliders.end(); j++) {
 	    if (i == j) continue;
-	    auto info = (*i)->Intersects(*j);
+
+	    auto currentBox = dynamic_cast<BoxColliderComponent*>(*i);
+	    auto otherBox = dynamic_cast<BoxColliderComponent*>(*j);
+
+	    // Hack: this should be checked by the box colliders intersect function.
+	    if (currentBox->GetBox().Intersects(otherBox->GetBox())) {
+		currentBox->GetOwner()->OnCollisionEnter(otherBox);
+		continue;
+	    }
+
+	    auto info = currentBox->Intersects(otherBox);
 	    if (info.colliding) {
 		activeCollisions.push_back(info);
 	    }

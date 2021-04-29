@@ -31,11 +31,11 @@ const float MoveVelocity = 200.0f;
 const float JumpVelocity = 300.0f;
 
 Player::Player(Game* game) : Actor(game) {
-    SetPosition(Vector2(300, 150));
+    SetPosition(Vector2(300, 600));
     SetScale(2.5f);
 
     auto sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetTexture("assets/CharacterSpritesheet.png"));
+    sprite->SetTexture(game->GetTexture("assets/SpriteSheet.png"));
     sprite->SetRegion({ 0, 0, 16, 16});
 
     auto collider = new BoxColliderComponent(this);
