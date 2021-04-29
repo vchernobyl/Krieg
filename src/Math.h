@@ -107,6 +107,14 @@ public:
 	y /= length;
     }
 
+    static float Dot(const Vector2& a, const Vector2& b) {
+	return a.x * b.x + a.y * b.y;
+    }
+
+    static Vector2 Reflect(const Vector2& v, const Vector2& n) {
+	return v - 2.0f * Vector2::Dot(v, n) * n;
+    }
+
     static const Vector2 Zero;
     static const Vector2 Up;
     static const Vector2 Down;

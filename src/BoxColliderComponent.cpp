@@ -29,6 +29,7 @@ void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
 
     auto rigidbody = GetAttachedRigidbody();
     auto otherRigidbody = info.other->GetAttachedRigidbody();
+
     rigidbody->velocity += info.contactNormal
 	* Vector2(Math::Fabs(rigidbody->velocity.x), Math::Fabs(rigidbody->velocity.y))
 	* (1.0f - info.contactTime);
