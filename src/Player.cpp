@@ -24,7 +24,9 @@ Bullet::Bullet(Game* game) : Actor(game) {
 }
 
 void Bullet::OnCollisionEnter(ColliderComponent* other) {
-    Destroy();
+    if (!dynamic_cast<Player*>(other->GetOwner())) {
+	Destroy();
+    }
 }
 
 const float MoveVelocity = 200.0f;
