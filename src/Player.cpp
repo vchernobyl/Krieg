@@ -23,8 +23,8 @@ Bullet::Bullet(Game* game) : Actor(game) {
     collider->isTrigger = true;
 }
 
-void Bullet::OnCollisionEnter(ColliderComponent* other) {
-    if (!dynamic_cast<Player*>(other->GetOwner())) {
+void Bullet::OnCollisionEnter(const CollisionInfo& info) {
+    if (!dynamic_cast<Player*>(info.other->GetOwner())) {
 	Destroy();
     }
 }

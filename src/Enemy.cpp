@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
+#include "ColliderComponent.h"
 #include "RigidbodyComponent.h"
 
 Enemy::Enemy(Game* game) : Actor(game) {
@@ -19,11 +20,12 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    time += deltaTime;
     rigidbody->velocity.x = velocity * deltaTime;
+}
 
-    if (time > 4.0f) {
-	time = 0.0f;
+void Enemy::OnCollisionEnter(const CollisionInfo& info) {
+    if (info.contactNormal == Vector2::Left || info.contactNormal == Vector2::Right) {
 	velocity = -velocity;
     }
 }
+

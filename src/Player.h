@@ -10,7 +10,7 @@ class InputSystem;
 class Bullet : public Actor {
 public:
     Bullet(Game* game);
-    void OnCollisionEnter(ColliderComponent* other) override;
+    void OnCollisionEnter(const CollisionInfo& info) override;
 private:
     RigidbodyComponent* rigidbody;
     BoxColliderComponent* collider;

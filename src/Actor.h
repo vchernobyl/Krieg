@@ -42,7 +42,7 @@ public:
     void AddComponent(Component* component);
     void RemoveComponent(Component* component);
 
-    virtual void OnCollisionEnter(class ColliderComponent* other) {}
+    virtual void OnCollisionEnter(const CollisionInfo& info) {}
 
     template <typename T> T* GetComponent() {
 	for (auto component : components) {
