@@ -8,6 +8,8 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
       texture(nullptr),
       drawOrder(drawOrder),
+      flipX(false),
+      flipY(false),
       width(0),
       height(0) {
     owner->GetGame()->GetRenderer()->AddSprite(this);
@@ -25,7 +27,16 @@ void SpriteComponent::Draw(Renderer* renderer) {
 	dst.x = static_cast<int>(owner->GetPosition().x);
 	dst.y = static_cast<int>(owner->GetPosition().y);
 	renderer->GetCamera()->ToScreenSpace(dst);
-	renderer->DrawTexture(texture, &region, &dst, flip);
+
+	SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
+	if (flipX) {
+	    spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_HORIZONTAL));
+	}
+	if (flipY) {
+	    spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_VERTICAL));
+	}
+
+	renderer->DrawTexture(texture, &region, &dst, spriteFlip);
     }
 }
 

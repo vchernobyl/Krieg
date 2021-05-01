@@ -17,12 +17,14 @@ public:
 
     virtual void Draw(class Renderer* renderer);
     virtual void SetTexture(SDL_Texture* texture, SDL_RendererFlip flip = SDL_FLIP_NONE);
-    void SetFlip(SDL_RendererFlip flip) { this->flip = flip; }
     void SetRegion(SDL_Rect region) { this->region = region; }
 
     int GetDrawOrder() const { return drawOrder; }
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }
+
+    bool flipX;
+    bool flipY;
 protected:
     SDL_Texture* texture;
     SDL_Rect region;

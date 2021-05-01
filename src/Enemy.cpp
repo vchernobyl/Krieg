@@ -27,9 +27,9 @@ void Enemy::OnCollisionEnter(const CollisionInfo& info) {
     if (info.contactNormal == Vector2::Left || info.contactNormal == Vector2::Right) {
 	velocity = -velocity;
 	if (velocity > 0) {
-	    sprite->SetFlip(SDL_FLIP_NONE);
+	    sprite->flipX = false;
 	} else {
-	    sprite->SetFlip(SDL_FLIP_HORIZONTAL);
+	    sprite->flipX = true;
 	}
     }
 }

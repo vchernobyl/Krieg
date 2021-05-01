@@ -51,12 +51,12 @@ void Player::ActorInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) {
 	velocity.x = MoveVelocity;
-	sprite->SetFlip(SDL_FLIP_NONE);
+	sprite->flipX = false;
     }
 
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) {
 	velocity.x = -MoveVelocity;
-	sprite->SetFlip(SDL_FLIP_HORIZONTAL);
+	sprite->flipX = true;
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
