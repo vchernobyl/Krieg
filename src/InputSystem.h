@@ -2,7 +2,7 @@
 
 #include "SDL.h"
 
-enum ButtonState {
+enum class ButtonState {
     None,
     Pressed,
     Released,

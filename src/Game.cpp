@@ -125,7 +125,7 @@ void Game::ProcessInput() {
     inputSystem->Update();
     const InputState& state = inputSystem->GetState();
 
-    if (state.Keyboard.GetKeyState(SDL_SCANCODE_ESCAPE) == Released) {
+    if (state.Keyboard.GetKeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released) {
 	isRunning = false;
     }
 

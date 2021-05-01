@@ -8,15 +8,15 @@ bool KeyboardState::GetKeyValue(SDL_Scancode keyCode) const {
 ButtonState KeyboardState::GetKeyState(SDL_Scancode keyCode) const {
     if (prevState[keyCode] == 0) {
 	if (currState[keyCode] == 0) {
-	    return None;
+	    return ButtonState::None;
 	} else {
-	    return Pressed;
+	    return ButtonState::Pressed;
 	}
     } else {
 	if (currState[keyCode] == 0) {
-	    return Released;
+	    return ButtonState::Released;
 	} else {
-	    return Held;
+	    return ButtonState::Held;
 	}
     }
 }
