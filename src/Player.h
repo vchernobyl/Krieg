@@ -24,4 +24,5 @@ public:
 private:
     RigidbodyComponent* rigidbody;
     Vector2 velocity;
+    bool isJumping = false;
 };

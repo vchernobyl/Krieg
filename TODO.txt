@@ -87,9 +87,11 @@ April
 
 May:
 ----
-1. Improve Rect API.
-2. Implement multiple dynamic box collisions (enemy vs player).
-3. Pass collision info to the OnCollisionEnter function. [IN PROGRESS]
+1. Pass collision info to the OnCollisionEnter function. [DONE]
+2. Allow player single jump only. [DONE]
+3. Flip player/enemy sprites in the direction they are moving. [IN PROGRESS]
+4. Basic audio support.
+[?]Implement multiple dynamic box collisions (enemy vs player) and improve Rect API.
 
 Backlog
 -------
