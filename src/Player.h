@@ -10,7 +10,7 @@ class InputSystem;
 
 class Bullet : public Actor {
 public:
-    Bullet(Game* game);
+    Bullet(Game* game, const Vector2& direction);
     void OnCollisionEnter(const CollisionInfo& info) override;
 private:
     RigidbodyComponent* rigidbody;
@@ -26,5 +26,6 @@ private:
     RigidbodyComponent* rigidbody;
     SpriteComponent* sprite;
     Vector2 velocity;
+    Vector2 direction;
     bool isJumping = false;
 };

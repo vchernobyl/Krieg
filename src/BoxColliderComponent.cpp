@@ -86,6 +86,8 @@ bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b, Col
     const auto& vel = a->GetAttachedRigidbody()->velocity;
     const auto& target = b->GetBox();
 
+    Debug::DrawRect(in);
+
     if (vel.x == 0 && vel.y == 0) {
 	return false;
     }

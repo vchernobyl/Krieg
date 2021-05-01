@@ -8,15 +8,18 @@
 #include "RigidbodyComponent.h"
 #include "InputSystem.h"
 
-Bullet::Bullet(Game* game) : Actor(game) {
+Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     SetScale(0.75f);
 
     auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetTexture("assets/Bullet.png"));
+    if (direction == Vector2::Left) {
+	sprite->flipX = true;
+    }
 
     rigidbody = new RigidbodyComponent(this);
     rigidbody->isKinematic = true;
-    rigidbody->velocity.x = 10.0f;
+    rigidbody->velocity = direction * 10.0f;
 
     collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());
@@ -32,7 +35,7 @@ void Bullet::OnCollisionEnter(const CollisionInfo& info) {
 const float MoveVelocity = 200.0f;
 const float JumpVelocity = 450.0f;
 
-Player::Player(Game* game) : Actor(game) {
+Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetPosition(Vector2(300, 700));
     SetScale(2.5f);
 
@@ -51,11 +54,13 @@ void Player::ActorInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) {
 	velocity.x = MoveVelocity;
+	direction = Vector2::Right;
 	sprite->flipX = false;
     }
 
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) {
 	velocity.x = -MoveVelocity;
+	direction = Vector2::Left;
 	sprite->flipX = true;
     }
 
@@ -65,9 +70,15 @@ void Player::ActorInput(const InputState& inputState) {
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
-	auto bullet = new Bullet(GetGame());
-	auto offset = Vector2(32 + 8, (32 + 8) / 2 - 8);
-	bullet->SetPosition(GetPosition() + offset);
+	auto bullet = new Bullet(GetGame(), direction);
+
+	if (direction == Vector2::Right) {
+	    auto offset = Vector2(32 + 8, (32 + 8) / 2 - 8);
+	    bullet->SetPosition(GetPosition() + offset);
+	} else {
+	    auto offset = Vector2(-8, 12);
+	    bullet->SetPosition(GetPosition() + offset);
+	}
     }
 }
 

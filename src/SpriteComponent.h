@@ -4,12 +4,6 @@
 #include "SDL.h"
 #include "Math.h"
 
-enum SpriteFlip {
-    None = SDL_FLIP_NONE,
-    Horizontal = SDL_FLIP_HORIZONTAL,
-    Vertical = SDL_FLIP_VERTICAL
-};
-
 class SpriteComponent : public Component {
 public:
     SpriteComponent(class Actor* owner, int drawOrder = 100);
