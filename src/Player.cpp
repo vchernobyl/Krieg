@@ -36,7 +36,7 @@ Player::Player(Game* game) : Actor(game) {
     SetPosition(Vector2(300, 700));
     SetScale(2.5f);
 
-    auto sprite = new SpriteComponent(this);
+    sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetTexture("assets/SpriteSheet.png"));
     sprite->SetRegion({ 0, 0, 16, 16});
 
@@ -49,8 +49,15 @@ Player::Player(Game* game) : Actor(game) {
 void Player::ActorInput(const InputState& inputState) {
     velocity = Vector2::Zero;
 
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) velocity.x = MoveVelocity;
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) velocity.x = -MoveVelocity;
+    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) {
+	velocity.x = MoveVelocity;
+	sprite->SetFlip(SDL_FLIP_NONE);
+    }
+
+    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) {
+	velocity.x = -MoveVelocity;
+	sprite->SetFlip(SDL_FLIP_HORIZONTAL);
+    }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
 	velocity.y = -JumpVelocity;

@@ -17,6 +17,7 @@ public:
 
     virtual void Draw(class Renderer* renderer);
     virtual void SetTexture(SDL_Texture* texture, SDL_RendererFlip flip = SDL_FLIP_NONE);
+    void SetFlip(SDL_RendererFlip flip) { this->flip = flip; }
     void SetRegion(SDL_Rect region) { this->region = region; }
 
     int GetDrawOrder() const { return drawOrder; }

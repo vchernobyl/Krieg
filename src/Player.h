@@ -3,8 +3,9 @@
 #include "Actor.h"
 
 class ColliderComponent;
-class RigidbodyComponent;
 class BoxColliderComponent;
+class RigidbodyComponent;
+class SpriteComponent;
 class InputSystem;
 
 class Bullet : public Actor {
@@ -23,6 +24,7 @@ public:
     void UpdateActor(float deltaTime) override;
 private:
     RigidbodyComponent* rigidbody;
+    SpriteComponent* sprite;
     Vector2 velocity;
     bool isJumping = false;
 };

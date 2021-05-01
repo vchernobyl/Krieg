@@ -9,5 +9,6 @@ public:
     void OnCollisionEnter(const class CollisionInfo& info) override;
 private:
     struct RigidbodyComponent* rigidbody;
+    class SpriteComponent* sprite;
     float velocity = -100.0f;
 };

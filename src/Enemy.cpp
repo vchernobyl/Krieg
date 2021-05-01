@@ -9,7 +9,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
     SetScale(2.5f);
     SetPosition(Vector2(900, 600));
 
-    auto sprite = new SpriteComponent(this);
+    sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetTexture("assets/SpriteSheet.png"));
     sprite->SetRegion({ 0, 16, 16, 16 });
 
@@ -26,6 +26,11 @@ void Enemy::UpdateActor(float deltaTime) {
 void Enemy::OnCollisionEnter(const CollisionInfo& info) {
     if (info.contactNormal == Vector2::Left || info.contactNormal == Vector2::Right) {
 	velocity = -velocity;
+	if (velocity > 0) {
+	    sprite->SetFlip(SDL_FLIP_NONE);
+	} else {
+	    sprite->SetFlip(SDL_FLIP_HORIZONTAL);
+	}
     }
 }
 
