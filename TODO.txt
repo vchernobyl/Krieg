@@ -73,19 +73,23 @@ April
 14. Log crash information in the console before closing. [DONE]
 15. Compile to an output directory with a single executable. [DONE]
 16. Allow VS debugger to attach and inspect running code. [DONE]
-17. Implement multiple dynamic box collisions (enemy vs player).
-18. Implement global static debug renderer for all shapes. [DONE]
-19. Make a prototype map. [DONE]
-20. Make a prototype character. [DONE]
-21. Implement tile map renderer. [DONE]
-22. Clean up the included headers. [DONE]
-23. Add compiler flag to enable/disable debug rendering. [DONE]
-24. Add simple bullet shooting. [DONE]
-25. Destroy bullets on impact. [DONE]
-26. Fix stutterings when shooting and moving forward. [DONE]
-27. Implement texture region drawing. [DONE]
-28. Improve Rect API.
-29. Add basic moving AI enemy. [DONE]
+17. Implement global static debug renderer for all shapes. [DONE]
+18. Make a prototype map. [DONE]
+19. Make a prototype character. [DONE]
+20. Implement tile map renderer. [DONE]
+21. Clean up the included headers. [DONE]
+22. Add compiler flag to enable/disable debug rendering. [DONE]
+23. Add simple bullet shooting. [DONE]
+24. Destroy bullets on impact. [DONE]
+25. Fix stutterings when shooting and moving forward. [DONE]
+26. Implement texture region drawing. [DONE]
+27. Add basic moving AI enemy. [DONE]
+
+May:
+----
+1. Improve Rect API.
+2. Implement multiple dynamic box collisions (enemy vs player).
+3. Pass collision info to the OnCollisionEnter function. [IN PROGRESS]
 
 Backlog
 -------

@@ -3,6 +3,11 @@
 #include "Math.h"
 #include <vector>
 
+class Game;
+class InputState;
+class Component;
+class CollisionInfo;
+
 class Actor {
 public:
     enum ActorState {
@@ -11,7 +16,7 @@ public:
 	Dead
     };
 
-    Actor(class Game* game);
+    Actor(Game* game);
     virtual ~Actor();
 
     const Vector2& GetPosition() const { return position; }
@@ -25,21 +30,21 @@ public:
     void SetState(ActorState s) { actorState = s; }
     void Destroy() { actorState = ActorState::Dead; }
 
-    class Game* GetGame() const { return game; }
+    Game* GetGame() const { return game; }
 
-    void ProcessInput(const class InputState& inputState);
-    virtual void ActorInput(const class InputState& inputState);
+    void ProcessInput(const InputState& inputState);
+    virtual void ActorInput(const InputState& inputState);
 
     void Update(float deltaTime);
     void UpdateComponents(float deltaTime);
     virtual void UpdateActor(float deltaTime);
 
-    void AddComponent(class Component* component);
-    void RemoveComponent(class Component* component);
+    void AddComponent(Component* component);
+    void RemoveComponent(Component* component);
 
     virtual void OnCollisionEnter(class ColliderComponent* other) {}
 
-    template <class T> T* GetComponent() {
+    template <typename T> T* GetComponent() {
 	for (auto component : components) {
 	    if (dynamic_cast<T*>(component)) {
 		return dynamic_cast<T*>(component);
@@ -53,6 +58,6 @@ private:
     Vector2 position;
     float scale;
     float rotation;
-    std::vector<class Component*> components;
-    class Game* game;
+    std::vector<Component*> components;
+    Game* game;
 };
