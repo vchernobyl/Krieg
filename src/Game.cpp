@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Actor.h"
 #include "InputSystem.h"
+#include "AudioSystem.h"
 #include "PhysicsWorld.h"
 #include "Renderer.h"
 #include "BoxColliderComponent.h"
@@ -8,10 +9,10 @@
 #include "TileMap.h"
 #include "TileMapRenderer.h"
 #include "Player.h"
-#include "SDL_image.h"
 #include "Debug.h"
 #include "Enemy.h"
 
+#include <SDL_image.h>
 #include <algorithm>
 
 Game::Game() :
@@ -26,13 +27,19 @@ Game::Game() :
 bool Game::Initialize() {
     renderer = new Renderer(this);
     if (!renderer->Initialize(1024, 768)) {
-	SDL_Log("Unable to initialize renderer");
+	SDL_Log("Failed to initialize the renderer");
 	return false;
     }
     
     inputSystem = new InputSystem();
     if (!inputSystem->Initialize()) {
-	SDL_Log("Unable to initialize input system");
+	SDL_Log("Failed to initialize the input system");
+	return false;
+    }
+
+    audioSystem = new AudioSystem(this);
+    if (!audioSystem->Initialize()) {
+	SDL_Log("Failed to initializa the audio system");
 	return false;
     }
 
@@ -54,11 +61,15 @@ void Game::RunLoop() {
 }
 
 void Game::Shutdown() {
+    renderer->Shutdown();
+    delete renderer;
+
     inputSystem->Shutdown();
     delete inputSystem;
 
-    renderer->Shutdown();
-    delete renderer;
+    audioSystem->Shutdown();
+    delete audioSystem;
+
     delete tileMapRenderer;
     delete tileMap;
 

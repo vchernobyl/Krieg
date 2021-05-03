@@ -1,6 +1,6 @@
 #pragma once
 
-#include "SDL.h"
+#include <SDL.h>
 #include <unordered_map>
 #include <string>
 #include <vector>
@@ -16,6 +16,7 @@ public:
     SDL_Texture* GetTexture(const std::string& filename);
     class Renderer* GetRenderer() const { return renderer; }
     class PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
+    class AudioSystem* GetAudioSystem() { return audioSystem; }
 private:
     void ProcessInput();
     void UpdateGame();
@@ -29,6 +30,7 @@ private:
 
     class Renderer* renderer;
     class InputSystem* inputSystem;
+    class AudioSystem* audioSystem;
     class PhysicsWorld* physicsWorld;
 
     // Game specific - will be in a Scene later on

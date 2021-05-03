@@ -31,3 +31,6 @@ void AudioSystem::Shutdown() {
     }
 }
     
+void AudioSystem::Update(float deltaTime) {
+    system->update();
+}
