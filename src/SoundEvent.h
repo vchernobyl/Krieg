@@ -1,10 +1,13 @@
 #pragma once
 
+class AudioSystem;
+
 class SoundEvent {
 public:
     SoundEvent() {}
 protected:
-    friend class AudioSystem;
+    friend AudioSystem;
+    SoundEvent(AudioSystem* system, unsigned int id) {}
 private:
     unsigned int ID;
 };
