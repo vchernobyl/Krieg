@@ -23,6 +23,9 @@ bool AudioSystem::Initialize() {
 	return false;
     }
     
+    LoadBank("assets/Master Bank.strings.bank");
+    LoadBank("assets/Master Bank.bank");
+	
     return true;
 }
 
@@ -88,6 +91,32 @@ void AudioSystem::UnloadBank(const std::string& name) {
 	    if (eventIter != events.end()) {
 		events.erase(eventIter);
 	    }
+	}
+    }
+
+    bank->unloadSampleData();
+    bank->unload();
+    banks.erase(iter);
+}
+
+void AudioSystem::UnloadAllBanks() {
+    for (const auto& iter : banks) {
+	iter.second->unloadSampleData();
+	iter.second->unload();
+    }
+
+    banks.clear();
+    events.clear();
+}
+
+void AudioSystem::PlayEvent(const std::string& name) {
+    const auto iter = events.find(name);
+    if (iter != events.end()) {
+	FMOD::Studio::EventInstance* event = nullptr;
+	iter->second->createInstance(&event);
+	if (event) {
+	    event->start();
+	    event->release();
 	}
     }
 }

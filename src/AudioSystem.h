@@ -23,13 +23,14 @@ public:
     bool Initialize();
     void Shutdown();
     void Update(float deltaTime);
-
     void LoadBank(const std::string& name);
     void UnloadBank(const std::string& name);
     void UnloadAllBanks();
+    void PlayEvent(const std::string& name);
 private:
     Game* game;
     FMOD::Studio::System* system;
     std::unordered_map<std::string, FMOD::Studio::Bank*> banks;
     std::unordered_map<std::string, FMOD::Studio::EventDescription*> events;
+    std::unordered_map<unsigned int, FMOD::Studio::EventInstance*> eventInstances;
 };
