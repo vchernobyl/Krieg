@@ -29,6 +29,9 @@ public:
     void UnloadBank(const std::string& name);
     void UnloadAllBanks();
     SoundEvent PlayEvent(const std::string& name);
+protected:
+    friend SoundEvent;
+    FMOD::Studio::EventInstance* GetEventInstance(unsigned int id);
 private:
     static unsigned int nextID;
 

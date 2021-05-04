@@ -144,3 +144,12 @@ SoundEvent AudioSystem::PlayEvent(const std::string& name) {
 
     return SoundEvent(this, retID);
 }
+
+FMOD::Studio::EventInstance* AudioSystem::GetEventInstance(unsigned int id) {
+    FMOD::Studio::EventInstance* event = nullptr;
+    const auto iter = eventInstances.find(id);
+    if (iter != eventInstances.end()) {
+	event = iter->second;
+    }
+    return event;
+}
