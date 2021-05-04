@@ -22,15 +22,43 @@ void SoundEvent::Restart() {
     }
 }
 
-void SoundEvent::Stop(bool allowFadeOut) {}
+void SoundEvent::Stop(bool allowFadeOut) {
+    const auto event = system ? system->GetEventInstance(ID) : nullptr;
+    if (event) {
+	FMOD_STUDIO_STOP_MODE mode = allowFadeOut ?
+	    FMOD_STUDIO_STOP_ALLOWFADEOUT :
+	    FMOD_STUDIO_STOP_IMMEDIATE;
+	event->stop(mode);
+    }
+}
 
-void SoundEvent::SetPaused(bool pause) {}
+void SoundEvent::SetPaused(bool pause) {
+    const auto event = system ? system->GetEventInstance(ID) : nullptr;
+    if (event) {
+	event->setPaused(pause);
+    }
+}
 
-void SoundEvent::SetVolume(float value) {}
+void SoundEvent::SetVolume(float value) {
+    const auto event = system ? system->GetEventInstance(ID) : nullptr;
+    if (event) {
+	event->setVolume(value);
+    }
+}
 
-void SoundEvent::SetPitch(float value) {}
+void SoundEvent::SetPitch(float value) {
+    const auto event = system ? system->GetEventInstance(ID) : nullptr;
+    if (event) {
+	event->setPitch(value);
+    }
+}
 
-void SoundEvent::SetParameter(const std::string& name, float value) {}
+void SoundEvent::SetParameter(const std::string& name, float value) {
+    const auto event = system ? system->GetEventInstance(ID) : nullptr;
+    if (event) {
+	event->setParameterByName(name.c_str(), value);
+    }
+}
 
 bool SoundEvent::GetPaused() const { return false; }
 
