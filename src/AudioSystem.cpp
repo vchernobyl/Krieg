@@ -3,6 +3,7 @@
 
 #include <fmod_studio.hpp>
 #include <fmod_errors.h>
+#include <vector>
 
 AudioSystem::AudioSystem(Game* game) : game(game), system(nullptr) {}
 
@@ -36,7 +37,7 @@ void AudioSystem::Update(float deltaTime) {
 }
 
 void AudioSystem::LoadBank(const std::string& name) {
-    // Prevent double-loading
+    // Prevent double-loading.
     if (banks.find(name) != banks.end()) {
 	return;
     }
@@ -65,3 +66,28 @@ void AudioSystem::LoadBank(const std::string& name) {
     }
 }
 	
+void AudioSystem::UnloadBank(const std::string& name) {
+    // Ignore if not loaded.
+    auto iter = banks.find(name);
+    if (iter == banks.end()) {
+	return;
+    }
+
+    FMOD::Studio::Bank* bank = iter->second;
+    int numEvents = 0;
+    bank->getEventCount(&numEvents);
+    if (numEvents > 0) {
+	std::vector<FMOD::Studio::EventDescription*> bankEvents(numEvents);
+	bank->getEventList(bankEvents.data(), numEvents, &numEvents);
+	char eventName[512];
+
+	for (int i = 0; i < numEvents; i++) {
+	    FMOD::Studio::EventDescription* e = bankEvents[i];
+	    e->getPath(eventName, 512, nullptr);
+	    auto eventIter = events.find(eventName);
+	    if (eventIter != events.end()) {
+		events.erase(eventIter);
+	    }
+	}
+    }
+}
