@@ -34,3 +34,34 @@ void AudioSystem::Shutdown() {
 void AudioSystem::Update(float deltaTime) {
     system->update();
 }
+
+void AudioSystem::LoadBank(const std::string& name) {
+    // Prevent double-loading
+    if (banks.find(name) != banks.end()) {
+	return;
+    }
+
+    FMOD::Studio::Bank* bank = nullptr;
+    FMOD_RESULT result = system->loadBankFile(name.c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &bank);
+
+    const int maxPathLength = 512;
+    if (result == FMOD_OK) {
+	banks.emplace(name, bank);
+	bank->loadSampleData();
+	
+	int numEvents = 0;
+	bank->getEventCount(&numEvents);
+	if (numEvents > 0) {
+	    std::vector<FMOD::Studio::EventDescription*> bankEvents(numEvents);
+	    bank->getEventList(bankEvents.data(), numEvents, &numEvents);
+	    char eventName[maxPathLength];
+	 
+	    for (int i = 0; i < numEvents; i++) {
+		FMOD::Studio::EventDescription* e = bankEvents[i];
+		e->getPath(eventName, maxPathLength, nullptr);
+		events.emplace(eventName, e);
+	    }
+	}
+    }
+}
+	
