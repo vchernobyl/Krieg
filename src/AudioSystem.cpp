@@ -5,6 +5,8 @@
 #include <fmod_errors.h>
 #include <vector>
 
+unsigned int AudioSystem::nextID = 0;
+
 AudioSystem::AudioSystem(Game* game) : game(game), system(nullptr) {}
 
 bool AudioSystem::Initialize() {
@@ -109,14 +111,16 @@ void AudioSystem::UnloadAllBanks() {
     events.clear();
 }
 
-void AudioSystem::PlayEvent(const std::string& name) {
-    const auto iter = events.find(name);
-    if (iter != events.end()) {
-	FMOD::Studio::EventInstance* event = nullptr;
-	iter->second->createInstance(&event);
-	if (event) {
-	    event->start();
-	    event->release();
-	}
-    }
+SoundEvent AudioSystem::PlayEvent(const std::string& name) {
+    // const auto iter = events.find(name);
+    // if (iter != events.end()) {
+    // 	FMOD::Studio::EventInstance* event = nullptr;
+    // 	iter->second->createInstance(&event);
+    // 	if (event) {
+    // 	    event->start();
+    // 	    event->release();
+    // 	}
+    // }
+    SoundEvent se;
+    return se;
 }

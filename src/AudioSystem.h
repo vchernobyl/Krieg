@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SoundEvent.h"
+
 #include <unordered_map>
 #include <string>
 
@@ -26,8 +28,10 @@ public:
     void LoadBank(const std::string& name);
     void UnloadBank(const std::string& name);
     void UnloadAllBanks();
-    void PlayEvent(const std::string& name);
+    SoundEvent PlayEvent(const std::string& name);
 private:
+    static unsigned int nextID;
+
     Game* game;
     FMOD::Studio::System* system;
     std::unordered_map<std::string, FMOD::Studio::Bank*> banks;
