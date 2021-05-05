@@ -197,7 +197,7 @@ void Game::LoadData() {
     new Player(this);
     new Enemy(this);
 
-    soundEvent = audioSystem->PlayEvent("event:/Music");
+    audioSystem->PlayEvent("event:/Music");
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");

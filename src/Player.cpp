@@ -7,6 +7,7 @@
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "InputSystem.h"
+#include "AudioSystem.h"
 
 Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     SetScale(0.75f);
@@ -79,6 +80,8 @@ void Player::ActorInput(const InputState& inputState) {
 	    auto offset = Vector2(-8, 12);
 	    bullet->SetPosition(GetPosition() + offset);
 	}
+
+	GetGame()->GetAudioSystem()->PlayEvent("event:/Explosion2D");
     }
 }
 
