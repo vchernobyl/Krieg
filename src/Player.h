@@ -6,6 +6,7 @@ class ColliderComponent;
 class BoxColliderComponent;
 class RigidbodyComponent;
 class SpriteComponent;
+class AudioComponent;
 class InputSystem;
 
 class Bullet : public Actor {
@@ -25,6 +26,7 @@ public:
 private:
     RigidbodyComponent* rigidbody;
     SpriteComponent* sprite;
+    AudioComponent* audio;
     Vector2 velocity;
     Vector2 direction;
     bool isJumping = false;

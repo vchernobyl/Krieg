@@ -6,6 +6,7 @@
 #include "ColliderComponent.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
+#include "AudioComponent.h"
 #include "InputSystem.h"
 #include "AudioSystem.h"
 
@@ -48,6 +49,8 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     collider->SetSize(Vector2(16, 16) * GetScale());
 
     rigidbody = new RigidbodyComponent(this);
+
+    audio = new AudioComponent(this);
 }
 
 void Player::ActorInput(const InputState& inputState) {
@@ -81,7 +84,7 @@ void Player::ActorInput(const InputState& inputState) {
 	    bullet->SetPosition(GetPosition() + offset);
 	}
 
-	GetGame()->GetAudioSystem()->PlayEvent("event:/Explosion2D");
+	audio->PlayEvent("event:/Explosion2D");
     }
 }
 
