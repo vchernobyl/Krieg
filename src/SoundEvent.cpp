@@ -60,10 +60,38 @@ void SoundEvent::SetParameter(const std::string& name, float value) {
     }
 }
 
-bool SoundEvent::GetPaused() const { return false; }
+bool SoundEvent::GetPaused() const {
+    bool retVal = false;
+    const auto event = system ? system->GetEventInstance(ID) : nullptr;
+    if (event) {
+	event->getPaused(&retVal);
+    }
+    return retVal;
+}
 
-float SoundEvent::GetVolume() const { return 0; }
+float SoundEvent::GetVolume() const {
+    float retVal = 0.0f;
+    const auto event = system ? system->GetEventInstance(ID) : nullptr;
+    if (event) {
+	event->getVolume(&retVal);
+    }
+    return retVal;
+}
 
-float SoundEvent::GetPitch() const { return 0; }
+float SoundEvent::GetPitch() const {
+    float retVal = 0.0f;
+    const auto event = system ? system->GetEventInstance(ID) : nullptr;
+    if (event) {
+	event->getPitch(&retVal);
+    }
+    return retVal;
+}
 
-float SoundEvent::GetParameter(const std::string& name) { return 0; }
+float SoundEvent::GetParameter(const std::string& name) const {
+    float retVal = 0.0f;
+    const auto event = system ? system->GetEventInstance(ID) : nullptr;
+    if (event) {
+	event->getParameterByName(name.c_str(), &retVal);
+    }
+    return retVal;
+}

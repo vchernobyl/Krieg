@@ -19,7 +19,7 @@ public:
     bool GetPaused() const;
     float GetVolume() const;
     float GetPitch() const;
-    float GetParameter(const std::string& name);
+    float GetParameter(const std::string& name) const;
 protected:
     friend AudioSystem;
     SoundEvent(AudioSystem* system, unsigned int id);
