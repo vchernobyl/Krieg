@@ -1,5 +1,7 @@
 #pragma once
 
+#include "SoundEvent.h"
+
 #include <SDL.h>
 #include <unordered_map>
 #include <string>
@@ -36,7 +38,8 @@ private:
     // Game specific - will be in a Scene later on
     class TileMapRenderer* tileMapRenderer;
     class TileMap* tileMap;
-
+    SoundEvent soundEvent;
+    
     bool isRunning;
     bool updatingActors;
     Uint32 ticks;

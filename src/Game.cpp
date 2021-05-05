@@ -177,6 +177,8 @@ void Game::UpdateGame() {
     for (auto actor : deadActors) {
 	delete actor;
     }
+
+    audioSystem->Update(deltaTime);
 }
 
 void Game::DrawGame() {
@@ -194,6 +196,8 @@ void Game::DrawGame() {
 void Game::LoadData() {
     new Player(this);
     new Enemy(this);
+
+    soundEvent = audioSystem->PlayEvent("event:/Music");
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
