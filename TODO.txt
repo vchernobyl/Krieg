@@ -93,6 +93,7 @@ May:
 4. Basic audio support. [DONE]
 5. Fix bullets passing through the enemies. [DONE]
 6. Fix bullets passing through other colliders if bullet is created within the other collider. [DONE]
+7. Add basic jumping and shooting sounds. [DONE]
 
 Backlog
 -------

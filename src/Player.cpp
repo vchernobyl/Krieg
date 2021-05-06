@@ -69,6 +69,7 @@ void Player::ActorInput(const InputState& inputState) {
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
+	audio->PlayEvent("event:/Jump");
 	velocity.y = -JumpVelocity;
 	isJumping = true;
     }
@@ -84,7 +85,7 @@ void Player::ActorInput(const InputState& inputState) {
 	    bullet->SetPosition(GetPosition() + offset);
 	}
 
-	audio->PlayEvent("event:/Explosion2D");
+	audio->PlayEvent("event:/Shoot");
     }
 }
 
