@@ -17,7 +17,6 @@ void PhysicsWorld::Update(float deltaTime) {
 	}
     }
 
-    // TODO: Try iterating over j = i + 1 elements.
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
 	for (auto j = colliders.begin(); j != colliders.end(); j++) {
 	    if (i == j) continue;

@@ -92,6 +92,11 @@ bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b, Col
 	return false;
     }
 
+    // Check if the current rectangle is already intersecting with the target rectangle.
+    if (in.Intersects(target)) {
+	return true;
+    }
+
     Rect expandedTarget;
     expandedTarget.position = target.position - in.size / 2;
     expandedTarget.size = target.size + in.size;

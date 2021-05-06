@@ -91,7 +91,8 @@ May:
 2. Allow player single jump only. [DONE]
 3. Flip player/enemy sprites in the direction they are moving. [DONE]
 4. Basic audio support. [DONE]
-[?]Implement multiple dynamic box collisions (enemy vs player) and improve Rect API.
+5. Fix bullets passing through the enemies. [DONE]
+6. Fix bullets passing through other colliders if bullet is created within the other collider. [DONE]
 
 Backlog
 -------
