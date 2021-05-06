@@ -131,6 +131,7 @@ void AudioSystem::UnloadAllBanks() {
 SoundEvent AudioSystem::PlayEvent(const std::string& name) {
     unsigned int retID = 0;
     const auto iter = events.find(name);
+    
     if (iter != events.end()) {
 	FMOD::Studio::EventInstance* event = nullptr;
 	iter->second->createInstance(&event);

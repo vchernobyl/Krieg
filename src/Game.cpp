@@ -187,7 +187,7 @@ void Game::DrawGame() {
     renderer->Draw();
 
 #ifdef DEBUG
-    Debug::Draw(renderer);
+    // Debug::Draw(renderer);
 #endif
 
     renderer->End();

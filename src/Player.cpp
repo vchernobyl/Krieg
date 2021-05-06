@@ -10,6 +10,19 @@
 #include "InputSystem.h"
 #include "AudioSystem.h"
 
+MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
+    SetScale(2.0f);
+
+    auto sprite = new SpriteComponent(this, 200);
+    sprite->SetTexture(game->GetTexture("assets/EffectsSpriteSheet.png"));
+    sprite->SetDrawRegion({ 0, 0, 16, 16 });
+}
+
+void MuzzleFlash::UpdateActor(float deltaTime) {
+    if (frames > 0) { Destroy(); }
+    frames++;
+}
+
 Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     SetScale(0.75f);
 
@@ -43,7 +56,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetTexture("assets/SpriteSheet.png"));
-    sprite->SetRegion({ 0, 0, 16, 16});
+    sprite->SetDrawRegion({ 0, 0, 16, 16});
 
     auto collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(16, 16) * GetScale());
@@ -76,13 +89,22 @@ void Player::ActorInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
 	auto bullet = new Bullet(GetGame(), direction);
-
+	auto muzzleFlash = new MuzzleFlash(GetGame());
+	
 	if (direction == Vector2::Right) {
-	    auto offset = Vector2(32 + 8, (32 + 8) / 2 - 8);
-	    bullet->SetPosition(GetPosition() + offset);
+	    auto bulletOffset = Vector2(16 * GetScale() + 8, 12);
+	    bullet->SetPosition(GetPosition() + bulletOffset);
+
+	    auto muzzleOffset = Vector2(32, (16 * GetScale() / 2) - (16 * muzzleFlash->GetScale() / 2));
+	    muzzleOffset.y -= 3;
+	    muzzleFlash->SetPosition(GetPosition() + muzzleOffset);
 	} else {
-	    auto offset = Vector2(-8, 12);
-	    bullet->SetPosition(GetPosition() + offset);
+	    auto bulletOffset = Vector2(-8, 12);
+	    bullet->SetPosition(GetPosition() + bulletOffset);
+	    
+	    auto muzzleOffset = Vector2(-32, (16 * GetScale() / 2) - (16 * muzzleFlash->GetScale() / 2));
+	    muzzleOffset.y -= 3;
+	    muzzleFlash->SetPosition(GetPosition() + muzzleOffset);
 	}
 
 	audio->PlayEvent("event:/Shoot");

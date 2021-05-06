@@ -8,6 +8,15 @@ class RigidbodyComponent;
 class SpriteComponent;
 class AudioComponent;
 class InputSystem;
+class Game;
+
+class MuzzleFlash : public Actor {
+public:
+    MuzzleFlash(Game* game);
+    void UpdateActor(float deltaTime) override;
+private:
+    int frames = 0;
+};
 
 class Bullet : public Actor {
 public:

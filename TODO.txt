@@ -94,6 +94,9 @@ May:
 5. Fix bullets passing through the enemies. [DONE]
 6. Fix bullets passing through other colliders if bullet is created within the other collider. [DONE]
 7. Add basic jumping and shooting sounds. [DONE]
+8. Add gun muzzle flash. [DONE]
+9. Load default texture if texture with a given name is missing.
+10. Fix audio memory leaks.
 
 Backlog
 -------

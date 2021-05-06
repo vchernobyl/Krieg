@@ -11,7 +11,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetTexture("assets/SpriteSheet.png"));
-    sprite->SetRegion({ 0, 16, 16, 16 });
+    sprite->SetDrawRegion({ 0, 16, 16, 16 });
 
     auto collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(16, 16) * GetScale());
