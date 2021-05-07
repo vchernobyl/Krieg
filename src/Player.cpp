@@ -99,7 +99,7 @@ void Player::ActorInput(const InputState& inputState) {
 	    muzzleOffset.y -= 3;
 	    muzzleFlash->SetPosition(GetPosition() + muzzleOffset);
 	} else {
-	    auto bulletOffset = Vector2(-8, 12);
+	    auto bulletOffset = Vector2(-16 * GetScale(), 12);
 	    bullet->SetPosition(GetPosition() + bulletOffset);
 	    
 	    auto muzzleOffset = Vector2(-32, (16 * GetScale() / 2) - (16 * muzzleFlash->GetScale() / 2));
