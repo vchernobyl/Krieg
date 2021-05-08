@@ -22,5 +22,7 @@ void Debug::Draw(Renderer* renderer) {
 }
 
 void Debug::DrawRect(const Rect& rect) {
+#ifdef DEBUG
     rects.push_back(rect);
+#endif
 }

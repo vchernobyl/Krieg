@@ -183,12 +183,10 @@ void Game::UpdateGame() {
 
 void Game::DrawGame() {
     renderer->Begin();
+
     tileMapRenderer->Draw(renderer);
     renderer->Draw();
-
-#ifdef DEBUG
-    // Debug::Draw(renderer);
-#endif
+    Debug::Draw(renderer);
 
     renderer->End();
 }
