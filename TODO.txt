@@ -95,8 +95,7 @@ May:
 6. Fix bullets passing through other colliders if bullet is created within the other collider. [DONE]
 7. Add basic jumping and shooting sounds. [DONE]
 8. Add gun muzzle flash. [DONE]
-9. Load default texture if texture with a given name is missing.
-10. Fix audio memory leaks.
+10. Fix audio memory leaks (nothing to do with audio though, debug rects were not cleared..). [DONE]
 
 Backlog
 -------
@@ -111,6 +110,7 @@ Backlog
 9. Put all player states in a single file.
 10. Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 11. Clean up the SDL main initialization: https://wiki.libsdl.org/SDL_SetMainReady
+12. Load default texture if texture with a given name is missing.
 
 How be brutally effective:
 --------------------------

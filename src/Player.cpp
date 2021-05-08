@@ -34,7 +34,7 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
 
     rigidbody = new RigidbodyComponent(this);
     rigidbody->isKinematic = true;
-    rigidbody->velocity = direction * 10.0f;
+    rigidbody->velocity = direction * 14.0f;
 
     collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());
