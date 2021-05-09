@@ -96,7 +96,9 @@ May:
 7. Add basic jumping and shooting sounds. [DONE]
 8. Add gun muzzle flash. [DONE]
 10. Fix audio memory leaks (nothing to do with audio though, debug rects were not cleared..). [DONE]
-11. Add minimal bullet spread. [IN PROGRESS]
+11. Add minimal bullet spread. [DONE]
+12. Basic particle system. [IN PROGRESS]
+13. Use smart pointers in Game class. [IN PROGRESS]
 
 Backlog
 -------
