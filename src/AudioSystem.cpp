@@ -32,6 +32,7 @@ bool AudioSystem::Initialize() {
 }
 
 void AudioSystem::Shutdown() {
+    UnloadAllBanks();
     if (system) {
 	system->release();
     }
