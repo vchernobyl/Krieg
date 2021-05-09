@@ -1,7 +1,7 @@
 #pragma once
 
-#include <random>
 #include "Math.h"
+#include <random>
 
 class Random {
 public:

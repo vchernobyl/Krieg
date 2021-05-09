@@ -9,6 +9,7 @@
 #include "AudioComponent.h"
 #include "InputSystem.h"
 #include "AudioSystem.h"
+#include "Random.h"
 
 MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
     SetScale(2.0f);
@@ -28,13 +29,17 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
 
     auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetTexture("assets/Bullet.png"));
+
     if (direction == Vector2::Left) {
 	sprite->flipX = true;
     }
 
     rigidbody = new RigidbodyComponent(this);
     rigidbody->isKinematic = true;
-    rigidbody->velocity = direction * 14.0f;
+
+    float spreadRange = 0.5f;
+    auto spread = Vector2(0.0f, Random::GetFloatRange(-spreadRange, spreadRange));
+    rigidbody->velocity = (direction * 14.0f) + spread;
 
     collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());

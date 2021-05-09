@@ -29,6 +29,8 @@ public:
     float GetRotation() const { return rotation; }
     void SetRotation(float rotation) { this->rotation = rotation; }
 
+    Vector2 GetForward() const { return Vector2(Math::Cos(rotation), -Math::Sin(rotation)); }
+
     ActorState GetState() const { return actorState; }
     void SetState(ActorState s) { actorState = s; }
     void Destroy() { actorState = ActorState::Dead; }
@@ -60,7 +62,7 @@ private:
     ActorState actorState;
     Vector2 position;
     float scale;
-    float rotation;
+    float rotation; // In radians
     std::vector<Component*> components;
     Game* game;
 };
