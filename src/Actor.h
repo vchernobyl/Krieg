@@ -10,7 +10,7 @@ class CollisionInfo;
 
 class Actor {
 public:
-    enum ActorState {
+    enum class ActorState {
 	Active,
 	Paused,
 	Dead
@@ -24,7 +24,10 @@ public:
     void Translate(const Vector2& v) { position.x += v.x; position.y += v.y; }
 
     float GetScale() const { return scale; }
-    void SetScale(float s) { scale = s; }
+    void SetScale(float scale) { this->scale = scale; }
+
+    float GetRotation() const { return rotation; }
+    void SetRotation(float rotation) { this->rotation = rotation; }
 
     ActorState GetState() const { return actorState; }
     void SetState(ActorState s) { actorState = s; }

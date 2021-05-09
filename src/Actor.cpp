@@ -6,7 +6,7 @@
 #include <algorithm>
 
 Actor::Actor(Game* game)
-    : actorState(Active),
+    : actorState(ActorState::Active),
       position(Vector2::Zero),
       scale(1.0f),
       rotation(0.0f),
@@ -22,7 +22,7 @@ Actor::~Actor() {
 }
 
 void Actor::ProcessInput(const InputState& inputState) {
-    if (actorState == Active) {
+    if (actorState == ActorState::Active) {
 	for (auto comp : components) {
 	    comp->ProcessInput(inputState);
 	}
@@ -33,7 +33,7 @@ void Actor::ProcessInput(const InputState& inputState) {
 void Actor::ActorInput(const InputState& inputState) {}
 
 void Actor::Update(float deltaTime) {
-    if (actorState == Active) {
+    if (actorState == ActorState::Active) {
 	UpdateComponents(deltaTime);
 	UpdateActor(deltaTime);
     }
