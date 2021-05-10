@@ -37,7 +37,7 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     rigidbody = new RigidbodyComponent(this);
     rigidbody->isKinematic = true;
 
-    float spreadRange = 0.5f;
+    float spreadRange = 0.7f;
     auto spread = Vector2(0.0f, Random::GetFloatRange(-spreadRange, spreadRange));
     rigidbody->velocity = (direction * 14.0f) + spread;
 

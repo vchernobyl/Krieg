@@ -98,8 +98,7 @@ May:
 10. Fix audio memory leaks (nothing to do with audio though, debug rects were not cleared..). [DONE]
 11. Add minimal bullet spread. [DONE]
 12. Basic particle system. [IN PROGRESS]
-13. Use smart pointers in Game class. [IN PROGRESS]
-14. Add assertions to the Game Shutdown function to check that all resources are released.
+12.1 Implement Vector3 and Vector4 for colors. [DONE]
 
 Backlog
 -------

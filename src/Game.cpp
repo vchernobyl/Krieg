@@ -11,6 +11,7 @@
 #include "Player.h"
 #include "Debug.h"
 #include "Enemy.h"
+#include "Random.h"
 
 #include <SDL_image.h>
 #include <algorithm>
@@ -44,6 +45,8 @@ bool Game::Initialize() {
     }
 
     physicsWorld = new PhysicsWorld();
+
+    Random::Init();
 
     LoadData();
 
