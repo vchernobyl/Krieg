@@ -99,6 +99,7 @@ May:
 11. Add minimal bullet spread. [DONE]
 12. Basic particle system. [IN PROGRESS]
 13. Use smart pointers in Game class. [IN PROGRESS]
+14. Add assertions to the Game Shutdown function to check that all resources are released.
 
 Backlog
 -------

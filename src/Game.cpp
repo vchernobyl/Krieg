@@ -70,9 +70,6 @@ void Game::Shutdown() {
     audioSystem->Shutdown();
     delete audioSystem;
 
-    delete tileMapRenderer;
-    delete tileMap;
-
     UnloadData();
     SDL_Quit();
 }
@@ -215,6 +212,9 @@ void Game::LoadData() {
 }
 
 void Game::UnloadData() {
+    delete tileMapRenderer;
+    delete tileMap;
+
     while (!actors.empty()) {
 	delete actors.back();
     }
