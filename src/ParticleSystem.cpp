@@ -7,7 +7,20 @@ const size_t MaxParticles = 1000;
 ParticleSystem::ParticleSystem()
     : particlePool(MaxParticles) {}
 
-void ParticleSystem::Update(float deltaTime) {}
+void ParticleSystem::Update(float deltaTime) {
+    for (auto& particle : particlePool) {
+	if (!particle.active) continue;
+
+	if (particle.lifeRemaining <= 0.0f) {
+	    particle.active = false;
+	    continue;
+	}
+
+	particle.lifeRemaining -= deltaTime;
+	particle.position += particle.velocity * deltaTime;
+	particle.rotation += 0.01f * deltaTime;
+    }
+}
 
 void ParticleSystem::Draw(Renderer* renderer) {}
 
