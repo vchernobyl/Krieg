@@ -1,29 +1,34 @@
 #pragma once
 
 #include "Math.h"
-#include "Actor.h"
-
 #include <vector>
 
-class Game;
-class Renderer;
-struct SDL_Texture;
-
-class Particle : public Actor {
-public:
-    Particle(Game* game);
-    void UpdateActor(float deltaTime) override;
-    bool IsDead() const { return lifetime <= 0; }
-private:
+struct ParticleProps {
     Vector2 position;
-    int lifetime;
-    SDL_Texture* texture;
+    Vector2 velocity, velocityVariation;
+    Vector4 colorBegin, colorEnd;
+    float sizeBegin, sizeEnd, sizeVariation;
+    float lifetime = 1.0f;
 };
 
-class ParticleSystem : public Actor {
+class ParticleSystem {
 public:
-    ParticleSystem(Game* game, int maxParticles = 100);
-    void UpdateActor(float deltaTime) override;
+    ParticleSystem();
+    void Update(float deltaTime);
+    void Draw(class Renderer* renderer);
+    void Emit(const ParticleProps& particleProps);
 private:
-    std::vector<Particle*> particles;
+    struct Particle {
+	Vector2 position;
+	Vector2 velocity;
+	Vector4 colorBegin, colorEnd;
+	float rotation = 0.0f;
+	float sizeBegin, sizeEnd;
+	float lifetime = 1.0f;
+	float lifeRemaining = 0.0f;
+	bool active = false;
+    };
+
+    std::vector<Particle> particlePool;
+    size_t poolIndex = 999;
 };

@@ -1,12 +1,11 @@
 #include "ParticleSystem.h"
 #include "Renderer.h"
-#include "Random.h"
 
-#include <SDL.h>
+ParticleSystem::ParticleSystem() {}
 
-Particle::Particle(Game* game)
-    : Actor(game), lifetime(10)  {}
+void ParticleSystem::Update(float deltaTime) {}
 
-void Particle::UpdateActor(float deltaTime) {
-    lifetime++;
-}
+void ParticleSystem::Draw(Renderer* renderer) {}
+
+void ParticleSystem::Emit(const ParticleProps& particleProps) {}
+
