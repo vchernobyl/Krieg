@@ -12,9 +12,11 @@
 #include "Debug.h"
 #include "Enemy.h"
 #include "Random.h"
+#include "ParticleSystem.h"
 
 #include <SDL_image.h>
 #include <algorithm>
+#include <memory>
 
 Game::Game() :
     renderer(nullptr),
@@ -194,6 +196,8 @@ void Game::DrawGame() {
 void Game::LoadData() {
     new Player(this);
     new Enemy(this);
+
+    ParticleSystem particles;
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
