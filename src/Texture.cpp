@@ -22,7 +22,10 @@ bool Texture::Load(const std::string& fileName, SDL_Renderer* renderer) {
     }
 
     texture = SDL_CreateTextureFromSurface(renderer, surf);
+    width = surf->w;
+    height = surf->h;
     SDL_FreeSurface(surf);
+
     if (!texture) {
 	SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
 	return false;

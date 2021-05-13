@@ -20,24 +20,24 @@ SpriteComponent::~SpriteComponent() {
 }
 
 void SpriteComponent::Draw(Renderer* renderer) {
-    if (texture) {
-	SDL_Rect dst;
-	dst.w = static_cast<int>(region.w * owner->GetScale());
-	dst.h = static_cast<int>(region.h * owner->GetScale());
-	dst.x = static_cast<int>(owner->GetPosition().x);
-	dst.y = static_cast<int>(owner->GetPosition().y);
-	renderer->GetCamera()->ToScreenSpace(dst);
+    if (!texture) return;
 
-	SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
-	if (flipX) {
-	    spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_HORIZONTAL));
-	}
-	if (flipY) {
-	    spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_VERTICAL));
-	}
+    SDL_Rect dst;
+    dst.w = static_cast<int>(region.w * owner->GetScale());
+    dst.h = static_cast<int>(region.h * owner->GetScale());
+    dst.x = static_cast<int>(owner->GetPosition().x);
+    dst.y = static_cast<int>(owner->GetPosition().y);
+    renderer->GetCamera()->ToScreenSpace(dst);
 
-	SDL_RenderCopyEx(renderer->GetSDLRenderer(), texture, &region, &dst, 0, nullptr, spriteFlip);
+    SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
+    if (flipX) {
+	spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_HORIZONTAL));
     }
+    if (flipY) {
+	spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_VERTICAL));
+    }
+
+    SDL_RenderCopyEx(renderer->GetSDLRenderer(), texture, &region, &dst, 0, nullptr, spriteFlip);
 }
 
 void SpriteComponent::SetTexture(SDL_Texture* texture) {
