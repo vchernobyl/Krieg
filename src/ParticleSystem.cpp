@@ -32,7 +32,9 @@ void ParticleSystem::Draw(Renderer* renderer) {
 	if (!particle.active) continue;
 
 	Vector2 pos = particle.position;
-	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), 8, 8 };
+	float life = particle.lifeRemaining / particle.lifetime;
+	int size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life);
+	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), size, size };
 	renderer->GetCamera()->ToScreenSpace(dst);
 	SDL_RenderCopyEx(renderer->GetSDLRenderer(), texture->texture, nullptr, &dst, 0, nullptr, SDL_FLIP_NONE);
     }

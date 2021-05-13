@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Math.h"
 #include <string>
 
 struct SDL_Renderer;
@@ -11,7 +12,7 @@ public:
     SDL_Texture* texture;
 
     Texture();
-    
+    void SetColor(const Vector3& color);
 private:
     friend class Renderer;
     bool Load(const std::string& fileName, SDL_Renderer* renderer);

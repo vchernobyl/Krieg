@@ -207,9 +207,9 @@ void Game::LoadData() {
     particle.colorBegin = Vector4(254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f);
     particle.colorEnd = Vector4(254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f);
 
-    particle.sizeBegin = 0.5f;
+    particle.sizeBegin = 15.0f;
     particle.sizeEnd = 0.0f;
-    particle.sizeVariation = 0.3f;
+    particle.sizeVariation = 5.0f;
     particle.lifetime = 1.0f;
     particle.velocity = Vector2(12.0f, 35.0f);
     particle.velocityVariation = Vector2(100.0f, 100.0f);
