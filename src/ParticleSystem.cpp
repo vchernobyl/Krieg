@@ -31,8 +31,13 @@ void ParticleSystem::Draw(Renderer* renderer) {
     for (auto& particle : particlePool) {
 	if (!particle.active) continue;
 
-	Vector2 pos = particle.position;
 	float life = particle.lifeRemaining / particle.lifetime;
+	Vector4 color = Vector4::Lerp(particle.colorEnd, particle.colorBegin, life);
+
+	// TODO: Set alpha
+	texture->SetColor(Vector3(color.x, color.y, color.z));
+	
+	Vector2 pos = particle.position;
 	int size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life);
 	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), size, size };
 	renderer->GetCamera()->ToScreenSpace(dst);

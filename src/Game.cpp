@@ -204,8 +204,8 @@ void Game::LoadData() {
     new Player(this);
     new Enemy(this);
 
-    particle.colorBegin = Vector4(254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f);
-    particle.colorEnd = Vector4(254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f);
+    particle.colorBegin = Vector4(254, 212, 123, 1.0f);
+    particle.colorEnd = Vector4(254, 109, 41, 1.0f);
 
     particle.sizeBegin = 15.0f;
     particle.sizeEnd = 0.0f;
