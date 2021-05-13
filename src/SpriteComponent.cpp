@@ -3,6 +3,9 @@
 #include "Camera.h"
 #include "Renderer.h"
 #include "Game.h"
+#include "Texture.h"
+
+#include <SDL.h>
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
@@ -30,12 +33,8 @@ void SpriteComponent::Draw(Renderer* renderer) {
     renderer->GetCamera()->ToScreenSpace(dst);
 
     SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
-    if (flipX) {
-	spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_HORIZONTAL));
-    }
-    if (flipY) {
-	spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_VERTICAL));
-    }
+    if (flipX) spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_HORIZONTAL));
+    if (flipY) spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_VERTICAL));
 
     SDL_Rect src = {
 	static_cast<int>(region.position.x),
@@ -44,11 +43,12 @@ void SpriteComponent::Draw(Renderer* renderer) {
 	static_cast<int>(region.size.y)
     };
     
-    SDL_RenderCopyEx(renderer->GetSDLRenderer(), texture, &src, &dst, 0, nullptr, spriteFlip);
+    SDL_RenderCopyEx(renderer->GetSDLRenderer(), texture->texture, &src, &dst, 0, nullptr, spriteFlip);
 }
 
-void SpriteComponent::SetTexture(SDL_Texture* texture) {
+void SpriteComponent::SetTexture(Texture* texture) {
     this->texture = texture;
-    SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
-    this->region = { 0, 0, (float) width, (float) height };
+    this->width = texture->width;
+    this->height = texture->height;
+    this->region = { 0, 0, static_cast<float>(width), static_cast<float>(height) };
 }

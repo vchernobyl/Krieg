@@ -15,7 +15,7 @@ MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
     SetScale(2.0f);
 
     auto sprite = new SpriteComponent(this, 200);
-    sprite->SetTexture(game->GetTexture("assets/EffectsSpriteSheet.png"));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/EffectsSpriteSheet.png"));
     sprite->SetDrawRegion({ 0, 0, 16, 16 });
 }
 
@@ -28,7 +28,7 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     SetScale(0.75f);
 
     auto sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetTexture("assets/Bullet.png"));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Bullet.png"));
 
     if (direction == Vector2::Left) {
 	sprite->flipX = true;
@@ -60,7 +60,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetScale(2.5f);
 
     sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetTexture("assets/SpriteSheet.png"));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
     sprite->SetDrawRegion({ 0, 0, 16, 16});
 
     auto collider = new BoxColliderComponent(this);

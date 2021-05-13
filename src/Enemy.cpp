@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Game.h"
+#include "Renderer.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
 #include "ColliderComponent.h"
@@ -10,7 +11,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
     SetPosition(Vector2(900, 600));
 
     sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetTexture("assets/SpriteSheet.png"));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
     sprite->SetDrawRegion({ 0, 16, 16, 16 });
 
     auto collider = new BoxColliderComponent(this);

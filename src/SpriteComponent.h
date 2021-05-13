@@ -3,8 +3,6 @@
 #include "Component.h"
 #include "Math.h"
 
-#include <SDL.h>
-
 class SpriteComponent : public Component {
 public:
     bool flipX, flipY;
@@ -13,7 +11,7 @@ public:
     ~SpriteComponent();
 
     virtual void Draw(class Renderer* renderer);
-    virtual void SetTexture(SDL_Texture* texture);
+    virtual void SetTexture(class Texture* texture);
 
     void SetDrawRegion(Rect region) { this->region = region; }
 
@@ -21,7 +19,7 @@ public:
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }
 protected:
-    SDL_Texture* texture;
+    class Texture* texture;
     Rect region;
     int drawOrder;
     int width;
