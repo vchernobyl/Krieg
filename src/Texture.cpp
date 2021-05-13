@@ -9,6 +9,11 @@ void Texture::SetColor(const Vector3& color) {
     SDL_SetTextureColorMod(texture, color.x, color.y, color.z);
 }
 
+void Texture::SetColor(const Vector4& color) {
+    SDL_SetTextureAlphaMod(texture, color.w);
+    SDL_SetTextureColorMod(texture, color.x, color.y, color.z);
+}
+
 bool Texture::Load(const std::string& fileName, SDL_Renderer* renderer) {
     SDL_Surface* surf = IMG_Load(fileName.c_str());
     if (!surf) {

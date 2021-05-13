@@ -33,14 +33,14 @@ void ParticleSystem::Draw(Renderer* renderer) {
 
 	float life = particle.lifeRemaining / particle.lifetime;
 	Vector4 color = Vector4::Lerp(particle.colorEnd, particle.colorBegin, life);
-
-	// TODO: Set alpha
-	texture->SetColor(Vector3(color.x, color.y, color.z));
+	texture->SetColor(color);
 	
 	Vector2 pos = particle.position;
 	int size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life);
 	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), size, size };
 	renderer->GetCamera()->ToScreenSpace(dst);
+
+	// TODO: Apply rotation
 	SDL_RenderCopyEx(renderer->GetSDLRenderer(), texture->texture, nullptr, &dst, 0, nullptr, SDL_FLIP_NONE);
     }
 }

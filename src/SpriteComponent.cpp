@@ -40,9 +40,8 @@ void SpriteComponent::Draw(Renderer* renderer) {
     }
 }
 
-void SpriteComponent::SetTexture(SDL_Texture* texture, SDL_RendererFlip flip) {
+void SpriteComponent::SetTexture(SDL_Texture* texture) {
     this->texture = texture;
-    this->flip = flip;
     SDL_QueryTexture(texture, nullptr, nullptr, &width, &height);
     this->region = { 0, 0, width, height };
 }
