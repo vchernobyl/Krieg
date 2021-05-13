@@ -66,6 +66,8 @@ void Game::RunLoop() {
 }
 
 void Game::Shutdown() {
+    UnloadData();
+
     renderer->Shutdown();
     delete renderer;
 
@@ -75,7 +77,6 @@ void Game::Shutdown() {
     audioSystem->Shutdown();
     delete audioSystem;
 
-    UnloadData();
     SDL_Quit();
 }
 
@@ -236,6 +237,8 @@ void Game::LoadData() {
 }
 
 void Game::UnloadData() {
+    renderer->UnloadData();
+    
     delete tileMapRenderer;
     delete tileMap;
 

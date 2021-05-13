@@ -2,7 +2,9 @@
 #include "SpriteComponent.h"
 #include "Game.h"
 #include "Camera.h"
-#include "SDL_image.h"
+#include "Texture.h"
+
+#include <SDL_image.h>
 #include <algorithm>
 
 const int WorldWidth = 32 * 42;
@@ -45,6 +47,14 @@ void Renderer::Shutdown() {
     SDL_DestroyWindow(window);
 }
 
+void Renderer::UnloadData() {
+    for (auto iter : textures) {
+	iter.second->Unload();
+	delete iter.second;
+    }
+    textures.clear();
+}
+
 void Renderer::Begin() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
@@ -56,6 +66,10 @@ void Renderer::Draw() {
     }
 }
 
+void Renderer::End() {
+    SDL_RenderPresent(renderer);
+}
+
 void Renderer::DrawTexture(SDL_Texture* texture, SDL_Rect* dst, SDL_RendererFlip flip) {
     SDL_RenderCopyEx(renderer, texture, nullptr, dst, 0, nullptr, flip);
 }
@@ -64,8 +78,21 @@ void Renderer::DrawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst, S
     SDL_RenderCopyEx(renderer, texture, src, dst, 0, nullptr, flip);
 }
 
-void Renderer::End() {
-    SDL_RenderPresent(renderer);
+Texture* Renderer::GetTexture(const std::string& fileName) {
+    Texture* tex = nullptr;
+    auto iter = textures.find(fileName);
+    if (iter != textures.end()) {
+	tex = iter->second;
+    } else {
+	tex = new Texture();
+	if (tex->Load(fileName, renderer)) {
+	    textures.emplace(fileName, tex);
+	} else {
+	    delete tex;
+	    tex = nullptr;
+	}
+    }
+    return tex;
 }
 
 void Renderer::AddSprite(SpriteComponent* sprite) {

@@ -2,21 +2,26 @@
 
 #include <SDL.h>
 #include <vector>
+#include <unordered_map>
 
 class Game;
 class Camera;
 class SpriteComponent;
+class Texture;
 
 class Renderer {
 public:
     Renderer(Game*);
     bool Initialize(int screenWidth, int screenHeight);
     void Shutdown();
+    void UnloadData();
     void Begin();
     void Draw();
+    void End();
     void DrawTexture(SDL_Texture* texture, SDL_Rect* dst, SDL_RendererFlip flip = SDL_FLIP_NONE);
     void DrawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst, SDL_RendererFlip flip = SDL_FLIP_NONE);
-    void End();
+
+    Texture* GetTexture(const std::string& fileName);
     void AddSprite(SpriteComponent* sprite);
     void RemoveSprite(SpriteComponent* sprite);
     SDL_Renderer* GetSDLRenderer() const { return renderer; }
@@ -24,7 +29,10 @@ public:
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
+
     std::vector<SpriteComponent*> sprites;
+    std::unordered_map<std::string, Texture*> textures;
+
     Game* game;
     Camera* camera;
 };
