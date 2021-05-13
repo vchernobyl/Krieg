@@ -17,6 +17,7 @@ public:
     void Update(float deltaTime);
     void Draw(class Renderer* renderer);
     void Emit(const ParticleProps& particleProps);
+    void SetTexture(struct SDL_Texture* texture) { this->texture = texture; }
 private:
     struct Particle {
 	Vector2 position;
@@ -31,4 +32,6 @@ private:
 
     std::vector<Particle> particlePool;
     size_t poolIndex = 999;
+
+    struct SDL_Texture* texture;
 };

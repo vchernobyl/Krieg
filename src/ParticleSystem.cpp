@@ -2,6 +2,8 @@
 #include "Renderer.h"
 #include "Random.h"
 
+#include <SDL.h>
+
 const size_t MaxParticles = 1000;
 
 ParticleSystem::ParticleSystem()
@@ -22,7 +24,15 @@ void ParticleSystem::Update(float deltaTime) {
     }
 }
 
-void ParticleSystem::Draw(Renderer* renderer) {}
+void ParticleSystem::Draw(Renderer* renderer) {
+    for (auto& particle : particlePool) {
+	if (!particle.active) continue;
+
+	Vector2 pos = particle.position;
+	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), 8, 8 };
+	renderer->DrawTexture(texture, &dst);
+    }
+}
 
 void ParticleSystem::Emit(const ParticleProps& particleProps) {
     Particle& particle = particlePool[poolIndex];
@@ -44,4 +54,3 @@ void ParticleSystem::Emit(const ParticleProps& particleProps) {
 
     poolIndex = --poolIndex % particlePool.size();
 }
-

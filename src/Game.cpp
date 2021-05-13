@@ -181,6 +181,7 @@ void Game::UpdateGame() {
     }
 
     audioSystem->Update(deltaTime);
+    particleSystem.Update(deltaTime);
 }
 
 void Game::DrawGame() {
@@ -188,6 +189,7 @@ void Game::DrawGame() {
 
     tileMapRenderer->Draw(renderer);
     renderer->Draw();
+    particleSystem.Draw(renderer);
     Debug::Draw(renderer);
 
     renderer->End();
@@ -197,7 +199,18 @@ void Game::LoadData() {
     new Player(this);
     new Enemy(this);
 
-    ParticleSystem particles;
+    particle.colorBegin = Vector4(254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f);
+    particle.colorEnd = Vector4(254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f);
+
+    particle.sizeBegin = 0.5f;
+    particle.sizeEnd = 0.0f;
+    particle.sizeVariation = 0.3f;
+    particle.lifetime = 1.0f;
+    particle.velocity = Vector2::Zero;
+    particle.velocityVariation = Vector2(3.0f, 1.0f);
+    particle.position = Vector2::Zero;
+    
+    particleSystem.SetTexture(GetTexture("assets/Particle.png"));
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
