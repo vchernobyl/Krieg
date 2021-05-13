@@ -14,14 +14,15 @@ public:
 
     virtual void Draw(class Renderer* renderer);
     virtual void SetTexture(SDL_Texture* texture);
-    void SetDrawRegion(SDL_Rect region) { this->region = region; }
+
+    void SetDrawRegion(Rect region) { this->region = region; }
 
     int GetDrawOrder() const { return drawOrder; }
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }
 protected:
     SDL_Texture* texture;
-    SDL_Rect region;
+    Rect region;
     int drawOrder;
     int width;
     int height;
