@@ -1,6 +1,7 @@
 #include "ParticleSystem.h"
 #include "Renderer.h"
 #include "Random.h"
+#include "Camera.h"
 
 #include <SDL.h>
 
@@ -30,6 +31,7 @@ void ParticleSystem::Draw(Renderer* renderer) {
 
 	Vector2 pos = particle.position;
 	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), 8, 8 };
+	renderer->GetCamera()->ToScreenSpace(dst);
 	renderer->DrawTexture(texture, &dst);
     }
 }

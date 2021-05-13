@@ -180,6 +180,10 @@ void Game::UpdateGame() {
 	delete actor;
     }
 
+    for (int i = 0; i < 5; i++ ) {
+	particleSystem.Emit(particle);
+    }
+
     audioSystem->Update(deltaTime);
     particleSystem.Update(deltaTime);
 }
@@ -206,9 +210,9 @@ void Game::LoadData() {
     particle.sizeEnd = 0.0f;
     particle.sizeVariation = 0.3f;
     particle.lifetime = 1.0f;
-    particle.velocity = Vector2::Zero;
-    particle.velocityVariation = Vector2(3.0f, 1.0f);
-    particle.position = Vector2::Zero;
+    particle.velocity = Vector2(12.0f, 35.0f);
+    particle.velocityVariation = Vector2(100.0f, 100.0f);
+    particle.position = Vector2(400.0f, 400.0f);
     
     particleSystem.SetTexture(GetTexture("assets/Particle.png"));
 
