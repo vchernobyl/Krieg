@@ -97,12 +97,15 @@ May:
 8. Add gun muzzle flash. [DONE]
 10. Fix audio memory leaks (nothing to do with audio though, debug rects were not cleared..). [DONE]
 11. Add minimal bullet spread. [DONE]
-12. Basic particle system. [IN PROGRESS]
+12. Basic particle system. [DONE]
 12.1 Implement Vector3 and Vector4 for colors. [DONE]
 12.2 Implement basic particle drawing. [DONE]
-12.3 Move texture loading to the renderer. [IN PROGRESS]
-12.4 Implement SDL_Texture wrapper class. [DONE]
-12.5 Make SpriteComponent use Texture class. [IN PROGRESS]
+12.3 Implement particle rotation.
+13 Move texture loading to the renderer. [IN PROGRESS]
+13.1 Implement SDL_Texture wrapper class. [DONE]
+13.2 Make SpriteComponent use Texture class. [DONE]
+13.3 Make TileMap use Texture class. [IN PROGRESS]
+13.4 Make TileMap use Rectangle class. [DONE]
 
 Backlog
 -------

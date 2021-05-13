@@ -9,7 +9,12 @@ TileSet::TileSet(SDL_Texture* image, int tileWidth, int tileHeight, int tileCoun
     const int rows = tileCount / columns;
     for (int row = 0; row < rows; ++row) {
 	for (int col = 0; col < columns; ++col) {
-	    SDL_Rect rect { col * tileWidth, row * tileHeight, tileWidth, tileHeight };
+	    Rect rect = {
+		static_cast<float>(col * tileWidth),
+		static_cast<float>(row * tileHeight),
+		static_cast<float>(tileWidth),
+		static_cast<float>(tileHeight)
+	    };
 	    TileInfo tileInfo { row * columns + col, image, rect };
 	    tileInfos.push_back(tileInfo);
 	}
@@ -101,13 +106,18 @@ const std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileI
 const std::vector<ObjectGroup*> TileMapLoader::CreateObjectGroups(pugi::xml_node root) {
     std::vector<ObjectGroup*> groups;
     for (pugi::xml_node objectGroupNode : root.children("objectgroup")) {
-	std::vector<SDL_Rect> objects;
+	std::vector<Rect> objects;
 	for (pugi::xml_node objectNode : objectGroupNode.children("object")) {
 	    auto x = objectNode.attribute("x").as_int();
 	    auto y = objectNode.attribute("y").as_int();
 	    auto width = objectNode.attribute("width").as_int();
 	    auto height = objectNode.attribute("height").as_int();
-	    auto rect = SDL_Rect { x, y, width, height };
+	    Rect rect = {
+		static_cast<float>(x),
+		static_cast<float>(y),
+		static_cast<float>(width),
+		static_cast<float>(height)
+	    };
 	    objects.push_back(rect);
 	}
 	auto name = objectGroupNode.attribute("name").value();

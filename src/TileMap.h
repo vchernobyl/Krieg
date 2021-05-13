@@ -7,12 +7,12 @@
 #include "pugixml.hpp"
 
 struct TileInfo {
-    TileInfo(int id, SDL_Texture* texture, SDL_Rect rect)
+    TileInfo(int id, SDL_Texture* texture, Rect rect)
 	: id(id), texture(texture), rect(rect) {}
 
     int id;
     SDL_Texture* texture;
-    SDL_Rect rect;
+    Rect rect;
 };
 
 struct TileSet {
@@ -47,11 +47,11 @@ struct TileMapLayer {
 };
 
 struct ObjectGroup {
-    ObjectGroup(const std::string& name, std::vector<SDL_Rect> objects)
+    ObjectGroup(const std::string& name, std::vector<Rect> objects)
 	: name(name), objects(objects) {}
 
     std::string name;
-    std::vector<SDL_Rect> objects;
+    std::vector<Rect> objects;
 };
 
 class TileMap {

@@ -225,10 +225,10 @@ void Game::LoadData() {
     for (auto objectGroup : objectGroups) {
 	for (const auto& object : objectGroup->objects) {
 	    auto objectActor = new Actor(this);
-	    objectActor->SetPosition(Vector2(object.x, object.y));
+	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    objectCollider->SetSize(Vector2(object.w, object.h));
+	    objectCollider->SetSize(Vector2(object.size.x, object.size.y));
 
 	    auto rigidbody = new RigidbodyComponent(objectActor);
 	    rigidbody->isKinematic = true;
