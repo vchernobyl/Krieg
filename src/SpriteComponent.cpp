@@ -36,7 +36,7 @@ void SpriteComponent::Draw(Renderer* renderer) {
 	    spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_VERTICAL));
 	}
 
-	renderer->DrawTexture(texture, &region, &dst, spriteFlip);
+	SDL_RenderCopyEx(renderer->GetSDLRenderer(), texture, &region, &dst, 0, nullptr, spriteFlip);
     }
 }
 

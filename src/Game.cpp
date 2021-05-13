@@ -215,7 +215,7 @@ void Game::LoadData() {
     particle.velocityVariation = Vector2(100.0f, 100.0f);
     particle.position = Vector2(400.0f, 400.0f);
     
-    particleSystem.SetTexture(GetTexture("assets/Particle.png"));
+    particleSystem.SetTexture(renderer->GetTexture("assets/Particle.png"));
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");

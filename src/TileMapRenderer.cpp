@@ -12,7 +12,7 @@ void TileMapRenderer::Draw(Renderer* renderer) {
 	    auto src = tileInfo->rect;
 	    auto dst = SDL_Rect { static_cast<int>(tile.x), static_cast<int>(tile.y), 32, 32 };
 	    renderer->GetCamera()->ToScreenSpace(dst);
-	    renderer->DrawTexture(tileInfo->texture, &src, &dst);
+	    SDL_RenderCopyEx(renderer->GetSDLRenderer(), tileInfo->texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
 	}
     }
 }

@@ -70,14 +70,6 @@ void Renderer::End() {
     SDL_RenderPresent(renderer);
 }
 
-void Renderer::DrawTexture(SDL_Texture* texture, SDL_Rect* dst, SDL_RendererFlip flip) {
-    SDL_RenderCopyEx(renderer, texture, nullptr, dst, 0, nullptr, flip);
-}
-
-void Renderer::DrawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst, SDL_RendererFlip flip) {
-    SDL_RenderCopyEx(renderer, texture, src, dst, 0, nullptr, flip);
-}
-
 Texture* Renderer::GetTexture(const std::string& fileName) {
     Texture* tex = nullptr;
     auto iter = textures.find(fileName);
