@@ -99,6 +99,9 @@ May:
 11. Add minimal bullet spread. [DONE]
 12. Basic particle system. [IN PROGRESS]
 12.1 Implement Vector3 and Vector4 for colors. [DONE]
+12.2 Implement basic particle drawing. [DONE]
+12.3 Move texture loading to the renderer. [IN PROGRESS]
+12.4 Implement SDL_Texture wrapper class. [IN PROGRESS]
 
 Backlog
 -------
