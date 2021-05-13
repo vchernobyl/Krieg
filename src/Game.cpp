@@ -11,9 +11,12 @@
 #include "Player.h"
 #include "Debug.h"
 #include "Enemy.h"
+#include "Random.h"
+#include "ParticleSystem.h"
 
 #include <SDL_image.h>
 #include <algorithm>
+#include <memory>
 
 Game::Game() :
     renderer(nullptr),
@@ -45,6 +48,8 @@ bool Game::Initialize() {
 
     physicsWorld = new PhysicsWorld();
 
+    Random::Init();
+
     LoadData();
 
     ticks = SDL_GetTicks();
@@ -69,9 +74,6 @@ void Game::Shutdown() {
 
     audioSystem->Shutdown();
     delete audioSystem;
-
-    delete tileMapRenderer;
-    delete tileMap;
 
     UnloadData();
     SDL_Quit();
@@ -178,7 +180,12 @@ void Game::UpdateGame() {
 	delete actor;
     }
 
+    for (int i = 0; i < 5; i++ ) {
+	particleSystem.Emit(particle);
+    }
+
     audioSystem->Update(deltaTime);
+    particleSystem.Update(deltaTime);
 }
 
 void Game::DrawGame() {
@@ -186,6 +193,7 @@ void Game::DrawGame() {
 
     tileMapRenderer->Draw(renderer);
     renderer->Draw();
+    particleSystem.Draw(renderer);
     Debug::Draw(renderer);
 
     renderer->End();
@@ -194,6 +202,19 @@ void Game::DrawGame() {
 void Game::LoadData() {
     new Player(this);
     new Enemy(this);
+
+    particle.colorBegin = Vector4(254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f);
+    particle.colorEnd = Vector4(254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f);
+
+    particle.sizeBegin = 0.5f;
+    particle.sizeEnd = 0.0f;
+    particle.sizeVariation = 0.3f;
+    particle.lifetime = 1.0f;
+    particle.velocity = Vector2(12.0f, 35.0f);
+    particle.velocityVariation = Vector2(100.0f, 100.0f);
+    particle.position = Vector2(400.0f, 400.0f);
+    
+    particleSystem.SetTexture(GetTexture("assets/Particle.png"));
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
@@ -215,6 +236,9 @@ void Game::LoadData() {
 }
 
 void Game::UnloadData() {
+    delete tileMapRenderer;
+    delete tileMap;
+
     while (!actors.empty()) {
 	delete actors.back();
     }

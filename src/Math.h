@@ -119,11 +119,71 @@ public:
 	return v - 2.0f * Vector2::Dot(v, n) * n;
     }
 
+    static Vector2 Lerp(const Vector2& a, const Vector2& b, float t) {
+	return Vector2(a + t * (b - a));
+    }
+
     static const Vector2 Zero;
     static const Vector2 Up;
     static const Vector2 Down;
     static const Vector2 Left;
     static const Vector2 Right;
+};
+
+class Vector3 {
+public:
+    float x, y, z;
+
+    explicit Vector3(float x = 0, float y = 0, float z = 0)
+	: x(x), y(y), z(z) {}
+
+    friend Vector3 operator+(const Vector3& a, const Vector3& b) {
+	return Vector3(a.x + b.x, a.y + b.y, a.z + b.z);
+    }
+
+    friend Vector3 operator-(const Vector3& a, const Vector3& b) {
+	return Vector3(a.x - b.x, a.y - b.y, a.z - b.z);
+    }
+
+    friend Vector3 operator*(const Vector3& v, float scalar) {
+	return Vector3(v.x * scalar, v.y * scalar, v.z * scalar);
+    }
+
+    friend Vector3 operator*(float scalar, const Vector3& v) {
+	return Vector3(v.x * scalar, v.y * scalar, v.z * scalar);
+    }
+
+    static Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
+	return Vector3(a + t * (b - a));
+    }
+};
+
+class Vector4 {
+public:
+    float x, y, z, w;
+
+    explicit Vector4(float x = 0, float y = 0, float z = 0, float w = 0)
+	: x(x), y(y), z(z), w(w) {}
+
+    friend Vector4 operator+(const Vector4& a, const Vector4& b) {
+	return Vector4(a.x + b.x, a.y + b.y, a.z + b.z, a.w + b.w);
+    }
+
+    friend Vector4 operator-(const Vector4& a, const Vector4& b) {
+	return Vector4(a.x - b.x, a.y - b.y, a.z - b.z, a.w - b.w);
+    }
+
+    friend Vector4 operator*(const Vector4& v, float scalar) {
+	return Vector4(v.x * scalar, v.y * scalar, v.z * scalar, v.w * scalar);
+    }
+
+    friend Vector4 operator*(float scalar, const Vector4& v) {
+	return Vector4(v.x * scalar, v.y * scalar, v.z * scalar, v.w * scalar);
+    }
+
+    static Vector4 Lerp(const Vector4& a, const Vector4& b, float t) {
+	return Vector4(a + t * (b - a));
+    }
 };
 
 struct Rect {
