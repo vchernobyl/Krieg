@@ -13,14 +13,14 @@ public:
 
     void SetOffset(Vector2 offset) { this->offset = offset; }
     void SetSize(Vector2 size) { this->size = size; }
-    Rect& GetBox();
+    Rectangle& GetBox();
 private:
     Vector2 offset;
     Vector2 size;
-    Rect box;
+    Rectangle box;
 };
 
-bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& target,
+bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rectangle& target,
 		   Vector2& contactPoint, Vector2& contactNormal, float& tHitNear);
 
 bool BoxCollidersIntersect(class BoxColliderComponent* a, class BoxColliderComponent* b,

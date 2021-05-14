@@ -9,12 +9,12 @@
 class Texture;
 
 struct TileInfo {
-    TileInfo(int id, Texture* texture, Rect rect)
+    TileInfo(int id, Texture* texture, Rectangle rect)
 	: id(id), texture(texture), rect(rect) {}
 
     int id;
     Texture* texture;
-    Rect rect;
+    Rectangle rect;
 };
 
 struct TileSet {
@@ -49,11 +49,11 @@ struct TileMapLayer {
 };
 
 struct ObjectGroup {
-    ObjectGroup(const std::string& name, std::vector<Rect> objects)
+    ObjectGroup(const std::string& name, std::vector<Rectangle> objects)
 	: name(name), objects(objects) {}
 
     std::string name;
-    std::vector<Rect> objects;
+    std::vector<Rectangle> objects;
 };
 
 class TileMap {

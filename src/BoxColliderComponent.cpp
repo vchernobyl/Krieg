@@ -35,13 +35,13 @@ void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
 	* (1.0f - info.contactTime);
 }
 
-Rect& BoxColliderComponent::GetBox() {
+Rectangle& BoxColliderComponent::GetBox() {
     box.position = owner->GetPosition() + offset;
     box.size = size;
     return box;
 }
 
-bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rect& target,
+bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rectangle& target,
 		   Vector2& contactPoint, Vector2& contactNormal, float& tHitNear) {
     Vector2 tNear = (target.position - rayOrigin) / rayDir;
     Vector2 tFar = (target.position + target.size - rayOrigin) / rayDir;
@@ -97,7 +97,7 @@ bool BoxCollidersIntersect(BoxColliderComponent* a, BoxColliderComponent* b, Col
 	return true;
     }
 
-    Rect expandedTarget;
+    Rectangle expandedTarget;
     expandedTarget.position = target.position - in.size / 2;
     expandedTarget.size = target.size + in.size;
 

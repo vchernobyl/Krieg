@@ -2,7 +2,7 @@
 #include "Renderer.h"
 #include "Camera.h"
 
-std::vector<Rect> Debug::rects = {};
+std::vector<Rectangle> Debug::rects = {};
 
 void Debug::Draw(Renderer* renderer) {
     for (const auto& rect : rects) {
@@ -21,7 +21,7 @@ void Debug::Draw(Renderer* renderer) {
     rects.clear();
 }
 
-void Debug::DrawRect(const Rect& rect) {
+void Debug::DrawRect(const Rectangle& rect) {
 #ifdef DEBUG
     rects.push_back(rect);
 #endif

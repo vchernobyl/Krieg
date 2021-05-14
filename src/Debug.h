@@ -4,7 +4,7 @@
 class Debug {
 public:
     static void Draw(class Renderer* renderer);
-    static void DrawRect(const Rect& rect);
+    static void DrawRect(const Rectangle& rect);
 private:
-    static std::vector<Rect> rects;
+    static std::vector<Rectangle> rects;
 };

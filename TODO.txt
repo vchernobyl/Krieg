@@ -107,6 +107,7 @@ May:
   13.3 Make TileMap use Texture class. [DONE]
   13.4 Make TileMap use Rectangle class. [DONE]
   13.5 Remove texture handling from the Game class. [DONE]
+14. Refactor Rect class. [IN PROGRESS]
 
 Backlog
 -------
