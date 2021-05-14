@@ -101,12 +101,12 @@ May:
   12.1 Implement Vector3 and Vector4 for colors. [DONE]
   12.2 Implement basic particle drawing. [DONE]
   12.3 Implement particle rotation. [DONE]
-13. Move texture loading to the renderer. [IN PROGRESS]
+13. Move texture loading to the renderer. [DONE]
   13.1 Implement SDL_Texture wrapper class. [DONE]
   13.2 Make SpriteComponent use Texture class. [DONE]
   13.3 Make TileMap use Texture class. [DONE]
   13.4 Make TileMap use Rectangle class. [DONE]
-  13.5 Remove texture handling from the Game class. [IN PROGRESS]
+  13.5 Remove texture handling from the Game class. [DONE]
 
 Backlog
 -------

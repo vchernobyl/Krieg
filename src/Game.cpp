@@ -102,28 +102,6 @@ void Game::RemoveActor(Actor* actor) {
     }
 }
 
-SDL_Texture* Game::GetTexture(const std::string& filename) {
-    SDL_Texture* tex = nullptr;
-    auto iter = textures.find(filename);
-    if (iter != textures.end()) {
-	tex = iter->second;
-    } else {
-	SDL_Surface* surf = IMG_Load(filename.c_str());
-	if (!surf) {
-	    SDL_Log("Failed to load texture file %s", filename.c_str());
-	    return nullptr;
-	}
-	tex = SDL_CreateTextureFromSurface(renderer->GetSDLRenderer(), surf);
-	SDL_FreeSurface(surf);
-	if (!tex) {
-	    SDL_Log("Failed to convert surface to texture for %s", filename.c_str());
-	    return nullptr;
-	}
-	textures.emplace(filename.c_str(), tex);
-    }
-    return tex;
-}
-
 void Game::ProcessInput() {
     inputSystem->PrepareForUpdate();
 
@@ -245,9 +223,4 @@ void Game::UnloadData() {
     while (!actors.empty()) {
 	delete actors.back();
     }
-
-    for (auto tex : textures) {
-	SDL_DestroyTexture(tex.second);
-    }
-    textures.clear();
 }
