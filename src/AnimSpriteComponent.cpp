@@ -1,12 +1,14 @@
 #include "AnimSpriteComponent.h"
 #include "Actor.h"
+#include "Texture.h"
 #include "Math.h"
 
 AnimSpriteComponent::AnimSpriteComponent(Actor* owner, int drawOrder)
     : SpriteComponent(owner, drawOrder),
-      direction(Right),
-      animNum(0), frameNum(0),
-      frameTime(0.0f), animFPS(24.0f) {}
+      animNum(0),
+      frameNum(0),
+      frameTime(0.0f),
+      animFPS(24.0f) {}
 
 void AnimSpriteComponent::Update(float deltaTime) {
     frameTime += deltaTime;
@@ -20,24 +22,17 @@ void AnimSpriteComponent::Update(float deltaTime) {
 	    }
 	}
 	int imageNum = animData.frameInfo[animNum].startFrame + frameNum;
-	SetTexture(animData.images[imageNum], (SDL_RendererFlip) direction);
+	SetTexture(animData.images[imageNum]);
 	frameTime = Math::Fmod(frameTime, 1.0f / animFPS);
     }
 }
 
-void AnimSpriteComponent::ChangeAnim(int animNum, AnimDirection direction) {
+void AnimSpriteComponent::ChangeAnim(int animNum) {
     this->animNum = animNum;
-    this->direction = direction;
     frameNum = 0;
     frameTime = 0.0f;
     int imageNum = animData.frameInfo[animNum].startFrame;
-    SetTexture(animData.images[imageNum], (SDL_RendererFlip) direction);
-}
-
-void AnimSpriteComponent::SetDirection(AnimDirection direction) {
-    this->direction = direction;
-    int imageNum = animData.frameInfo[animNum].startFrame + frameNum;
-    SetTexture(animData.images[imageNum], (SDL_RendererFlip) direction);
+    SetTexture(animData.images[imageNum]);
 }
 
 bool AnimSpriteComponent::Finished(int animNum) {

@@ -10,13 +10,8 @@ struct AnimFrameData {
 };
 
 struct AnimData {
-    std::vector<SDL_Texture*> images;
+    std::vector<class Texture*> images;
     std::vector<AnimFrameData> frameInfo;
-};
-
-enum AnimDirection {
-    Left = SDL_FLIP_HORIZONTAL,
-    Right = SDL_FLIP_NONE
 };
 
 class AnimSpriteComponent : public SpriteComponent {
@@ -25,12 +20,10 @@ public:
     void SetAnimData(const AnimData& animData) { this->animData = animData; }
     void SetAnimFPS(float animFPS) { this->animFPS = animFPS; }
     void Update(float deltaTime) override;
-    void ChangeAnim(int animNum, AnimDirection direction = AnimDirection::Right);
-    void SetDirection(AnimDirection direction);
+    void ChangeAnim(int animNum);
     bool Finished(int animNum);
 private:
     AnimData animData;
-    AnimDirection direction;
     int animNum, frameNum;
     float frameTime, animFPS;
 };

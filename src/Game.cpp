@@ -66,6 +66,8 @@ void Game::RunLoop() {
 }
 
 void Game::Shutdown() {
+    UnloadData();
+
     renderer->Shutdown();
     delete renderer;
 
@@ -75,7 +77,6 @@ void Game::Shutdown() {
     audioSystem->Shutdown();
     delete audioSystem;
 
-    UnloadData();
     SDL_Quit();
 }
 
@@ -99,28 +100,6 @@ void Game::RemoveActor(Actor* actor) {
 	std::iter_swap(iter, actors.end() - 1);
 	actors.pop_back();
     }
-}
-
-SDL_Texture* Game::GetTexture(const std::string& filename) {
-    SDL_Texture* tex = nullptr;
-    auto iter = textures.find(filename);
-    if (iter != textures.end()) {
-	tex = iter->second;
-    } else {
-	SDL_Surface* surf = IMG_Load(filename.c_str());
-	if (!surf) {
-	    SDL_Log("Failed to load texture file %s", filename.c_str());
-	    return nullptr;
-	}
-	tex = SDL_CreateTextureFromSurface(renderer->GetSDLRenderer(), surf);
-	SDL_FreeSurface(surf);
-	if (!tex) {
-	    SDL_Log("Failed to convert surface to texture for %s", filename.c_str());
-	    return nullptr;
-	}
-	textures.emplace(filename.c_str(), tex);
-    }
-    return tex;
 }
 
 void Game::ProcessInput() {
@@ -203,18 +182,18 @@ void Game::LoadData() {
     new Player(this);
     new Enemy(this);
 
-    particle.colorBegin = Vector4(254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f);
-    particle.colorEnd = Vector4(254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f);
+    particle.colorBegin = Vector4(254, 212, 123, 255.0f);
+    particle.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
 
-    particle.sizeBegin = 0.5f;
+    particle.sizeBegin = 15.0f;
     particle.sizeEnd = 0.0f;
-    particle.sizeVariation = 0.3f;
+    particle.sizeVariation = 5.0f;
     particle.lifetime = 1.0f;
     particle.velocity = Vector2(12.0f, 35.0f);
     particle.velocityVariation = Vector2(100.0f, 100.0f);
     particle.position = Vector2(400.0f, 400.0f);
     
-    particleSystem.SetTexture(GetTexture("assets/Particle.png"));
+    particleSystem.SetTexture(renderer->GetTexture("assets/Particle.png"));
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
@@ -224,10 +203,10 @@ void Game::LoadData() {
     for (auto objectGroup : objectGroups) {
 	for (const auto& object : objectGroup->objects) {
 	    auto objectActor = new Actor(this);
-	    objectActor->SetPosition(Vector2(object.x, object.y));
+	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    objectCollider->SetSize(Vector2(object.w, object.h));
+	    objectCollider->SetSize(Vector2(object.size.x, object.size.y));
 
 	    auto rigidbody = new RigidbodyComponent(objectActor);
 	    rigidbody->isKinematic = true;
@@ -236,15 +215,12 @@ void Game::LoadData() {
 }
 
 void Game::UnloadData() {
+    renderer->UnloadData();
+    
     delete tileMapRenderer;
     delete tileMap;
 
     while (!actors.empty()) {
 	delete actors.back();
     }
-
-    for (auto tex : textures) {
-	SDL_DestroyTexture(tex.second);
-    }
-    textures.clear();
 }

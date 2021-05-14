@@ -23,7 +23,6 @@ public:
     void Shutdown();
     void AddActor(Actor* actor);
     void RemoveActor(Actor* actor);
-    SDL_Texture* GetTexture(const std::string& filename);
     Renderer* GetRenderer() const { return renderer; }
     PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
     AudioSystem* GetAudioSystem() { return audioSystem; }
@@ -34,7 +33,6 @@ private:
     void LoadData();
     void UnloadData();
 
-    std::unordered_map<std::string, SDL_Texture*> textures;
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
 

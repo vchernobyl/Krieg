@@ -97,20 +97,26 @@ May:
 8. Add gun muzzle flash. [DONE]
 10. Fix audio memory leaks (nothing to do with audio though, debug rects were not cleared..). [DONE]
 11. Add minimal bullet spread. [DONE]
-12. Basic particle system. [IN PROGRESS]
-12.1 Implement Vector3 and Vector4 for colors. [DONE]
+12. Basic particle system. [DONE]
+  12.1 Implement Vector3 and Vector4 for colors. [DONE]
+  12.2 Implement basic particle drawing. [DONE]
+  12.3 Implement particle rotation. [DONE]
+13. Move texture loading to the renderer. [DONE]
+  13.1 Implement SDL_Texture wrapper class. [DONE]
+  13.2 Make SpriteComponent use Texture class. [DONE]
+  13.3 Make TileMap use Texture class. [DONE]
+  13.4 Make TileMap use Rectangle class. [DONE]
+  13.5 Remove texture handling from the Game class. [DONE]
 
 Backlog
 -------
 1. Implement tile map parallax.
 2. Implement basic scene manager.
 3. Extract resource handling into a separate resource manager.
-4. Implement sprite component drawing from source region if given.
 5. Detect collisions between two moving objects.
 6. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
 7. Refactor Tile map load function.
 8. Refactor Tile map structs/classes.
-9. Put all player states in a single file.
 10. Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 11. Clean up the SDL main initialization: https://wiki.libsdl.org/SDL_SetMainReady
 12. Load default texture if texture with a given name is missing.

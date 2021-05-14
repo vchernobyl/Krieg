@@ -1,5 +1,6 @@
 #include "Component.h"
 #include "Actor.h"
+#include "InputSystem.h"
 
 Component::Component(Actor* owner, int updateOrder)
     : owner(owner),
@@ -10,7 +11,3 @@ Component::Component(Actor* owner, int updateOrder)
 Component::~Component() {
     owner->RemoveComponent(this);
 }
-
-void Component::Update(float deltaTime) {}
-
-void Component::ProcessInput(const InputState& inputState) {}

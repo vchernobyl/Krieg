@@ -2,13 +2,13 @@
 #include "Renderer.h"
 #include "Random.h"
 #include "Camera.h"
+#include "Texture.h"
 
 #include <SDL.h>
 
 const size_t MaxParticles = 1000;
 
-ParticleSystem::ParticleSystem()
-    : particlePool(MaxParticles) {}
+ParticleSystem::ParticleSystem() : particlePool(MaxParticles), texture(nullptr) {}
 
 void ParticleSystem::Update(float deltaTime) {
     for (auto& particle : particlePool) {
@@ -26,13 +26,27 @@ void ParticleSystem::Update(float deltaTime) {
 }
 
 void ParticleSystem::Draw(Renderer* renderer) {
+    if (!texture) return;
+    
     for (auto& particle : particlePool) {
 	if (!particle.active) continue;
 
+	float life = particle.lifeRemaining / particle.lifetime;
+	Vector4 color = Vector4::Lerp(particle.colorEnd, particle.colorBegin, life);
+	texture->SetColor(color);
+	
 	Vector2 pos = particle.position;
-	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), 8, 8 };
+	int size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life);
+	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), size, size };
 	renderer->GetCamera()->ToScreenSpace(dst);
-	renderer->DrawTexture(texture, &dst);
+
+	SDL_RenderCopyEx(renderer->GetSDLRenderer(),
+			 texture->texture,
+			 nullptr,
+			 &dst,
+			 Math::ToDegrees(particle.rotation),
+			 nullptr, // Rotate around the center of the texture
+			 SDL_FLIP_NONE);
     }
 }
 
