@@ -16,7 +16,7 @@ MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
 
     auto sprite = new SpriteComponent(this, 200);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/EffectsSpriteSheet.png"));
-    sprite->SetDrawRegion({ 0, 0, 16, 16 });
+    sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 }
 
 void MuzzleFlash::UpdateActor(float deltaTime) {
@@ -61,7 +61,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
-    sprite->SetDrawRegion({ 0, 0, 16, 16});
+    sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 
     auto collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(16, 16) * GetScale());

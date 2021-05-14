@@ -191,8 +191,8 @@ public:
     Vector2 position;
     Vector2 size;
     
-    Rectangle(float x = 0, float y = 0, float width = 0, float height = 0);
-    Rectangle(Vector2 position, Vector2 size);
+    explicit Rectangle(float x = 0, float y = 0, float width = 0, float height = 0);
+    explicit Rectangle(Vector2 position, Vector2 size);
 
     bool Contains(const Vector2& point) const;
     bool Intersects(const Rectangle& rect) const;
