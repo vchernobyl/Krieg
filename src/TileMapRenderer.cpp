@@ -2,6 +2,7 @@
 #include "TileMap.h"
 #include "Renderer.h"
 #include "Camera.h"
+#include "Texture.h"
 
 TileMapRenderer::TileMapRenderer(TileMap* map) : map(map) {}
 
@@ -26,7 +27,7 @@ void TileMapRenderer::Draw(Renderer* renderer) {
 	    };
 	    
 	    renderer->GetCamera()->ToScreenSpace(dst);
-	    SDL_RenderCopyEx(renderer->GetSDLRenderer(), tileInfo->texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
+	    SDL_RenderCopyEx(renderer->GetSDLRenderer(), tileInfo->texture->texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
 	}
     }
 }

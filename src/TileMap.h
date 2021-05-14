@@ -1,24 +1,26 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#include "SDL.h"
 #include "Math.h"
 #include "pugixml.hpp"
 
+#include <string>
+#include <vector>
+
+class Texture;
+
 struct TileInfo {
-    TileInfo(int id, SDL_Texture* texture, Rect rect)
+    TileInfo(int id, Texture* texture, Rect rect)
 	: id(id), texture(texture), rect(rect) {}
 
     int id;
-    SDL_Texture* texture;
+    Texture* texture;
     Rect rect;
 };
 
 struct TileSet {
-    TileSet(SDL_Texture* image, int tileWidth, int tileHeight, int tileCount, int columns);
+    TileSet(Texture* image, int tileWidth, int tileHeight, int tileCount, int columns);
     const TileInfo* GetTileInfo(int id) const { return &tileInfos[id]; }
-    SDL_Texture* image;
+    Texture* image;
     int tileWidth;
     int tileHeight;
     int tileCount;

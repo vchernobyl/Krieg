@@ -1,9 +1,12 @@
 #include "TileMap.h"
 #include "Game.h"
+#include "Renderer.h"
+#include "Texture.h"
+
 #include <sstream>
 #include <iostream>
 
-TileSet::TileSet(SDL_Texture* image, int tileWidth, int tileHeight, int tileCount, int columns)
+TileSet::TileSet(Texture* image, int tileWidth, int tileHeight, int tileCount, int columns)
     : image(image), tileWidth(tileWidth), tileHeight(tileHeight),
       tileCount(tileCount), columns(columns) {
     const int rows = tileCount / columns;
@@ -64,7 +67,7 @@ TileSet* TileMapLoader::CreateTileSet(pugi::xml_node root) {
     auto imageName = tileSetNode.child("image").attribute("source").value();
     std::stringstream imagePath;
     imagePath << "assets/" << imageName;
-    return new TileSet(game->GetTexture(imagePath.str()),
+    return new TileSet(game->GetRenderer()->GetTexture(imagePath.str()),
 		       tileSetNode.attribute("tilewidth").as_int(),
 		       tileSetNode.attribute("tileheight").as_int(),
 		       tileSetNode.attribute("tilecount").as_int(),
