@@ -39,7 +39,7 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
 
     float spreadRange = 0.7f;
     auto spread = Vector2(0.0f, Random::GetFloatRange(-spreadRange, spreadRange));
-    rigidbody->velocity = (direction * 14.0f) + spread;
+    rigidbody->velocity = (direction * 12.0f) + spread;
 
     collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());

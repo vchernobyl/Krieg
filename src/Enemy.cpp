@@ -8,7 +8,7 @@
 
 Enemy::Enemy(Game* game) : Actor(game) {
     SetScale(2.5f);
-    SetPosition(Vector2(900, 600));
+    SetPosition(Vector2(100, 700));
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
@@ -25,9 +25,7 @@ void Enemy::UpdateActor(float deltaTime) {
 }
 
 void Enemy::OnCollisionEnter(const CollisionInfo& info) {
-    // TODO: We should have 2 different callbacks, one for collisions
-    // and one for triggers.
-    if (info.other->isTrigger) return;
+    // If hit a wall, just turn around.
     if (info.contactNormal == Vector2::Left || info.contactNormal == Vector2::Right) {
 	velocity = -velocity;
 	if (velocity > 0) {
@@ -38,3 +36,6 @@ void Enemy::OnCollisionEnter(const CollisionInfo& info) {
     }
 }
 
+void Enemy::OnTriggerEnter(const CollisionInfo& info) {
+    SDL_Log("Enemy hit!");
+}

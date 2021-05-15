@@ -48,6 +48,7 @@ public:
     void RemoveComponent(Component* component);
 
     virtual void OnCollisionEnter(const CollisionInfo& info) {}
+    virtual void OnTriggerEnter(const CollisionInfo& info) {}
 
     template <typename T> T* GetComponent() {
 	for (auto component : components) {

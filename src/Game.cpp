@@ -135,8 +135,6 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
-    physicsWorld->Update(deltaTime);
-
     updatingActors = true;
     for (auto actor : actors) {
 	actor->Update(deltaTime);
@@ -163,6 +161,7 @@ void Game::UpdateGame() {
 	particleSystem.Emit(particle);
     }
 
+    physicsWorld->Update(deltaTime);
     audioSystem->Update(deltaTime);
     particleSystem.Update(deltaTime);
 }

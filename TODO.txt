@@ -107,7 +107,10 @@ May:
   13.3 Make TileMap use Texture class. [DONE]
   13.4 Make TileMap use Rectangle class. [DONE]
   13.5 Remove texture handling from the Game class. [DONE]
-14. Refactor Rect class. [IN PROGRESS]
+14. Refactor Rect class. [DONE]
+15. Fix OnCollisionEnter not being call on the Enemy on every bullet hit. [IN PROGRESS]
+15.1 Implement OnTriggerEnter function. [DONE]
+15.2 Remove dynamic casts in collision where possible. [IN PROGRESS]
 
 Backlog
 -------

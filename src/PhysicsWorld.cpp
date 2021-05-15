@@ -5,11 +5,12 @@
 #include "Actor.h"
 
 #include <algorithm>
+#include <cassert>
 
 const float Gravity = 9.81f;
 
 void PhysicsWorld::Update(float deltaTime) {
-    if (colliders.size() == 0) return;
+    assert(colliders.size() == rigidbodies.size());
 
     for (auto rb : rigidbodies) {
 	if (!rb->isKinematic) {
@@ -20,20 +21,27 @@ void PhysicsWorld::Update(float deltaTime) {
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
 	for (auto j = colliders.begin(); j != colliders.end(); j++) {
 	    if (i == j) continue;
+	    // PERF: get rid of the casts here, very expensive
 	    auto currentBox = dynamic_cast<BoxColliderComponent*>(*i);
 	    auto otherBox = dynamic_cast<BoxColliderComponent*>(*j);
 	    auto info = currentBox->Intersects(otherBox);
-	    if (info.colliding) {
-		activeCollisions.push_back(info);
+
+	    if (!info.colliding) continue;
+
+	    if (otherBox->isTrigger) {
+		currentBox->GetOwner()->OnTriggerEnter(info);
+	    } else {
+		collisionToResolve.push_back(info);
 	    }
 	}
     }
 
-    std::sort(activeCollisions.begin(), activeCollisions.end(), [](const CollisionInfo& a, const CollisionInfo& b) {
+    std::sort(collisionToResolve.begin(), collisionToResolve.end(), [](const CollisionInfo& a, const CollisionInfo& b) {
 	return a.contactTime < b.contactTime;
     });
 
-    for (auto& info : activeCollisions) {
+    for (auto& info : collisionToResolve) {
+	// PERF: get rid of the casts here, very expensive
 	auto other = dynamic_cast<BoxColliderComponent*>(info.other);
 	auto current = dynamic_cast<BoxColliderComponent*>(info.current);
 	if (BoxCollidersIntersect(current, other, info)) {
@@ -42,7 +50,7 @@ void PhysicsWorld::Update(float deltaTime) {
 	}
     }
 
-    activeCollisions.clear();
+    collisionToResolve.clear();
 }
 
 void PhysicsWorld::AddCollider(ColliderComponent* collider) {

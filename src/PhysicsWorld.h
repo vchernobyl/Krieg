@@ -17,5 +17,5 @@ public:
 private:
     std::vector<class ColliderComponent*> colliders;
     std::vector<class RigidbodyComponent*> rigidbodies;
-    std::vector<struct CollisionInfo> activeCollisions;
+    std::vector<struct CollisionInfo> collisionToResolve;
 };
