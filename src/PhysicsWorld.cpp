@@ -21,17 +21,16 @@ void PhysicsWorld::Update(float deltaTime) {
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
 	for (auto j = colliders.begin(); j != colliders.end(); j++) {
 	    if (i == j) continue;
-	    // PERF: get rid of the casts here, very expensive
-	    auto currentBox = dynamic_cast<BoxColliderComponent*>(*i);
-	    auto otherBox = dynamic_cast<BoxColliderComponent*>(*j);
-	    auto info = currentBox->Intersects(otherBox);
+	    auto current = *i;
+	    auto other = *j;
+	    auto info = current->Intersects(other);
 
 	    if (!info.colliding) continue;
 
 	    // On trigger, send trigger message to both intersecting objects.
-	    if (otherBox->isTrigger ||  currentBox->isTrigger) {
-		currentBox->GetOwner()->OnTriggerEnter(otherBox);
-		otherBox->GetOwner()->OnTriggerEnter(currentBox);
+	    if (other->isTrigger ||  current->isTrigger) {
+		current->GetOwner()->OnTriggerEnter(other);
+		other->GetOwner()->OnTriggerEnter(current);
 	    } else {
 		collisionToResolve.push_back(info);
 	    }
