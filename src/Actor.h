@@ -6,7 +6,8 @@
 class Game;
 class InputState;
 class Component;
-class CollisionInfo;
+class ColliderComponent;
+struct CollisionInfo;
 
 class Actor {
 public:
@@ -48,7 +49,7 @@ public:
     void RemoveComponent(Component* component);
 
     virtual void OnCollisionEnter(const CollisionInfo& info) {}
-    virtual void OnTriggerEnter(const CollisionInfo& info) {}
+    virtual void OnTriggerEnter(ColliderComponent* other) {}
 
     template <typename T> T* GetComponent() {
 	for (auto component : components) {

@@ -28,8 +28,10 @@ void PhysicsWorld::Update(float deltaTime) {
 
 	    if (!info.colliding) continue;
 
-	    if (otherBox->isTrigger) {
-		currentBox->GetOwner()->OnTriggerEnter(info);
+	    // On trigger, send trigger message to both intersecting objects.
+	    if (otherBox->isTrigger ||  currentBox->isTrigger) {
+		currentBox->GetOwner()->OnTriggerEnter(otherBox);
+		otherBox->GetOwner()->OnTriggerEnter(currentBox);
 	    } else {
 		collisionToResolve.push_back(info);
 	    }

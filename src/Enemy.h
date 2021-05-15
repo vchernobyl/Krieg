@@ -7,7 +7,7 @@ public:
     Enemy(class Game* game);
     void UpdateActor(float deltaTime) override;
     void OnCollisionEnter(const struct CollisionInfo& info) override;
-    void OnTriggerEnter(const struct CollisionInfo& info) override;
+    void OnTriggerEnter(class ColliderComponent* other) override;
 private:
     struct RigidbodyComponent* rigidbody;
     class SpriteComponent* sprite;
