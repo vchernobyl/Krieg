@@ -23,7 +23,7 @@ public:
 
     void SetTexture(class Texture* texture) { this->texture = texture; }
     void SetProps(const ParticleProps& particleProps) { this->particleProps = particleProps; }
-    void SetAmount(int amount) { this->amount = amount; }
+    void SetEmissionRate(int emissionRate) { this->emissionRate = emissionRate; }
     
     int GetDrawOrder() const { return drawOrder; }
 private:
@@ -45,5 +45,5 @@ private:
     ParticleProps particleProps;
     
     int drawOrder;
-    int amount;
+    int emissionRate;
 };

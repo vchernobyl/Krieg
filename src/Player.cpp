@@ -6,6 +6,7 @@
 #include "ColliderComponent.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
+#include "ParticleEmitterComponent.h"
 #include "AudioComponent.h"
 #include "InputSystem.h"
 #include "AudioSystem.h"
@@ -67,6 +68,22 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     rigidbody = new RigidbodyComponent(this);
 
     audio = new AudioComponent(this);
+
+    ParticleProps particleProps;
+    particleProps.colorBegin = Vector4(254, 212, 123, 255.0f);
+    particleProps.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
+
+    particleProps.sizeBegin = 15.0f;
+    particleProps.sizeEnd = 0.0f;
+    particleProps.sizeVariation = 5.0f;
+    particleProps.lifetime = 1.0f;
+    particleProps.velocity = Vector2(12.0f, 35.0f);
+    particleProps.velocityVariation = Vector2(100.0f, 100.0f);
+
+    dustParticles = new ParticleEmitterComponent(this);
+    dustParticles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));
+    dustParticles->SetProps(particleProps);
+    dustParticles->SetEmissionRate(2);
 }
 
 void Player::ActorInput(const InputState& inputState) {

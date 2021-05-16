@@ -192,7 +192,7 @@ void Game::LoadData() {
     auto particles = new ParticleEmitterComponent(emitter);
     particles->SetTexture(renderer->GetTexture("assets/Particle.png"));
     particles->SetProps(particleProps);
-    particles->SetAmount(3);
+    particles->SetEmissionRate(3);
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");

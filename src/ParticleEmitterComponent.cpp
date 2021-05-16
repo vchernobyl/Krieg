@@ -9,13 +9,14 @@
 #include <SDL.h>
 
 const size_t MaxParticles = 1000;
+const int DefaultEmissionRate = 1;
 
 ParticleEmitterComponent::ParticleEmitterComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
       particlePool(MaxParticles),
       texture(nullptr),
       drawOrder(drawOrder),
-      amount(0) {
+      emissionRate(DefaultEmissionRate) {
     owner->GetGame()->GetRenderer()->AddParticles(this);
 }
 
@@ -24,7 +25,7 @@ ParticleEmitterComponent::~ParticleEmitterComponent() {
 }
 
 void ParticleEmitterComponent::Update(float deltaTime) {
-    for (int i = 0; i < amount; i++) {
+    for (int i = 0; i < emissionRate; i++) {
 	Particle& particle = particlePool[poolIndex];
 	particle.active = true;
 	particle.position = GetOwner()->GetPosition();

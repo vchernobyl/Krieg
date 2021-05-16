@@ -7,6 +7,7 @@ class BoxColliderComponent;
 class RigidbodyComponent;
 class SpriteComponent;
 class AudioComponent;
+class ParticleEmitterComponent;
 class InputSystem;
 class Game;
 
@@ -36,6 +37,8 @@ private:
     RigidbodyComponent* rigidbody;
     SpriteComponent* sprite;
     AudioComponent* audio;
+    ParticleEmitterComponent* dustParticles;
+
     Vector2 velocity;
     Vector2 direction;
     bool isJumping = false;
