@@ -1,13 +1,13 @@
 #pragma once
 
 #include "Actor.h"
+#include "ParticleEmitterComponent.h"
 
 class ColliderComponent;
 class BoxColliderComponent;
 class RigidbodyComponent;
 class SpriteComponent;
 class AudioComponent;
-class ParticleEmitterComponent;
 class InputSystem;
 class Game;
 
@@ -37,7 +37,9 @@ private:
     RigidbodyComponent* rigidbody;
     SpriteComponent* sprite;
     AudioComponent* audio;
+
     ParticleEmitterComponent* dustParticles;
+    ParticleProps particleProps;
 
     Vector2 velocity;
     Vector2 direction;

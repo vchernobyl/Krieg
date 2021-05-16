@@ -9,18 +9,12 @@
 #include <SDL.h>
 
 const size_t MaxParticles = 1000;
-const int DefaultEmissionRate = 1;
-const float DefaultEmissionDuration = 1.0f;
 
 ParticleEmitterComponent::ParticleEmitterComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
       particlePool(MaxParticles),
       texture(nullptr),
-      drawOrder(drawOrder),
-      emissionRate(DefaultEmissionRate),
-      looping(true),
-      emissionDuration(DefaultEmissionDuration),
-      elapsedTime(0.0f) {
+      drawOrder(drawOrder) {
     owner->GetGame()->GetRenderer()->AddParticles(this);
 }
 
@@ -29,31 +23,6 @@ ParticleEmitterComponent::~ParticleEmitterComponent() {
 }
 
 void ParticleEmitterComponent::Update(float deltaTime) {
-    if (!looping) elapsedTime += deltaTime;
-
-    if (elapsedTime <= emissionDuration) {
-	for (int i = 0; i < emissionRate; i++) {
-	    Particle& particle = particlePool[poolIndex];
-	    particle.active = true;
-	    particle.position = GetOwner()->GetPosition();
-	    particle.rotation = Random::GetFloat() * Math::TwoPi;
-
-	    particle.velocity = particleProps.velocity;
-	    particle.velocity.x += particleProps.velocityVariation.x * (Random::GetFloat() - 0.5f);
-	    particle.velocity.y += particleProps.velocityVariation.y * (Random::GetFloat() - 0.5f);
-
-	    particle.colorBegin = particleProps.colorBegin;
-	    particle.colorEnd = particleProps.colorEnd;
-
-	    particle.lifetime = particleProps.lifetime;
-	    particle.lifeRemaining = particleProps.lifetime;
-	    particle.sizeBegin = particleProps.sizeBegin + particleProps.sizeVariation * (Random::GetFloat() - 0.5f);
-	    particle.sizeEnd = particleProps.sizeEnd;
-
-	    poolIndex = --poolIndex % particlePool.size();
-	}
-    }
-    
     for (auto& particle : particlePool) {
 	if (!particle.active) continue;
 
@@ -90,5 +59,28 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
 			 Math::ToDegrees(particle.rotation),
 			 nullptr, // Rotate around the center of the texture
 			 SDL_FLIP_NONE);
+    }
+}
+
+void ParticleEmitterComponent::Emit(const ParticleProps& props, int amount) {
+    for (int i = 0; i < amount; i++) {
+	Particle& particle = particlePool[poolIndex];
+	particle.active = true;
+	particle.position = props.position;
+	particle.rotation = Random::GetFloat() * Math::TwoPi;
+
+	particle.velocity = props.velocity;
+	particle.velocity.x += props.velocityVariation.x * (Random::GetFloat() - 0.5f);
+	particle.velocity.y += props.velocityVariation.y * (Random::GetFloat() - 0.5f);
+
+	particle.colorBegin = props.colorBegin;
+	particle.colorEnd = props.colorEnd;
+
+	particle.lifetime = props.lifetime;
+	particle.lifeRemaining = props.lifetime;
+	particle.sizeBegin = props.sizeBegin + props.sizeVariation * (Random::GetFloat() - 0.5f);
+	particle.sizeEnd = props.sizeEnd;
+
+	poolIndex = --poolIndex % particlePool.size();
     }
 }

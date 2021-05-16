@@ -6,6 +6,7 @@
 #include <vector>
 
 struct ParticleProps {
+    Vector2 position;
     Vector2 velocity, velocityVariation;
     Vector4 colorBegin, colorEnd;
     float sizeBegin, sizeEnd, sizeVariation;
@@ -21,14 +22,10 @@ public:
     void Update(float deltaTime) override;
     void Draw(class Renderer* renderer);
 
-    void Play() { elapsedTime = 0.0f; }
-    void Stop() { elapsedTime = emissionDuration; }
+    void Emit(const ParticleProps& props, int amount);
 
     void SetTexture(class Texture* texture) { this->texture = texture; }
     void SetProps(const ParticleProps& particleProps) { this->particleProps = particleProps; }
-    void SetEmissionRate(int emissionRate) { this->emissionRate = emissionRate; }
-    void SetEmissionDuration(float emissionDuration) { this->emissionDuration = emissionDuration; }
-    void SetIsLooping(bool looping) { this->looping = looping; }
     
     int GetDrawOrder() const { return drawOrder; }
 private:
@@ -50,8 +47,4 @@ private:
     ParticleProps particleProps;
     
     int drawOrder;
-    int emissionRate;
-    float emissionDuration;
-    float elapsedTime;
-    bool looping;
 };
