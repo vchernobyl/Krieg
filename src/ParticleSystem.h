@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Math.h"
+#include "Component.h"
+
 #include <vector>
 
 struct ParticleProps {
@@ -11,13 +13,20 @@ struct ParticleProps {
     float lifetime = 1.0f;
 };
 
-class ParticleSystem {
+// TODO: Probably need to rename to ParticleComponent.
+class ParticleSystem : public Component {
 public:
-    ParticleSystem();
-    void Update(float deltaTime);
+    ParticleSystem(class Actor* owner, int drawOrder = 200);
+    ~ParticleSystem();
+
+    void Update(float deltaTime) override;
     void Draw(class Renderer* renderer);
-    void Emit(const ParticleProps& particleProps);
+
     void SetTexture(class Texture* texture) { this->texture = texture; }
+    void SetProps(const ParticleProps& props) { this->props = props; }
+    void SetAmount(int amount) { this->amount = amount; }
+    
+    int GetDrawOrder() const { return drawOrder; }
 private:
     struct Particle {
 	Vector2 position;
@@ -34,4 +43,10 @@ private:
     size_t poolIndex = 999;
 
     class Texture* texture;
+    ParticleProps props;
+    
+    int drawOrder;
+    int amount;
+    
+    void Emit(const ParticleProps& particleProps);
 };

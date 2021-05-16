@@ -3,14 +3,32 @@
 #include "Random.h"
 #include "Camera.h"
 #include "Texture.h"
+#include "Actor.h"
+#include "Game.h"
 
 #include <SDL.h>
 
 const size_t MaxParticles = 1000;
 
-ParticleSystem::ParticleSystem() : particlePool(MaxParticles), texture(nullptr) {}
+ParticleSystem::ParticleSystem(Actor* owner, int drawOrder)
+    : Component(owner, drawOrder),
+      particlePool(MaxParticles),
+      texture(nullptr),
+      drawOrder(drawOrder),
+      amount(0) {
+    owner->GetGame()->GetRenderer()->AddParticles(this);
+}
+
+ParticleSystem::~ParticleSystem() {
+    owner->GetGame()->GetRenderer()->RemoveParticles(this);
+}
 
 void ParticleSystem::Update(float deltaTime) {
+    for (int i = 0; i < amount; i++) {
+	// TODO: We can remove props from the Emit function or inline the function call.
+	Emit(props);
+    }
+
     for (auto& particle : particlePool) {
 	if (!particle.active) continue;
 

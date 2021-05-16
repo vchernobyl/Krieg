@@ -157,13 +157,8 @@ void Game::UpdateGame() {
 	delete actor;
     }
 
-    for (int i = 0; i < 5; i++ ) {
-	particleSystem.Emit(particle);
-    }
-
     physicsWorld->Update(deltaTime);
     audioSystem->Update(deltaTime);
-    particleSystem.Update(deltaTime);
 }
 
 void Game::DrawGame() {
@@ -171,7 +166,6 @@ void Game::DrawGame() {
 
     tileMapRenderer->Draw(renderer);
     renderer->Draw();
-    particleSystem.Draw(renderer);
     Debug::Draw(renderer);
 
     renderer->End();
@@ -181,6 +175,7 @@ void Game::LoadData() {
     new Player(this);
     new Enemy(this);
 
+    ParticleProps particle;
     particle.colorBegin = Vector4(254, 212, 123, 255.0f);
     particle.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
 
@@ -190,9 +185,18 @@ void Game::LoadData() {
     particle.lifetime = 1.0f;
     particle.velocity = Vector2(12.0f, 35.0f);
     particle.velocityVariation = Vector2(100.0f, 100.0f);
-    particle.position = Vector2(400.0f, 400.0f);
+    particle.position = Vector2(400.0f, 400.0f); // TODO: Should be set to the owner's position.
+
+    auto emitter = new Actor(this);
+    emitter->SetPosition(Vector2(300, 500));
     
-    particleSystem.SetTexture(renderer->GetTexture("assets/Particle.png"));
+    auto particles = new ParticleSystem(emitter);
+    particles->SetTexture(renderer->GetTexture("assets/Particle.png"));
+    particles->SetProps(particle);
+    particles->SetAmount(5);
+
+    
+    // particleSystem.SetTexture(renderer->GetTexture("assets/Particle.png"));
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");

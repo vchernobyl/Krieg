@@ -5,8 +5,6 @@
 #include <string>
 #include <vector>
 
-#include "ParticleSystem.h"
-
 class Actor;
 class Renderer;
 class PhysicsWorld;
@@ -45,9 +43,6 @@ private:
     TileMapRenderer* tileMapRenderer;
     TileMap* tileMap;
 
-    ParticleProps particle;
-    ParticleSystem particleSystem;
-    
     bool isRunning;
     bool updatingActors;
     Uint32 ticks;

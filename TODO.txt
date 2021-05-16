@@ -110,7 +110,8 @@ May:
 14. Refactor Rect class. [DONE]
 15. Fix OnCollisionEnter not being call on the Enemy on every bullet hit. [DONE]
 15.1 Implement OnTriggerEnter function. [DONE]
-15.2 Remove dynamic casts in collision where possible. [IN PROGRESS]
+15.2 Remove dynamic casts in collision where possible. [DONE]
+16. Add particles to the renderer automatically. [IN PROGRESS]
 
 Backlog
 -------

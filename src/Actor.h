@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Math.h"
+#include "InputSystem.h"
+
 #include <vector>
 
 class Game;
