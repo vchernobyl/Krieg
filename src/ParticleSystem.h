@@ -6,7 +6,6 @@
 #include <vector>
 
 struct ParticleProps {
-    Vector2 position;
     Vector2 velocity, velocityVariation;
     Vector4 colorBegin, colorEnd;
     float sizeBegin, sizeEnd, sizeVariation;
@@ -23,7 +22,7 @@ public:
     void Draw(class Renderer* renderer);
 
     void SetTexture(class Texture* texture) { this->texture = texture; }
-    void SetProps(const ParticleProps& props) { this->props = props; }
+    void SetProps(const ParticleProps& particleProps) { this->particleProps = particleProps; }
     void SetAmount(int amount) { this->amount = amount; }
     
     int GetDrawOrder() const { return drawOrder; }
@@ -43,10 +42,8 @@ private:
     size_t poolIndex = 999;
 
     class Texture* texture;
-    ParticleProps props;
+    ParticleProps particleProps;
     
     int drawOrder;
     int amount;
-    
-    void Emit(const ParticleProps& particleProps);
 };

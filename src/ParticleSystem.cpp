@@ -25,8 +25,24 @@ ParticleSystem::~ParticleSystem() {
 
 void ParticleSystem::Update(float deltaTime) {
     for (int i = 0; i < amount; i++) {
-	// TODO: We can remove props from the Emit function or inline the function call.
-	Emit(props);
+	Particle& particle = particlePool[poolIndex];
+	particle.active = true;
+	particle.position = GetOwner()->GetPosition();
+	particle.rotation = Random::GetFloat() * Math::TwoPi;
+
+	particle.velocity = particleProps.velocity;
+	particle.velocity.x += particleProps.velocityVariation.x * (Random::GetFloat() - 0.5f);
+	particle.velocity.y += particleProps.velocityVariation.y * (Random::GetFloat() - 0.5f);
+
+	particle.colorBegin = particleProps.colorBegin;
+	particle.colorEnd = particleProps.colorEnd;
+
+	particle.lifetime = particleProps.lifetime;
+	particle.lifeRemaining = particleProps.lifetime;
+	particle.sizeBegin = particleProps.sizeBegin + particleProps.sizeVariation * (Random::GetFloat() - 0.5f);
+	particle.sizeEnd = particleProps.sizeEnd;
+
+	poolIndex = --poolIndex % particlePool.size();
     }
 
     for (auto& particle : particlePool) {
@@ -66,25 +82,4 @@ void ParticleSystem::Draw(Renderer* renderer) {
 			 nullptr, // Rotate around the center of the texture
 			 SDL_FLIP_NONE);
     }
-}
-
-void ParticleSystem::Emit(const ParticleProps& particleProps) {
-    Particle& particle = particlePool[poolIndex];
-    particle.active = true;
-    particle.position = particleProps.position;
-    particle.rotation = Random::GetFloat() * Math::TwoPi;
-
-    particle.velocity = particleProps.velocity;
-    particle.velocity.x += particleProps.velocityVariation.x * (Random::GetFloat() - 0.5f);
-    particle.velocity.y += particleProps.velocityVariation.y * (Random::GetFloat() - 0.5f);
-
-    particle.colorBegin = particleProps.colorBegin;
-    particle.colorEnd = particleProps.colorEnd;
-
-    particle.lifetime = particleProps.lifetime;
-    particle.lifeRemaining = particleProps.lifetime;
-    particle.sizeBegin = particleProps.sizeBegin + particleProps.sizeVariation * (Random::GetFloat() - 0.5f);
-    particle.sizeEnd = particleProps.sizeEnd;
-
-    poolIndex = --poolIndex % particlePool.size();
 }

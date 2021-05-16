@@ -175,28 +175,24 @@ void Game::LoadData() {
     new Player(this);
     new Enemy(this);
 
-    ParticleProps particle;
-    particle.colorBegin = Vector4(254, 212, 123, 255.0f);
-    particle.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
+    ParticleProps particleProps;
+    particleProps.colorBegin = Vector4(254, 212, 123, 255.0f);
+    particleProps.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
 
-    particle.sizeBegin = 15.0f;
-    particle.sizeEnd = 0.0f;
-    particle.sizeVariation = 5.0f;
-    particle.lifetime = 1.0f;
-    particle.velocity = Vector2(12.0f, 35.0f);
-    particle.velocityVariation = Vector2(100.0f, 100.0f);
-    particle.position = Vector2(400.0f, 400.0f); // TODO: Should be set to the owner's position.
+    particleProps.sizeBegin = 15.0f;
+    particleProps.sizeEnd = 0.0f;
+    particleProps.sizeVariation = 5.0f;
+    particleProps.lifetime = 3.0f;
+    particleProps.velocity = Vector2(12.0f, 35.0f);
+    particleProps.velocityVariation = Vector2(100.0f, 100.0f);
 
     auto emitter = new Actor(this);
-    emitter->SetPosition(Vector2(300, 500));
+    emitter->SetPosition(Vector2(300, 700));
     
     auto particles = new ParticleSystem(emitter);
     particles->SetTexture(renderer->GetTexture("assets/Particle.png"));
-    particles->SetProps(particle);
-    particles->SetAmount(5);
-
-    
-    // particleSystem.SetTexture(renderer->GetTexture("assets/Particle.png"));
+    particles->SetProps(particleProps);
+    particles->SetAmount(3);
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
