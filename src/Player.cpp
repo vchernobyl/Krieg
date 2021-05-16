@@ -69,15 +69,15 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
 
     audio = new AudioComponent(this);
 
-    particleProps.colorBegin = Vector4(254, 212, 123, 255.0f);
-    particleProps.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
+    particleProps.colorBegin = Vector4(255, 255, 255, 255);
+    particleProps.colorEnd = Vector4(255 / 2, 255 / 2, 255 / 2, 255 / 4);
 
-    particleProps.sizeBegin = 15.0f;
-    particleProps.sizeEnd = 0.0f;
+    particleProps.sizeBegin = 10.0f;
+    particleProps.sizeEnd = 5.0f;
     particleProps.sizeVariation = 5.0f;
-    particleProps.lifetime = 0.75f;
-    particleProps.velocity = Vector2(12.0f, 35.0f);
-    particleProps.velocityVariation = Vector2(100.0f, 100.0f);
+    particleProps.lifetime = 0.4f;
+    particleProps.velocity = Vector2::Up * 50.0f;
+    particleProps.velocityVariation = Vector2(130.0f, 20.0f);
 
     dustParticles = new ParticleEmitterComponent(this);
     dustParticles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));
@@ -101,8 +101,13 @@ void Player::ActorInput(const InputState& inputState) {
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
 	audio->PlayEvent("event:/Jump");
 
-	particleProps.position = GetPosition();
-	dustParticles->Emit(particleProps, 10);
+
+	auto particlePosition = GetPosition();
+	particlePosition.x += sprite->GetWidth() * GetScale() / 2;
+	particlePosition.y += sprite->GetHeight() * GetScale() / 2; // Division by 2 only because sprite sheet contains 2 characters.
+	particleProps.position = particlePosition;
+	
+	dustParticles->Emit(particleProps, 12);
 
 	velocity.y = -JumpVelocity;
 	isJumping = true;
