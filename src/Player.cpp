@@ -69,6 +69,16 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
 
     audio = new AudioComponent(this);
 
+    particleProps.colorBegin = Vector4(254, 212, 123, 255.0f);
+    particleProps.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
+
+    particleProps.sizeBegin = 15.0f;
+    particleProps.sizeEnd = 0.0f;
+    particleProps.sizeVariation = 5.0f;
+    particleProps.lifetime = 0.75f;
+    particleProps.velocity = Vector2(12.0f, 35.0f);
+    particleProps.velocityVariation = Vector2(100.0f, 100.0f);
+
     dustParticles = new ParticleEmitterComponent(this);
     dustParticles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));
 }
@@ -91,18 +101,7 @@ void Player::ActorInput(const InputState& inputState) {
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
 	audio->PlayEvent("event:/Jump");
 
-	ParticleProps particleProps;
 	particleProps.position = GetPosition();
-	particleProps.colorBegin = Vector4(254, 212, 123, 255.0f);
-	particleProps.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
-
-	particleProps.sizeBegin = 15.0f;
-	particleProps.sizeEnd = 0.0f;
-	particleProps.sizeVariation = 5.0f;
-	particleProps.lifetime = 0.75f;
-	particleProps.velocity = Vector2(12.0f, 35.0f);
-	particleProps.velocityVariation = Vector2(100.0f, 100.0f);
-
 	dustParticles->Emit(particleProps, 10);
 
 	velocity.y = -JumpVelocity;
