@@ -70,6 +70,8 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     audio = new AudioComponent(this);
 
     ParticleProps particleProps;
+    particleProps.looping = false;
+    
     particleProps.colorBegin = Vector4(254, 212, 123, 255.0f);
     particleProps.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
 
@@ -84,6 +86,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     dustParticles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));
     dustParticles->SetProps(particleProps);
     dustParticles->SetEmissionRate(2);
+    dustParticles->Stop();
 }
 
 void Player::ActorInput(const InputState& inputState) {
@@ -103,6 +106,7 @@ void Player::ActorInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
 	audio->PlayEvent("event:/Jump");
+	dustParticles->Play();
 	velocity.y = -JumpVelocity;
 	isJumping = true;
     }
@@ -136,6 +140,7 @@ void Player::UpdateActor(float deltaTime) {
     rigidbody->velocity.y += velocity.y * deltaTime;
 
     if (Math::NearZero(rigidbody->velocity.y)) {
+	dustParticles->Stop();
 	isJumping = false;
     }
 

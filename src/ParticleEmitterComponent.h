@@ -10,6 +10,7 @@ struct ParticleProps {
     Vector4 colorBegin, colorEnd;
     float sizeBegin, sizeEnd, sizeVariation;
     float lifetime = 1.0f;
+    bool looping = true;
 };
 
 // TODO: Probably need to rename to ParticleComponent.
@@ -20,6 +21,9 @@ public:
 
     void Update(float deltaTime) override;
     void Draw(class Renderer* renderer);
+
+    void Play();
+    void Stop();
 
     void SetTexture(class Texture* texture) { this->texture = texture; }
     void SetProps(const ParticleProps& particleProps) { this->particleProps = particleProps; }
@@ -38,11 +42,17 @@ private:
 	bool active = false;
     };
 
+    enum class State {
+	Playing,
+ 	Stopped
+    };
+
     std::vector<Particle> particlePool;
     size_t poolIndex = 999;
 
     class Texture* texture;
     ParticleProps particleProps;
+    State state;
     
     int drawOrder;
     int emissionRate;

@@ -15,6 +15,7 @@ ParticleEmitterComponent::ParticleEmitterComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
       particlePool(MaxParticles),
       texture(nullptr),
+      state(State::Playing),
       drawOrder(drawOrder),
       emissionRate(DefaultEmissionRate) {
     owner->GetGame()->GetRenderer()->AddParticles(this);
@@ -62,6 +63,7 @@ void ParticleEmitterComponent::Update(float deltaTime) {
 
 void ParticleEmitterComponent::Draw(Renderer* renderer) {
     if (!texture) return;
+    if (state == State::Stopped) return;
     
     for (auto& particle : particlePool) {
 	if (!particle.active) continue;
@@ -83,4 +85,15 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
 			 nullptr, // Rotate around the center of the texture
 			 SDL_FLIP_NONE);
     }
+}
+
+void ParticleEmitterComponent::Play() {
+    this->state = State::Playing;
+}
+
+void ParticleEmitterComponent::Stop() {
+    this->state = State::Stopped;
+    poolIndex = MaxParticles - 1;
+    particlePool.clear();
+    particlePool.resize(MaxParticles);
 }
