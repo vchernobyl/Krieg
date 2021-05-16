@@ -76,7 +76,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     particleProps.sizeBegin = 15.0f;
     particleProps.sizeEnd = 0.0f;
     particleProps.sizeVariation = 5.0f;
-    particleProps.lifetime = 1.0f;
+    particleProps.lifetime = 0.75f;
     particleProps.velocity = Vector2(12.0f, 35.0f);
     particleProps.velocityVariation = Vector2(100.0f, 100.0f);
 
@@ -84,8 +84,9 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     dustParticles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));
     dustParticles->SetProps(particleProps);
     dustParticles->SetEmissionRate(2);
-    dustParticles->SetEmissionDuration(0.5f);
+    dustParticles->SetEmissionDuration(0.1f);
     dustParticles->SetIsLooping(false);
+    dustParticles->Stop();
 }
 
 void Player::ActorInput(const InputState& inputState) {
