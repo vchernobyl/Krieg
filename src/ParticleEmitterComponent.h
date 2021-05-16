@@ -10,7 +10,6 @@ struct ParticleProps {
     Vector4 colorBegin, colorEnd;
     float sizeBegin, sizeEnd, sizeVariation;
     float lifetime = 1.0f;
-    bool looping = true;
 };
 
 // TODO: Probably need to rename to ParticleComponent.
@@ -28,6 +27,8 @@ public:
     void SetTexture(class Texture* texture) { this->texture = texture; }
     void SetProps(const ParticleProps& particleProps) { this->particleProps = particleProps; }
     void SetEmissionRate(int emissionRate) { this->emissionRate = emissionRate; }
+    void SetEmissionDuration(float emissionDuration) { this->emissionDuration = emissionDuration; }
+    void SetIsLooping(bool looping) { this->looping = looping; }
     
     int GetDrawOrder() const { return drawOrder; }
 private:
@@ -56,4 +57,7 @@ private:
     
     int drawOrder;
     int emissionRate;
+    float emissionDuration;
+    float elapsedTime;
+    bool looping;
 };

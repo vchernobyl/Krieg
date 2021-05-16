@@ -10,6 +10,7 @@
 
 const size_t MaxParticles = 1000;
 const int DefaultEmissionRate = 1;
+const float DefaultEmissionDuration = 1.0f;
 
 ParticleEmitterComponent::ParticleEmitterComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
@@ -17,7 +18,10 @@ ParticleEmitterComponent::ParticleEmitterComponent(Actor* owner, int drawOrder)
       texture(nullptr),
       state(State::Playing),
       drawOrder(drawOrder),
-      emissionRate(DefaultEmissionRate) {
+      emissionRate(DefaultEmissionRate),
+      looping(true),
+      emissionDuration(DefaultEmissionDuration),
+      elapsedTime(0.0f) {
     owner->GetGame()->GetRenderer()->AddParticles(this);
 }
 
@@ -26,27 +30,31 @@ ParticleEmitterComponent::~ParticleEmitterComponent() {
 }
 
 void ParticleEmitterComponent::Update(float deltaTime) {
-    for (int i = 0; i < emissionRate; i++) {
-	Particle& particle = particlePool[poolIndex];
-	particle.active = true;
-	particle.position = GetOwner()->GetPosition();
-	particle.rotation = Random::GetFloat() * Math::TwoPi;
+    if (!looping) elapsedTime += deltaTime;
 
-	particle.velocity = particleProps.velocity;
-	particle.velocity.x += particleProps.velocityVariation.x * (Random::GetFloat() - 0.5f);
-	particle.velocity.y += particleProps.velocityVariation.y * (Random::GetFloat() - 0.5f);
+    if (elapsedTime <= emissionDuration) {
+	for (int i = 0; i < emissionRate; i++) {
+	    Particle& particle = particlePool[poolIndex];
+	    particle.active = true;
+	    particle.position = GetOwner()->GetPosition();
+	    particle.rotation = Random::GetFloat() * Math::TwoPi;
 
-	particle.colorBegin = particleProps.colorBegin;
-	particle.colorEnd = particleProps.colorEnd;
+	    particle.velocity = particleProps.velocity;
+	    particle.velocity.x += particleProps.velocityVariation.x * (Random::GetFloat() - 0.5f);
+	    particle.velocity.y += particleProps.velocityVariation.y * (Random::GetFloat() - 0.5f);
 
-	particle.lifetime = particleProps.lifetime;
-	particle.lifeRemaining = particleProps.lifetime;
-	particle.sizeBegin = particleProps.sizeBegin + particleProps.sizeVariation * (Random::GetFloat() - 0.5f);
-	particle.sizeEnd = particleProps.sizeEnd;
+	    particle.colorBegin = particleProps.colorBegin;
+	    particle.colorEnd = particleProps.colorEnd;
 
-	poolIndex = --poolIndex % particlePool.size();
+	    particle.lifetime = particleProps.lifetime;
+	    particle.lifeRemaining = particleProps.lifetime;
+	    particle.sizeBegin = particleProps.sizeBegin + particleProps.sizeVariation * (Random::GetFloat() - 0.5f);
+	    particle.sizeEnd = particleProps.sizeEnd;
+
+	    poolIndex = --poolIndex % particlePool.size();
+	}
     }
-
+    
     for (auto& particle : particlePool) {
 	if (!particle.active) continue;
 
@@ -64,7 +72,7 @@ void ParticleEmitterComponent::Update(float deltaTime) {
 void ParticleEmitterComponent::Draw(Renderer* renderer) {
     if (!texture) return;
     if (state == State::Stopped) return;
-    
+
     for (auto& particle : particlePool) {
 	if (!particle.active) continue;
 
@@ -88,11 +96,12 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
 }
 
 void ParticleEmitterComponent::Play() {
-    this->state = State::Playing;
+    state = State::Playing;
+    elapsedTime = 0.0f;
 }
 
 void ParticleEmitterComponent::Stop() {
-    this->state = State::Stopped;
+    state = State::Stopped;
     poolIndex = MaxParticles - 1;
     particlePool.clear();
     particlePool.resize(MaxParticles);
