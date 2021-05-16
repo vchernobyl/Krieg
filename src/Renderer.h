@@ -8,7 +8,7 @@ class Game;
 class Camera;
 class SpriteComponent;
 class Texture;
-class ParticleSystem;
+class ParticleEmitterComponent;
 
 class Renderer {
 public:
@@ -28,8 +28,8 @@ public:
     void AddSprite(SpriteComponent* sprite);
     void RemoveSprite(SpriteComponent* sprite);
 
-    void AddParticles(ParticleSystem* particles);
-    void RemoveParticles(ParticleSystem* particles);    
+    void AddParticles(ParticleEmitterComponent* emitter);
+    void RemoveParticles(ParticleEmitterComponent* emitter);
     
     SDL_Renderer* GetSDLRenderer() const { return renderer; }
     Camera* GetCamera() const { return camera; }
@@ -38,7 +38,8 @@ private:
     SDL_Renderer* renderer;
 
     std::vector<SpriteComponent*> sprites;
-    std::vector<ParticleSystem*> particles;
+    std::vector<ParticleEmitterComponent*> particles;
+
     std::unordered_map<std::string, Texture*> textures;
 
     Game* game;

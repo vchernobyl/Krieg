@@ -13,10 +13,10 @@ struct ParticleProps {
 };
 
 // TODO: Probably need to rename to ParticleComponent.
-class ParticleSystem : public Component {
+class ParticleEmitterComponent : public Component {
 public:
-    ParticleSystem(class Actor* owner, int drawOrder = 200);
-    ~ParticleSystem();
+    ParticleEmitterComponent(class Actor* owner, int drawOrder = 200);
+    ~ParticleEmitterComponent();
 
     void Update(float deltaTime) override;
     void Draw(class Renderer* renderer);

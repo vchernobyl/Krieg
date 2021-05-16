@@ -1,4 +1,4 @@
-#include "ParticleSystem.h"
+#include "ParticleEmitterComponent.h"
 #include "Renderer.h"
 #include "Random.h"
 #include "Camera.h"
@@ -10,7 +10,7 @@
 
 const size_t MaxParticles = 1000;
 
-ParticleSystem::ParticleSystem(Actor* owner, int drawOrder)
+ParticleEmitterComponent::ParticleEmitterComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
       particlePool(MaxParticles),
       texture(nullptr),
@@ -19,11 +19,11 @@ ParticleSystem::ParticleSystem(Actor* owner, int drawOrder)
     owner->GetGame()->GetRenderer()->AddParticles(this);
 }
 
-ParticleSystem::~ParticleSystem() {
+ParticleEmitterComponent::~ParticleEmitterComponent() {
     owner->GetGame()->GetRenderer()->RemoveParticles(this);
 }
 
-void ParticleSystem::Update(float deltaTime) {
+void ParticleEmitterComponent::Update(float deltaTime) {
     for (int i = 0; i < amount; i++) {
 	Particle& particle = particlePool[poolIndex];
 	particle.active = true;
@@ -59,7 +59,7 @@ void ParticleSystem::Update(float deltaTime) {
     }
 }
 
-void ParticleSystem::Draw(Renderer* renderer) {
+void ParticleEmitterComponent::Draw(Renderer* renderer) {
     if (!texture) return;
     
     for (auto& particle : particlePool) {

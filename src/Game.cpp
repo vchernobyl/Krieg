@@ -12,7 +12,7 @@
 #include "Debug.h"
 #include "Enemy.h"
 #include "Random.h"
-#include "ParticleSystem.h"
+#include "ParticleEmitterComponent.h"
 
 #include <SDL_image.h>
 #include <algorithm>
@@ -189,7 +189,7 @@ void Game::LoadData() {
     auto emitter = new Actor(this);
     emitter->SetPosition(Vector2(300, 700));
     
-    auto particles = new ParticleSystem(emitter);
+    auto particles = new ParticleEmitterComponent(emitter);
     particles->SetTexture(renderer->GetTexture("assets/Particle.png"));
     particles->SetProps(particleProps);
     particles->SetAmount(3);

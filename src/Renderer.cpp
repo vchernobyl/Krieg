@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Camera.h"
 #include "Texture.h"
-#include "ParticleSystem.h"
+#include "ParticleEmitterComponent.h"
 
 #include <SDL_image.h>
 #include <algorithm>
@@ -108,7 +108,7 @@ void Renderer::RemoveSprite(SpriteComponent* sprite) {
     }
 }
 
-void Renderer::AddParticles(ParticleSystem* emitter) {
+void Renderer::AddParticles(ParticleEmitterComponent* emitter) {
     int drawOrder = emitter->GetDrawOrder();
     auto iter = particles.begin();
     while (iter != particles.end() && drawOrder > (*iter)->GetDrawOrder()) {
@@ -117,7 +117,7 @@ void Renderer::AddParticles(ParticleSystem* emitter) {
     particles.insert(iter, emitter);
 }
 
-void Renderer::RemoveParticles(ParticleSystem* emitter) {
+void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
     auto iter = std::find(particles.begin(), particles.end(), emitter);
     if (iter != particles.end()) {
 	particles.erase(iter);
