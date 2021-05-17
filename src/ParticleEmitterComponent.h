@@ -11,6 +11,7 @@ struct ParticleProps {
     Vector2 velocity, velocityVariation;
     Vector4 colorBegin, colorEnd;
     float sizeBegin, sizeEnd, sizeVariation;
+    float rotationBegin, rotationSpeed;
     float lifetime = 1.0f;
 };
 
@@ -35,6 +36,7 @@ private:
 	Vector2 velocity;
 	Vector4 colorBegin, colorEnd;
 	float rotation = 0.0f;
+	float rotationSpeed = 0.0f;
 	float sizeBegin, sizeEnd;
 	float lifetime = 1.0f;
 	float lifeRemaining = 0.0f;

@@ -40,13 +40,12 @@ void ParticleEmitterComponent::Update(float deltaTime) {
 
 	particle.lifeRemaining -= deltaTime;
 	particle.position += particle.velocity * deltaTime;
-	particle.rotation += 0.01f * deltaTime;
+	particle.rotation += particle.rotationSpeed * deltaTime;
     }
 
     if (isRunning && inactive == MaxParticles) {
 	isRunning = false;
 	if (onEmissionEnd) {
-	    SDL_Log("OnEmissionEnd called!");
 	    onEmissionEnd();
 	}
     }
@@ -84,7 +83,8 @@ void ParticleEmitterComponent::Emit(const ParticleProps& props, int amount) {
 	Particle& particle = particlePool[poolIndex];
 	particle.active = true;
 	particle.position = props.position;
-	particle.rotation = Random::GetFloat() * Math::TwoPi;
+	particle.rotation = props.rotationBegin;
+	particle.rotationSpeed = props.rotationSpeed;
 
 	particle.velocity = props.velocity;
 	particle.velocity.x += props.velocityVariation.x * (Random::GetFloat() - 0.5f);
