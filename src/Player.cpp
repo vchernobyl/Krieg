@@ -61,6 +61,7 @@ void Bullet::OnTriggerEnter(ColliderComponent* other) {
     auto emitter = new Actor(GetGame());
     auto sparkParticles = new ParticleEmitterComponent(emitter);
     sparkParticles->SetTexture(GetGame()->GetRenderer()->GetTexture("assets/Particle.png"));
+    sparkParticles->DestroyOnEnd(true);
 
     particleProps.position = GetPosition();
     sparkParticles->Emit(particleProps, 10);

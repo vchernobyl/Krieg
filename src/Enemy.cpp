@@ -37,5 +37,4 @@ void Enemy::OnCollisionEnter(const CollisionInfo& info) {
 }
 
 void Enemy::OnTriggerEnter(ColliderComponent* other) {
-    SDL_Log("Enemy hit!");
 }
