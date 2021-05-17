@@ -49,12 +49,12 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     particleProps.colorBegin = Vector4(255, 255, 0, 255);
     particleProps.colorEnd = Vector4(255, 0, 0, 255 / 4);
 
-    particleProps.sizeBegin = 8.0f;
-    particleProps.sizeEnd = 2.0f;
-    particleProps.sizeVariation = 2.0f;
+    particleProps.sizeBegin = 12.0f;
+    particleProps.sizeEnd = 6.0f;
+    particleProps.sizeVariation = 3.0f;
     particleProps.lifetime = 0.3f;
-    particleProps.velocity.x = -Math::Sign(rigidbody->velocity.x) * 50.0f;
-    particleProps.velocityVariation = Vector2(20.0f, 120.0f);
+    particleProps.velocity.x = -Math::Sign(rigidbody->velocity.x) * 60.0f;
+    particleProps.velocityVariation = Vector2(30.0f, 130.0f);
 }
 
 void Bullet::OnTriggerEnter(ColliderComponent* other) {
@@ -64,7 +64,7 @@ void Bullet::OnTriggerEnter(ColliderComponent* other) {
     sparkParticles->SetOnEmissionEnd([=]() { emitter->Destroy(); });
 
     particleProps.position = GetPosition();
-    sparkParticles->Emit(particleProps, 10);
+    sparkParticles->Emit(particleProps, 8);
 
     Destroy();
 }
