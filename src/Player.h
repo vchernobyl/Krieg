@@ -26,6 +26,7 @@ public:
 private:
     RigidbodyComponent* rigidbody;
     BoxColliderComponent* collider;
+    ParticleProps particleProps;
 };
 
 class Player : public Actor {

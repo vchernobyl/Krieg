@@ -25,7 +25,6 @@ public:
     void Emit(const ParticleProps& props, int amount);
 
     void SetTexture(class Texture* texture) { this->texture = texture; }
-    void SetProps(const ParticleProps& particleProps) { this->particleProps = particleProps; }
     
     int GetDrawOrder() const { return drawOrder; }
 private:
@@ -44,7 +43,6 @@ private:
     size_t poolIndex = 999;
 
     class Texture* texture;
-    ParticleProps particleProps;
     
     int drawOrder;
 };

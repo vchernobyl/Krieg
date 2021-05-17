@@ -39,6 +39,11 @@ namespace Math {
     inline float Sqrt(float value) {
 	return sqrtf(value);
     }
+
+    template <typename T>
+    inline int Sign(T value) {
+	return (value > 0) ? 1 : (value < 0) ? -1 : 0;
+    }
 }
 
 class Vector2 {

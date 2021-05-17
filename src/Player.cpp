@@ -40,14 +40,31 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
 
     float spreadRange = 0.7f;
     auto spread = Vector2(0.0f, Random::GetFloatRange(-spreadRange, spreadRange));
-    rigidbody->velocity = (direction * 12.0f) + spread;
+    rigidbody->velocity = (direction * 14.0f) + spread;
 
     collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());
     collider->isTrigger = true;
+
+    particleProps.colorBegin = Vector4(255, 255, 0, 255);
+    particleProps.colorEnd = Vector4(255, 0, 0, 255 / 4);
+
+    particleProps.sizeBegin = 8.0f;
+    particleProps.sizeEnd = 2.0f;
+    particleProps.sizeVariation = 2.0f;
+    particleProps.lifetime = 0.3f;
+    particleProps.velocity.x = -Math::Sign(rigidbody->velocity.x) * 50.0f;
+    particleProps.velocityVariation = Vector2(20.0f, 120.0f);
 }
 
 void Bullet::OnTriggerEnter(ColliderComponent* other) {
+    auto emitter = new Actor(GetGame());
+    auto sparkParticles = new ParticleEmitterComponent(emitter);
+    sparkParticles->SetTexture(GetGame()->GetRenderer()->GetTexture("assets/Particle.png"));
+
+    particleProps.position = GetPosition();
+    sparkParticles->Emit(particleProps, 10);
+
     Destroy();
 }
 
@@ -100,7 +117,6 @@ void Player::ActorInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
 	audio->PlayEvent("event:/Jump");
-
 
 	auto particlePosition = GetPosition();
 	particlePosition.x += sprite->GetWidth() * GetScale() / 2;

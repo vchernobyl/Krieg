@@ -112,7 +112,9 @@ May:
 15.1 Implement OnTriggerEnter function. [DONE]
 15.2 Remove dynamic casts in collision where possible. [DONE]
 16. Add particles to the renderer automatically. [DONE]
-17. Leave dust particles when player is jumping. [IN PROGRESS]
+17. Leave dust particles when player is jumping. [DONE]
+18. Add bullet spark particles. [IN PROGRESS]
+19. Fix particles with 0 alpha.
 
 Backlog
 -------
