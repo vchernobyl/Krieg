@@ -4,6 +4,7 @@
 #include "Component.h"
 
 #include <vector>
+#include <functional>
 
 struct ParticleProps {
     Vector2 position;
@@ -25,8 +26,8 @@ public:
     void Emit(const ParticleProps& props, int amount);
 
     void SetTexture(class Texture* texture) { this->texture = texture; }
-    void DestroyOnEnd(bool destroyOnEnd) { this->destroyOnEnd = destroyOnEnd; }
-    
+    void SetOnEmissionEnd(std::function<void(void)> onEmissionEnd) { this->onEmissionEnd = onEmissionEnd; }
+
     int GetDrawOrder() const { return drawOrder; }
 private:
     struct Particle {
@@ -49,4 +50,5 @@ private:
 
     bool isRunning = false;
     bool destroyOnEnd = false;
+    std::function<void(void)> onEmissionEnd;
 };

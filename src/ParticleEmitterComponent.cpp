@@ -45,8 +45,9 @@ void ParticleEmitterComponent::Update(float deltaTime) {
 
     if (isRunning && inactive == MaxParticles) {
 	isRunning = false;
-	if (destroyOnEnd) {
-	    GetOwner()->Destroy();
+	if (onEmissionEnd) {
+	    SDL_Log("OnEmissionEnd called!");
+	    onEmissionEnd();
 	}
     }
 }
