@@ -23,8 +23,15 @@ ParticleEmitterComponent::~ParticleEmitterComponent() {
 }
 
 void ParticleEmitterComponent::Update(float deltaTime) {
+    if (!isRunning) return;
+    
+    int inactive = 0;
+    
     for (auto& particle : particlePool) {
-	if (!particle.active) continue;
+	if (!particle.active) {
+	    inactive++;
+	    continue;
+	}
 
 	if (particle.lifeRemaining <= 0.0f) {
 	    particle.active = false;
@@ -34,6 +41,11 @@ void ParticleEmitterComponent::Update(float deltaTime) {
 	particle.lifeRemaining -= deltaTime;
 	particle.position += particle.velocity * deltaTime;
 	particle.rotation += 0.01f * deltaTime;
+    }
+
+    if (isRunning && inactive == MaxParticles) {
+	isRunning = false;
+	SDL_Log("Particle end!");
     }
 }
 
@@ -63,6 +75,8 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
 }
 
 void ParticleEmitterComponent::Emit(const ParticleProps& props, int amount) {
+    isRunning = true;
+
     for (int i = 0; i < amount; i++) {
 	Particle& particle = particlePool[poolIndex];
 	particle.active = true;

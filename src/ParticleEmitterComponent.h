@@ -45,4 +45,6 @@ private:
     class Texture* texture;
     
     int drawOrder;
+
+    bool isRunning = false;
 };
