@@ -44,7 +44,7 @@ private:
     };
 
     std::vector<Particle> particlePool;
-    size_t poolIndex = 999;
+    size_t poolIndex = 0;
 
     class Texture* texture;
     

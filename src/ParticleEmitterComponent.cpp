@@ -63,6 +63,7 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
 	
 	Vector2 pos = particle.position;
 	int size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life);
+
 	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), size, size };
 	renderer->GetCamera()->ToScreenSpace(dst);
 
@@ -98,6 +99,6 @@ void ParticleEmitterComponent::Emit(const ParticleProps& props, int amount) {
 	particle.sizeBegin = props.sizeBegin + props.sizeVariation * (Random::GetFloat() - 0.5f);
 	particle.sizeEnd = props.sizeEnd;
 
-	poolIndex = --poolIndex % particlePool.size();
+	poolIndex = ++poolIndex % particlePool.size();
     }
 }

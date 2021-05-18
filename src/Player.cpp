@@ -47,7 +47,7 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     collider->isTrigger = true;
 
     particleProps.colorBegin = Vector4(255, 255, 0, 255);
-    particleProps.colorEnd = Vector4(255, 0, 0, 255 / 4);
+    particleProps.colorEnd = Vector4(255, 128, 0, 0);
 
     particleProps.sizeBegin = 8.0f;
     particleProps.sizeEnd = 4.0f;
@@ -57,9 +57,6 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     
     particleProps.velocity.x = -Math::Sign(rigidbody->velocity.x) * 60.0f;
     particleProps.velocityVariation = Vector2(30.0f, 130.0f);
-
-    particleProps.rotationBegin = Random::GetFloat() * Math::TwoPi;
-    particleProps.rotationSpeed = 0.9f;
 }
 
 void Bullet::OnTriggerEnter(ColliderComponent* other) {
@@ -93,7 +90,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     audio = new AudioComponent(this);
 
     particleProps.colorBegin = Vector4(255, 255, 255, 255);
-    particleProps.colorEnd = Vector4(255 / 2, 255 / 2, 255 / 2, 255 / 4);
+    particleProps.colorEnd = Vector4(255 / 2, 255 / 2, 255 / 2, 0);
 
     particleProps.sizeBegin = 10.0f;
     particleProps.sizeEnd = 5.0f;
@@ -103,9 +100,6 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
 
     particleProps.velocity = Vector2::Up * 50.0f;
     particleProps.velocityVariation = Vector2(130.0f, 20.0f);
-
-    particleProps.rotationBegin = 0.0f;//Random::GetFloat() * Math::TwoPi;
-    particleProps.rotationSpeed = 1.5f;
 
     dustParticles = new ParticleEmitterComponent(this);
     dustParticles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));

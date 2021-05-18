@@ -159,8 +159,6 @@ void Game::UpdateGame() {
 
     physicsWorld->Update(deltaTime);
     audioSystem->Update(deltaTime);
-
-    SDL_Log("actor count: %d", actors.size());
 }
 
 void Game::DrawGame() {

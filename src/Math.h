@@ -160,6 +160,8 @@ public:
     }
 
     static Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
+	if (t < 0.0f) return a;
+	if (t > 1.0f) return b;
 	return Vector3(a + t * (b - a));
     }
 };
@@ -188,6 +190,8 @@ public:
     }
 
     static Vector4 Lerp(const Vector4& a, const Vector4& b, float t) {
+	if (t < 0.0f) return a;
+	if (t > 1.0f) return b;
 	return Vector4(a + t * (b - a));
     }
 };

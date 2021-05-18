@@ -114,8 +114,9 @@ May:
 16. Add particles to the renderer automatically. [DONE]
 17. Leave dust particles when player is jumping. [DONE]
 18. Add bullet spark particles. [DONE]
-19. Make rotation as part of the particle props. [IN PROGRESS]
-20. Fix particles with 0 alpha.
+19. Make rotation as part of the particle props. [DONE]
+20. Fix particles with 0 alpha. [DONE]
+21. Fix collisions happening too far from the actual object. [IN PROGRESS]
 
 Backlog
 -------
