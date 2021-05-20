@@ -15,31 +15,31 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other) {
     CollisionInfo info;
 
     auto otherBox = dynamic_cast<BoxColliderComponent*>(other)->GetBox();
-    auto thisBox = GetBox();
+    auto box = GetBox();
 
-    auto topLeft = thisBox.position - (otherBox.position + otherBox.size);
-    auto fullSize = thisBox.size + otherBox.size;
+    auto topLeft = box.position - (otherBox.position + otherBox.size);
+    auto fullSize = box.size + otherBox.size;
     auto minkowski = Rectangle(topLeft, fullSize);
 
-    Debug::DrawRect(thisBox);
+    Debug::DrawRect(box);
     Debug::DrawRect(otherBox);
-
-    SDL_Log("x=%f, y=%f, w=%f, h=%f", topLeft.x, topLeft.y, fullSize.x, fullSize.y);
+    
     if (minkowski.Contains(Vector2::Zero)) {
 	SDL_Log("collision!");
+    } else {
+	SDL_Log("no collision!");
     }
 
     return info;
 }
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
+    
+//    float minDist = Math::Fabs(Vecto2::Zero.x - 
     return;
 }
 
-Rectangle& BoxColliderComponent::GetBox() {
-    // TODO: Update the box position inside the Update function.
+void BoxColliderComponent::Update(float deltaTime) {
     box.position = owner->GetPosition() + offset;
     box.size = size;
-    return box;
 }
-
