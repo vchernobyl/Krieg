@@ -46,8 +46,8 @@ void PhysicsWorld::Update(float deltaTime) {
 	auto other = dynamic_cast<BoxColliderComponent*>(info.other);
 	auto current = dynamic_cast<BoxColliderComponent*>(info.current);
 	if (BoxCollidersIntersect(current, other, info)) {
-	    current->GetOwner()->OnCollisionEnter(info);
 	    current->ResolveCollision(info);
+	    current->GetOwner()->OnCollisionEnter(info);
 	}
     }
 

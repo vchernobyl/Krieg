@@ -117,6 +117,7 @@ May:
 19. Make rotation as part of the particle props. [DONE]
 20. Fix particles with 0 alpha. [DONE]
 21. Fix collisions happening too far from the actual object. [IN PROGRESS]
+  21.1 Add line drawing to debug bullet raycast. [DONE]
 
 Backlog
 -------

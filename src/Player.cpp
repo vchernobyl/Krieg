@@ -40,23 +40,23 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
 
     float spreadRange = 0.7f;
     auto spread = Vector2(0.0f, Random::GetFloatRange(-spreadRange, spreadRange));
-    rigidbody->velocity = (direction * 14.0f) + spread;
+    rigidbody->velocity = (direction * 20.0f) + spread;
 
     collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());
     collider->isTrigger = true;
 
     particleProps.colorBegin = Vector4(255, 255, 0, 255);
-    particleProps.colorEnd = Vector4(255, 128, 0, 0);
+    particleProps.colorEnd = Vector4(255, 56, 0, 0);
 
-    particleProps.sizeBegin = 8.0f;
-    particleProps.sizeEnd = 4.0f;
+    particleProps.sizeBegin = 10.0f;
+    particleProps.sizeEnd = 3.0f;
     particleProps.sizeVariation = 2.0f;
     
     particleProps.lifetime = 0.3f;
     
-    particleProps.velocity.x = -Math::Sign(rigidbody->velocity.x) * 60.0f;
-    particleProps.velocityVariation = Vector2(30.0f, 130.0f);
+    particleProps.velocity.x = -Math::Sign(rigidbody->velocity.x) * 80.0f;
+    particleProps.velocityVariation = Vector2(50.0f, 150.0f);
 }
 
 void Bullet::OnTriggerEnter(ColliderComponent* other) {
@@ -68,7 +68,21 @@ void Bullet::OnTriggerEnter(ColliderComponent* other) {
     particleProps.position = GetPosition();
     sparkParticles->Emit(particleProps, 12);
 
+    rigidbody->velocity = Vector2::Zero;
+
     Destroy();
+
+    // The bullet actor gets destroyed too far off from the other collider (wall, enemy etc).
+    // This seems to be happening only if the object is trigger and kinematic.
+    // If we make the bullet non-kinematic and non-trigger, the bullet stops pixel-perfectly before
+    // the collider. Hmm...
+
+    // AN IDEA!!!!
+    // I have a feeling that the reason why non-kinematic objects have perfect collisions is because
+    // they are resolved against expanded rectangle of the collision target.
+    // BUT the trigger/kinematic objects don't really need that. What they are interested in is only
+    // whether or not a collision has happened (object shapes are intersecting) and that's it.
+    // One possible solution for this is to treat these two different types of collisions separately.
 }
 
 const float MoveVelocity = 200.0f;
