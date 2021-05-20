@@ -19,9 +19,3 @@ private:
     Vector2 size;
     Rectangle box;
 };
-
-bool RayIntersects(const Vector2& rayOrigin, const Vector2& rayDir, const Rectangle& target,
-		   Vector2& contactPoint, Vector2& contactNormal, float& tHitNear);
-
-bool BoxCollidersIntersect(class BoxColliderComponent* a, class BoxColliderComponent* b,
-			   class CollisionInfo& info);

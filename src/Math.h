@@ -204,8 +204,12 @@ public:
     explicit Rectangle(float x = 0, float y = 0, float width = 0, float height = 0);
     explicit Rectangle(Vector2 position, Vector2 size);
 
-    Vector2 GetCenter() const { return position + size / 2; }
-
+    Vector2 Center() const { return position + size / 2; }
+    Vector2 TopLeft() const { return position; }
+    Vector2 TopRight() const { return position + Vector2(size.x, 0); }
+    Vector2 BottomLeft() const { return position + Vector2(0, size.y); }
+    Vector2 BottomRight() const { return position + size; }
+	
     bool Contains(const Vector2& point) const;
     bool Intersects(const Rectangle& rect) const;
 };

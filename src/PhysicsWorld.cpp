@@ -14,40 +14,14 @@ void PhysicsWorld::Update(float deltaTime) {
 
     for (auto rb : rigidbodies) {
 	if (!rb->isKinematic) {
-	    rb->velocity.y += (Gravity * deltaTime);
+//	    rb->velocity.y += (Gravity * deltaTime);
 	}
     }
 
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
-	for (auto j = colliders.begin(); j != colliders.end(); j++) {
+	for (auto j = i + 1; j != colliders.end(); j++) {
 	    if (i == j) continue;
-	    auto current = *i;
-	    auto other = *j;
-	    auto info = current->Intersects(other);
-
-	    if (!info.colliding) continue;
-
-	    // On trigger, send trigger message to both intersecting objects.
-	    if (other->isTrigger ||  current->isTrigger) {
-		current->GetOwner()->OnTriggerEnter(other);
-		other->GetOwner()->OnTriggerEnter(current);
-	    } else {
-		collisionToResolve.push_back(info);
-	    }
-	}
-    }
-
-    std::sort(collisionToResolve.begin(), collisionToResolve.end(), [](const CollisionInfo& a, const CollisionInfo& b) {
-	return a.contactTime < b.contactTime;
-    });
-
-    for (auto& info : collisionToResolve) {
-	// PERF: get rid of the casts here, very expensive
-	auto other = dynamic_cast<BoxColliderComponent*>(info.other);
-	auto current = dynamic_cast<BoxColliderComponent*>(info.current);
-	if (BoxCollidersIntersect(current, other, info)) {
-	    current->ResolveCollision(info);
-	    current->GetOwner()->OnCollisionEnter(info);
+	    (*i)->Intersects(*j);
 	}
     }
 
