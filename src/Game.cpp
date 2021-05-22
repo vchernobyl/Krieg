@@ -175,42 +175,23 @@ void Game::LoadData() {
     new Player(this);
     new Enemy(this);
 
-    // ParticleProps particleProps;
-    // particleProps.colorBegin = Vector4(254, 212, 123, 255.0f);
-    // particleProps.colorEnd = Vector4(254, 109, 41, 255.0f / 2);
-
-    // particleProps.sizeBegin = 15.0f;
-    // particleProps.sizeEnd = 0.0f;
-    // particleProps.sizeVariation = 5.0f;
-    // particleProps.lifetime = 3.0f;
-    // particleProps.velocity = Vector2(12.0f, 35.0f);
-    // particleProps.velocityVariation = Vector2(100.0f, 100.0f);
-
-    // auto emitter = new Actor(this);
-    // emitter->SetPosition(Vector2(300, 700));
-    
-    // auto particles = new ParticleEmitterComponent(emitter);
-    // particles->SetTexture(renderer->GetTexture("assets/Particle.png"));
-    // particles->SetProps(particleProps);
-    // particles->SetEmissionRate(3);
-
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
     tileMapRenderer = new TileMapRenderer(tileMap);
 
-    // auto objectGroups = tileMap->GetObjectGroups();
-    // for (auto objectGroup : objectGroups) {
-    // 	for (const auto& object : objectGroup->objects) {
-    // 	    auto objectActor = new Actor(this);
-    // 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
+    auto objectGroups = tileMap->GetObjectGroups();
+    for (auto objectGroup : objectGroups) {
+	for (const auto& object : objectGroup->objects) {
+	    auto objectActor = new Actor(this);
+	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
-    // 	    auto objectCollider = new BoxColliderComponent(objectActor);
-    // 	    objectCollider->SetSize(Vector2(object.size.x, object.size.y));
+	    auto objectCollider = new BoxColliderComponent(objectActor);
+	    objectCollider->SetSize(Vector2(object.size.x, object.size.y));
 
-    // 	    auto rigidbody = new RigidbodyComponent(objectActor);
-    // 	    rigidbody->isKinematic = true;
-    // 	}
-    // }
+	    auto rigidbody = new RigidbodyComponent(objectActor);
+	    rigidbody->isKinematic = true;
+	}
+    }
 }
 
 void Game::UnloadData() {

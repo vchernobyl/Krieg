@@ -23,7 +23,7 @@ void PhysicsWorld::Update(float deltaTime) {
 	    if (i == j) continue;
 	    auto info = (*i)->Intersects(*j);
 	    if (info.colliding) {
-		(*i)->ResolveCollision(info, deltaTime);
+		(*i)->ResolveCollision(info);
 	    }
 	}
     }

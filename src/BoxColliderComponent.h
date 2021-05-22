@@ -9,7 +9,7 @@ public:
     ~BoxColliderComponent();
     
     CollisionInfo Intersects(ColliderComponent* other) override;
-    void ResolveCollision(const CollisionInfo& info, float deltaTime) override;
+    void ResolveCollision(const CollisionInfo& info) override;
     void Update(float deltaTime) override;
 
     void SetOffset(Vector2 offset) { this->offset = offset; }
