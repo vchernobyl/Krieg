@@ -23,27 +23,31 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other) {
     Debug::DrawRect(box);
     Debug::DrawRect(otherBox);
     
-    info.colliding = minkowski.Contains(Vector2::Zero);
+    if (minkowski.Contains(Vector2::Zero)) {
+	info.colliding = true;
+	
+	auto origin = Vector2::Zero;
+	auto min = minkowski.position;
+	auto max = minkowski.position + minkowski.size;
 
-    Vector2 point = Vector2::Zero;
-    Vector2 min = minkowski.position;
-    Vector2 max = minkowski.position + minkowski.size;
+	auto minDist = Math::Fabs(origin.x - min.x);
+	auto closestPoint = Vector2(min.x, origin.y);
 
-    float minDist = Math::Fabs(point.x - min.x);
-    Vector2 boundsPoint = Vector2(min.x, point.y);
+	if (Math::Fabs(max.x - origin.x) < minDist) {
+	    minDist = Math::Fabs(max.x - origin.x);
+	    closestPoint = Vector2(max.x, origin.y);
+	}
+	if (Math::Fabs(max.y - origin.y) < minDist) {
+	    minDist = Math::Fabs(max.y - origin.y);
+	    closestPoint = Vector2(origin.x, max.y);
+	}
+	if (Math::Fabs(min.y - origin.y) < minDist) {
+	    minDist = Math::Fabs(min.y - origin.y);
+	    closestPoint = Vector2(origin.x, min.y);
+	}
 
-    if (Math::Fabs(max.x - point.x) < minDist) {
-	minDist = Math::Fabs(max.x - point.x);
-	boundsPoint = Vector2(max.x, point.y);
-    } else if (Math::Fabs(max.y - point.y) < minDist) {
-	minDist = Math::Fabs(max.y - point.y);
-	boundsPoint = Vector2(point.x, max.y);
-    } else if (Math::Fabs(min.y - point.y) < minDist) {
-	minDist = Math::Fabs(min.y - point.y);
-	boundsPoint = Vector2(point.x, min.y);
+	info.contactNormal = closestPoint;
     }
-
-    info.contactNormal = boundsPoint;
 
     return info;
 }
@@ -51,7 +55,7 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other) {
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info, float deltaTime) {
     auto rigidbody = GetAttachedRigidbody();
     auto resolution = -rigidbody->velocity + info.contactNormal;
-    GetAttachedRigidbody()->velocity += resolution;
+    rigidbody->velocity += resolution;
 }
 
 void BoxColliderComponent::Update(float deltaTime) {
