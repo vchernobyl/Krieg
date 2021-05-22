@@ -80,6 +80,10 @@ public:
 	return Vector2(left.x / scalar, left.y / scalar);
     }
 
+    friend Vector2 operator-(const Vector2& v) {
+	return Vector2(-v.x, -v.y);
+    }
+
     friend bool operator==(const Vector2& left, const Vector2& right) {
 	return left.x == right.x && left.y == right.y;
     }

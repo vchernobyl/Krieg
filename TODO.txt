@@ -118,6 +118,8 @@ May:
 20. Fix particles with 0 alpha. [DONE]
 21. Fix collisions happening too far from the actual object. [IN PROGRESS]
   21.1 Add line drawing to debug bullet raycast. [DONE]
+22. Implement basic discrete collision detection using Minkowski Difference. [DONE]
+23. Implement collision resolution using the penetration vector. [IN PROGRESS]
 
 Backlog
 -------

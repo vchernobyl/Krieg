@@ -21,7 +21,10 @@ void PhysicsWorld::Update(float deltaTime) {
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
 	for (auto j = i + 1; j != colliders.end(); j++) {
 	    if (i == j) continue;
-	    (*i)->Intersects(*j);
+	    auto info = (*i)->Intersects(*j);
+	    if (info.colliding) {
+		(*i)->ResolveCollision(info, deltaTime);
+	    }
 	}
     }
 
