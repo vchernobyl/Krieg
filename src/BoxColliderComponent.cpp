@@ -53,9 +53,10 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other) {
 }
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info, float deltaTime) {
+    // TODO: Rename contactNormal to penetrationVector or something.
     auto rigidbody = GetAttachedRigidbody();
-    auto resolution = -rigidbody->velocity + info.contactNormal;
-    rigidbody->velocity += resolution;
+    auto resolution = info.contactNormal;
+    rigidbody->velocity += info.contactNormal;
 }
 
 void BoxColliderComponent::Update(float deltaTime) {
