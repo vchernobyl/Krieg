@@ -59,7 +59,7 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     particleProps.velocityVariation = Vector2(50.0f, 150.0f);
 }
 
-void Bullet::OnTriggerEnter(ColliderComponent* other) {
+void Bullet::OnCollisionEnter(const CollisionInfo& info) {
     auto emitter = new Actor(GetGame());
     auto sparkParticles = new ParticleEmitterComponent(emitter);
     sparkParticles->SetTexture(GetGame()->GetRenderer()->GetTexture("assets/Particle.png"));

@@ -5,11 +5,7 @@
 
 struct CollisionInfo {
     bool colliding = false;
-    Vector2 contactPoint;
-    Vector2 contactNormal;
-    float contactTime;
-    class ColliderComponent* other;
-    class ColliderComponent* current;
+    Vector2 penetrationVector;
 };
 
 class ColliderComponent : public Component {

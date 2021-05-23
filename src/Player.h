@@ -22,7 +22,7 @@ private:
 class Bullet : public Actor {
 public:
     Bullet(Game* game, const Vector2& direction);
-    void OnTriggerEnter(ColliderComponent* other) override;
+    void OnCollisionEnter(const CollisionInfo& info) override;
 private:
     RigidbodyComponent* rigidbody;
     BoxColliderComponent* collider;

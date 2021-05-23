@@ -46,18 +46,17 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other) {
 	    closestPoint = Vector2(origin.x, min.y);
 	}
 
-	info.contactNormal = closestPoint;
+	info.penetrationVector = closestPoint;
     }
 
     return info;
 }
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
-    // TODO: Rename contactNormal to penetrationVector or something.
     auto rigidbody = GetAttachedRigidbody();
     if (!rigidbody->isKinematic) {
-	auto resolution = info.contactNormal;
-	rigidbody->velocity += info.contactNormal;
+	auto resolution = info.penetrationVector;
+	rigidbody->velocity += info.penetrationVector;
     }
 }
 
