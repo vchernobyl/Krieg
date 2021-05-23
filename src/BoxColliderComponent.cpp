@@ -14,7 +14,8 @@ BoxColliderComponent::~BoxColliderComponent() {}
 CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other) {
     CollisionInfo info;
 
-    auto otherBox = dynamic_cast<BoxColliderComponent*>(other)->GetBox();
+    auto otherCollider = dynamic_cast<BoxColliderComponent*>(other);
+    auto otherBox = otherCollider->GetBox();
 
     auto topLeft = otherBox.position - (box.position + box.size);
     auto fullSize = box.size + otherBox.size;
@@ -47,6 +48,12 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other) {
 	}
 
 	info.penetrationVector = closestPoint;
+    } else {
+	auto velocity = GetAttachedRigidbody()->velocity;
+	auto otherVelocity = otherCollider->GetAttachedRigidbody()->velocity;
+	auto relativeVelocity = velocity - otherVelocity;
+
+	
     }
 
     return info;

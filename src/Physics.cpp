@@ -6,8 +6,8 @@ bool Physics::GetLineIntersectionTime(const Vector2& startA,
 				      const Vector2& startB,
 				      const Vector2& endB,
 				      float& time) {
-    Vector2 r = endA - startA;
-    Vector2 s = endB - startB;
+    auto r = endA - startA;
+    auto s = endB - startB;
 
     float numerator = Vector2::Cross(startB - startA, r);
     float denominator = Vector2::Cross(r, s);
@@ -23,5 +23,12 @@ bool Physics::GetLineIntersectionTime(const Vector2& startA,
 	return true;
     }
 
+    return false;
+}
+
+bool Physics::GetRayIntersectionTime(const Vector2& start,
+				     const Vector2& direction,
+				     const Rectangle& rect,
+				     float& time) {
     return false;
 }

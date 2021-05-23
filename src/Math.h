@@ -1,10 +1,12 @@
 #pragma once
 
 #include <cmath>
+#include <limits>
 
 namespace Math {
     const float Pi = 3.1415926535f;
     const float TwoPi = Pi * 2.0f;
+    const float Infinity = std::numeric_limits<float>::infinity();
 
     inline float ToDegrees(float radians) {
 	return radians * 180.0f / Pi;
@@ -204,6 +206,7 @@ public:
     }
 };
 
+// TODO: Extract to a separate header.
 class Rectangle {
 public:
     Vector2 position;
@@ -211,13 +214,15 @@ public:
     
     explicit Rectangle(float x = 0, float y = 0, float width = 0, float height = 0);
     explicit Rectangle(Vector2 position, Vector2 size);
-
-    Vector2 Center() const { return position + size / 2; }
-    Vector2 TopLeft() const { return position; }
-    Vector2 TopRight() const { return position + Vector2(size.x, 0); }
-    Vector2 BottomLeft() const { return position + Vector2(0, size.y); }
-    Vector2 BottomRight() const { return position + size; }
-	
+    
     bool Contains(const Vector2& point) const;
     bool Intersects(const Rectangle& rect) const;
+
+    float RayIntersectionTime(const Vector2& start, const Vector2& direction);
 };
+
+float LineIntersectionTime(const Vector2& startA,
+			   const Vector2& endA,
+			   const Vector2& startB,
+			   const Vector2& endB);
+

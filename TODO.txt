@@ -122,6 +122,7 @@ May:
 23. Implement collision resolution using the penetration vector. [DONE]
 24. Don't resolve collisions with objects marked as static. [DONE]
 25. Implement swept collision detection. [IN PROGRESS]
+26. Separate Math, AABB and Vector headers.
 
 Backlog
 -------

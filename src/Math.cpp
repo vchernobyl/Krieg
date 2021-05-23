@@ -25,3 +25,52 @@ bool Rectangle::Intersects(const Rectangle& rect) const {
 	    position.y < rect.position.y + rect.size.y &&
 	    position.y + size.y > rect.position.y);
 }
+
+float Rectangle::RayIntersectionTime(const Vector2& start, const Vector2& direction) {
+    auto end = start + direction;
+    auto max = position + size;
+    auto min = position;
+
+    float minTime = LineIntersectionTime(start, end, Vector2(min.x, min.y), Vector2(min.x, max.y));
+    float time;
+
+    time = LineIntersectionTime(start, end, Vector2(min.x, max.y), Vector2(max.x, max.y));
+    if (time < minTime) {
+	minTime = time;
+    }
+
+    time = LineIntersectionTime(start, end, Vector2(max.x, max.y), Vector2(max.x, min.y));
+    if (time < minTime) {
+	minTime = time;
+    }
+
+    time = LineIntersectionTime(start, end, Vector2(max.x, min.y), Vector2(min.x, min.y));
+    if (time < minTime) {
+	minTime = time;
+    }
+
+    return minTime;
+}
+
+float LineIntersectionTime(const Vector2& startA,
+			  const Vector2& endA,
+			  const Vector2& startB,
+			  const Vector2& endB) {
+    auto r = endA - startA;
+    auto s = endB - startB;
+
+    float numerator = Vector2::Cross(startB - startA, r);
+    float denominator = Vector2::Cross(r, s);
+
+    if (numerator == 0.0f && denominator == 0.0f) return Math::Infinity;
+    if (denominator == 0.0f) return Math::Infinity;
+
+    float u = numerator / denominator;
+    float t = Vector2::Cross(startB - startA, s) / denominator;
+
+    if (t >= 0.0f && t <= 1.0f && u >= 0.0f && u <= 1.0f) {
+	return t;
+    }
+
+    return Math::Infinity;
+}
