@@ -90,6 +90,10 @@ public:
 	return left.x == right.x && left.y == right.y;
     }
 
+    friend bool operator!=(const Vector2& left, const Vector2& right) {
+	return left.x != right.x || left.y != right.y;
+    }
+
     Vector2& operator*=(const Vector2& v) {
 	x *= v.x;
 	y *= v.y;
@@ -122,6 +126,18 @@ public:
 	y /= length;
     }
 
+    // TODO: Check if this works.
+    Vector2& Normalized() {
+	Normalize();
+	return *this;
+    }
+
+    static Vector2 Normalize(const Vector2& v) {
+	Vector2 temp = v;
+	temp.Normalize();
+	return v;
+    }
+
     static float Dot(const Vector2& a, const Vector2& b) {
 	return a.x * b.x + a.y * b.y;
     }
@@ -136,6 +152,10 @@ public:
 
     static Vector2 Lerp(const Vector2& a, const Vector2& b, float t) {
 	return Vector2(a + t * (b - a));
+    }
+
+    static Vector2 Tan(const Vector2& v) {
+	return Vector2(-v.y, v.x);
     }
 
     static const Vector2 Zero;

@@ -8,7 +8,7 @@ public:
     BoxColliderComponent(Actor* owner);
     ~BoxColliderComponent();
     
-    CollisionInfo Intersects(ColliderComponent* other) override;
+    CollisionInfo Intersects(ColliderComponent* other, float deltaTime) override;
     void ResolveCollision(const CollisionInfo& info) override;
     void Update(float deltaTime) override;
 

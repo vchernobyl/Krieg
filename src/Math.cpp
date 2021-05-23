@@ -1,4 +1,5 @@
 #include "Math.h"
+#include <SDL.h>
 
 const Vector2 Vector2::Zero(0.0f, 0.0f);
 const Vector2 Vector2::One(1.0f, 1.0f);
@@ -36,26 +37,33 @@ float Rectangle::RayIntersectionTime(const Vector2& start, const Vector2& direct
 
     time = LineIntersectionTime(start, end, Vector2(min.x, max.y), Vector2(max.x, max.y));
     if (time < minTime) {
+	SDL_Log("will collide from below");
 	minTime = time;
     }
 
     time = LineIntersectionTime(start, end, Vector2(max.x, max.y), Vector2(max.x, min.y));
     if (time < minTime) {
+	SDL_Log("will collide from right");
 	minTime = time;
     }
 
     time = LineIntersectionTime(start, end, Vector2(max.x, min.y), Vector2(min.x, min.y));
     if (time < minTime) {
+	SDL_Log("will collide from top");
 	minTime = time;
+    }
+
+    if (minTime < Math::Infinity) {
+	SDL_Log("will collide from left");
     }
 
     return minTime;
 }
 
 float LineIntersectionTime(const Vector2& startA,
-			  const Vector2& endA,
-			  const Vector2& startB,
-			  const Vector2& endB) {
+			   const Vector2& endA,
+			   const Vector2& startB,
+			   const Vector2& endB) {
     auto r = endA - startA;
     auto s = endB - startB;
 

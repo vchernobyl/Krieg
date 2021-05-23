@@ -11,7 +11,8 @@ const float Gravity = 9.81f;
 
 void PhysicsWorld::Update(float deltaTime) {
     assert(colliders.size() == rigidbodies.size());
-
+    assert(collisionToResolve.empty());
+    
     for (auto rb : rigidbodies) {
 	if (!rb->isKinematic) {
 //	    rb->velocity.y += (Gravity * deltaTime);
@@ -23,12 +24,12 @@ void PhysicsWorld::Update(float deltaTime) {
 	    if (i == j) continue;
 	    auto current = *i;
 	    auto other = *j;
-	    auto info = current->Intersects(other);
-	    if (info.colliding) {
-		current->GetOwner()->OnCollisionEnter(info);
-		other->GetOwner()->OnCollisionEnter(info);
-		current->ResolveCollision(info);
-	    }
+	    auto info = current->Intersects(other, deltaTime);
+	    // if (info.colliding) {
+	    // 	current->GetOwner()->OnCollisionEnter(info);
+	    // 	other->GetOwner()->OnCollisionEnter(info);
+	    // 	current->ResolveCollision(info);
+	    // }
 	}
     }
 
