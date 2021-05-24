@@ -1,5 +1,6 @@
 #include "Math.h"
 #include <SDL.h>
+#include <cassert>
 
 const Vector2 Vector2::Zero(0.0f, 0.0f);
 const Vector2 Vector2::One(1.0f, 1.0f);
@@ -32,6 +33,10 @@ float Rectangle::RayIntersectionTime(const Vector2& start, const Vector2& direct
     auto max = position + size;
     auto min = position;
 
+    if (direction != Vector2::Zero) {
+	SDL_Log("relative velocity x=%f, y=%f", direction.x, direction.y);
+    }
+    
     float minTime = LineIntersectionTime(start, end, Vector2(min.x, min.y), Vector2(min.x, max.y));
     float time;
 
@@ -77,6 +82,7 @@ float LineIntersectionTime(const Vector2& startA,
     float t = Vector2::Cross(startB - startA, s) / denominator;
 
     if (t >= 0.0f && t <= 1.0f && u >= 0.0f && u <= 1.0f) {
+	SDL_Log("t=%f", t);
 	return t;
     }
 

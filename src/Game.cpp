@@ -180,19 +180,19 @@ void Game::LoadData() {
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
     tileMapRenderer = new TileMapRenderer(tileMap);
 
-    auto objectGroups = tileMap->GetObjectGroups();
-    for (auto objectGroup : objectGroups) {
-	for (const auto& object : objectGroup->objects) {
-	    auto objectActor = new Actor(this);
-	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
+    // auto objectGroups = tileMap->GetObjectGroups();
+    // for (auto objectGroup : objectGroups) {
+    // 	for (const auto& object : objectGroup->objects) {
+    // 	    auto objectActor = new Actor(this);
+    // 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
-	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    objectCollider->SetSize(Vector2(object.size.x, object.size.y));
+    // 	    auto objectCollider = new BoxColliderComponent(objectActor);
+    // 	    objectCollider->SetSize(Vector2(object.size.x, object.size.y));
 
-	    auto rigidbody = new RigidbodyComponent(objectActor);
-	    rigidbody->isKinematic = true;
-	}
-    }
+    // 	    auto rigidbody = new RigidbodyComponent(objectActor);
+    // 	    rigidbody->isKinematic = true;
+    // 	}
+    // }
 }
 
 void Game::UnloadData() {

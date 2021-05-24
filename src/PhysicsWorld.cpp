@@ -11,7 +11,7 @@ const float Gravity = 9.81f;
 
 void PhysicsWorld::Update(float deltaTime) {
     assert(colliders.size() == rigidbodies.size());
-    assert(collisionToResolve.empty());
+//    assert(collisionToResolve.empty());
     
     for (auto rb : rigidbodies) {
 	if (!rb->isKinematic) {

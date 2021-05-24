@@ -3,6 +3,10 @@
 #include "Actor.h"
 #include "Debug.h"
 
+#include "Game.h"
+#include "Renderer.h"
+#include "Camera.h"
+
 #include <algorithm>
 #include <cmath>
 #include <cassert>
@@ -23,6 +27,17 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 
     Debug::DrawRect(box);
     Debug::DrawRect(otherBox);
+
+    // Minkowi debug
+    auto minkowskiDebug = minkowski;
+    auto camera= GetOwner()->GetGame()->GetRenderer()->GetCamera();
+    auto cameraPos = camera->GetPosition();
+    cameraPos += camera->GetViewportSize() / 2;
+    minkowskiDebug.position += cameraPos;
+
+    auto originRect = Rectangle(cameraPos, Vector2(1, 1));
+    Debug::DrawRect(minkowskiDebug);
+    Debug::DrawRect(originRect);
     
     if (minkowski.Contains(Vector2::Zero)) {
 	// info.colliding = true;
@@ -61,22 +76,21 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 	//     }
 	// }
     } else {
-	// auto velocity = GetAttachedRigidbody()->velocity;
-	// auto otherVelocity = otherCollider->GetAttachedRigidbody()->velocity;
-	// auto relativeVelocity = (velocity - otherVelocity) * deltaTime;
-	// auto t = minkowski.RayIntersectionTime(Vector2::Zero, relativeVelocity);
-	SDL_Log("intersection t=%f", deltaTime);
+	auto velocity = GetAttachedRigidbody()->velocity;
+	auto otherVelocity = otherCollider->GetAttachedRigidbody()->velocity;
+	auto relativeVelocity = (velocity - otherVelocity);
+	auto t = minkowski.RayIntersectionTime(Vector2::Zero, relativeVelocity);
 
-	// if (t < Math::Infinity) {
-	//     SDL_Log("will collide, t=%f", t);
-	    
-	//     GetOwner()->Translate(velocity * deltaTime * t);
-	//     otherCollider->GetOwner()->Translate(otherVelocity * deltaTime * t);
+	Debug::DrawLine(originRect.position, originRect.position + relativeVelocity);
 
-	//     auto tan = Vector2::Tan(relativeVelocity.Normalized());
-	//     GetAttachedRigidbody()->velocity = Vector2::Dot(velocity, tan) * tan;
-	//     otherCollider->GetAttachedRigidbody()->velocity = Vector2::Dot(otherVelocity, tan) * tan;
-	// }
+	if (t < Math::Infinity) {
+	    GetOwner()->Translate(velocity * deltaTime * t);
+	    otherCollider->GetOwner()->Translate(otherVelocity * deltaTime * t);
+
+	    auto tan = Vector2::Tan(relativeVelocity.Normalized());
+	    GetAttachedRigidbody()->velocity = Vector2::Dot(velocity, tan) * tan;
+	    otherCollider->GetAttachedRigidbody()->velocity = Vector2::Dot(otherVelocity, tan) * tan;
+	}
     }
 
     return info;

@@ -13,8 +13,11 @@ public:
     void SetWorldSize(Vector2 worldSize) { this->worldSize = worldSize; }
     void SetWorldSize(int width, int height) { SetWorldSize(Vector2(width, height)); }
     void ToScreenSpace(SDL_Rect& dst) const;
+
     const SDL_Rect& GetViewport() const { return viewport; }
     const Vector2& GetPosition() const { return position; }
+    const Vector2& GetWorldSize() const { return worldSize; }
+    Vector2 GetViewportSize() const { return Vector2(viewportWidth, viewportHeight); }
 private:
     int viewportWidth;
     int viewportHeight;
