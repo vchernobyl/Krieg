@@ -21,9 +21,7 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
     auto otherCollider = dynamic_cast<BoxColliderComponent*>(other);
     auto otherBox = otherCollider->GetBox();
 
-    auto topLeft = otherBox.position - (box.position + box.size);
-    auto fullSize = box.size + otherBox.size;
-    auto minkowski = Rectangle(topLeft, fullSize);
+    auto minkowski = MinkowskiDifference(box, otherBox);
 
     Debug::DrawRect(box);
     Debug::DrawRect(otherBox);
@@ -38,8 +36,12 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
     auto originRect = Rectangle(cameraPos, Vector2(1, 1));
     Debug::DrawRect(minkowskiDebug);
     Debug::DrawRect(originRect);
+
+    auto vel = GetAttachedRigidbody()->velocity;
+    SDL_Log("vel.x=%f, vel.y=%f\n", vel.x, vel.y);
     
     if (minkowski.Contains(Vector2::Zero)) {
+	SDL_Log("already colliding!");
 	// info.colliding = true;
 	
 	// auto origin = Vector2::Zero;
@@ -67,13 +69,13 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 	// if (!rigidbody->isKinematic) {
 	//     GetOwner()->Translate(info.penetrationVector);
 
-	//     if (info.penetrationVector != Vector2::Zero) {
-	// 	auto tan = Vector2::Tan(info.penetrationVector.Normalized());
-	// 	auto aRigidbody = GetAttachedRigidbody();
-	// 	auto bRigidbody = otherCollider->GetAttachedRigidbody();
-	// 	aRigidbody->velocity = Vector2::Dot(aRigidbody->velocity, tan) * tan;
-	// 	bRigidbody->velocity = Vector2::Dot(bRigidbody->velocity, tan) * tan;
-	//     }
+	//     // if (info.penetrationVector != Vector2::Zero) {
+	//     // 	auto tan = Vector2::Tan(info.penetrationVector.Normalized());
+	//     // 	auto aRigidbody = GetAttachedRigidbody();
+	//     // 	auto bRigidbody = otherCollider->GetAttachedRigidbody();
+	//     // 	aRigidbody->velocity = Vector2::Dot(aRigidbody->velocity, tan) * tan;
+	//     // 	bRigidbody->velocity = Vector2::Dot(bRigidbody->velocity, tan) * tan;
+	//     // }
 	// }
     } else {
 	auto velocity = GetAttachedRigidbody()->velocity;
@@ -87,20 +89,21 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 	Debug::DrawLine(originRect.position, originRect.position + relativeVelocity);
 
 	if (t < Math::Infinity) {	    
-	    GetOwner()->Translate(velocity * t);
+	    GetOwner()->Translate(velocity * (t - 0.001f));
 	    
 	    auto norm = Vector2::Normalize(relativeVelocity);
-	    SDL_Log("norm.x=%f, norm.y=%f", norm.x, norm.y);
+	    SDL_Log("will collide! adjusting position and velocity");
 
 	    auto tangent = Vector2(-norm.y, norm.x);
 	    auto v1 = Vector2::Dot(velocity, tangent) * tangent;
 	    
 	    GetAttachedRigidbody()->velocity = v1;
 	} else {
+	    SDL_Log("will NOT collide!");
 	    GetOwner()->Translate(GetAttachedRigidbody()->velocity);
 	    otherCollider->GetOwner()->Translate(otherCollider->GetAttachedRigidbody()->velocity);
 	}
-    }
+     }
 
     return info;
 }

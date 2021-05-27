@@ -58,6 +58,12 @@ float Rectangle::RayIntersectionTime(const Vector2& start, const Vector2& direct
     return minTime;
 }
 
+Rectangle MinkowskiDifference(const Rectangle& a, const Rectangle& b) {
+    auto topLeft = b.position - (a.position + a.size);
+    auto fullSize = a.size + b.size;
+    return Rectangle(topLeft, fullSize);
+}
+
 float LineIntersectionTime(const Vector2& startA,
 			   const Vector2& endA,
 			   const Vector2& startB,
