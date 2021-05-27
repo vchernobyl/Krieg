@@ -21,20 +21,5 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    //rigidbody->velocity.x = velocity * deltaTime;
-}
-
-void Enemy::OnCollisionEnter(const CollisionInfo& info) {
-    // If hit a wall, just turn around.
-    // if (info.contactNormal == Vector2::Left || info.contactNormal == Vector2::Right) {
-    // 	velocity = -velocity;
-    // 	if (velocity > 0) {
-    // 	    sprite->flipX = false;
-    // 	} else {
-    // 	    sprite->flipX = true;
-    // 	}
-    // }
-}
-
-void Enemy::OnTriggerEnter(ColliderComponent* other) {
+    //rigidbody->velocity.x = -velocity * deltaTime;
 }

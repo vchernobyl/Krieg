@@ -12,8 +12,12 @@ public:
     void ResolveCollision(const CollisionInfo& info) override;
     void Update(float deltaTime) override;
 
-    void SetOffset(Vector2 offset) { this->offset = offset; }
-    void SetSize(Vector2 size) { this->size = size; }
+    void SetOffset(const Vector2& offset) { this->offset = offset; }
+    void SetSize(const Vector2& size) { this->size = size; }
+    
+    void SetBoxPosition(const Vector2& position) { this->box.position = position; }
+    Vector2 GetBoxPosition() const { return box.position; }
+
     Rectangle& GetBox() { return box; }
 private:
     Vector2 offset;

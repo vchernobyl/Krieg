@@ -78,18 +78,27 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
     } else {
 	auto velocity = GetAttachedRigidbody()->velocity;
 	auto otherVelocity = otherCollider->GetAttachedRigidbody()->velocity;
-	auto relativeVelocity = (velocity - otherVelocity);
-	auto t = minkowski.RayIntersectionTime(Vector2::Zero, relativeVelocity);
+	auto relativeVelocity = velocity;
+
+
+	Vector2 normal;
+	auto t = minkowski.RayIntersectionTime(Vector2::Zero, relativeVelocity, normal);
 
 	Debug::DrawLine(originRect.position, originRect.position + relativeVelocity);
 
-	if (t < Math::Infinity) {
-	    GetOwner()->Translate(velocity * deltaTime * t);
-	    otherCollider->GetOwner()->Translate(otherVelocity * deltaTime * t);
+	if (t < Math::Infinity) {	    
+	    GetOwner()->Translate(velocity * t);
+	    
+	    auto norm = Vector2::Normalize(relativeVelocity);
+	    SDL_Log("norm.x=%f, norm.y=%f", norm.x, norm.y);
 
-	    auto tan = Vector2::Tan(relativeVelocity.Normalized());
-	    GetAttachedRigidbody()->velocity = Vector2::Dot(velocity, tan) * tan;
-	    otherCollider->GetAttachedRigidbody()->velocity = Vector2::Dot(otherVelocity, tan) * tan;
+	    auto tangent = Vector2(-norm.y, norm.x);
+	    auto v1 = Vector2::Dot(velocity, tangent) * tangent;
+	    
+	    GetAttachedRigidbody()->velocity = v1;
+	} else {
+	    GetOwner()->Translate(GetAttachedRigidbody()->velocity);
+	    otherCollider->GetOwner()->Translate(otherCollider->GetAttachedRigidbody()->velocity);
 	}
     }
 
@@ -97,11 +106,11 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 }
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
-    auto rigidbody = GetAttachedRigidbody();
-    if (!rigidbody->isKinematic) {
-	auto resolution = info.penetrationVector;
-	rigidbody->velocity += info.penetrationVector;
-    }
+    // auto rigidbody = GetAttachedRigidbody();
+    // if (!rigidbody->isKinematic) {
+    // 	auto resolution = info.penetrationVector;
+    // 	rigidbody->velocity += info.penetrationVector;
+    // }
 }
 
 void BoxColliderComponent::Update(float deltaTime) {

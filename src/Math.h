@@ -126,16 +126,17 @@ public:
 	y /= length;
     }
 
-    // TODO: Check if this works.
     Vector2& Normalized() {
 	Normalize();
 	return *this;
     }
 
     static Vector2 Normalize(const Vector2& v) {
-	Vector2 temp = v;
-	temp.Normalize();
-	return v;
+	float length = v.Length();
+	if (length != 0.0f) {
+	    return Vector2(v.x / length, v.y / length);
+	}
+	return Vector2::Zero;
     }
 
     static float Dot(const Vector2& a, const Vector2& b) {
@@ -152,10 +153,6 @@ public:
 
     static Vector2 Lerp(const Vector2& a, const Vector2& b, float t) {
 	return Vector2(a + t * (b - a));
-    }
-
-    static Vector2 Tan(const Vector2& v) {
-	return Vector2(-v.y, v.x);
     }
 
     static const Vector2 Zero;
@@ -238,7 +235,7 @@ public:
     bool Contains(const Vector2& point) const;
     bool Intersects(const Rectangle& rect) const;
 
-    float RayIntersectionTime(const Vector2& start, const Vector2& direction);
+    float RayIntersectionTime(const Vector2& start, const Vector2& direction, Vector2& normal);
 };
 
 float LineIntersectionTime(const Vector2& startA,

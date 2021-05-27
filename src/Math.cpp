@@ -28,38 +28,31 @@ bool Rectangle::Intersects(const Rectangle& rect) const {
 	    position.y + size.y > rect.position.y);
 }
 
-float Rectangle::RayIntersectionTime(const Vector2& start, const Vector2& direction) {
+float Rectangle::RayIntersectionTime(const Vector2& start, const Vector2& direction, Vector2& normal) {
     auto end = start + direction;
     auto max = position + size;
     auto min = position;
 
-    if (direction != Vector2::Zero) {
-	SDL_Log("relative velocity x=%f, y=%f", direction.x, direction.y);
-    }
-    
     float minTime = LineIntersectionTime(start, end, Vector2(min.x, min.y), Vector2(min.x, max.y));
+    normal = Vector2(-1, 0);
     float time;
 
     time = LineIntersectionTime(start, end, Vector2(min.x, max.y), Vector2(max.x, max.y));
-    if (time < minTime) {
-	SDL_Log("will collide from below");
+    if (time < minTime)	{
+	normal = Vector2(0, 1);
 	minTime = time;
     }
 
     time = LineIntersectionTime(start, end, Vector2(max.x, max.y), Vector2(max.x, min.y));
     if (time < minTime) {
-	SDL_Log("will collide from right");
+	normal = Vector2(1, 0);
 	minTime = time;
     }
 
     time = LineIntersectionTime(start, end, Vector2(max.x, min.y), Vector2(min.x, min.y));
-    if (time < minTime) {
-	SDL_Log("will collide from top");
+    if (time < minTime)	{
+	normal = Vector2(0, -1);
 	minTime = time;
-    }
-
-    if (minTime < Math::Infinity) {
-	SDL_Log("will collide from left");
     }
 
     return minTime;
@@ -82,7 +75,6 @@ float LineIntersectionTime(const Vector2& startA,
     float t = Vector2::Cross(startB - startA, s) / denominator;
 
     if (t >= 0.0f && t <= 1.0f && u >= 0.0f && u <= 1.0f) {
-	SDL_Log("t=%f", t);
 	return t;
     }
 

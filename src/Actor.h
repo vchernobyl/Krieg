@@ -24,7 +24,7 @@ public:
 
     const Vector2& GetPosition() const { return position; }
     void SetPosition(const Vector2& v) { position = v; }
-    void Translate(const Vector2& v) { position.x += v.x; position.y += v.y; }
+    void Translate(const Vector2& v) { position += v; }
 
     float GetScale() const { return scale; }
     void SetScale(float scale) { this->scale = scale; }
