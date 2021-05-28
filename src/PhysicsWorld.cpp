@@ -19,10 +19,10 @@ void PhysicsWorld::Update(float deltaTime) {
 	}
     }
 
-    // // Advance physics simulation.
-    // for (auto rb : rigidbodies) {
-    // 	rb->GetOwner()->Translate(rb->velocity);
-    // }
+    // Advance physics simulation.
+    for (auto rb : rigidbodies) {
+	rb->GetOwner()->Translate(rb->velocity);
+    }
 }
 
 void PhysicsWorld::AddCollider(ColliderComponent* collider) {

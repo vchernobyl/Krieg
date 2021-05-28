@@ -38,10 +38,8 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
     Debug::DrawRect(originRect);
 
     auto vel = GetAttachedRigidbody()->velocity;
-    SDL_Log("vel.x=%f, vel.y=%f\n", vel.x, vel.y);
     
     if (minkowski.Contains(Vector2::Zero)) {
-	SDL_Log("already colliding!");
 	// info.colliding = true;
 	
 	// auto origin = Vector2::Zero;
@@ -80,8 +78,7 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
     } else {
 	auto velocity = GetAttachedRigidbody()->velocity;
 	auto otherVelocity = otherCollider->GetAttachedRigidbody()->velocity;
-	auto relativeVelocity = velocity;
-
+	auto relativeVelocity = velocity - otherVelocity;
 
 	Vector2 normal;
 	auto t = minkowski.RayIntersectionTime(Vector2::Zero, relativeVelocity, normal);
@@ -90,18 +87,17 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 
 	if (t < Math::Infinity) {	    
 	    GetOwner()->Translate(velocity * (t - 0.001f));
-	    
-	    auto norm = Vector2::Normalize(relativeVelocity);
-	    SDL_Log("will collide! adjusting position and velocity");
+	    otherCollider->GetOwner()->Translate(otherVelocity * (t - 0.001f));
 
-	    auto tangent = Vector2(-norm.y, norm.x);
-	    auto v1 = Vector2::Dot(velocity, tangent) * tangent;
-	    
-	    GetAttachedRigidbody()->velocity = v1;
-	} else {
-	    SDL_Log("will NOT collide!");
-	    GetOwner()->Translate(GetAttachedRigidbody()->velocity);
-	    otherCollider->GetOwner()->Translate(otherCollider->GetAttachedRigidbody()->velocity);
+	    auto tangent = Vector2(Math::Fabs(normal.y), Math::Fabs(normal.x));
+	    SDL_Log("tx=%f, ty=%f", tangent.x, tangent.y);
+
+	    GetAttachedRigidbody()->velocity = tangent * velocity;
+
+	    otherCollider->GetAttachedRigidbody()->velocity = tangent * otherVelocity;
+	// } else {
+	//     GetOwner()->Translate(GetAttachedRigidbody()->velocity);
+	//     otherCollider->GetOwner()->Translate(otherCollider->GetAttachedRigidbody()->velocity);
 	}
      }
 
