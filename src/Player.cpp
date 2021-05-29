@@ -133,28 +133,27 @@ void Player::ActorInput(const InputState& inputState) {
 	direction = Vector2::Left;
 	sprite->flipX = true;
     }
-    
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) {
-	velocity.y = -MoveVelocity;
-    }
-
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) {
-	velocity.y = MoveVelocity;
-    }
-    
-    // if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
-    // 	audio->PlayEvent("event:/Jump");
-
-    // 	auto particlePosition = GetPosition();
-    // 	particlePosition.x += sprite->GetWidth() * GetScale() / 2;
-    // 	particlePosition.y += sprite->GetHeight() * GetScale() / 2; // Division by 2 only because sprite sheet contains 2 characters.
-    // 	particleProps.position = particlePosition;
-	
-    // 	dustParticles->Emit(particleProps, 12);
-
-    // 	velocity.y = -JumpVelocity;
-    // 	isJumping = true;
+    // if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) {
+    // 	velocity.y = -MoveVelocity;
     // }
+
+    // if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) {
+    // 	velocity.y = MoveVelocity;
+    // }
+    
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
+	audio->PlayEvent("event:/Jump");
+
+	auto particlePosition = GetPosition();
+	particlePosition.x += sprite->GetWidth() * GetScale() / 2;
+	particlePosition.y += sprite->GetHeight() * GetScale() / 2; // Division by 2 only because sprite sheet contains 2 characters.
+	particleProps.position = particlePosition;
+	
+	dustParticles->Emit(particleProps, 12);
+
+	velocity.y = -JumpVelocity;
+	isJumping = true;
+    }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
 	auto bullet = new Bullet(GetGame(), direction);
@@ -182,7 +181,7 @@ void Player::ActorInput(const InputState& inputState) {
 
 void Player::UpdateActor(float deltaTime) {
     rigidbody->velocity.x = velocity.x * deltaTime;
-    rigidbody->velocity.y = velocity.y * deltaTime;
+    rigidbody->velocity.y += velocity.y * deltaTime;
 
     if (Math::NearZero(rigidbody->velocity.y)) {
 	isJumping = false;

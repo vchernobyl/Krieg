@@ -19,97 +19,65 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
     CollisionInfo info;
 
     auto otherCollider = dynamic_cast<BoxColliderComponent*>(other);
-    auto otherBox = otherCollider->GetBox();
-
-    auto minkowski = MinkowskiDifference(box, otherBox);
+    auto minkowski = MinkowskiDifference(box, otherCollider->GetBox());
 
     Debug::DrawRect(box);
-    Debug::DrawRect(otherBox);
+    Debug::DrawRect(otherCollider->GetBox());
 
-    // Minkowi debug
-    auto minkowskiDebug = minkowski;
-    auto camera= GetOwner()->GetGame()->GetRenderer()->GetCamera();
-    auto cameraPos = camera->GetPosition();
-    cameraPos += camera->GetViewportSize() / 2;
-    minkowskiDebug.position += cameraPos;
-
-    auto originRect = Rectangle(cameraPos, Vector2(1, 1));
-    Debug::DrawRect(minkowskiDebug);
-    Debug::DrawRect(originRect);
-
-    auto vel = GetAttachedRigidbody()->velocity;
-    
     if (minkowski.Contains(Vector2::Zero)) {
-	// info.colliding = true;
+	info.colliding = true;
 	
-	// auto origin = Vector2::Zero;
-	// auto min = minkowski.position;
-	// auto max = minkowski.position + minkowski.size;
+	auto origin = Vector2::Zero;
+	auto min = minkowski.position;
+	auto max = minkowski.position + minkowski.size;
 
-	// auto minDist = Math::Fabs(origin.x - min.x);
-	// auto closestPoint = Vector2(min.x, origin.y);
+	auto minDist = Math::Fabs(origin.x - min.x);
+	auto closestPoint = Vector2(min.x, origin.y);
 
-	// if (Math::Fabs(max.x - origin.x) < minDist) {
-	//     minDist = Math::Fabs(max.x - origin.x);
-	//     closestPoint = Vector2(max.x, origin.y);
-	// }
-	// if (Math::Fabs(max.y - origin.y) < minDist) {
-	//     minDist = Math::Fabs(max.y - origin.y);
-	//     closestPoint = Vector2(origin.x, max.y);
-	// }
-	// if (Math::Fabs(min.y - origin.y) < minDist) {
-	//     minDist = Math::Fabs(min.y - origin.y);
-	//     closestPoint = Vector2(origin.x, min.y);
-	// }
-
-	// info.penetrationVector = closestPoint;
-	// auto rigidbody = GetAttachedRigidbody();
-	// if (!rigidbody->isKinematic) {
-	//     GetOwner()->Translate(info.penetrationVector);
-
-	//     // if (info.penetrationVector != Vector2::Zero) {
-	//     // 	auto tan = Vector2::Tan(info.penetrationVector.Normalized());
-	//     // 	auto aRigidbody = GetAttachedRigidbody();
-	//     // 	auto bRigidbody = otherCollider->GetAttachedRigidbody();
-	//     // 	aRigidbody->velocity = Vector2::Dot(aRigidbody->velocity, tan) * tan;
-	//     // 	bRigidbody->velocity = Vector2::Dot(bRigidbody->velocity, tan) * tan;
-	//     // }
-	// }
-    } else {
-	auto velocity = GetAttachedRigidbody()->velocity;
-	auto otherVelocity = otherCollider->GetAttachedRigidbody()->velocity;
-	auto relativeVelocity = velocity - otherVelocity;
-
-	Vector2 normal;
-	auto t = minkowski.RayIntersectionTime(Vector2::Zero, relativeVelocity, normal);
-
-	Debug::DrawLine(originRect.position, originRect.position + relativeVelocity);
-
-	if (t < Math::Infinity) {	    
-	    GetOwner()->Translate(velocity * (t - 0.001f));
-	    otherCollider->GetOwner()->Translate(otherVelocity * (t - 0.001f));
-
-	    auto tangent = Vector2(Math::Fabs(normal.y), Math::Fabs(normal.x));
-	    SDL_Log("tx=%f, ty=%f", tangent.x, tangent.y);
-
-	    GetAttachedRigidbody()->velocity = tangent * velocity;
-
-	    otherCollider->GetAttachedRigidbody()->velocity = tangent * otherVelocity;
-	// } else {
-	//     GetOwner()->Translate(GetAttachedRigidbody()->velocity);
-	//     otherCollider->GetOwner()->Translate(otherCollider->GetAttachedRigidbody()->velocity);
+	if (Math::Fabs(max.x - origin.x) < minDist) {
+	    minDist = Math::Fabs(max.x - origin.x);
+	    closestPoint = Vector2(max.x, origin.y);
 	}
+	if (Math::Fabs(max.y - origin.y) < minDist) {
+	    minDist = Math::Fabs(max.y - origin.y);
+	    closestPoint = Vector2(origin.x, max.y);
+	}
+	if (Math::Fabs(min.y - origin.y) < minDist) {
+	    minDist = Math::Fabs(min.y - origin.y);
+	    closestPoint = Vector2(origin.x, min.y);
+	}
+
+	info.penetrationVector = closestPoint;
+	auto rigidbody = GetAttachedRigidbody();
+	if (!rigidbody->isKinematic) {
+	    // BUG: Fix the bounciness!
+	    rigidbody->velocity += info.penetrationVector;
+	}
+
+	// } else {
+    // 	auto velocity = GetAttachedRigidbody()->velocity;
+    // 	auto otherVelocity = otherCollider->GetAttachedRigidbody()->velocity;
+    // 	auto relativeVelocity = velocity - otherVelocity;
+
+    // 	Vector2 normal;
+    // 	auto t = minkowski.RayIntersectionTime(Vector2::Zero, relativeVelocity, normal);
+
+    // 	//Debug::DrawLine(originRect.position, originRect.position + relativeVelocity);
+
+    // 	if (t < Math::Infinity) {	    
+    // 	    GetOwner()->Translate(velocity * (t - 0.001f));
+    // 	    otherCollider->GetOwner()->Translate(otherVelocity * (t - 0.001f));
+
+    // 	    auto tangent = Vector2(Math::Fabs(normal.y), Math::Fabs(normal.x));
+    // 	    GetAttachedRigidbody()->velocity = tangent * velocity;
+    // 	    otherCollider->GetAttachedRigidbody()->velocity = tangent * otherVelocity;
+    // 	}
      }
 
     return info;
 }
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
-    // auto rigidbody = GetAttachedRigidbody();
-    // if (!rigidbody->isKinematic) {
-    // 	auto resolution = info.penetrationVector;
-    // 	rigidbody->velocity += info.penetrationVector;
-    // }
 }
 
 void BoxColliderComponent::Update(float deltaTime) {

@@ -11,6 +11,13 @@ const float Gravity = 9.81f;
 
 void PhysicsWorld::Update(float deltaTime) {
     assert(colliders.size() == rigidbodies.size());
+
+    // Apply forces.
+    for (auto rb : rigidbodies) {
+	if (!rb->isKinematic) {
+	    rb->velocity.y += Gravity * deltaTime;
+	}
+    }
     
     // Detect and resolve collisions.
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
