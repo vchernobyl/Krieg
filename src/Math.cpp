@@ -59,8 +59,8 @@ float Rectangle::RayIntersectionTime(const Vector2& start, const Vector2& direct
 }
 
 Rectangle MinkowskiDifference(const Rectangle& a, const Rectangle& b) {
-    auto topLeft = b.position - (a.position + a.size);
-    auto fullSize = a.size + b.size;
+    const auto topLeft = b.position - (a.position + a.size);
+    const auto fullSize = a.size + b.size;
     return Rectangle(topLeft, fullSize);
 }
 
@@ -68,8 +68,8 @@ float LineIntersectionTime(const Vector2& startA,
 			   const Vector2& endA,
 			   const Vector2& startB,
 			   const Vector2& endB) {
-    auto r = endA - startA;
-    auto s = endB - startB;
+    const auto r = endA - startA;
+    const auto s = endB - startB;
 
     float numerator = Vector2::Cross(startB - startA, r);
     float denominator = Vector2::Cross(r, s);

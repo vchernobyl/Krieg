@@ -36,15 +36,13 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     }
 
     rigidbody = new RigidbodyComponent(this);
-    rigidbody->isKinematic = true;
 
     float spreadRange = 0.7f;
     auto spread = Vector2(0.0f, Random::GetFloatRange(-spreadRange, spreadRange));
-    rigidbody->velocity = (direction * 20.0f) + spread;
+    rigidbody->velocity = (direction * 10.0f) + spread;
 
     collider = new BoxColliderComponent(this);
     collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());
-    collider->isTrigger = true;
 
     particleProps.colorBegin = Vector4(255, 255, 0, 255);
     particleProps.colorEnd = Vector4(255, 56, 0, 0);
@@ -71,18 +69,6 @@ void Bullet::OnCollisionEnter(const CollisionInfo& info) {
     rigidbody->velocity = Vector2::Zero;
 
     Destroy();
-
-    // The bullet actor gets destroyed too far off from the other collider (wall, enemy etc).
-    // This seems to be happening only if the object is trigger and kinematic.
-    // If we make the bullet non-kinematic and non-trigger, the bullet stops pixel-perfectly before
-    // the collider. Hmm...
-
-    // AN IDEA!!!!
-    // I have a feeling that the reason why non-kinematic objects have perfect collisions is because
-    // they are resolved against expanded rectangle of the collision target.
-    // BUT the trigger/kinematic objects don't really need that. What they are interested in is only
-    // whether or not a collision has happened (object shapes are intersecting) and that's it.
-    // One possible solution for this is to treat these two different types of collisions separately.
 }
 
 const float MoveVelocity = 200.0f;
@@ -133,15 +119,8 @@ void Player::ActorInput(const InputState& inputState) {
 	direction = Vector2::Left;
 	sprite->flipX = true;
     }
-    // if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) {
-    // 	velocity.y = -MoveVelocity;
-    // }
-
-    // if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) {
-    // 	velocity.y = MoveVelocity;
-    // }
     
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed && !isJumping) {
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
 	audio->PlayEvent("event:/Jump");
 
 	auto particlePosition = GetPosition();
@@ -183,7 +162,7 @@ void Player::UpdateActor(float deltaTime) {
     rigidbody->velocity.x = velocity.x * deltaTime;
     rigidbody->velocity.y += velocity.y * deltaTime;
 
-    if (Math::NearZero(rigidbody->velocity.y)) {
+    if (isJumping && Math::NearZero(rigidbody->velocity.y)) {
 	isJumping = false;
     }
 

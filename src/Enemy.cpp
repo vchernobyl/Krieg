@@ -21,5 +21,5 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    //rigidbody->velocity.x = -velocity * deltaTime;
+    rigidbody->velocity.x = -velocity * deltaTime;
 }

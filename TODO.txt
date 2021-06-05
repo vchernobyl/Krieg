@@ -121,8 +121,14 @@ May:
 22. Implement basic discrete collision detection using Minkowski Difference. [DONE]
 23. Implement collision resolution using the penetration vector. [DONE]
 24. Don't resolve collisions with objects marked as static. [DONE]
-25. Implement swept collision detection. [IN PROGRESS]
-26. Separate Math, AABB and Vector headers.
+
+June:
+-----
+0. Implement collision sliding. [IN PROGRESS]
+1. Implement robust discrete collision detection and resolution with external forces. [IN PROGRESS]
+2. Implement swept collision detection.
+3. Separate Math, AABB and Vector headers.
+4. Extract actor update and delete code to the ActorManager (or whatever the name will be).
 
 Backlog
 -------

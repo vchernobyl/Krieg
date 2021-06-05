@@ -9,26 +9,47 @@
 
 const float Gravity = 9.81f;
 
-void PhysicsWorld::Update(float deltaTime) {
+void PhysicsWorld::Step(float deltaTime) {
+    // TODO: This shouldn't be the case anymore.
+    // Actors can have a collider without a rigidbody (eg. Trigger/Phantom).
     assert(colliders.size() == rigidbodies.size());
+
+    // Update rigidbody position to match that of the actors.
+    for (auto rb : rigidbodies) {
+	rb->position = rb->GetOwner()->GetPosition();
+    }
 
     // Apply forces.
     for (auto rb : rigidbodies) {
-	if (!rb->isKinematic) {
+	if (rb->GetMotionType() == MotionType::PhysicsDriven) {
 	    rb->velocity.y += Gravity * deltaTime;
 	}
     }
     
-    // Detect and resolve collisions.
+    // Detect and resolve collisions of non-fixed rigidbodies.
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
+	auto first = *i;
 	for (auto j = i + 1; j != colliders.end(); j++) {
-	    (*i)->Intersects(*j, deltaTime);
+	    auto second = *j;
+	    auto rigidbody = first->GetAttachedRigidbody();
+	    if (rigidbody->GetMotionType() == MotionType::Fixed) continue;
+	    
+	    auto info = first->Intersects(second, deltaTime);
+	    if (info.colliding) {
+		first->ResolveCollision(info);
+	    }
 	}
     }
 
-    // Advance physics simulation.
+    int i = 0;
+    // Match actor position to that of the rigidbodies.
     for (auto rb : rigidbodies) {
-	rb->GetOwner()->Translate(rb->velocity);
+	if (rb->GetMotionType() != MotionType::Fixed) {
+	    i++;
+	    //SDL_Log("Actor #%d: v.x=%f, v.y=%f", i, rb->velocity.x, rb->velocity.y);
+	    rb->position += rb->velocity;
+	    rb->GetOwner()->SetPosition(rb->position);
+	}
     }
 }
 

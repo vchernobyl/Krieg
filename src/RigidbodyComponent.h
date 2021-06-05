@@ -3,12 +3,22 @@
 #include "Component.h"
 #include "Math.h"
 
+enum class MotionType {
+    Fixed,
+    GameDriven,
+    PhysicsDriven
+};
+
 class RigidbodyComponent : public Component {
 public:
     RigidbodyComponent(class Actor* owner);
     ~RigidbodyComponent();
-//    void Update(float deltaTime) override;
 
     Vector2 velocity;
-    float isKinematic;
+    Vector2 position;
+
+    void SetMotionType(MotionType motionType) { this->motionType = motionType; }
+    const MotionType& GetMotionType() const { return motionType; }
+private:
+    MotionType motionType;
 };

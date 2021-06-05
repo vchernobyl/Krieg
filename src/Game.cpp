@@ -135,8 +135,6 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
-    physicsWorld->Update(deltaTime);
-
     updatingActors = true;
     for (auto actor : actors) {
 	actor->Update(deltaTime);
@@ -159,6 +157,7 @@ void Game::UpdateGame() {
 	delete actor;
     }
 
+    physicsWorld->Step(deltaTime);
     audioSystem->Update(deltaTime);
 }
 
@@ -174,7 +173,7 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Player(this);
-    new Enemy(this);
+//    new Enemy(this);
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
@@ -190,7 +189,7 @@ void Game::LoadData() {
 	    objectCollider->SetSize(Vector2(object.size.x, object.size.y));
 
 	    auto rigidbody = new RigidbodyComponent(objectActor);
-	    rigidbody->isKinematic = true;
+	    rigidbody->SetMotionType(MotionType::Fixed);
 	}
     }
 }

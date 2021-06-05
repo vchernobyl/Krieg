@@ -5,7 +5,8 @@
 
 struct CollisionInfo {
     bool colliding = false;
-    Vector2 penetrationVector;
+    Vector2 penetration;
+    Vector2 normal;
 };
 
 class ColliderComponent : public Component {
