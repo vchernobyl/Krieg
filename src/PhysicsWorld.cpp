@@ -3,6 +3,7 @@
 #include "RigidbodyComponent.h"
 #include "BoxColliderComponent.h"
 #include "Actor.h"
+#include "Debug.h"
 
 #include <algorithm>
 #include <cassert>
@@ -41,12 +42,9 @@ void PhysicsWorld::Step(float deltaTime) {
 	}
     }
 
-    int i = 0;
     // Match actor position to that of the rigidbodies.
     for (auto rb : rigidbodies) {
 	if (rb->GetMotionType() != MotionType::Fixed) {
-	    i++;
-	    //SDL_Log("Actor #%d: v.x=%f, v.y=%f", i, rb->velocity.x, rb->velocity.y);
 	    rb->position += rb->velocity;
 	    rb->GetOwner()->SetPosition(rb->position);
 	}

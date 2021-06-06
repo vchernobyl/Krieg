@@ -60,16 +60,7 @@ void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
 
     const auto normal = info.normal;
     if (normal != Vector2::Zero) {
-	const auto opposite = Vector2(rigidbody->velocity.x * Math::Fabs(normal.x),
-				      rigidbody->velocity.y * Math::Fabs(normal.y));
-	rigidbody->velocity = rigidbody->velocity - opposite;
-
-	// Jumping is not working! The problem is that we nullify the velocity in the direction
-	// of the normal (collision). If the actor is falling and colliding and we press jump, the
-	// collision system will nullify the y velocity to not collide into the platform. However,
-	// this will also result in velocity added by the jump to be overriden.
-	// This means we have to nullify the velocity not just in the axis of the collision,
-	// but also respect the forces.
+	rigidbody->velocity -= normal * Vector2::Dot(rigidbody->velocity, normal);
     }
 }
 
