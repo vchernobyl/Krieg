@@ -11,20 +11,19 @@
 const float Gravity = 9.81f;
 
 void PhysicsWorld::Step(float deltaTime) {
-    // Update collider positions to match that of the actors.
-    for (auto collider : colliders) {
-	const auto owner = collider->GetOwner();
-	const auto box = dynamic_cast<BoxColliderComponent*>(collider);
-
-	auto& aabb = box->GetBox();
-	aabb.UpdateMinMax(owner->GetPosition());
-    }
-
-    // Match actor position to that of the rigidbodies.
+    // Advance the game objects base on their velocity.
     for (auto rb : rigidbodies) {
 	if (rb->GetMotionType() != MotionType::Fixed) {
 	    rb->GetOwner()->Translate(rb->velocity);
 	}
+    }
+
+    // Update collider positions to match that of the actors.
+    for (auto collider : colliders) {
+	const auto owner = collider->GetOwner();
+	const auto box = dynamic_cast<BoxColliderComponent*>(collider);
+	auto& aabb = box->GetBox();
+	aabb.UpdateMinMax(owner->GetPosition());
     }
 
     // Detect and resolve collisions of non-fixed rigidbodies.
@@ -37,12 +36,15 @@ void PhysicsWorld::Step(float deltaTime) {
 	    
 	    auto info = first->Intersects(second, deltaTime);
 	    if (info.colliding) {
-		SDL_Log("colliding");
 		first->ResolveCollision(info);
-	    } else {
-		SDL_Log("not colliding");
 	    }
 	}
+    }
+
+    for (auto collider : colliders) {
+	const auto box = dynamic_cast<BoxColliderComponent*>(collider);
+	const auto aabb = box->GetBox();
+	Debug::DrawRect(Rectangle(aabb.min, aabb.max - aabb.min));
     }
 }
 
