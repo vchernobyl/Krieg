@@ -13,6 +13,7 @@
 #include "Enemy.h"
 #include "Random.h"
 #include "ParticleEmitterComponent.h"
+#include "Collision.h"
 
 #include <SDL_image.h>
 #include <algorithm>
@@ -186,7 +187,8 @@ void Game::LoadData() {
 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    objectCollider->SetSize(Vector2(object.size.x, object.size.y));
+	    const auto box = AABB(object.position, object.position + object.size);
+	    objectCollider->SetBox(box);
 
 	    auto rigidbody = new RigidbodyComponent(objectActor);
 	    rigidbody->SetMotionType(MotionType::Fixed);

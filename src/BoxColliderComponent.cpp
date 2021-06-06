@@ -9,7 +9,9 @@
 
 #include <cassert>
 
-BoxColliderComponent::BoxColliderComponent(Actor* owner) : ColliderComponent(owner) {}
+BoxColliderComponent::BoxColliderComponent(Actor* owner)
+    : ColliderComponent(owner),
+      box(Vector2::Zero, Vector2::Zero) {}
 
 BoxColliderComponent::~BoxColliderComponent() {}
 
@@ -17,56 +19,39 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
     CollisionInfo info;
 
     const auto otherCollider = dynamic_cast<BoxColliderComponent*>(other);
-    const auto minkowski = MinkowskiDifference(box, otherCollider->GetBox());
+    const auto minkowski = MinkowskiDifference(otherCollider->GetBox(), box);
 
-    Debug::DrawRect(box);
-    Debug::DrawRect(otherCollider->GetBox());
+    // This draw is lagging behind by one frame, because box's position matches actor's,
+    // who hasn't been translated by the velocity, which is the last step.
+    // auto debugBox = box;
+    // debugBox.UpdateMinMax(GetOwner()->GetPosition() + GetAttachedRigidbody()->velocity);
+    // Debug::DrawRect(Rectangle(debugBox.min, debugBox.max - debugBox.min));
+    Debug::DrawRect(Rectangle(box.min, box.max - box.min));
 
-    assert(box.position == GetOwner()->GetPosition());
+    const auto otherBox = otherCollider->GetBox();
+    Debug::DrawRect(Rectangle(otherBox.min, otherBox.max - otherBox.min));
 
-    if (minkowski.Contains(Vector2::Zero)) {
+    // TODO: Extract!
+    if (minkowski.min.x <= 0 && minkowski.max.x >= 0 &&
+	minkowski.min.y <= 0 && minkowski.max.y >= 0) {
 	info.colliding = true;
 	
-	const auto origin = Vector2::Zero;
-	const auto min = minkowski.position;
-	const auto max = minkowski.position + minkowski.size;
-	
-	auto minDist = Math::Fabs(origin.x - min.x);
-	auto closestPoint = Vector2(min.x, origin.y);
+	const auto penetration = minkowski.ClosestPointOnEdge(Vector2::Zero);
 
-	if (Math::Fabs(max.x - origin.x) < minDist) {
-	    minDist = Math::Fabs(max.x - origin.x);
-	    closestPoint = Vector2(max.x, origin.y);
-	}
-	if (Math::Fabs(max.y - origin.y) < minDist) {
-	    minDist = Math::Fabs(max.y - origin.y);
-	    closestPoint = Vector2(origin.x, max.y);
-	}
-	if (Math::Fabs(min.y - origin.y) < minDist) {
-	    minDist = Math::Fabs(min.y - origin.y);
-	    closestPoint = Vector2(origin.x, min.y);
-	}
-
-	info.penetration = closestPoint;
-	info.normal = Vector2::Normalize(closestPoint);
+	info.penetration = penetration;
+	info.normal = Vector2::Normalize(penetration);
+	info.other = other;
     }
 
     return info;
 }
 
 void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
-    auto rigidbody = GetAttachedRigidbody();
-    rigidbody->position += info.penetration;
+    GetOwner()->Translate(info.penetration);
 
     const auto normal = info.normal;
     if (normal != Vector2::Zero) {
+	auto rigidbody = GetAttachedRigidbody();
 	rigidbody->velocity -= normal * Vector2::Dot(rigidbody->velocity, normal);
     }
-}
-
-// TODO: Rethink this approach. It is very bad, because positions are updated outside of the dynamics
-// simulation. Ideally, these should be somewhere in the physics step.
-void BoxColliderComponent::Update(float deltaTime) {
-    box.position = owner->GetPosition() + offset;
-    box.size = size;
 }

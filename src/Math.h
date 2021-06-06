@@ -234,14 +234,4 @@ public:
     
     bool Contains(const Vector2& point) const;
     bool Intersects(const Rectangle& rect) const;
-
-    float RayIntersectionTime(const Vector2& start, const Vector2& direction, Vector2& normal);
 };
-
-Rectangle MinkowskiDifference(const Rectangle& a, const Rectangle& b);
-
-float LineIntersectionTime(const Vector2& startA,
-			   const Vector2& endA,
-			   const Vector2& startB,
-			   const Vector2& endB);
-

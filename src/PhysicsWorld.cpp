@@ -11,22 +11,22 @@
 const float Gravity = 9.81f;
 
 void PhysicsWorld::Step(float deltaTime) {
-    // TODO: This shouldn't be the case anymore.
-    // Actors can have a collider without a rigidbody (eg. Trigger/Phantom).
-    assert(colliders.size() == rigidbodies.size());
+    // Update collider positions to match that of the actors.
+    for (auto collider : colliders) {
+	const auto owner = collider->GetOwner();
+	const auto box = dynamic_cast<BoxColliderComponent*>(collider);
 
-    // Update rigidbody position to match that of the actors.
-    for (auto rb : rigidbodies) {
-	rb->position = rb->GetOwner()->GetPosition();
+	auto& aabb = box->GetBox();
+	aabb.UpdateMinMax(owner->GetPosition());
     }
 
-    // Apply forces.
+    // Match actor position to that of the rigidbodies.
     for (auto rb : rigidbodies) {
-	if (rb->GetMotionType() == MotionType::PhysicsDriven) {
-	    rb->velocity.y += Gravity * deltaTime;
+	if (rb->GetMotionType() != MotionType::Fixed) {
+	    rb->GetOwner()->Translate(rb->velocity);
 	}
     }
-    
+
     // Detect and resolve collisions of non-fixed rigidbodies.
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
 	auto first = *i;
@@ -37,16 +37,11 @@ void PhysicsWorld::Step(float deltaTime) {
 	    
 	    auto info = first->Intersects(second, deltaTime);
 	    if (info.colliding) {
+		SDL_Log("colliding");
 		first->ResolveCollision(info);
+	    } else {
+		SDL_Log("not colliding");
 	    }
-	}
-    }
-
-    // Match actor position to that of the rigidbodies.
-    for (auto rb : rigidbodies) {
-	if (rb->GetMotionType() != MotionType::Fixed) {
-	    rb->position += rb->velocity;
-	    rb->GetOwner()->SetPosition(rb->position);
 	}
     }
 }

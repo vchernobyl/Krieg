@@ -5,6 +5,7 @@
 #include "BoxColliderComponent.h"
 #include "ColliderComponent.h"
 #include "RigidbodyComponent.h"
+#include "Collision.h"
 
 Enemy::Enemy(Game* game) : Actor(game) {
     SetScale(2.5f);
@@ -15,7 +16,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
     sprite->SetDrawRegion(Rectangle(0, 16, 16, 16));
 
     auto collider = new BoxColliderComponent(this);
-    collider->SetSize(Vector2(16, 16) * GetScale());
+    collider->SetBox(AABB(GetPosition(), GetPosition() + Vector2(16, 16) * GetScale()));
 
     rigidbody = new RigidbodyComponent(this);
 }

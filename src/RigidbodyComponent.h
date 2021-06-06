@@ -15,7 +15,6 @@ public:
     ~RigidbodyComponent();
 
     Vector2 velocity;
-    Vector2 position;
 
     void SetMotionType(MotionType motionType) { this->motionType = motionType; }
     const MotionType& GetMotionType() const { return motionType; }

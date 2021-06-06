@@ -18,6 +18,7 @@ public:
     int GetDrawOrder() const { return drawOrder; }
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }
+    Vector2 GetSize() const { return Vector2(width, height); }
 protected:
     class Texture* texture;
     Rectangle region;

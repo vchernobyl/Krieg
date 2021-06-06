@@ -42,7 +42,7 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     rigidbody->velocity = (direction * 10.0f) + spread;
 
     collider = new BoxColliderComponent(this);
-    collider->SetSize(Vector2(sprite->GetWidth(), sprite->GetHeight()) * GetScale());
+    collider->SetBox(AABB(GetPosition(), sprite->GetSize() * GetScale()));
 
     particleProps.colorBegin = Vector4(255, 255, 0, 255);
     particleProps.colorEnd = Vector4(255, 56, 0, 0);
@@ -83,7 +83,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 
     auto collider = new BoxColliderComponent(this);
-    collider->SetSize(Vector2(16, 16) * GetScale());
+    collider->SetBox(AABB(GetPosition(), GetPosition() + Vector2(16, 16) * GetScale()));
 
     rigidbody = new RigidbodyComponent(this);
 
@@ -119,8 +119,16 @@ void Player::ActorInput(const InputState& inputState) {
 	direction = Vector2::Left;
 	sprite->flipX = true;
     }
+
+    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) {
+	velocity.y = -MoveVelocity;
+    }
+
+    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) {
+	velocity.y = MoveVelocity;
+    }
     
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
+    if (false && inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
 	audio->PlayEvent("event:/Jump");
 
 	auto particlePosition = GetPosition();
@@ -160,7 +168,7 @@ void Player::ActorInput(const InputState& inputState) {
 
 void Player::UpdateActor(float deltaTime) {
     rigidbody->velocity.x = velocity.x * deltaTime;
-    rigidbody->velocity.y += velocity.y * deltaTime;
+    rigidbody->velocity.y = velocity.y * deltaTime;
 
     if (isJumping && Math::NearZero(rigidbody->velocity.y)) {
 	isJumping = false;
