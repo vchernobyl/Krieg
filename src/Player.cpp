@@ -120,15 +120,15 @@ void Player::ActorInput(const InputState& inputState) {
 	sprite->flipX = true;
     }
 
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) {
-	velocity.y = -MoveVelocity;
-    }
+    // if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) {
+    // 	velocity.y = -MoveVelocity;
+    // }
 
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) {
-	velocity.y = MoveVelocity;
-    }
+    // if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_DOWN)) {
+    // 	velocity.y = MoveVelocity;
+    // }
     
-    if (false && inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
 	audio->PlayEvent("event:/Jump");
 
 	auto particlePosition = GetPosition();
@@ -167,8 +167,12 @@ void Player::ActorInput(const InputState& inputState) {
 }
 
 void Player::UpdateActor(float deltaTime) {
-    rigidbody->velocity.x = velocity.x * deltaTime;
-    rigidbody->velocity.y = velocity.y * deltaTime;
+    // BUG: The character movement will have a tiny "shaking" when moving. This only happens when the
+    // velocity has a fractional component (e.g. 3.2f).
+    // Math.Floor is only a temporary fix, will probably have to make some adjustemenets in the
+    // Renderer in the future.
+    rigidbody->velocity.x = Math::Floor(velocity.x * deltaTime);
+    rigidbody->velocity.y += velocity.y * deltaTime;
 
     if (isJumping && Math::NearZero(rigidbody->velocity.y)) {
 	isJumping = false;

@@ -126,10 +126,13 @@ June:
 -----
 1. Implement collision sliding. [DONE]
 2. Fix actor collision when direction arrow is pressed. [DONE]
-2. Implement robust discrete collision detection and resolution with external forces. [IN PROGRESS]
-3. Implement swept collision detection.
-4. Separate Math, AABB and Vector headers.
-5. Extract actor update and delete code to the ActorManager (or whatever the name will be).
+2. Implement robust discrete collision detection and resolution with external forces. [DONE]
+3. Fix actor micro-shaking when moving. [IN PROGRESS]
+4. Fix bullet collision.
+?. Fix weird resolution when colliding with platform sides.
+?. Implement swept collision detection.
+?. Separate Math, AABB and Vector headers.
+?. Extract actor update and delete code to the ActorManager (or whatever the name will be).
 
 Backlog
 -------

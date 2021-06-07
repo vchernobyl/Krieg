@@ -11,6 +11,13 @@
 const float Gravity = 9.81f;
 
 void PhysicsWorld::Step(float deltaTime) {
+    // Apply forces to the physics driven rigidbodies.
+    for (auto rb : rigidbodies) {
+	if (rb->GetMotionType() == MotionType::PhysicsDriven) {
+	    rb->velocity.y += Gravity * deltaTime;
+	}
+    }
+    
     // Advance the game objects base on their velocity.
     for (auto rb : rigidbodies) {
 	if (rb->GetMotionType() != MotionType::Fixed) {
@@ -19,6 +26,8 @@ void PhysicsWorld::Step(float deltaTime) {
     }
 
     // Update collider positions to match that of the actors.
+    // TODO: Could be possibly merged with the previous step.
+    // It would be nice to have a handle to the collider from the rigidbody.
     for (auto collider : colliders) {
 	const auto owner = collider->GetOwner();
 	const auto box = dynamic_cast<BoxColliderComponent*>(collider);
@@ -31,19 +40,22 @@ void PhysicsWorld::Step(float deltaTime) {
 	auto first = *i;
 	for (auto j = i + 1; j != colliders.end(); j++) {
 	    auto second = *j;
-	    auto rigidbody = first->GetAttachedRigidbody();
-	    if (rigidbody->GetMotionType() == MotionType::Fixed) continue;
+	    const auto rigidbody = first->GetAttachedRigidbody();
 	    
-	    auto info = first->Intersects(second, deltaTime);
-	    if (info.colliding) {
-		first->ResolveCollision(info);
+	    if (rigidbody->GetMotionType() != MotionType::Fixed) {
+		auto info = first->Intersects(second, deltaTime);
+		if (info.colliding) {
+		    first->ResolveCollision(info);
+		}
 	    }
 	}
     }
 
+    // Draw collision boxes after collisions have been resolved, they will now
+    // match the positions of the owning actors perfectly.
     for (auto collider : colliders) {
 	const auto box = dynamic_cast<BoxColliderComponent*>(collider);
-	const auto aabb = box->GetBox();
+	const auto& aabb = box->GetBox();
 	Debug::DrawRect(Rectangle(aabb.min, aabb.max - aabb.min));
     }
 }

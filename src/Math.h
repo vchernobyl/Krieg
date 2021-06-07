@@ -46,6 +46,10 @@ namespace Math {
     inline int Sign(T value) {
 	return (value > 0) ? 1 : (value < 0) ? -1 : 0;
     }
+
+    inline float Floor(float number) {
+	return floor(number);
+    }
 }
 
 class Vector2 {
