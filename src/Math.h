@@ -32,6 +32,10 @@ namespace Math {
 	return fabs(number);
     }
 
+    inline float Floor(float number) {
+	return floor(number);
+    }
+
     inline float Lerp(float a, float b, float t) {
 	if (t > 1.0f) return b;
 	if (t < 0.0f) return a;
@@ -45,10 +49,6 @@ namespace Math {
     template <typename T>
     inline int Sign(T value) {
 	return (value > 0) ? 1 : (value < 0) ? -1 : 0;
-    }
-
-    inline float Floor(float number) {
-	return floor(number);
     }
 }
 
