@@ -33,6 +33,7 @@ CollisionInfo BoxColliderComponent::Intersects(ColliderComponent* other, float d
 
 	info.penetration = penetration;
 	info.normal = Vector2::Normalize(penetration);
+	info.other = other;
     }
 
     return info;
@@ -43,8 +44,12 @@ void BoxColliderComponent::ResolveCollision(const CollisionInfo& info) {
     box.UpdateMinMax(GetOwner()->GetPosition());
 
     const auto normal = info.normal;
+    
     if (normal != Vector2::Zero) {
 	auto rigidbody = GetAttachedRigidbody();
 	rigidbody->velocity -= normal * Vector2::Dot(rigidbody->velocity, normal);
+
+	auto otherRigidbody = info.other->GetAttachedRigidbody();
+	otherRigidbody->velocity -= normal * Vector2::Dot(otherRigidbody->velocity, normal);
     }
 }

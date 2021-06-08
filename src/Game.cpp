@@ -136,6 +136,8 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
+    SDL_Log("dt=%f", deltaTime);
+    
     updatingActors = true;
     for (auto actor : actors) {
 	actor->Update(deltaTime);
@@ -174,7 +176,7 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Player(this);
-//    new Enemy(this);
+    new Enemy(this);
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");

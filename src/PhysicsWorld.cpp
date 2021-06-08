@@ -2,6 +2,7 @@
 #include "ColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "BoxColliderComponent.h"
+#include "Player.h"
 #include "Actor.h"
 #include "Debug.h"
 
@@ -17,6 +18,7 @@ void PhysicsWorld::Step(float deltaTime) {
 	    rb->velocity.y += Gravity * deltaTime;
 	}
     }
+
     
     // Advance the game objects base on their velocity.
     for (auto rb : rigidbodies) {
@@ -38,12 +40,16 @@ void PhysicsWorld::Step(float deltaTime) {
     // Detect and resolve collisions of non-fixed rigidbodies.
     for (auto i = colliders.begin(); i != colliders.end(); i++) {
 	auto first = *i;
-	for (auto j = i + 1; j != colliders.end(); j++) {
+	const auto rigidbody = first->GetAttachedRigidbody();
+	
+	for (auto j = colliders.begin(); j != colliders.end(); j++) {
+	    // TODO: Optimize loop. A vs B and B vs A collision check is not necessary.
+	    if (i == j) continue;
+
 	    auto second = *j;
-	    const auto rigidbody = first->GetAttachedRigidbody();
-	    
+
 	    if (rigidbody->GetMotionType() != MotionType::Fixed) {
-		auto info = first->Intersects(second, deltaTime);
+		const auto info = first->Intersects(second, deltaTime);
 		if (info.colliding) {
 		    first->ResolveCollision(info);
 		}
