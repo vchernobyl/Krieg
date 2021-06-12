@@ -130,6 +130,9 @@ June:
 3. Fix actor micro-shaking when moving. [DONE]
 4. Fix bullet collision. [DONE]
 5. Organize project dependencies inside the external folder. [IN PROGRESS]
+  5.1 Create and add pugixml as a lib in external. [DONE]
+  5.2 Add SDL2_image to the external. [IN PROGRESS]
+
 ?. Fix weird resolution when colliding with platform sides.
 ?. Implement swept collision detection.
 ?. Separate Math, AABB and Vector headers.
