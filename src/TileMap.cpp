@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "Texture.h"
 
+#include <pugixml.hpp>
 #include <sstream>
 #include <iostream>
 

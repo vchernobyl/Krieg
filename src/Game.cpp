@@ -15,7 +15,6 @@
 #include "ParticleEmitterComponent.h"
 #include "Collision.h"
 
-#include <SDL_image.h>
 #include <algorithm>
 #include <memory>
 

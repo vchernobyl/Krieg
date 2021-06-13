@@ -2,7 +2,6 @@
 
 #include "Math.h"
 
-#include <pugixml.hpp>
 #include <string>
 #include <vector>
 
@@ -68,6 +67,11 @@ private:
     std::vector<TileMapLayer*> layers;
     std::vector<TileSet*> tileSets;
     std::vector<ObjectGroup*> objectGroups;
+};
+
+// Forward declaration for the pugi::xml_node.
+namespace pugi {
+    class xml_node;
 };
 
 class TileMapLoader {
