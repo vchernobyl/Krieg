@@ -8,10 +8,15 @@
 
 #include <algorithm>
 #include <cassert>
+#include <b2_world.h>
+#include <b2_math.h>
 
 const float Gravity = 9.81f;
 
 void PhysicsWorld::Step(float deltaTime) {
+    b2Vec2 g(0.0f, 0.0f);
+    b2World world(g);
+    
     // Apply forces to the physics driven rigidbodies.
     for (auto rb : rigidbodies) {
 	if (rb->GetMotionType() == MotionType::PhysicsDriven) {
