@@ -14,6 +14,7 @@
 #include "Random.h"
 #include "ParticleEmitterComponent.h"
 #include "Collision.h"
+#include "Math.h"
 
 #include <algorithm>
 #include <memory>
@@ -46,7 +47,7 @@ bool Game::Initialize() {
 	return false;
     }
 
-    physicsWorld = new PhysicsWorld();
+    physicsWorld = new PhysicsWorld(Vector2(0.0f, -10.0f));
 
     Random::Init();
 

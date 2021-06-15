@@ -134,10 +134,9 @@ June:
   5.2 Add SDL2_image to the external. [DONE]
   5.3 Add SDL2 to the external. [DONE]
   5.4 Add FMOD to the external. [DONE]
-6. Add Box2D to the external. [IN PROGRESS]
+6. Add Box2D to the external. [DONE]
+7. Integrate b2World into the physics world class. [IN PROGRESS]
 
-?. Fix weird resolution when colliding with platform sides.
-?. Implement swept collision detection.
 ?. Separate Math, AABB and Vector headers.
 ?. Extract actor update and delete code to the ActorManager (or whatever the name will be).
 

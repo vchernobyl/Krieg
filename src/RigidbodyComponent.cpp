@@ -5,7 +5,13 @@
 
 RigidbodyComponent::RigidbodyComponent(Actor* owner)
     : Component(owner), motionType(MotionType::PhysicsDriven) {
-    owner->GetGame()->GetPhysicsWorld()->AddRigidbody(this);
+    b2BodyDef bodyDef;
+    const Vector2& position = owner->GetPosition();
+    bodyDef.position.Set(position.x, position.y);
+
+    PhysicsWorld* physicsWorld = owner->GetGame()->GetPhysicsWorld();
+    b2Body* body = physicsWorld->world.CreateBody(&bodyDef);
+    physicsWorld->AddRigidbody(this);
 }
 
 RigidbodyComponent::~RigidbodyComponent() {

@@ -5,70 +5,16 @@
 #include "Player.h"
 #include "Actor.h"
 #include "Debug.h"
+#include "Math.h"
 
 #include <algorithm>
 #include <cassert>
-#include <b2_world.h>
 #include <b2_math.h>
 
-const float Gravity = 9.81f;
+PhysicsWorld::PhysicsWorld(const Vector2& gravity)
+    : world(b2World(b2Vec2(gravity.x, gravity.y))) {}
 
 void PhysicsWorld::Step(float deltaTime) {
-    b2Vec2 g(0.0f, 0.0f);
-    b2World world(g);
-    
-    // Apply forces to the physics driven rigidbodies.
-    for (auto rb : rigidbodies) {
-	if (rb->GetMotionType() == MotionType::PhysicsDriven) {
-	    rb->velocity.y += Gravity * deltaTime;
-	}
-    }
-
-    
-    // Advance the game objects base on their velocity.
-    for (auto rb : rigidbodies) {
-	if (rb->GetMotionType() != MotionType::Fixed) {
-	    rb->GetOwner()->Translate(rb->velocity);
-	}
-    }
-
-    // Update collider positions to match that of the actors.
-    // TODO: Could be possibly merged with the previous step.
-    // It would be nice to have a handle to the collider from the rigidbody.
-    for (auto collider : colliders) {
-	const auto owner = collider->GetOwner();
-	const auto box = dynamic_cast<BoxColliderComponent*>(collider);
-	auto& aabb = box->GetBox();
-	aabb.UpdateMinMax(owner->GetPosition());
-    }
-
-    // Detect and resolve collisions of non-fixed rigidbodies.
-    for (auto i = colliders.begin(); i != colliders.end(); i++) {
-	auto first = *i;
-	const auto rigidbody = first->GetAttachedRigidbody();
-	
-	for (auto j = colliders.begin(); j != colliders.end(); j++) {
-	    // TODO: Optimize loop. A vs B and B vs A collision check is not necessary.
-	    if (i == j) continue;
-
-	    auto second = *j;
-
-	    if (rigidbody->GetMotionType() != MotionType::Fixed) {
-		const auto info = first->Intersects(second, deltaTime);
-		if (info.colliding) {
-		    first->ResolveCollision(info);
-		}
-	    }
-	}
-    }
-
-    // Draw collision boxes after collisions have been resolved, they will now
-    // match the positions of the owning actors perfectly.
-    for (auto collider : colliders) {
-	const auto box = dynamic_cast<BoxColliderComponent*>(collider);
-	const auto& aabb = box->GetBox();
-	Debug::DrawRect(Rectangle(aabb.min, aabb.max - aabb.min));
-    }
 }
 
 void PhysicsWorld::AddCollider(ColliderComponent* collider) {
