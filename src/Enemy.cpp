@@ -16,7 +16,8 @@ Enemy::Enemy(Game* game) : Actor(game) {
     sprite->SetDrawRegion(Rectangle(0, 16, 16, 16));
 
     auto collider = new BoxColliderComponent(this);
-    collider->SetBox(AABB(GetPosition(), GetPosition() + Vector2(16, 16) * GetScale()));
+    auto size = Vector2(16, 16) * GetScale();
+    collider->SetBox(size.x, size.y);
 
     rigidbody = new RigidbodyComponent(this);
 }

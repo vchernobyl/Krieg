@@ -189,8 +189,7 @@ void Game::LoadData() {
 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    const auto box = AABB(object.position, object.position + object.size);
-	    objectCollider->SetBox(box);
+	    objectCollider->SetBox(object.size.x, object.size.y);
 
 	    auto rigidbody = new RigidbodyComponent(objectActor);
 	    rigidbody->SetMotionType(MotionType::Fixed);

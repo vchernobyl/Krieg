@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "Math.h"
 
+// TODO: All dependencies on Box2D should be hidden away.
 #include <b2_body.h>
 
 enum class MotionType {

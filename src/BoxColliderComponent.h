@@ -4,16 +4,19 @@
 #include "Collision.h"
 #include "Math.h"
 
+// TODO: This guy has to be hidden away.
+#include <b2_polygon_shape.h>
+
 class BoxColliderComponent : public ColliderComponent {
 public:
-    BoxColliderComponent(Actor* owner);
+    BoxColliderComponent(class Actor* owner);
     ~BoxColliderComponent();
     
-    CollisionInfo Intersects(ColliderComponent* other, float deltaTime) override;
-    void ResolveCollision(const CollisionInfo& info) override;
-
-    AABB& GetBox() { return box; }
-    void SetBox(const AABB& box) { this->box = box; }
+    void SetBox(float width, float height);
 private:
-    AABB box;
+    b2PolygonShape box;
 };
+
+inline void BoxColliderComponent::SetBox(float width, float height) {
+    box.SetAsBox(width * 0.5f, height * 0.5f);
+}

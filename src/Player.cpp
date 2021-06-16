@@ -42,7 +42,8 @@ Bullet::Bullet(Game* game, const Vector2& direction) : Actor(game) {
     rigidbody->velocity = (direction * 10.0f) + spread;
 
     collider = new BoxColliderComponent(this);
-    collider->SetBox(AABB(GetPosition(), sprite->GetSize() * GetScale()));
+    auto size = sprite->GetSize() * GetScale();
+    collider->SetBox(size.x, size.y);
 
     particleProps.colorBegin = Vector4(255, 255, 0, 255);
     particleProps.colorEnd = Vector4(255, 56, 0, 0);
@@ -83,7 +84,8 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 
     auto collider = new BoxColliderComponent(this);
-    collider->SetBox(AABB(GetPosition(), GetPosition() + Vector2(16, 16) * GetScale()));
+    auto size = Vector2(16, 16) * GetScale();
+    collider->SetBox(size.x, size.y);
 
     rigidbody = new RigidbodyComponent(this);
 

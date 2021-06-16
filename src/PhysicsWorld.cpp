@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <cassert>
 #include <b2_math.h>
+#include <b2_world.h>
 
 PhysicsWorld::PhysicsWorld(const Vector2& gravity)
     : world(b2World(b2Vec2(gravity.x, gravity.y))) {}

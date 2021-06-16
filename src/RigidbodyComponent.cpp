@@ -10,7 +10,7 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner)
     bodyDef.position.Set(position.x, position.y);
 
     PhysicsWorld* physicsWorld = owner->GetGame()->GetPhysicsWorld();
-    b2Body* body = physicsWorld->world.CreateBody(&bodyDef);
+    body = physicsWorld->world.CreateBody(&bodyDef);
     physicsWorld->AddRigidbody(this);
 }
 
