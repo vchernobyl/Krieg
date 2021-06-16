@@ -8,6 +8,7 @@
 // TODO: This guy has to be hidden away.
 #include <b2_polygon_shape.h>
 #include <b2_body.h>
+#include <box2d.h>
 
 class BoxColliderComponent : public ColliderComponent {
 public:
@@ -20,5 +21,10 @@ private:
 
 inline void BoxColliderComponent::SetBox(float width, float height) {
     box.SetAsBox(width * 0.5f, height * 0.5f);
-    GetAttachedRigidbody()->body->CreateFixture(&box, 0.0f);
+    // TODO: Can crash if rigidbody not set, needs a better mechanism to create a fixture.
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &box;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.0f;
+    GetAttachedRigidbody()->body->CreateFixture(&fixtureDef);
 }

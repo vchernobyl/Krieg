@@ -14,6 +14,7 @@ public:
     ~RigidbodyComponent();
 private:
     friend class BoxColliderComponent;
+    friend class PhysicsWorld;
     
     b2Body* body;
 };

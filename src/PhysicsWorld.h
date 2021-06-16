@@ -6,7 +6,7 @@
 class PhysicsWorld {
 public:
     PhysicsWorld(const class Vector2& gravity);
-    void Step(float deltaTime);
+    void Step(float timeStep);
 
     void AddCollider(class ColliderComponent* collider);
     void RemoveCollider(class ColliderComponent* collider);

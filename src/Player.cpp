@@ -83,11 +83,11 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
     sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 
+    rigidbody = new RigidbodyComponent(this);
+
     auto collider = new BoxColliderComponent(this);
     auto size = Vector2(16, 16) * GetScale();
     collider->SetBox(size.x, size.y);
-
-    rigidbody = new RigidbodyComponent(this);
 
     audio = new AudioComponent(this);
 
@@ -182,4 +182,7 @@ void Player::UpdateActor(float deltaTime) {
     }
 
     GetGame()->GetRenderer()->GetCamera()->Follow(this);
+
+    const auto& position = GetPosition();
+    SDL_Log("p.x=%f, p.y=%f", position.x, position.y);
 }

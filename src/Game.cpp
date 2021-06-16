@@ -47,7 +47,7 @@ bool Game::Initialize() {
 	return false;
     }
 
-    physicsWorld = new PhysicsWorld(Vector2(0.0f, -10.0f));
+    physicsWorld = new PhysicsWorld(Vector2(0.0f, 10.0f));
 
     Random::Init();
 
@@ -136,8 +136,6 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
-    SDL_Log("dt=%f", deltaTime);
-    
     updatingActors = true;
     for (auto actor : actors) {
 	actor->Update(deltaTime);
@@ -160,7 +158,7 @@ void Game::UpdateGame() {
 	delete actor;
     }
 
-    physicsWorld->Step(deltaTime);
+    physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.
     audioSystem->Update(deltaTime);
 }
 
@@ -188,10 +186,10 @@ void Game::LoadData() {
 	    auto objectActor = new Actor(this);
 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
+	    new RigidbodyComponent(objectActor);
+
 	    auto objectCollider = new BoxColliderComponent(objectActor);
 	    objectCollider->SetBox(object.size.x, object.size.y);
-
-	    new RigidbodyComponent(objectActor);
 	}
     }
 }

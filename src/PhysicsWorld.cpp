@@ -11,11 +11,22 @@
 #include <cassert>
 #include <b2_math.h>
 #include <b2_world.h>
+#include <box2d.h>
+
+const int32 VelocityIterations = 8;
+const int32 PositionIterations = 3;
 
 PhysicsWorld::PhysicsWorld(const Vector2& gravity)
     : world(b2World(b2Vec2(gravity.x, gravity.y))) {}
 
-void PhysicsWorld::Step(float deltaTime) {
+void PhysicsWorld::Step(float timeStep) {
+    world.Step(timeStep, VelocityIterations, PositionIterations);
+
+    for (const auto rb : rigidbodies) {
+	const b2Vec2& position = rb->body->GetPosition();
+	Actor* owner = rb->GetOwner();
+	owner->SetPosition(Vector2(position.x, position.y));
+    }
 }
 
 void PhysicsWorld::AddCollider(ColliderComponent* collider) {
