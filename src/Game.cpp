@@ -191,8 +191,7 @@ void Game::LoadData() {
 	    auto objectCollider = new BoxColliderComponent(objectActor);
 	    objectCollider->SetBox(object.size.x, object.size.y);
 
-	    auto rigidbody = new RigidbodyComponent(objectActor);
-	    rigidbody->SetMotionType(MotionType::Fixed);
+	    new RigidbodyComponent(objectActor);
 	}
     }
 }

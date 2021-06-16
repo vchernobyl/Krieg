@@ -3,8 +3,7 @@
 #include "Game.h"
 #include "PhysicsWorld.h"
 
-RigidbodyComponent::RigidbodyComponent(Actor* owner)
-    : Component(owner), motionType(MotionType::PhysicsDriven) {
+RigidbodyComponent::RigidbodyComponent(Actor* owner) : Component(owner) {
     b2BodyDef bodyDef;
     const Vector2& position = owner->GetPosition();
     bodyDef.position.Set(position.x, position.y);
