@@ -15,16 +15,23 @@ public:
     BoxColliderComponent(class Actor* owner);
     ~BoxColliderComponent();
     void SetBox(float width, float height);
+    const Vector2& GetSize();
 private:
     b2PolygonShape box;
+    Vector2 size;
 };
 
 inline void BoxColliderComponent::SetBox(float width, float height) {
     box.SetAsBox(width * 0.5f, height * 0.5f);
+    size = Vector2(width, height);
     // TODO: Can crash if rigidbody not set, needs a better mechanism to create a fixture.
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &box;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.0f;
     GetAttachedRigidbody()->body->CreateFixture(&fixtureDef);
+}
+
+inline const Vector2& BoxColliderComponent::GetSize() {
+    return size;
 }

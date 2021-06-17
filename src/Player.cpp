@@ -83,7 +83,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
     sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 
-    rigidbody = new RigidbodyComponent(this);
+    rigidbody = new RigidbodyComponent(this, MotionType::PhysicsDriven);
 
     auto collider = new BoxColliderComponent(this);
     auto size = Vector2(16, 16) * GetScale();
