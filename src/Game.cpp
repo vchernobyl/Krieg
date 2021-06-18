@@ -47,7 +47,7 @@ bool Game::Initialize() {
 	return false;
     }
 
-    physicsWorld = new PhysicsWorld(Vector2(0.0f, 600.0f));
+    physicsWorld = new PhysicsWorld(Vector2(0.0f, 1000.0f));
 
     Random::Init();
 

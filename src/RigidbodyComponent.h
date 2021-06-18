@@ -14,10 +14,11 @@ enum class MotionType {
 
 class RigidbodyComponent : public Component {
 public:
-    Vector2 velocity;
-
     RigidbodyComponent(class Actor* owner, MotionType type = MotionType::Fixed);
     ~RigidbodyComponent();
+
+    void SetVelocity(const Vector2& velocity);
+    Vector2 GetVelocity() const;
 
 private:
     friend class BoxColliderComponent;
@@ -25,4 +26,14 @@ private:
     
     b2Body* body;
     MotionType type;
+    Vector2 velocity;
 };
+
+inline void RigidbodyComponent::SetVelocity(const Vector2& velocity) {
+    body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
+}
+
+inline Vector2 RigidbodyComponent::GetVelocity() const {
+    b2Vec2 velocity = body->GetLinearVelocity();
+    return Vector2(velocity.x, velocity.y);
+}
