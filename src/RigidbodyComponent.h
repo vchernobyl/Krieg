@@ -3,21 +3,37 @@
 #include "Component.h"
 #include "Math.h"
 
+// TODO: All dependencies on Box2D should be hidden away.
+#include <b2_body.h>
+
 enum class MotionType {
     Fixed,
-    GameDriven,
+    GameplayDriven,
     PhysicsDriven
 };
 
 class RigidbodyComponent : public Component {
 public:
-    RigidbodyComponent(class Actor* owner);
+    RigidbodyComponent(class Actor* owner, MotionType type = MotionType::Fixed);
     ~RigidbodyComponent();
 
-    Vector2 velocity;
+    void SetVelocity(const Vector2& velocity);
+    Vector2 GetVelocity() const;
 
-    void SetMotionType(MotionType motionType) { this->motionType = motionType; }
-    const MotionType& GetMotionType() const { return motionType; }
 private:
-    MotionType motionType;
+    friend class BoxColliderComponent;
+    friend class PhysicsWorld;
+    
+    b2Body* body;
+    MotionType type;
+    Vector2 velocity;
 };
+
+inline void RigidbodyComponent::SetVelocity(const Vector2& velocity) {
+    body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
+}
+
+inline Vector2 RigidbodyComponent::GetVelocity() const {
+    b2Vec2 velocity = body->GetLinearVelocity();
+    return Vector2(velocity.x, velocity.y);
+}

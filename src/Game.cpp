@@ -14,6 +14,7 @@
 #include "Random.h"
 #include "ParticleEmitterComponent.h"
 #include "Collision.h"
+#include "Math.h"
 
 #include <algorithm>
 #include <memory>
@@ -46,7 +47,7 @@ bool Game::Initialize() {
 	return false;
     }
 
-    physicsWorld = new PhysicsWorld();
+    physicsWorld = new PhysicsWorld(Vector2(0.0f, 1000.0f));
 
     Random::Init();
 
@@ -135,8 +136,6 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
-    SDL_Log("dt=%f", deltaTime);
-    
     updatingActors = true;
     for (auto actor : actors) {
 	actor->Update(deltaTime);
@@ -159,7 +158,7 @@ void Game::UpdateGame() {
 	delete actor;
     }
 
-    physicsWorld->Step(deltaTime);
+    physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.
     audioSystem->Update(deltaTime);
 }
 
@@ -175,7 +174,6 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Player(this);
-    new Enemy(this);
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
@@ -187,12 +185,10 @@ void Game::LoadData() {
 	    auto objectActor = new Actor(this);
 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
-	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    const auto box = AABB(object.position, object.position + object.size);
-	    objectCollider->SetBox(box);
+	    new RigidbodyComponent(objectActor);
 
-	    auto rigidbody = new RigidbodyComponent(objectActor);
-	    rigidbody->SetMotionType(MotionType::Fixed);
+	    auto objectCollider = new BoxColliderComponent(objectActor);
+	    objectCollider->SetBox(object.size.x, object.size.y);
 	}
     }
 }
