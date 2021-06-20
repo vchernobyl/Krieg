@@ -17,34 +17,17 @@ const float JumpVelocity = 4000.0f;
 
 Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetPosition(Vector2(300, 700));
-    SetScale(2.5f);
+    SetScale(2.0f);
 
     sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
-    sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Guy.png"));
 
     rigidbody = new RigidbodyComponent(this, MotionType::PhysicsDriven);
 
     auto collider = new BoxColliderComponent(this);
-    auto size = Vector2(16, 16) * GetScale();
+    auto size = sprite->GetSize() * GetScale();
     collider->SetBox(size.x, size.y);
 
-    audio = new AudioComponent(this);
-
-    particleProps.colorBegin = Vector4(255, 255, 255, 255);
-    particleProps.colorEnd = Vector4(255 / 2, 255 / 2, 255 / 2, 0);
-
-    particleProps.sizeBegin = 10.0f;
-    particleProps.sizeEnd = 5.0f;
-    particleProps.sizeVariation = 5.0f;
-
-    particleProps.lifetime = 0.4f;
-
-    particleProps.velocity = Vector2::Up * 50.0f;
-    particleProps.velocityVariation = Vector2(130.0f, 20.0f);
-
-    dustParticles = new ParticleEmitterComponent(this);
-    dustParticles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));
 }
 
 void Player::ActorInput(const InputState& inputState) {
@@ -63,21 +46,7 @@ void Player::ActorInput(const InputState& inputState) {
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
-	audio->PlayEvent("event:/Jump");
-
-	auto particlePosition = GetPosition();
-	particlePosition.x += sprite->GetWidth() * GetScale() / 2;
-	particlePosition.y += sprite->GetHeight() * GetScale() / 2; // Division by 2 only because sprite sheet contains 2 characters.
-	particleProps.position = particlePosition;
-	
-	dustParticles->Emit(particleProps, 12);
-
 	velocity.y = -JumpVelocity;
-	isJumping = true;
-    }
-
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
-	audio->PlayEvent("event:/Shoot");
     }
 }
 

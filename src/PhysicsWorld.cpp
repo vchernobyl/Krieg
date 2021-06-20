@@ -28,8 +28,7 @@ void PhysicsWorld::Step(float timeStep) {
 	owner->SetPosition(Vector2(position.x, position.y));
 
 	auto box = owner->GetComponent<BoxColliderComponent>();
-	const Vector2& size = box->GetSize(); 
-	Debug::DrawRect(Rectangle(position.x, position.y, size.x, size.y));
+	Debug::DrawRect(box->GetBox());
     }
 }
 
