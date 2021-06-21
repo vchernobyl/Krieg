@@ -30,10 +30,13 @@ public:
 
     void AddParticles(ParticleEmitterComponent* emitter);
     void RemoveParticles(ParticleEmitterComponent* emitter);
-    
-    SDL_Renderer* GetSDLRenderer() const { return renderer; }
+
     Camera* GetCamera() const { return camera; }
 private:
+    friend class SpriteComponent;
+    friend class ParticleEmitterComponent;
+    friend class TileMapRenderer;
+    
     SDL_Window* window;
     SDL_Renderer* renderer;
 

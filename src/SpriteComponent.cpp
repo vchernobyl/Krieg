@@ -43,7 +43,7 @@ void SpriteComponent::Draw(Renderer* renderer) {
 	static_cast<int>(region.size.y)
     };
     
-    SDL_RenderCopyEx(renderer->GetSDLRenderer(), texture->texture, &src, &dst, 0, nullptr, spriteFlip);
+    SDL_RenderCopyEx(renderer->renderer, texture->texture, &src, &dst, 0, nullptr, spriteFlip);
 }
 
 void SpriteComponent::SetTexture(Texture* texture) {

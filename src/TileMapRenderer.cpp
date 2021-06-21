@@ -27,7 +27,7 @@ void TileMapRenderer::Draw(Renderer* renderer) {
 	    };
 	    
 	    renderer->GetCamera()->ToScreenSpace(dst);
-	    SDL_RenderCopyEx(renderer->GetSDLRenderer(), tileInfo->texture->texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
+	    SDL_RenderCopyEx(renderer->renderer, tileInfo->texture->texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
 	}
     }
 }

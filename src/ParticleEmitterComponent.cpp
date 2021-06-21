@@ -67,7 +67,7 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
 	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), size, size };
 	renderer->GetCamera()->ToScreenSpace(dst);
 
-	SDL_RenderCopyEx(renderer->GetSDLRenderer(),
+	SDL_RenderCopyEx(renderer->renderer,
 			 texture->texture,
 			 nullptr,
 			 &dst,
