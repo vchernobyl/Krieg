@@ -4,6 +4,7 @@
 #include "Camera.h"
 #include "Texture.h"
 #include "ParticleEmitterComponent.h"
+#include "DebugRenderer.h"
 
 #include <SDL_image.h>
 #include <algorithm>
@@ -69,6 +70,8 @@ void Renderer::Draw() {
     for (auto emitter : particles) {
 	emitter->Draw(this);
     }
+
+    DebugRenderer::Draw(this);
 }
 
 void Renderer::End() {

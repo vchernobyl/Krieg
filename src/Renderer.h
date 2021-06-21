@@ -36,6 +36,7 @@ private:
     friend class SpriteComponent;
     friend class ParticleEmitterComponent;
     friend class TileMapRenderer;
+    friend class DebugRenderer;
     
     SDL_Window* window;
     SDL_Renderer* renderer;
