@@ -9,7 +9,6 @@
 #include "TileMap.h"
 #include "TileMapRenderer.h"
 #include "Player.h"
-#include "Debug.h"
 #include "Enemy.h"
 #include "Random.h"
 #include "ParticleEmitterComponent.h"
@@ -167,7 +166,6 @@ void Game::DrawGame() {
 
     tileMapRenderer->Draw(renderer);
     renderer->Draw();
-    Debug::Draw(renderer);
 
     renderer->End();
 }

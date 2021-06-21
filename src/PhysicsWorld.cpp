@@ -4,7 +4,6 @@
 #include "BoxColliderComponent.h"
 #include "Player.h"
 #include "Actor.h"
-#include "Debug.h"
 #include "Math.h"
 
 #include <algorithm>
@@ -26,9 +25,6 @@ void PhysicsWorld::Step(float timeStep) {
 	const b2Vec2& position = rb->body->GetPosition();
 	Actor* owner = rb->GetOwner();
 	owner->SetPosition(Vector2(position.x, position.y));
-
-	auto box = owner->GetComponent<BoxColliderComponent>();
-	Debug::DrawRect(box->GetBox());
     }
 }
 
