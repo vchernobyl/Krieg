@@ -6,6 +6,7 @@
 #include "Actor.h"
 #include "Math.h"
 #include "DebugRenderer.h"
+#include "Box2DDebugRenderer.h"
 
 #include <algorithm>
 #include <cassert>
@@ -17,7 +18,10 @@ const int32 VelocityIterations = 8;
 const int32 PositionIterations = 3;
 
 PhysicsWorld::PhysicsWorld(const Vector2& gravity)
-    : world(b2World(b2Vec2(gravity.x, gravity.y))) {}
+    : world(b2World(b2Vec2(gravity.x, gravity.y))) {
+    debugRenderer = std::make_unique<Box2DDebugRenderer>();
+    world.SetDebugDraw(debugRenderer.get());
+}
 
 void PhysicsWorld::Step(float timeStep) {
     world.Step(timeStep, VelocityIterations, PositionIterations);

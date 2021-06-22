@@ -1,11 +1,13 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include <b2_world.h>
 
 class PhysicsWorld {
 public:
     PhysicsWorld(const class Vector2& gravity);
+    
     void Step(float timeStep);
 
     void AddCollider(class ColliderComponent* collider);
@@ -19,5 +21,6 @@ private:
     std::vector<class ColliderComponent*> colliders;
     std::vector<class RigidbodyComponent*> rigidbodies;
 
-    b2World world;
+    std::unique_ptr<class Box2DDebugRenderer> debugRenderer;
+    b2World world; // TODO: Maybe a pointer instead?
 };
