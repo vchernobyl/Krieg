@@ -40,6 +40,7 @@ void PhysicsWorld::Step(float timeStep) {
 	auto boxPosition = box.position;
 	auto boxSize = box.size;
 	DebugRenderer::DrawRect(boxPosition.x, boxPosition.y, boxSize.x, boxSize.y);
+	DebugRenderer::DrawLine(boxPosition.x, boxPosition.y, boxPosition.x + 100, boxPosition.y + 100);
     }
 }
 

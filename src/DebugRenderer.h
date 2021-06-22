@@ -20,9 +20,19 @@ private:
     int width, height;
 };
 
+class DebugLine : public DebugShape {
+public:
+    DebugLine(int x1, int y1, int x2, int y2);
+    void Draw(class SDL_Renderer* renderer, const class Vector2& camPos) override;
+private:
+    int x1, y1;
+    int x2, y2;
+};
+
 class DebugRenderer {
 public:
     static void DrawRect(int x, int y, int width, int height);
+    static void DrawLine(int x1, int y1, int x2, int y2);
 private:
     friend class Renderer;
 
