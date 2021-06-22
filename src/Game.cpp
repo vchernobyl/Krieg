@@ -46,7 +46,8 @@ bool Game::Initialize() {
 	return false;
     }
 
-    physicsWorld = new PhysicsWorld(Vector2(0.0f, 1000.0f));
+    const auto gravity = Vector2(0.0f, 1000.0f);
+    physicsWorld = new PhysicsWorld(gravity);
 
     Random::Init();
 
@@ -76,6 +77,9 @@ void Game::Shutdown() {
 
     audioSystem->Shutdown();
     delete audioSystem;
+
+    physicsWorld->Shutdown();
+    delete physicsWorld;
 
     SDL_Quit();
 }

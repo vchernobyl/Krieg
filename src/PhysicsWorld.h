@@ -2,11 +2,11 @@
 
 #include <vector>
 #include <memory>
-#include <b2_world.h>
 
 class PhysicsWorld {
 public:
     PhysicsWorld(const class Vector2& gravity);
+    void Shutdown();
     
     void Step(float timeStep);
 
@@ -21,6 +21,6 @@ private:
     std::vector<class ColliderComponent*> colliders;
     std::vector<class RigidbodyComponent*> rigidbodies;
 
-    std::unique_ptr<class Box2DDebugRenderer> debugRenderer;
-    b2World world; // TODO: Maybe a pointer instead?
+    class Box2DDebugRenderer* debugRenderer;
+    class b2World* world;
 };

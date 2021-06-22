@@ -3,6 +3,10 @@
 #include "Game.h"
 #include "PhysicsWorld.h"
 
+#include <b2_world.h>
+#include <b2_body.h>
+#include <b2_math.h>
+
 RigidbodyComponent::RigidbodyComponent(Actor* owner, MotionType type) : Component(owner) {
     b2BodyDef bodyDef;
     const Vector2& position = owner->GetPosition();
@@ -13,7 +17,7 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, MotionType type) : Componen
     if (type == MotionType::Fixed) bodyDef.type = b2BodyType::b2_staticBody;
 
     PhysicsWorld* physicsWorld = owner->GetGame()->GetPhysicsWorld();
-    body = physicsWorld->world.CreateBody(&bodyDef);
+    body = physicsWorld->world->CreateBody(&bodyDef);
     physicsWorld->AddRigidbody(this);
 }
 
@@ -21,3 +25,12 @@ RigidbodyComponent::~RigidbodyComponent() {
     owner->GetGame()->GetPhysicsWorld()->RemoveRigidbody(this);
 }
 	
+
+void RigidbodyComponent::SetVelocity(const Vector2& velocity) {
+    body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
+}
+
+Vector2 RigidbodyComponent::GetVelocity() const {
+    b2Vec2 velocity = body->GetLinearVelocity();
+    return Vector2(velocity.x, velocity.y);
+}

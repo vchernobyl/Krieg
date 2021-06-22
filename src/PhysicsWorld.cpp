@@ -18,13 +18,18 @@ const int32 VelocityIterations = 8;
 const int32 PositionIterations = 3;
 
 PhysicsWorld::PhysicsWorld(const Vector2& gravity)
-    : world(b2World(b2Vec2(gravity.x, gravity.y))) {
-    debugRenderer = std::make_unique<Box2DDebugRenderer>();
-    world.SetDebugDraw(debugRenderer.get());
+    : world(new b2World(b2Vec2(gravity.x, gravity.y))),
+      debugRenderer(new Box2DDebugRenderer()) {
+    world->SetDebugDraw(debugRenderer);
+}
+
+void PhysicsWorld::Shutdown() {
+    delete debugRenderer;
+    delete world;
 }
 
 void PhysicsWorld::Step(float timeStep) {
-    world.Step(timeStep, VelocityIterations, PositionIterations);
+    world->Step(timeStep, VelocityIterations, PositionIterations);
 
     for (const auto rb : rigidbodies) {
 	const b2Vec2& position = rb->body->GetPosition();
