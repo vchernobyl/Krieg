@@ -6,27 +6,31 @@
 #include <SDL.h>
 #include <cassert>
 
-std::vector<Rectangle> DebugRenderer::rects = {};
+DebugRect::DebugRect(int x, int y, int width, int height)
+    : x(x), y(y), width(width), height(height) {}
 
-void DebugRenderer::DrawRect(const Rectangle& rect) {
-    rects.push_back(rect);
+void DebugRect::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
+    SDL_Rect rect = { x - static_cast<int>(camPos.x), y - static_cast<int>(camPos.y), width, height };
+    SDL_RenderDrawRect(renderer, &rect);
+}
+
+std::vector<DebugShape*> DebugRenderer::shapes = {};
+
+void DebugRenderer::DrawRect(int x, int y, int width, int height) {
+    DebugShape* rect = new DebugRect(x, y, width, height);
+    shapes.push_back(rect);
 }
 
 void DebugRenderer::Draw(Renderer* renderer) {
     SDL_Renderer* sdlRenderer = renderer->renderer;
-    Vector2 cameraPosition = renderer->GetCamera()->GetPosition();
+    Vector2 camPos = renderer->GetCamera()->GetPosition();
     
-    for (const auto& rect : rects) {
-	SDL_Rect sdlRect = {
-	    static_cast<int>(rect.position.x - cameraPosition.x),
-	    static_cast<int>(rect.position.y - cameraPosition.y),
-	    static_cast<int>(rect.size.x),
-	    static_cast<int>(rect.size.y)
-	};
-	SDL_SetRenderDrawColor(sdlRenderer, 0, 255, 0, 255);
-	SDL_RenderDrawRect(sdlRenderer, &sdlRect);
+    SDL_SetRenderDrawColor(sdlRenderer, 0, 255, 0, 255);
+    for (auto shape : shapes) {
+	shape->Draw(sdlRenderer, camPos);
+	delete shape;
     }
 
-    rects.clear();
-    assert(rects.empty());
+    shapes.clear();
+    assert(shapes.empty());
 }
