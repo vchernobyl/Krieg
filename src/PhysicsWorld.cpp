@@ -39,9 +39,10 @@ void PhysicsWorld::Step(float timeStep) {
 	auto box = owner->GetComponent<BoxColliderComponent>()->GetBox();
 	auto boxPosition = box.position;
 	auto boxSize = box.size;
-	DebugRenderer::DrawRect(boxPosition.x, boxPosition.y, boxSize.x, boxSize.y);
-	DebugRenderer::DrawLine(boxPosition.x, boxPosition.y, boxPosition.x + 100, boxPosition.y + 100);
+//	DebugRenderer::DrawRect(boxPosition.x, boxPosition.y, boxSize.x, boxSize.y);
     }
+
+    world->DebugDraw();
 }
 
 void PhysicsWorld::AddCollider(ColliderComponent* collider) {

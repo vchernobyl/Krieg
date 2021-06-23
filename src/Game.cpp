@@ -139,8 +139,6 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
-    SDL_Log("deltaTime=%f", deltaTime);
-
     updatingActors = true;
     for (auto actor : actors) {
 	actor->Update(deltaTime);
