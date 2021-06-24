@@ -35,11 +35,6 @@ void PhysicsWorld::Step(float timeStep) {
 	const b2Vec2& position = rb->body->GetPosition();
 	Actor* owner = rb->GetOwner();
 	owner->SetPosition(Vector2(position.x, position.y));
-
-	auto box = owner->GetComponent<BoxColliderComponent>()->GetBox();
-	auto boxPosition = box.position;
-	auto boxSize = box.size;
-//	DebugRenderer::DrawRect(boxPosition.x, boxPosition.y, boxSize.x, boxSize.y);
     }
 
     world->DebugDraw();

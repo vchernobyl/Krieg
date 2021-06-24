@@ -136,7 +136,9 @@ June:
   5.4 Add FMOD to the external. [DONE]
 6. Add Box2D to the external. [DONE]
 7. Integrate b2World into the physics world class. [DONE]
-8. Implement physics world debug renderer. [IN PROGRESS]
+8. Implement physics world debug renderer. [DONE]
+9. Fix collider positions. [DONE]
+10. Fix character movement. [IN PROGRESS]
 
 ?. Separate Math, AABB and Vector headers.
 ?. Extract actor update and delete code to the ActorManager (or whatever the name will be).

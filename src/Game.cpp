@@ -6,13 +6,12 @@
 #include "Renderer.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
+#include "ParticleEmitterComponent.h"
 #include "TileMap.h"
 #include "TileMapRenderer.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Random.h"
-#include "ParticleEmitterComponent.h"
-#include "Collision.h"
 #include "Math.h"
 
 #include <algorithm>
@@ -176,6 +175,7 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Player(this);
+    new Enemy(this);
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");

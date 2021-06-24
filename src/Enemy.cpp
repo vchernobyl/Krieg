@@ -5,7 +5,6 @@
 #include "BoxColliderComponent.h"
 #include "ColliderComponent.h"
 #include "RigidbodyComponent.h"
-#include "Collision.h"
 
 Enemy::Enemy(Game* game) : Actor(game) {
     SetScale(2.5f);
@@ -13,7 +12,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
-    sprite->SetDrawRegion(Rectangle(0, 16, 16, 16));
+    sprite->SetRegion(Rectangle(0, 16, 16, 16));
 
     rigidbody = new RigidbodyComponent(this, MotionType::PhysicsDriven);
 

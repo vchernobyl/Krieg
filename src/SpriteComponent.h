@@ -13,7 +13,7 @@ public:
     virtual void Draw(class Renderer* renderer);
     virtual void SetTexture(class Texture* texture);
 
-    void SetDrawRegion(Rectangle region) { this->region = region; }
+    void SetRegion(Rectangle region) { this->region = region; }
 
     int GetDrawOrder() const { return drawOrder; }
     int GetWidth() const { return width; }

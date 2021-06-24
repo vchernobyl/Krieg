@@ -17,15 +17,16 @@ const float JumpVelocity = 4000.0f;
 
 Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetPosition(Vector2(300, 700));
-    SetScale(2.0f);
+    SetScale(2.5f);
 
     sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Guy.png"));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
+    sprite->SetRegion(Rectangle(0, 0, 16, 16));
 
     rigidbody = new RigidbodyComponent(this, MotionType::PhysicsDriven);
 
     auto collider = new BoxColliderComponent(this);
-    auto size = sprite->GetSize() * GetScale();
+    auto size = Vector2(16, 16) * GetScale();
     collider->SetBox(size.x, size.y);
 
 }
