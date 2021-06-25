@@ -9,9 +9,6 @@
 #include <SDL_image.h>
 #include <algorithm>
 
-const int WorldWidth = 32 * 42;
-const int WorldHeight = 32 * 32;
-
 Renderer::Renderer(Game* game) : game(game) {}
 
 bool Renderer::Initialize(int screenWidth, int screenHeight) {
@@ -37,6 +34,8 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 	return false;
     }
 
+    const int worldWidth = 32 * 42;
+    const int worldHeight = 32 * 32;
     camera = new Camera(screenWidth, screenHeight);
     camera->SetWorldSize(WorldWidth, WorldHeight);
 

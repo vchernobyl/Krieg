@@ -138,7 +138,8 @@ June:
 7. Integrate b2World into the physics world class. [DONE]
 8. Implement physics world debug renderer. [DONE]
 9. Fix collider positions. [DONE]
-10. Fix character movement. [IN PROGRESS]
+10. Convert pixel size to unit size. [IN PROGRESS]
+11. Fix character movement.
 
 ?. Separate Math, AABB and Vector headers.
 ?. Extract actor update and delete code to the ActorManager (or whatever the name will be).
