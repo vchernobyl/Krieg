@@ -13,6 +13,9 @@ class TileMap;
 
 class Game {
 public:
+    static constexpr float WorldToBox = 1.0f / WorldUnit;
+    static constexpr float BoxToWorld = 1.0f / WorldToBox;
+
     Game();
     bool Initialize();
     void RunLoop();

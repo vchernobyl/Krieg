@@ -34,10 +34,11 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 	return false;
     }
 
+    camera = new Camera(screenWidth, screenHeight);
+
     const int worldWidth = 32 * 42;
     const int worldHeight = 32 * 32;
-    camera = new Camera(screenWidth, screenHeight);
-    camera->SetWorldSize(WorldWidth, WorldHeight);
+    camera->SetWorldSize(worldWidth, worldHeight);
 
     return true;
 }
