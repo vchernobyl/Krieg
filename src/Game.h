@@ -13,7 +13,7 @@ class TileMap;
 
 class Game {
 public:
-    static constexpr float WorldToBox = 1.0f / WorldUnit;
+    static constexpr float WorldToBox = 1.0f / 32.0f;
     static constexpr float BoxToWorld = 1.0f / WorldToBox;
 
     Game();
