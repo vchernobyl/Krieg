@@ -26,22 +26,27 @@ void SpriteComponent::Draw(Renderer* renderer) {
     if (!texture) return;
 
     SDL_Rect dst;
-    dst.w = static_cast<int>(width * owner->GetScale());
-    dst.h = static_cast<int>(height * owner->GetScale());
-    dst.x = static_cast<int>(owner->GetPosition().x);
-    dst.y = static_cast<int>(owner->GetPosition().y);
+    dst.w = static_cast<int>(width * owner->GetScale() * Game::UnitsToPixels);
+    dst.h = static_cast<int>(height * owner->GetScale() * Game::UnitsToPixels);
+    dst.x = static_cast<int>(owner->GetPosition().x); // TODO: This needs to be converted to units.
+    dst.y = static_cast<int>(owner->GetPosition().y); // TODO: This needs to be converted to units.
     renderer->GetCamera()->ToScreenSpace(dst);
 
     SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
     if (flipX) spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_HORIZONTAL));
     if (flipY) spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_VERTICAL));
 
-    SDL_Rect src = { 0,	0, width, height };
+    SDL_Rect src;
+    src.x = 0;
+    src.y = 0;
+    src.w = static_cast<int>(width * Game::UnitsToPixels);
+    src.h = static_cast<int>(height * Game::UnitsToPixels);
+    
     SDL_RenderCopyEx(renderer->renderer, texture->texture, &src, &dst, 0, nullptr, spriteFlip);
 }
 
 void SpriteComponent::SetTexture(Texture* texture) {
     this->texture = texture;
-    this->width = texture->width;
-    this->height = texture->height;
+    this->width = texture->width * Game::PixelsToUnits;
+    this->height = texture->height * Game::PixelsToUnits;
 }

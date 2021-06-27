@@ -7,7 +7,6 @@
 #include "RigidbodyComponent.h"
 
 Enemy::Enemy(Game* game) : Actor(game) {
-    SetScale(2.5f);
     SetPosition(Vector2(100, 700));
 
     sprite = new SpriteComponent(this);
@@ -16,7 +15,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
     rigidbody = new RigidbodyComponent(this, MotionType::PhysicsDriven);
 
     auto collider = new BoxColliderComponent(this);
-    auto size = Vector2(16, 16) * GetScale();
+    auto size = sprite->GetSize() * GetScale();
     collider->SetBox(size.x, size.y);
 }
 

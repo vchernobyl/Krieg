@@ -14,12 +14,11 @@ public:
     virtual void SetTexture(class Texture* texture);
 
     int GetDrawOrder() const { return drawOrder; }
-    int GetWidth() const { return width; }
-    int GetHeight() const { return height; }
     Vector2 GetSize() const { return Vector2(width, height); }
+
 protected:
     class Texture* texture;
     int drawOrder;
-    int width;
-    int height;
+    float width;
+    float height;
 };
