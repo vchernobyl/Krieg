@@ -20,8 +20,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetScale(2.5f);
 
     sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
-    sprite->SetRegion(Rectangle(0, 0, 16, 16));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));
 
     rigidbody = new RigidbodyComponent(this, MotionType::PhysicsDriven);
 

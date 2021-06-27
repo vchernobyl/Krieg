@@ -13,15 +13,12 @@ public:
     virtual void Draw(class Renderer* renderer);
     virtual void SetTexture(class Texture* texture);
 
-    void SetRegion(Rectangle region) { this->region = region; }
-
     int GetDrawOrder() const { return drawOrder; }
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }
     Vector2 GetSize() const { return Vector2(width, height); }
 protected:
     class Texture* texture;
-    Rectangle region;
     int drawOrder;
     int width;
     int height;

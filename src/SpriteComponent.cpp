@@ -26,8 +26,8 @@ void SpriteComponent::Draw(Renderer* renderer) {
     if (!texture) return;
 
     SDL_Rect dst;
-    dst.w = static_cast<int>(region.size.x * owner->GetScale());
-    dst.h = static_cast<int>(region.size.y * owner->GetScale());
+    dst.w = static_cast<int>(width * owner->GetScale());
+    dst.h = static_cast<int>(height * owner->GetScale());
     dst.x = static_cast<int>(owner->GetPosition().x);
     dst.y = static_cast<int>(owner->GetPosition().y);
     renderer->GetCamera()->ToScreenSpace(dst);
@@ -36,13 +36,7 @@ void SpriteComponent::Draw(Renderer* renderer) {
     if (flipX) spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_HORIZONTAL));
     if (flipY) spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_VERTICAL));
 
-    SDL_Rect src = {
-	static_cast<int>(region.position.x),
-	static_cast<int>(region.position.y),
-	static_cast<int>(region.size.x),
-	static_cast<int>(region.size.y)
-    };
-    
+    SDL_Rect src = { 0,	0, width, height };
     SDL_RenderCopyEx(renderer->renderer, texture->texture, &src, &dst, 0, nullptr, spriteFlip);
 }
 
@@ -50,5 +44,4 @@ void SpriteComponent::SetTexture(Texture* texture) {
     this->texture = texture;
     this->width = texture->width;
     this->height = texture->height;
-    this->region = { 0, 0, static_cast<float>(width), static_cast<float>(height) };
 }

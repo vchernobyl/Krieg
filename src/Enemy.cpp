@@ -11,8 +11,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
     SetPosition(Vector2(100, 700));
 
     sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/SpriteSheet.png"));
-    sprite->SetRegion(Rectangle(0, 16, 16, 16));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Enemy.png"));
 
     rigidbody = new RigidbodyComponent(this, MotionType::PhysicsDriven);
 
@@ -22,6 +21,6 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    float gravity = rigidbody->GetVelocity().y;
-    rigidbody->SetVelocity(Vector2(-velocity, gravity));
+    // float gravity = rigidbody->GetVelocity().y;
+    // rigidbody->SetVelocity(Vector2(-velocity, gravity));
 }

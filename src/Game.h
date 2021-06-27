@@ -13,8 +13,8 @@ class TileMap;
 
 class Game {
 public:
-    static constexpr float WorldToBox = 1.0f / 32.0f;
-    static constexpr float BoxToWorld = 1.0f / WorldToBox;
+    static constexpr float PixelsToUnits = 1.0f / 32.0f;
+    static constexpr float UnitsToPixels = 1.0f / PixelsToUnits;
 
     Game();
     bool Initialize();
