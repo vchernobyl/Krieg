@@ -2,6 +2,7 @@
 #include "Renderer.h"
 #include "Camera.h"
 #include "Math.h"
+#include "Game.h"
 
 #include <SDL.h>
 #include <cassert>
@@ -57,7 +58,8 @@ void DebugRenderer::DrawRect(int x, int y, int width, int height) {
 }
 
 void DebugRenderer::DrawLine(int x1, int y1, int x2, int y2) {
-    DebugShape* line = new DebugLine(x1, y1, x2, y2);
+    float pixels = Game::UnitsToPixels;
+    DebugShape* line = new DebugLine(x1 * pixels, y1 * pixels, x2 * pixels, y2 * pixels);
     shapes.push_back(line);
 }
 

@@ -175,7 +175,7 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Player(this);
-    new Enemy(this);
+//    new Enemy(this);
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
@@ -185,12 +185,14 @@ void Game::LoadData() {
     for (auto objectGroup : objectGroups) {
 	for (const auto& object : objectGroup->objects) {
 	    auto objectActor = new Actor(this);
-	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
+	    // TODO: Object position from tile map should be using units instead of pixels.
+	    objectActor->SetPosition(Vector2(object.position.x, object.position.y) * Game::PixelsToUnits);
 
 	    new RigidbodyComponent(objectActor);
 
+	    // TODO: Object size from tile map should be using units instead of pixels.
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    objectCollider->SetBox(object.size.x, object.size.y);
+	    objectCollider->SetBox(object.size.x * Game::PixelsToUnits, object.size.y * Game::PixelsToUnits);
 	}
     }
 }

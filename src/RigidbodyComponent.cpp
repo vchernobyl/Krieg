@@ -31,6 +31,6 @@ void RigidbodyComponent::SetVelocity(const Vector2& velocity) {
 }
 
 Vector2 RigidbodyComponent::GetVelocity() const {
-    b2Vec2 velocity = body->GetLinearVelocity();
-    return Vector2(velocity.x, velocity.y);
+    b2Vec2 vel = body->GetLinearVelocity();
+    return Vector2(vel.x, vel.y);
 }

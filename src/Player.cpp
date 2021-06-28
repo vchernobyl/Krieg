@@ -12,11 +12,11 @@
 #include "AudioSystem.h"
 #include "Random.h"
 
-const float MoveVelocity = 200.0f;
-const float JumpVelocity = 4000.0f;
+const float MoveVelocity = 2.0f;
+const float JumpVelocity = 4.0f;
 
 Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
-    SetPosition(Vector2(300, 700));
+    SetPosition(Vector2(5, 10));
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));

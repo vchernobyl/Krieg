@@ -28,8 +28,8 @@ void SpriteComponent::Draw(Renderer* renderer) {
     SDL_Rect dst;
     dst.w = static_cast<int>(width * owner->GetScale() * Game::UnitsToPixels);
     dst.h = static_cast<int>(height * owner->GetScale() * Game::UnitsToPixels);
-    dst.x = static_cast<int>(owner->GetPosition().x); // TODO: This needs to be converted to units.
-    dst.y = static_cast<int>(owner->GetPosition().y); // TODO: This needs to be converted to units.
+    dst.x = static_cast<int>(owner->GetPosition().x * Game::UnitsToPixels);
+    dst.y = static_cast<int>(owner->GetPosition().y * Game::UnitsToPixels);
     renderer->GetCamera()->ToScreenSpace(dst);
 
     SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
