@@ -15,33 +15,39 @@ public:
 
 class DebugRect : public DebugShape {
 public:
-    DebugRect(int x, int y, int width, int height);
+    DebugRect(float x, float y, float width, float height);
     void Draw(class SDL_Renderer* renderer, const class Vector2& camPos) override;
 private:
-    int x, y;
-    int width, height;
+    float x, y;
+    float width, height;
 };
 
-DebugRect::DebugRect(int x, int y, int width, int height)
+DebugRect::DebugRect(float x, float y, float width, float height)
     : x(x), y(y), width(width), height(height) {}
 
 void DebugRect::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
     int camX = static_cast<int>(camPos.x);
     int camY = static_cast<int>(camPos.y);
-    SDL_Rect rect = { x - camX, y - camY, width, height };
+
+    SDL_Rect rect;
+    rect.x = static_cast<int>(x) - camX;
+    rect.y = static_cast<int>(y) - camY;
+    rect.w = static_cast<int>(width);
+    rect.h = static_cast<int>(height);
+
     SDL_RenderDrawRect(renderer, &rect);
 }
 
 class DebugLine : public DebugShape {
 public:
-    DebugLine(int x1, int y1, int x2, int y2);
+    DebugLine(float x1, float y1, float x2, float y2);
     void Draw(class SDL_Renderer* renderer, const class Vector2& camPos) override;
 private:
-    int x1, y1;
-    int x2, y2;
+    float x1, y1;
+    float x2, y2;
 };
 
-DebugLine::DebugLine(int x1, int y1, int x2, int y2)
+DebugLine::DebugLine(float x1, float y1, float x2, float y2)
     : x1(x1), y1(y1), x2(x2), y2(y2) {}
 
 void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
@@ -52,12 +58,12 @@ void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
 
 std::vector<DebugShape*> DebugRenderer::shapes = {};
 
-void DebugRenderer::DrawRect(int x, int y, int width, int height) {
+void DebugRenderer::DrawRect(float x, float y, float width, float height) {
     DebugShape* rect = new DebugRect(x, y, width, height);
     shapes.push_back(rect);
 }
 
-void DebugRenderer::DrawLine(int x1, int y1, int x2, int y2) {
+void DebugRenderer::DrawLine(float x1, float y1, float x2, float y2) {
     float pixels = Game::UnitsToPixels;
     DebugShape* line = new DebugLine(x1 * pixels, y1 * pixels, x2 * pixels, y2 * pixels);
     shapes.push_back(line);

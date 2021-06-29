@@ -26,10 +26,10 @@ void SpriteComponent::Draw(Renderer* renderer) {
     if (!texture) return;
 
     SDL_Rect dst;
-    dst.w = static_cast<int>(width * owner->GetScale() * Game::UnitsToPixels);
-    dst.h = static_cast<int>(height * owner->GetScale() * Game::UnitsToPixels);
-    dst.x = static_cast<int>(owner->GetPosition().x * Game::UnitsToPixels);
-    dst.y = static_cast<int>(owner->GetPosition().y * Game::UnitsToPixels);
+    dst.w = static_cast<int>(width * owner->GetScale());
+    dst.h = static_cast<int>(height * owner->GetScale());
+    dst.x = static_cast<int>(owner->GetPosition().x);
+    dst.y = static_cast<int>(owner->GetPosition().y);
     renderer->GetCamera()->ToScreenSpace(dst);
 
     SDL_RendererFlip spriteFlip = SDL_FLIP_NONE;
@@ -39,9 +39,9 @@ void SpriteComponent::Draw(Renderer* renderer) {
     SDL_Rect src;
     src.x = 0;
     src.y = 0;
-    src.w = static_cast<int>(width * Game::UnitsToPixels);
-    src.h = static_cast<int>(height * Game::UnitsToPixels);
-    
+    src.w = static_cast<int>(width);
+    src.h = static_cast<int>(height);
+
     SDL_RenderCopyEx(renderer->renderer, texture->texture, &src, &dst, 0, nullptr, spriteFlip);
 }
 

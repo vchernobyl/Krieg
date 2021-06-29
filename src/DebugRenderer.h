@@ -4,8 +4,8 @@
 
 class DebugRenderer {
 public:
-    static void DrawRect(int x, int y, int width, int height);
-    static void DrawLine(int x1, int y1, int x2, int y2);
+    static void DrawRect(float x, float y, float width, float height);
+    static void DrawLine(float x1, float y1, float x2, float y2);
 private:
     friend class Renderer;
 

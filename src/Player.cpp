@@ -12,11 +12,12 @@
 #include "AudioSystem.h"
 #include "Random.h"
 
-const float MoveVelocity = 2.0f;
-const float JumpVelocity = 4.0f;
+const float MoveVelocity = 6.0f;
+const float JumpVelocity = 6.0f;
 
 Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetPosition(Vector2(5, 10));
+    SetScale(2.0f);
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));
@@ -26,7 +27,6 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     auto collider = new BoxColliderComponent(this);
     auto size = sprite->GetSize() * GetScale();
     collider->SetBox(size.x, size.y);
-
 }
 
 void Player::ActorInput(const InputState& inputState) {
@@ -50,11 +50,6 @@ void Player::ActorInput(const InputState& inputState) {
 }
 
 void Player::UpdateActor(float deltaTime) {
-    // BUG: The character movement will have a tiny "shaking" when moving. This only happens when the
-    // velocity has a fractional component (e.g. 3.2f).
-    // Math.Floor is only a temporary fix, will probably have to make some adjustemenets in the
-    // Renderer in the future. The problem could probably lie in the float-to-int conversion, because
-    // the Renderer accepts the SDL_Rect for position, which consists of 4 ints (x, y, w, h).
     float gravity = rigidbody->GetVelocity().y;
     auto v = Vector2(Math::Floor(velocity.x), gravity + Math::Floor(velocity.y));
     rigidbody->SetVelocity(v);
