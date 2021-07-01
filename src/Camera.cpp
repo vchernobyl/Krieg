@@ -3,14 +3,7 @@
 
 Camera::Camera(int viewportWidth, int viewportHeight)
     : viewportWidth(viewportWidth),
-      viewportHeight(viewportHeight) {
-    viewport = SDL_Rect {
-	static_cast<int>(position.x),
-	static_cast<int>(position.y),
-	viewportWidth,
-	viewportHeight
-    };
-}
+      viewportHeight(viewportHeight) {}
 
 void Camera::Follow(Actor* owner) {
     Vector2 target = owner->GetPosition();
@@ -22,7 +15,7 @@ void Camera::Follow(Actor* owner) {
     if (target.x > worldSize.x - viewportWidth) target.x = worldSize.x - viewportWidth;
     if (target.y > worldSize.y - viewportHeight) target.y = worldSize.y - viewportHeight;
 
-    MoveTo(target);
+    SetPosition(target);
 }
 
 void Camera::ToScreenSpace(SDL_Rect& dst) const {

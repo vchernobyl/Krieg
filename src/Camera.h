@@ -1,27 +1,22 @@
 #pragma once
 
-#include "SDL.h"
 #include "Math.h"
 
 class Camera {
 public:
     Camera(int viewportWidth, int viewportHeight);
-    void MoveTo(Vector2 position) { this->position = position; }
-    void TranslateX(float dx) { this->position.x += dx; }
-    void TranslateY(float dy) { this->position.y += dy; }
-    void Follow(class Actor* owner);
-    void SetWorldSize(Vector2 worldSize) { this->worldSize = worldSize; }
-    void SetWorldSize(int width, int height) { SetWorldSize(Vector2(width, height)); }
-    void ToScreenSpace(SDL_Rect& dst) const;
 
-    const SDL_Rect& GetViewport() const { return viewport; }
+    void Follow(class Actor* owner);
+    void ToScreenSpace(struct SDL_Rect& dst) const;
+
+    void SetPosition(Vector2 position) { this->position = position; }
     const Vector2& GetPosition() const { return position; }
+
+    void SetWorldSize(int width, int height) { worldSize = Vector2(width, height); }
     const Vector2& GetWorldSize() const { return worldSize; }
-    Vector2 GetViewportSize() const { return Vector2(viewportWidth, viewportHeight); }
 private:
     int viewportWidth;
     int viewportHeight;
-    SDL_Rect viewport;
     Vector2 position;
     Vector2 worldSize;
 };
