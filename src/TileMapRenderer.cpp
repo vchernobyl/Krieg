@@ -3,10 +3,16 @@
 #include "Renderer.h"
 #include "Camera.h"
 #include "Texture.h"
+#include "Game.h"
 
 TileMapRenderer::TileMapRenderer(TileMap* map) : map(map) {}
 
 void TileMapRenderer::Draw(Renderer* renderer) {
+    auto tileSet = map->tileSets[0];
+    int tileWidth = tileSet->tileWidth;
+    int tileHeight = tileSet->tileHeight;
+    //SDL_Log("w=%d, h=%d", tileSet->tileWidth, tileSet->tileHeight);
+    
     for (auto layer : map->GetLayers()) {
 	for (auto tile : layer->tiles) {
 	    auto tileInfo = tile.tileInfo;
@@ -20,12 +26,12 @@ void TileMapRenderer::Draw(Renderer* renderer) {
 	    };
 	    
 	    SDL_Rect dst =  {
-		static_cast<int>(tile.x),
-		static_cast<int>(tile.y),
-		32,
-		32
+		static_cast<int>(tile.x * Game::UnitsToPixels),
+		static_cast<int>(tile.y * Game::UnitsToPixels),
+		static_cast<int>(tileWidth * Game::UnitsToPixels),
+		static_cast<int>(tileHeight * Game::UnitsToPixels)
 	    };
-	    
+
 	    renderer->GetCamera()->ToScreenSpace(dst);
 	    SDL_RenderCopyEx(renderer->renderer, tileInfo->texture->texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
 	}

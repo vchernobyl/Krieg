@@ -64,6 +64,8 @@ public:
     const std::vector<TileMapLayer*>& GetLayers() { return layers; }
     const std::vector<ObjectGroup*>& GetObjectGroups() { return objectGroups; }
 private:
+    friend class TileMapRenderer;
+    
     std::vector<TileMapLayer*> layers;
     std::vector<TileSet*> tileSets;
     std::vector<ObjectGroup*> objectGroups;
