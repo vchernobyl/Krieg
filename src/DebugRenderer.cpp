@@ -10,13 +10,13 @@
 class DebugShape {
 public:
     virtual ~DebugShape() {}
-    virtual void Draw(class SDL_Renderer* renderer, const class Vector2& camPos) = 0;
+    virtual void Draw(SDL_Renderer* renderer, const Vector2& camPos) = 0;
 };
 
 class DebugRect : public DebugShape {
 public:
     DebugRect(float x, float y, float width, float height);
-    void Draw(class SDL_Renderer* renderer, const class Vector2& camPos) override;
+    void Draw(SDL_Renderer* renderer, const Vector2& camPos) override;
 private:
     float x, y;
     float width, height;
@@ -41,7 +41,7 @@ void DebugRect::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
 class DebugLine : public DebugShape {
 public:
     DebugLine(float x1, float y1, float x2, float y2);
-    void Draw(class SDL_Renderer* renderer, const class Vector2& camPos) override;
+    void Draw(SDL_Renderer* renderer, const Vector2& camPos) override;
 private:
     float x1, y1;
     float x2, y2;
@@ -51,6 +51,10 @@ DebugLine::DebugLine(float x1, float y1, float x2, float y2)
     : x1(x1), y1(y1), x2(x2), y2(y2) {}
 
 void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
+    // For some reason the line positions are not downscaled? Even though
+    // the object position is.
+    assert(false);
+	
     int camX = static_cast<int>(camPos.x);
     int camY = static_cast<int>(camPos.y);
     SDL_RenderDrawLine(renderer, x1 - camX, y1 - camY, x2 - camX, y2 - camY);

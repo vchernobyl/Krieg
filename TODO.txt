@@ -138,11 +138,13 @@ June:
 7. Integrate b2World into the physics world class. [DONE]
 8. Implement physics world debug renderer. [DONE]
 9. Fix collider positions. [DONE]
-10. Convert pixel size to unit size. [IN PROGRESS]
-11. Fix character movement.
 
-?. Separate Math, AABB and Vector headers.
-?. Extract actor update and delete code to the ActorManager (or whatever the name will be).
+July:
+-----
+1. Convert pixel size to unit size. [DONE]
+2. Fix box collider sizes, they are not aligning at the moment. [IN PROGRESS]
+3. Fix objects moving in increments instead of smooth movement.
+4. Fix camera movement.
 
 Backlog
 -------
@@ -156,6 +158,8 @@ Backlog
 10. Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 11. Clean up the SDL main initialization: https://wiki.libsdl.org/SDL_SetMainReady
 12. Load default texture if texture with a given name is missing.
+13. Separate Math, AABB and Vector headers.
+14. Extract actor update and delete code to the ActorManager (or whatever the name will be).
 
 How be brutally effective:
 --------------------------

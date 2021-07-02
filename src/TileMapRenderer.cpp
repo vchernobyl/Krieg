@@ -11,18 +11,19 @@ void TileMapRenderer::Draw(Renderer* renderer) {
     auto tileSet = map->tileSets[0];
     int tileWidth = tileSet->tileWidth;
     int tileHeight = tileSet->tileHeight;
-    //SDL_Log("w=%d, h=%d", tileSet->tileWidth, tileSet->tileHeight);
     
     for (auto layer : map->GetLayers()) {
 	for (auto tile : layer->tiles) {
 	    auto tileInfo = tile.tileInfo;
 	    auto rect = tileInfo->rect;
 
+	    // TODO: Tile source should not be using units, it's just an internal representation
+	    // which won't benefit from this conversion. Needs to be kept in pixels as loaded.
 	    SDL_Rect src = {
-		static_cast<int>(rect.position.x),
-		static_cast<int>(rect.position.y),
-		static_cast<int>(rect.size.x),
-		static_cast<int>(rect.size.y)
+		static_cast<int>(rect.position.x * Game::UnitsToPixels),
+		static_cast<int>(rect.position.y * Game::UnitsToPixels),
+		static_cast<int>(rect.size.x * Game::UnitsToPixels),
+		static_cast<int>(rect.size.y * Game::UnitsToPixels)
 	    };
 	    
 	    SDL_Rect dst =  {
