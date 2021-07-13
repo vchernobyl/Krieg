@@ -7,7 +7,8 @@
 #include "RigidbodyComponent.h"
 
 Enemy::Enemy(Game* game) : Actor(game) {
-    SetPosition(Vector2(100, 700));
+    SetPosition(Vector2(5, 20));
+    SetScale(2.0f);
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Enemy.png"));
@@ -20,6 +21,6 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    // float gravity = rigidbody->GetVelocity().y;
-    // rigidbody->SetVelocity(Vector2(-velocity, gravity));
+    float gravity = rigidbody->GetVelocity().y;
+    rigidbody->SetVelocity(Vector2(-velocity, gravity));
 }

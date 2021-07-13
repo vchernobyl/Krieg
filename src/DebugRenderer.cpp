@@ -53,6 +53,7 @@ DebugLine::DebugLine(float x1, float y1, float x2, float y2)
 void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
     int camX = static_cast<int>(camPos.x);
     int camY = static_cast<int>(camPos.y);
+
     SDL_RenderDrawLine(renderer, x1 - camX, y1 - camY, x2 - camX, y2 - camY);
 }
 
@@ -72,7 +73,7 @@ void DebugRenderer::DrawLine(float x1, float y1, float x2, float y2, Color color
 
 void DebugRenderer::Draw(Renderer* renderer) {
     SDL_Renderer* sdlRenderer = renderer->renderer;
-    Vector2 camPos = renderer->GetCamera()->GetPosition();
+    Vector2 camPos = renderer->GetCamera()->GetPosition() * Game::UnitsToPixels;
     
     for (auto pair : shapes) {
 	const auto color = pair.second;

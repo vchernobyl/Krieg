@@ -9,5 +9,5 @@ public:
 private:
     struct RigidbodyComponent* rigidbody;
     class SpriteComponent* sprite;
-    float velocity = -100.0f;
+    float velocity = -2.0f;
 };

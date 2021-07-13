@@ -144,24 +144,15 @@ July:
 1. Convert pixel size to unit size. [DONE]
 2. Fix box collider sizes, they are not aligning at the moment. [DONE]
 3. Fix objects moving in increments instead of smooth movement. [DONE]
-4. Fix camera movement. [IN PROGRESS]
+4. Fix camera movement. [DONE]
 5. Fix bodies moving in weird trajectories, probably because of wrong center of mass? [DONE]
-6. Add debug renderer color support for different kinds of shapes and types.
+6. Add debug renderer color support for different kinds of shapes and types. [DONE]
+7. Object position and size from tile map should be using units instead of pixels.
 
 Backlog
 -------
-1. Implement tile map parallax.
-2. Implement basic scene manager.
-3. Extract resource handling into a separate resource manager.
-5. Detect collisions between two moving objects.
-6. Replace SDL_Rect with custom Rect struct/class and use SDL_Rect only in rendering.
-7. Refactor Tile map load function.
-8. Refactor Tile map structs/classes.
-10. Implement SpriteDirection instead of AnimDirection and pass that on to animations.
 11. Clean up the SDL main initialization: https://wiki.libsdl.org/SDL_SetMainReady
 12. Load default texture if texture with a given name is missing.
-13. Separate Math, AABB and Vector headers.
-14. Extract actor update and delete code to the ActorManager (or whatever the name will be).
 
 How be brutally effective:
 --------------------------

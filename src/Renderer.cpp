@@ -59,11 +59,6 @@ void Renderer::UnloadData() {
 
 void Renderer::Begin() {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-
-    // TODO: This seems to be working pretty good!
-    // Maybe use it instead of scaling individual classes everywhere?
-    // SDL_RenderSetScale(renderer, 2, 2);
-    
     SDL_RenderClear(renderer);
 }
 

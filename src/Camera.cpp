@@ -1,5 +1,6 @@
 #include "Camera.h"
 #include "Actor.h"
+#include "Game.h"
 
 Camera::Camera(int viewportWidth, int viewportHeight)
     : viewportWidth(viewportWidth),
@@ -19,6 +20,6 @@ void Camera::Follow(Actor* owner) {
 }
 
 void Camera::ToScreenSpace(SDL_Rect& dst) const {
-    dst.x -= position.x;
-    dst.y -= position.y;
+    dst.x -= position.x * Game::UnitsToPixels;
+    dst.y -= position.y * Game::UnitsToPixels;
 }
