@@ -51,10 +51,6 @@ DebugLine::DebugLine(float x1, float y1, float x2, float y2)
     : x1(x1), y1(y1), x2(x2), y2(y2) {}
 
 void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
-    // For some reason the line positions are not downscaled? Even though
-    // the object position is.
-    assert(false);
-	
     int camX = static_cast<int>(camPos.x);
     int camY = static_cast<int>(camPos.y);
     SDL_RenderDrawLine(renderer, x1 - camX, y1 - camY, x2 - camX, y2 - camY);
