@@ -2,7 +2,7 @@
 #include "DebugRenderer.h"
 
 Box2DDebugRenderer::Box2DDebugRenderer() : b2Draw() {
-    SetFlags(e_shapeBit);
+    SetFlags(e_shapeBit | e_centerOfMassBit);
 };
 
 void Box2DDebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) {
@@ -15,4 +15,8 @@ void Box2DDebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCo
     const b2Vec2 first = vertices[0];
     const b2Vec2 last = vertices[vertexCount - 1];
     DebugRenderer::DrawLine(first.x, first.y, last.x, last.y);
+}
+
+void Box2DDebugRenderer::DrawTransform(const b2Transform& xf) {
+    DebugRenderer::DrawRect(xf.p.x, xf.p.y, 0.1f, 0.1f);
 }

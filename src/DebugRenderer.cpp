@@ -59,13 +59,14 @@ void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
 std::vector<DebugShape*> DebugRenderer::shapes = {};
 
 void DebugRenderer::DrawRect(float x, float y, float width, float height) {
-    DebugShape* rect = new DebugRect(x, y, width, height);
+    const float toPixels = Game::UnitsToPixels;
+    DebugShape* rect = new DebugRect(x * toPixels, y * toPixels, width * toPixels, height * toPixels);
     shapes.push_back(rect);
 }
 
 void DebugRenderer::DrawLine(float x1, float y1, float x2, float y2) {
-    float pixels = Game::UnitsToPixels;
-    DebugShape* line = new DebugLine(x1 * pixels, y1 * pixels, x2 * pixels, y2 * pixels);
+    const float toPixels = Game::UnitsToPixels;
+    DebugShape* line = new DebugLine(x1 * toPixels, y1 * toPixels, x2 * toPixels, y2 * toPixels);
     shapes.push_back(line);
 }
 

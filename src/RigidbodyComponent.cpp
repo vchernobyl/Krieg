@@ -11,6 +11,7 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, MotionType type) : Componen
     b2BodyDef bodyDef;
     const Vector2& position = owner->GetPosition();
     bodyDef.position.Set(position.x, position.y);
+    bodyDef.fixedRotation = true;
 
     if (type == MotionType::PhysicsDriven) bodyDef.type = b2BodyType::b2_dynamicBody;
     if (type == MotionType::GameplayDriven) bodyDef.type = b2BodyType::b2_kinematicBody;
