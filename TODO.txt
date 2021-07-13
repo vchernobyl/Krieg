@@ -144,7 +144,7 @@ July:
 1. Convert pixel size to unit size. [DONE]
 2. Fix box collider sizes, they are not aligning at the moment. [DONE]
 3. Fix objects moving in increments instead of smooth movement. [DONE]
-4. Fix camera movement.
+4. Fix camera movement. [IN PROGRESS]
 5. Fix bodies moving in weird trajectories, probably because of wrong center of mass? [DONE]
 6. Add debug renderer color support for different kinds of shapes and types.
 

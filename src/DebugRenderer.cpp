@@ -56,26 +56,29 @@ void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
     SDL_RenderDrawLine(renderer, x1 - camX, y1 - camY, x2 - camX, y2 - camY);
 }
 
-std::vector<DebugShape*> DebugRenderer::shapes = {};
+std::vector<std::pair<DebugShape*, Color>> DebugRenderer::shapes = {};
 
-void DebugRenderer::DrawRect(float x, float y, float width, float height) {
+void DebugRenderer::DrawRect(float x, float y, float width, float height, Color color) {
     const float toPixels = Game::UnitsToPixels;
     DebugShape* rect = new DebugRect(x * toPixels, y * toPixels, width * toPixels, height * toPixels);
-    shapes.push_back(rect);
+    shapes.emplace_back(rect, color);
 }
 
-void DebugRenderer::DrawLine(float x1, float y1, float x2, float y2) {
+void DebugRenderer::DrawLine(float x1, float y1, float x2, float y2, Color color) {
     const float toPixels = Game::UnitsToPixels;
     DebugShape* line = new DebugLine(x1 * toPixels, y1 * toPixels, x2 * toPixels, y2 * toPixels);
-    shapes.push_back(line);
+    shapes.emplace_back(line, color);
 }
 
 void DebugRenderer::Draw(Renderer* renderer) {
     SDL_Renderer* sdlRenderer = renderer->renderer;
     Vector2 camPos = renderer->GetCamera()->GetPosition();
     
-    SDL_SetRenderDrawColor(sdlRenderer, 0, 255, 0, 255);
-    for (auto shape : shapes) {
+    for (auto pair : shapes) {
+	const auto color = pair.second;
+	SDL_SetRenderDrawColor(sdlRenderer, color.r, color.g, color.b, color.a);
+
+	const auto shape = pair.first;
 	shape->Draw(sdlRenderer, camPos);
 	delete shape;
     }
