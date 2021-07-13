@@ -145,6 +145,7 @@ July:
 2. Fix box collider sizes, they are not aligning at the moment. [IN PROGRESS]
 3. Fix objects moving in increments instead of smooth movement.
 4. Fix camera movement.
+5. Fix bodies moving in weird trajectories, probably because of wrong center of mass?
 
 Backlog
 -------
