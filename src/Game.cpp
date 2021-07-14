@@ -179,7 +179,7 @@ void Game::LoadData() {
 
     TileMapLoader tileMapLoader(this);
     tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
-    tileMapRenderer = new TileMapRenderer(tileMap);
+    tileMapRenderer = new TileMapRenderer(*tileMap);
 
     auto objectGroups = tileMap->GetObjectGroups();
     for (auto objectGroup : objectGroups) {

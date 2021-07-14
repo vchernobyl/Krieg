@@ -5,14 +5,14 @@
 #include "Texture.h"
 #include "Game.h"
 
-TileMapRenderer::TileMapRenderer(TileMap* map) : map(map) {}
+TileMapRenderer::TileMapRenderer(TileMap tileMap) : tileMap(tileMap) {}
 
 void TileMapRenderer::Draw(Renderer* renderer) {
-    TileSet tileSet = map->tileSets[0]; // We currently support only maps with a single tile set.
+    TileSet tileSet = tileMap.tileSets[0]; // We currently support only maps with a single tile set.
     int tileWidth = tileSet.GetTileWidth();
     int tileHeight = tileSet.GetTileHeight();
     
-    for (auto layer : map->GetLayers()) {
+    for (auto layer : tileMap.GetLayers()) {
 	for (auto tile : layer.tiles) {
 	    auto tileInfo = tile.tileInfo;
 	    auto rect = tileInfo.rect;

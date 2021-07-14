@@ -1,10 +1,12 @@
 #pragma once
 
+#include "TileMap.h"
+
 // TODO: Move this guy to the TileMap header.
 class TileMapRenderer {
 public:
-    TileMapRenderer(class TileMap* map);
+    TileMapRenderer(TileMap tileMap);
     void Draw(class Renderer* renderer);
 private:
-    class TileMap* map;
+    TileMap tileMap;
 };
