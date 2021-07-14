@@ -8,17 +8,20 @@
 class Texture;
 
 struct TileInfo {
-    TileInfo(int id, Texture* texture, Rectangle rect)
-	: id(id), texture(texture), rect(rect) {}
-
     int id;
     Texture* texture;
     Rectangle rect;
 };
 
-struct TileSet {
+class TileSet {
+public:
     TileSet(Texture* image, int tileWidth, int tileHeight, int tileCount, int columns);
+
     const TileInfo* GetTileInfo(int id) const { return &tileInfos[id]; }
+    int GetTileWidth() const { return tileWidth; }
+    int GetTileHeight() const { return tileHeight; }
+
+private:
     Texture* image;
     int tileWidth;
     int tileHeight;

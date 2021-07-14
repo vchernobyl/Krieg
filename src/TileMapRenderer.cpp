@@ -8,9 +8,9 @@
 TileMapRenderer::TileMapRenderer(TileMap* map) : map(map) {}
 
 void TileMapRenderer::Draw(Renderer* renderer) {
-    auto tileSet = map->tileSets[0];
-    int tileWidth = tileSet->tileWidth;
-    int tileHeight = tileSet->tileHeight;
+    auto tileSet = map->tileSets[0]; // We currently support only maps with a single tile set.
+    int tileWidth = tileSet->GetTileWidth();
+    int tileHeight = tileSet->GetTileHeight();
     
     for (auto layer : map->GetLayers()) {
 	for (auto tile : layer->tiles) {

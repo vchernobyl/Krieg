@@ -14,7 +14,7 @@ TileSet::TileSet(Texture* image, int tileWidth, int tileHeight, int tileCount, i
     for (int row = 0; row < rows; ++row) {
 	for (int col = 0; col < columns; ++col) {
 	    Rectangle rect = Rectangle(col * tileWidth, row * tileHeight, tileWidth, tileHeight);
-	    TileInfo tileInfo { row * columns + col, image, rect };
+	    TileInfo tileInfo = { row * columns + col, image, rect };
 	    tileInfos.push_back(tileInfo);
 	}
     }
@@ -63,6 +63,7 @@ TileSet* TileMapLoader::CreateTileSet(pugi::xml_node root) {
     auto imageName = tileSetNode.child("image").attribute("source").value();
     std::stringstream imagePath;
     imagePath << "assets/" << imageName;
+
     return new TileSet(game->GetRenderer()->GetTexture(imagePath.str()),
 		       tileSetNode.attribute("tilewidth").as_int() * Game::PixelsToUnits,
 		       tileSetNode.attribute("tileheight").as_int() * Game::PixelsToUnits,
@@ -88,8 +89,8 @@ const std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileI
     std::vector<Tile> tiles;
     for (int row = 0; row < layerHeight; ++row) {
 	for (int col = 0; col < layerWidth; ++col) {
-	    int x = col * tileSet->tileWidth;
-	    int y = row * tileSet->tileHeight;
+	    int x = col * tileSet->GetTileWidth();
+	    int y = row * tileSet->GetTileHeight();
 	    int index = row * layerWidth + col;
 	    int id = tileIds[index] - 1; // -1 because tilegid == 1
 	    if (id > 0) {
