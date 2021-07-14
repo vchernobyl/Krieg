@@ -42,7 +42,6 @@ private:
 
     // Game specific - will be in a Scene later on
     TileMapRenderer* tileMapRenderer;
-    TileMap* tileMap;
 
     bool isRunning;
     bool updatingActors;

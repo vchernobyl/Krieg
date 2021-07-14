@@ -151,7 +151,7 @@ July:
 8. We don't need a separate tile map loader class, it can be a function instead (it doesn't have state). [IN PROGRESS]
 9. Remove struct constructors in tile map header, they are not needed. [DONE]
 10. Remove all the useless pointers in the tile map loader and tile map. [DONE]
-11. Remove tile map pointer from the tile map renderer. [IN PROGRESS]
+11. Remove tile map pointer from the tile map renderer. [DONE]
 
 Backlog
 -------

@@ -22,11 +22,11 @@ TileSet::TileSet(Texture* image, int tileWidth, int tileHeight, int tileCount, i
     }
 }
 
-TileMap* TileMapLoader::Load(const std::string& fileName) {
+TileMap TileMapLoader::Load(const std::string& fileName) {
     pugi::xml_document doc;
     pugi::xml_parse_result success = doc.load_file(fileName.c_str());
 
-    auto map = new TileMap();
+    auto map = TileMap();
 
     if (!success) {
 	SDL_Log("Failed to load map: %s", fileName.c_str());
@@ -34,16 +34,16 @@ TileMap* TileMapLoader::Load(const std::string& fileName) {
     }
 
     auto tileSet = CreateTileSet(doc.child("map"));
-    map->AddTileSet(tileSet);
+    map.AddTileSet(tileSet);
 
     auto layers = CreateTileMapLayers(doc.child("map"), tileSet);
     for (auto layer : layers) {
-	map->AddLayer(layer);
+	map.AddLayer(layer);
     }
 
     auto objectGroups = CreateObjectGroups(doc.child("map"));
     for (auto group : objectGroups) {
-	map->AddObjectGroup(group);
+	map.AddObjectGroup(group);
     }
 
     return map;

@@ -22,7 +22,6 @@ Game::Game() :
     inputSystem(nullptr),
     physicsWorld(nullptr),
     tileMapRenderer(nullptr),
-    tileMap(nullptr),
     isRunning(true),
     updatingActors(false) {}
 
@@ -178,10 +177,10 @@ void Game::LoadData() {
     new Enemy(this);
 
     TileMapLoader tileMapLoader(this);
-    tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
-    tileMapRenderer = new TileMapRenderer(*tileMap);
+    TileMap tileMap = tileMapLoader.Load("assets/prototype_map.tmx");
+    tileMapRenderer = new TileMapRenderer(tileMap);
 
-    auto objectGroups = tileMap->GetObjectGroups();
+    auto objectGroups = tileMap.GetObjectGroups();
     for (auto objectGroup : objectGroups) {
 	for (const auto& object : objectGroup.objects) {
 	    auto objectActor = new Actor(this);
@@ -199,7 +198,6 @@ void Game::UnloadData() {
     renderer->UnloadData();
     
     delete tileMapRenderer;
-    delete tileMap;
 
     while (!actors.empty()) {
 	delete actors.back();

@@ -73,7 +73,7 @@ namespace pugi {
 class TileMapLoader {
 public:
     TileMapLoader(Game* game) : game(game) {}
-    TileMap* Load(const std::string& fileName);
+    TileMap Load(const std::string& fileName);
 private:
     TileSet CreateTileSet(pugi::xml_node root);
     const std::vector<TileMapLayer> CreateTileMapLayers(pugi::xml_node root, TileSet tileSet);
