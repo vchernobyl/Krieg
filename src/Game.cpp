@@ -183,7 +183,7 @@ void Game::LoadData() {
 
     auto objectGroups = tileMap->GetObjectGroups();
     for (auto objectGroup : objectGroups) {
-	for (const auto& object : objectGroup->objects) {
+	for (const auto& object : objectGroup.objects) {
 	    auto objectActor = new Actor(this);
 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 

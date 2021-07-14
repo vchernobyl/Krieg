@@ -8,14 +8,14 @@
 TileMapRenderer::TileMapRenderer(TileMap* map) : map(map) {}
 
 void TileMapRenderer::Draw(Renderer* renderer) {
-    TileSet* tileSet = map->tileSets[0]; // We currently support only maps with a single tile set.
-    int tileWidth = tileSet->GetTileWidth();
-    int tileHeight = tileSet->GetTileHeight();
+    TileSet tileSet = map->tileSets[0]; // We currently support only maps with a single tile set.
+    int tileWidth = tileSet.GetTileWidth();
+    int tileHeight = tileSet.GetTileHeight();
     
     for (auto layer : map->GetLayers()) {
-	for (auto tile : layer->tiles) {
+	for (auto tile : layer.tiles) {
 	    auto tileInfo = tile.tileInfo;
-	    auto rect = tileInfo->rect;
+	    auto rect = tileInfo.rect;
 
 	    // TODO: Tile source should not be using units, it's just an internal representation
 	    // which won't benefit from this conversion. Needs to be kept in pixels as loaded.
@@ -34,7 +34,7 @@ void TileMapRenderer::Draw(Renderer* renderer) {
 	    };
 
 	    renderer->GetCamera()->ToScreenSpace(dst);
-	    SDL_RenderCopyEx(renderer->renderer, tileInfo->texture->texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
+	    SDL_RenderCopyEx(renderer->renderer, tileInfo.texture->texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
 	}
     }
 }

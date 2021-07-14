@@ -22,17 +22,6 @@ TileSet::TileSet(Texture* image, int tileWidth, int tileHeight, int tileCount, i
     }
 }
 
-TileMap::~TileMap() {
-    for (auto layer : layers) {	delete layer; }
-    layers.clear();
-
-    for (auto tileSet : tileSets) { delete tileSet; }
-    tileSets.clear();
-
-    for (auto objectGroup : objectGroups) { delete objectGroup; }
-    objectGroups.clear();
-}
-
 TileMap* TileMapLoader::Load(const std::string& fileName) {
     pugi::xml_document doc;
     pugi::xml_parse_result success = doc.load_file(fileName.c_str());
@@ -60,43 +49,43 @@ TileMap* TileMapLoader::Load(const std::string& fileName) {
     return map;
 }
 
-TileSet* TileMapLoader::CreateTileSet(pugi::xml_node root) {
+TileSet TileMapLoader::CreateTileSet(pugi::xml_node root) {
     auto tileSetNode = root.child("tileset");
     auto imageName = tileSetNode.child("image").attribute("source").value();
     std::stringstream imagePath;
     imagePath << "assets/" << imageName;
 
-    return new TileSet(game->GetRenderer()->GetTexture(imagePath.str()),
-		       tileSetNode.attribute("tilewidth").as_int() * Game::PixelsToUnits,
-		       tileSetNode.attribute("tileheight").as_int() * Game::PixelsToUnits,
-		       tileSetNode.attribute("tilecount").as_int(),
-		       tileSetNode.attribute("columns").as_int());
+    return TileSet(game->GetRenderer()->GetTexture(imagePath.str()),
+		   tileSetNode.attribute("tilewidth").as_int() * Game::PixelsToUnits,
+		   tileSetNode.attribute("tileheight").as_int() * Game::PixelsToUnits,
+		   tileSetNode.attribute("tilecount").as_int(),
+		   tileSetNode.attribute("columns").as_int());
 }
 
-const std::vector<TileMapLayer*> TileMapLoader::CreateTileMapLayers(pugi::xml_node root, TileSet* tileSet) {
-    std::vector<TileMapLayer*> layers;
+const std::vector<TileMapLayer> TileMapLoader::CreateTileMapLayers(pugi::xml_node root, TileSet tileSet) {
+    std::vector<TileMapLayer> layers;
     for (pugi::xml_node layerNode : root.children("layer")) {
 	auto name = layerNode.attribute("name").value();
 	auto width = layerNode.attribute("width").as_int();
 	auto height = layerNode.attribute("height").as_int();
 	auto tileIds = ParseTileIds(layerNode.child_value("data"));
 	auto tiles = CreateTiles(tileIds, tileSet, width, height);
-	layers.push_back(new TileMapLayer { name, width, height, tiles });
+	layers.push_back(TileMapLayer { name, width, height, tiles });
     }
     return layers;
 }
 
-const std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, TileSet* tileSet,
+const std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, TileSet tileSet,
 					     int layerWidth, int layerHeight) {
     std::vector<Tile> tiles;
     for (int row = 0; row < layerHeight; ++row) {
 	for (int col = 0; col < layerWidth; ++col) {
-	    int x = col * tileSet->GetTileWidth();
-	    int y = row * tileSet->GetTileHeight();
+	    int x = col * tileSet.GetTileWidth();
+	    int y = row * tileSet.GetTileHeight();
 	    int index = row * layerWidth + col;
 	    int id = tileIds[index] - 1; // -1 because tilegid == 1
 	    if (id > 0) {
-		const TileInfo* tileInfo = tileSet->GetTileInfo(id);
+		TileInfo tileInfo = tileSet.GetTileInfo(id);
 		Vector2 position = Vector2(x, y);
 		Tile tile = { position, tileInfo };
 		tiles.push_back(tile);
@@ -106,8 +95,8 @@ const std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileI
     return tiles;
 }
 
-const std::vector<ObjectGroup*> TileMapLoader::CreateObjectGroups(pugi::xml_node root) {
-    std::vector<ObjectGroup*> groups;
+const std::vector<ObjectGroup> TileMapLoader::CreateObjectGroups(pugi::xml_node root) {
+    std::vector<ObjectGroup> groups;
     for (pugi::xml_node objectGroupNode : root.children("objectgroup")) {
 	std::vector<Rectangle> objects;
 	for (pugi::xml_node objectNode : objectGroupNode.children("object")) {
@@ -123,7 +112,7 @@ const std::vector<ObjectGroup*> TileMapLoader::CreateObjectGroups(pugi::xml_node
 	    objects.push_back(object);
 	}
 	auto name = objectGroupNode.attribute("name").value();
-	groups.push_back(new ObjectGroup { name, objects });
+	groups.push_back(ObjectGroup { name, objects });
     }
     return groups;
 }
