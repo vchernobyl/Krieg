@@ -111,8 +111,12 @@ const std::vector<ObjectGroup*> TileMapLoader::CreateObjectGroups(pugi::xml_node
 	    auto y = objectNode.attribute("y").as_int();
 	    auto width = objectNode.attribute("width").as_int();
 	    auto height = objectNode.attribute("height").as_int();
-	    Rectangle rect = Rectangle(x, y, width, height);
-	    objects.push_back(rect);
+
+	    auto position = Vector2(x, y) * Game::PixelsToUnits;
+	    auto size = Vector2(width, height) * Game::PixelsToUnits;
+	    auto object = Rectangle(position, size);
+
+	    objects.push_back(object);
 	}
 	auto name = objectGroupNode.attribute("name").value();
 	groups.push_back(new ObjectGroup(name, objects));

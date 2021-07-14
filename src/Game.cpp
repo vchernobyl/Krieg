@@ -185,14 +185,12 @@ void Game::LoadData() {
     for (auto objectGroup : objectGroups) {
 	for (const auto& object : objectGroup->objects) {
 	    auto objectActor = new Actor(this);
-	    // TODO: Object position from tile map should be using units instead of pixels.
-	    objectActor->SetPosition(Vector2(object.position.x, object.position.y) * Game::PixelsToUnits);
+	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
 	    new RigidbodyComponent(objectActor);
 
-	    // TODO: Object size from tile map should be using units instead of pixels.
 	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    objectCollider->SetBox(object.size.x * Game::PixelsToUnits, object.size.y * Game::PixelsToUnits);
+	    objectCollider->SetBox(object.size.x, object.size.y);
 	}
     }
 }
