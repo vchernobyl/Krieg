@@ -13,6 +13,11 @@ struct TileInfo {
     Rectangle rect;
 };
 
+struct Tile {
+    Vector2 position;
+    const TileInfo* tileInfo;
+};
+
 class TileSet {
 public:
     TileSet(Texture* image, int tileWidth, int tileHeight, int tileCount, int columns);
@@ -28,15 +33,6 @@ private:
     int tileCount;
     int columns;
     std::vector<TileInfo> tileInfos;
-};
-
-struct Tile {
-    Tile(int x, int y, const TileInfo* tileInfo)
-	: x(x), y(y), tileInfo(tileInfo) {}
-
-    int x;
-    int y;
-    const TileInfo* tileInfo;
 };
 
 struct TileMapLayer {

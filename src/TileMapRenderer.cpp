@@ -27,8 +27,8 @@ void TileMapRenderer::Draw(Renderer* renderer) {
 	    };
 	    
 	    SDL_Rect dst =  {
-		static_cast<int>(tile.x * Game::UnitsToPixels),
-		static_cast<int>(tile.y * Game::UnitsToPixels),
+		static_cast<int>(tile.position.x * Game::UnitsToPixels),
+		static_cast<int>(tile.position.y * Game::UnitsToPixels),
 		static_cast<int>(tileWidth * Game::UnitsToPixels),
 		static_cast<int>(tileHeight * Game::UnitsToPixels)
 	    };

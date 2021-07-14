@@ -94,8 +94,9 @@ const std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileI
 	    int index = row * layerWidth + col;
 	    int id = tileIds[index] - 1; // -1 because tilegid == 1
 	    if (id > 0) {
-		auto tileInfo = tileSet->GetTileInfo(id);
-		auto tile = Tile(x, y, tileInfo);
+		const TileInfo* tileInfo = tileSet->GetTileInfo(id);
+		Vector2 position = Vector2(x, y);
+		Tile tile = { position, tileInfo };
 		tiles.push_back(tile);
 	    }
 	}
