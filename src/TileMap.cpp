@@ -14,7 +14,9 @@ TileSet::TileSet(Texture* image, int tileWidth, int tileHeight, int tileCount, i
     for (int row = 0; row < rows; ++row) {
 	for (int col = 0; col < columns; ++col) {
 	    Rectangle rect = Rectangle(col * tileWidth, row * tileHeight, tileWidth, tileHeight);
-	    TileInfo tileInfo = { row * columns + col, image, rect };
+	    int tileId = row * columns + col;
+	    TileInfo tileInfo = { tileId, image, rect };
+
 	    tileInfos.push_back(tileInfo);
 	}
     }
@@ -79,7 +81,7 @@ const std::vector<TileMapLayer*> TileMapLoader::CreateTileMapLayers(pugi::xml_no
 	auto height = layerNode.attribute("height").as_int();
 	auto tileIds = ParseTileIds(layerNode.child_value("data"));
 	auto tiles = CreateTiles(tileIds, tileSet, width, height);
-	layers.push_back(new TileMapLayer(name, width, height, tiles));
+	layers.push_back(new TileMapLayer { name, width, height, tiles });
     }
     return layers;
 }
@@ -121,7 +123,7 @@ const std::vector<ObjectGroup*> TileMapLoader::CreateObjectGroups(pugi::xml_node
 	    objects.push_back(object);
 	}
 	auto name = objectGroupNode.attribute("name").value();
-	groups.push_back(new ObjectGroup(name, objects));
+	groups.push_back(new ObjectGroup { name, objects });
     }
     return groups;
 }

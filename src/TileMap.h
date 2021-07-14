@@ -6,6 +6,7 @@
 #include <vector>
 
 class Texture;
+class Game;
 
 struct TileInfo {
     int id;
@@ -16,6 +17,18 @@ struct TileInfo {
 struct Tile {
     Vector2 position;
     const TileInfo* tileInfo;
+};
+
+struct TileMapLayer {
+    std::string name;
+    int width;
+    int height;
+    std::vector<Tile> tiles;
+};
+
+struct ObjectGroup {
+    std::string name;
+    std::vector<Rectangle> objects;
 };
 
 class TileSet {
@@ -33,25 +46,6 @@ private:
     int tileCount;
     int columns;
     std::vector<TileInfo> tileInfos;
-};
-
-struct TileMapLayer {
-    TileMapLayer(const std::string& name, int width, int height, std::vector<Tile> tiles)
-	: name(name), width(width), height(height), tiles(tiles) {}
-
-    std::string name;
-    int width;
-    int height;
-    bool isVisible = true;
-    std::vector<Tile> tiles;
-};
-
-struct ObjectGroup {
-    ObjectGroup(const std::string& name, std::vector<Rectangle> objects)
-	: name(name), objects(objects) {}
-
-    std::string name;
-    std::vector<Rectangle> objects;
 };
 
 class TileMap {
@@ -77,7 +71,7 @@ namespace pugi {
 
 class TileMapLoader {
 public:
-    TileMapLoader(class Game* game) : game(game) {}
+    TileMapLoader(Game* game) : game(game) {}
     TileMap* Load(const std::string& fileName);
 private:
     TileSet* CreateTileSet(pugi::xml_node root);
@@ -86,5 +80,5 @@ private:
 				  int layerWidth, int layerHeight);
     const std::vector<ObjectGroup*> CreateObjectGroups(pugi::xml_node root);
     const std::vector<int> ParseTileIds(const std::string& fileName);
-    class Game* game;
+    Game* game;
 };
