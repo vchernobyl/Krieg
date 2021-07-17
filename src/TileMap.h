@@ -50,7 +50,7 @@ private:
 
 class TileMap {
 public:
-    static TileMap Load(Game* game, const std::string& filename);
+    TileMap(Game* game, const std::string& filename);
 
     void AddLayer(TileMapLayer layer) { layers.push_back(layer); }
     void AddTileSet(TileSet tileSet) { tileSets.push_back(tileSet); }

@@ -116,29 +116,24 @@ namespace {
     }
 }
 
-TileMap TileMap::Load(Game* game, const std::string& fileName) {
+TileMap::TileMap(Game* game, const std::string& fileName) {
     pugi::xml_document doc;
     pugi::xml_parse_result success = doc.load_file(fileName.c_str());
 
-    auto map = TileMap();
-
     if (!success) {
 	SDL_Log("Failed to load map: %s", fileName.c_str());
-	return map;
     }
 
     auto tileSet = CreateTileSet(game, doc.child("map"));
-    map.AddTileSet(tileSet);
+    AddTileSet(tileSet);
 
     auto layers = CreateTileMapLayers(doc.child("map"), tileSet);
     for (auto layer : layers) {
-	map.AddLayer(layer);
+	AddLayer(layer);
     }
 
     auto objectGroups = CreateObjectGroups(doc.child("map"));
     for (auto group : objectGroups) {
-	map.AddObjectGroup(group);
+	AddObjectGroup(group);
     }
-
-    return map;
 }
