@@ -22,11 +22,11 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));
 
-    rigidbody = new RigidbodyComponent(this, MotionType::PhysicsDriven);
-
     auto collider = new BoxColliderComponent(this);
     auto size = sprite->GetSize() * GetScale();
     collider->SetBox(size.x, size.y);
+
+    rigidbody = collider->GetAttachedRigidbody();
 }
 
 void Player::ActorInput(const InputState& inputState) {

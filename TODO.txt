@@ -148,10 +148,11 @@ July:
 5. Fix bodies moving in weird trajectories, probably because of wrong center of mass? [DONE]
 6. Add debug renderer color support for different kinds of shapes and types. [DONE]
 7. Object position and size from tile map should be using units instead of pixels. [DONE]
-8. We don't need a separate tile map loader class, it can be a function instead (it doesn't have state). [IN PROGRESS]
+8. We don't need a separate tile map loader class, it can be a function instead (it doesn't have state). [DONE]
 9. Remove struct constructors in tile map header, they are not needed. [DONE]
 10. Remove all the useless pointers in the tile map loader and tile map. [DONE]
 11. Remove tile map pointer from the tile map renderer. [DONE]
+12. Refactor how rigidbodies and shapes are being created. [DONE]
 
 Backlog
 -------

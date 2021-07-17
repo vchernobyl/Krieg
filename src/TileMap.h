@@ -52,9 +52,9 @@ class TileMap {
 public:
     TileMap(Game* game, const std::string& filename);
 
-    const std::vector<TileMapLayer>& GetLayers() { return layers; }
-    const std::vector<TileSet>& GetTileSets() { return tileSets; }
-    const std::vector<ObjectGroup>& GetObjectGroups() { return objectGroups; }
+    const std::vector<TileMapLayer>& GetLayers() const { return layers; }
+    const std::vector<TileSet>& GetTileSets() const { return tileSets; }
+    const std::vector<ObjectGroup>& GetObjectGroups() const { return objectGroups; }
 
 private:
     std::vector<TileMapLayer> layers;

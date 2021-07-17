@@ -19,11 +19,14 @@ void BoxColliderComponent::SetBox(float width, float height) {
 
     box.SetAsBox(hw, hh, center, 0.0f);
 
-    // TODO: Can crash if rigidbody not set, needs a better mechanism to create a fixture.
-    // Maybe attach rigidbody automatically whenever a collider is attached?
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &box;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
-    GetAttachedRigidbody()->body->CreateFixture(&fixtureDef);
+
+    // TODO: I don't have better idea yet, but I think this will have to be refactored later on.
+    RigidbodyComponent* rb = GetAttachedRigidbody();
+    if (rb == nullptr) rb = new RigidbodyComponent(owner);
+    
+    rb->body->CreateFixture(&fixtureDef);
 }

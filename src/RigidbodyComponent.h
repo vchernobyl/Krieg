@@ -11,7 +11,7 @@ enum class MotionType {
 
 class RigidbodyComponent : public Component {
 public:
-    RigidbodyComponent(class Actor* owner, MotionType type = MotionType::Fixed);
+    RigidbodyComponent(class Actor* owner, MotionType type = MotionType::PhysicsDriven);
     ~RigidbodyComponent();
 
     void SetVelocity(const Vector2& velocity);
