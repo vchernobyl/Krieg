@@ -116,7 +116,7 @@ namespace {
     }
 }
 
-TileMap LoadTileMap(Game* game, const std::string& fileName) {
+TileMap TileMap::Load(Game* game, const std::string& fileName) {
     pugi::xml_document doc;
     pugi::xml_parse_result success = doc.load_file(fileName.c_str());
 

@@ -50,6 +50,8 @@ private:
 
 class TileMap {
 public:
+    static TileMap Load(Game* game, const std::string& filename);
+
     void AddLayer(TileMapLayer layer) { layers.push_back(layer); }
     void AddTileSet(TileSet tileSet) { tileSets.push_back(tileSet); }
     void AddObjectGroup(ObjectGroup objectGroup) { objectGroups.push_back(objectGroup); }
@@ -64,5 +66,3 @@ private:
     std::vector<TileSet> tileSets;
     std::vector<ObjectGroup> objectGroups;
 };
-
-TileMap LoadTileMap(Game* game, const std::string& filename);

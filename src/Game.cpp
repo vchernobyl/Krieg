@@ -176,7 +176,7 @@ void Game::LoadData() {
     new Player(this);
     new Enemy(this);
 
-    TileMap tileMap = LoadTileMap(this, "assets/prototype_map.tmx");
+    TileMap tileMap = TileMap::Load(this, "assets/prototype_map.tmx");
     tileMapRenderer = new TileMapRenderer(tileMap);
 
     auto objectGroups = tileMap.GetObjectGroups();
