@@ -8,7 +8,7 @@
 TileMapRenderer::TileMapRenderer(TileMap tileMap) : tileMap(tileMap) {}
 
 void TileMapRenderer::Draw(Renderer* renderer) {
-    TileSet tileSet = tileMap.tileSets[0]; // We currently support only maps with a single tile set.
+    TileSet tileSet = tileMap.GetTileSets().front(); // We currently support only maps with a single tile set.
     int tileWidth = tileSet.GetTileWidth();
     int tileHeight = tileSet.GetTileHeight();
     

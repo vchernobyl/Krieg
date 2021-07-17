@@ -52,16 +52,11 @@ class TileMap {
 public:
     TileMap(Game* game, const std::string& filename);
 
-    void AddLayer(TileMapLayer layer) { layers.push_back(layer); }
-    void AddTileSet(TileSet tileSet) { tileSets.push_back(tileSet); }
-    void AddObjectGroup(ObjectGroup objectGroup) { objectGroups.push_back(objectGroup); }
-
     const std::vector<TileMapLayer>& GetLayers() { return layers; }
+    const std::vector<TileSet>& GetTileSets() { return tileSets; }
     const std::vector<ObjectGroup>& GetObjectGroups() { return objectGroups; }
 
 private:
-    friend class TileMapRenderer;
-    
     std::vector<TileMapLayer> layers;
     std::vector<TileSet> tileSets;
     std::vector<ObjectGroup> objectGroups;

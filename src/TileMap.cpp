@@ -124,16 +124,16 @@ TileMap::TileMap(Game* game, const std::string& fileName) {
 	SDL_Log("Failed to load map: %s", fileName.c_str());
     }
 
-    auto tileSet = CreateTileSet(game, doc.child("map"));
-    AddTileSet(tileSet);
+    auto mapTileSet = CreateTileSet(game, doc.child("map"));
+    tileSets.push_back(mapTileSet);
 
-    auto layers = CreateTileMapLayers(doc.child("map"), tileSet);
-    for (auto layer : layers) {
-	AddLayer(layer);
+    auto mapLayers = CreateTileMapLayers(doc.child("map"), mapTileSet);
+    for (auto layer : mapLayers) {
+	layers.push_back(layer);
     }
 
-    auto objectGroups = CreateObjectGroups(doc.child("map"));
-    for (auto group : objectGroups) {
-	AddObjectGroup(group);
+    auto mapObjectGroups = CreateObjectGroups(doc.child("map"));
+    for (auto group : mapObjectGroups) {
+	objectGroups.push_back(group);
     }
 }
