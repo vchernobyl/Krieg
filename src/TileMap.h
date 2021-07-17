@@ -70,15 +70,9 @@ namespace pugi {
     class xml_node;
 };
 
-class TileMapLoader {
-public:
-    TileMapLoader(Game* game) : game(game) {}
-    TileMap Load(const std::string& fileName);
-private:
-    TileSet CreateTileSet(pugi::xml_node root);
-    const std::vector<TileMapLayer> CreateTileMapLayers(pugi::xml_node root, TileSet tileSet);
-    const std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, TileSet tileSet, int layerWidth, int layerHeight);
-    const std::vector<ObjectGroup> CreateObjectGroups(pugi::xml_node root);
-    const std::vector<int> ParseTileIds(const std::string& fileName);
-    Game* game;
-};
+TileSet CreateTileSet(Game* game, pugi::xml_node root);
+const std::vector<TileMapLayer> CreateTileMapLayers(pugi::xml_node root, TileSet tileSet);
+const std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, TileSet tileSet, int layerWidth, int layerHeight);
+const std::vector<ObjectGroup> CreateObjectGroups(pugi::xml_node root);
+const std::vector<int> ParseTileIds(const std::string& data);
+TileMap LoadTileMap(Game* game, const std::string& filename);

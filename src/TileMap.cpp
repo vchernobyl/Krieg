@@ -22,7 +22,7 @@ TileSet::TileSet(Texture* image, int tileWidth, int tileHeight, int tileCount, i
     }
 }
 
-TileMap TileMapLoader::Load(const std::string& fileName) {
+TileMap LoadTileMap(Game* game, const std::string& fileName) {
     pugi::xml_document doc;
     pugi::xml_parse_result success = doc.load_file(fileName.c_str());
 
@@ -33,7 +33,7 @@ TileMap TileMapLoader::Load(const std::string& fileName) {
 	return map;
     }
 
-    auto tileSet = CreateTileSet(doc.child("map"));
+    auto tileSet = CreateTileSet(game, doc.child("map"));
     map.AddTileSet(tileSet);
 
     auto layers = CreateTileMapLayers(doc.child("map"), tileSet);
@@ -49,7 +49,7 @@ TileMap TileMapLoader::Load(const std::string& fileName) {
     return map;
 }
 
-TileSet TileMapLoader::CreateTileSet(pugi::xml_node root) {
+TileSet CreateTileSet(Game* game, pugi::xml_node root) {
     auto tileSetNode = root.child("tileset");
     auto imageName = tileSetNode.child("image").attribute("source").value();
     std::stringstream imagePath;
@@ -62,7 +62,7 @@ TileSet TileMapLoader::CreateTileSet(pugi::xml_node root) {
 		   tileSetNode.attribute("columns").as_int());
 }
 
-const std::vector<TileMapLayer> TileMapLoader::CreateTileMapLayers(pugi::xml_node root, TileSet tileSet) {
+const std::vector<TileMapLayer> CreateTileMapLayers(pugi::xml_node root, TileSet tileSet) {
     std::vector<TileMapLayer> layers;
     for (pugi::xml_node layerNode : root.children("layer")) {
 	auto name = layerNode.attribute("name").value();
@@ -75,7 +75,7 @@ const std::vector<TileMapLayer> TileMapLoader::CreateTileMapLayers(pugi::xml_nod
     return layers;
 }
 
-const std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileIds, TileSet tileSet,
+const std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, TileSet tileSet,
 					     int layerWidth, int layerHeight) {
     std::vector<Tile> tiles;
     for (int row = 0; row < layerHeight; ++row) {
@@ -95,7 +95,7 @@ const std::vector<Tile> TileMapLoader::CreateTiles(const std::vector<int>& tileI
     return tiles;
 }
 
-const std::vector<ObjectGroup> TileMapLoader::CreateObjectGroups(pugi::xml_node root) {
+const std::vector<ObjectGroup> CreateObjectGroups(pugi::xml_node root) {
     std::vector<ObjectGroup> groups;
     for (pugi::xml_node objectGroupNode : root.children("objectgroup")) {
 	std::vector<Rectangle> objects;
@@ -117,7 +117,7 @@ const std::vector<ObjectGroup> TileMapLoader::CreateObjectGroups(pugi::xml_node 
     return groups;
 }
 
-const std::vector<int> TileMapLoader::ParseTileIds(const std::string& data) {
+const std::vector<int> ParseTileIds(const std::string& data) {
     std::istringstream inputStream(data);
     std::string line;
     std::vector<int> tileIds;
