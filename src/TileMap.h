@@ -65,14 +65,4 @@ private:
     std::vector<ObjectGroup> objectGroups;
 };
 
-// Forward declaration for the pugi::xml_node.
-namespace pugi {
-    class xml_node;
-};
-
-TileSet CreateTileSet(Game* game, pugi::xml_node root);
-const std::vector<TileMapLayer> CreateTileMapLayers(pugi::xml_node root, TileSet tileSet);
-const std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, TileSet tileSet, int layerWidth, int layerHeight);
-const std::vector<ObjectGroup> CreateObjectGroups(pugi::xml_node root);
-const std::vector<int> ParseTileIds(const std::string& data);
 TileMap LoadTileMap(Game* game, const std::string& filename);
