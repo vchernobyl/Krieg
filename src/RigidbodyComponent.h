@@ -17,6 +17,8 @@ public:
     void SetVelocity(const Vector2& velocity);
     Vector2 GetVelocity() const;
 
+    void ApplyForce(const Vector2& force);
+
 private:
     friend class BoxColliderComponent;
     friend class PhysicsWorld;

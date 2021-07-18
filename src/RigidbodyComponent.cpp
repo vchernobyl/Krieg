@@ -35,3 +35,13 @@ Vector2 RigidbodyComponent::GetVelocity() const {
     b2Vec2 vel = body->GetLinearVelocity();
     return Vector2(vel.x, vel.y);
 }
+
+void RigidbodyComponent::ApplyForce(const Vector2& force) {
+    bool awake = true;
+
+    if (Math::NearZero(force.Length())) {
+	awake = false;
+    }
+
+    body->ApplyForceToCenter(b2Vec2(force.x, force.y), awake);
+}

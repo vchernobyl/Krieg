@@ -12,10 +12,11 @@
 #include "AudioSystem.h"
 #include "Random.h"
 
-const float MoveVelocity = 6.0f;
-const float JumpVelocity = 6.0f;
+const float MaxVelocity = 8.0f;
+const float Acceleration = 30.0f;
+const float Deceleration = 5.0f;
 
-Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
+Player::Player(Game* game) : Actor(game) {
     SetPosition(Vector2(5, 10));
     SetScale(2.0f);
 
@@ -30,33 +31,22 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
 }
 
 void Player::ActorInput(const InputState& inputState) {
-    velocity = Vector2::Zero;
+    velocity = rigidbody->GetVelocity();
+    float force = 0.0f;
 
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) {
-	velocity.x = MoveVelocity;
-	direction = Vector2::Right;
+	if (velocity.x < MaxVelocity) force = Acceleration;
 	sprite->flipX = false;
-    }
-
-    if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) {
-	velocity.x = -MoveVelocity;
-	direction = Vector2::Left;
+    } else if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) {
+	if (velocity.x > -MaxVelocity) force = -Acceleration;
 	sprite->flipX = true;
+    } else {
+	force = velocity.x * -Deceleration;
     }
 
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
-	velocity.y = -JumpVelocity;
-    }
+    rigidbody->ApplyForce(Vector2(force, 0.0f));
 }
 
 void Player::UpdateActor(float deltaTime) {
-    float gravity = rigidbody->GetVelocity().y;
-    auto v = Vector2(Math::Floor(velocity.x), gravity + Math::Floor(velocity.y));
-    rigidbody->SetVelocity(v);
-
-    if (isJumping && Math::NearZero(rigidbody->GetVelocity().y)) {
-	isJumping = false;
-    }
-
     GetGame()->GetRenderer()->GetCamera()->CenterAt(GetPosition());
 }

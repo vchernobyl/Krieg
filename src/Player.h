@@ -17,6 +17,4 @@ private:
     SpriteComponent* sprite;
 
     Vector2 velocity;
-    Vector2 direction;
-    bool isJumping = false;
 };
