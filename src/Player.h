@@ -4,6 +4,7 @@
 
 class RigidbodyComponent;
 class SpriteComponent;
+class AudioComponent;
 class InputSystem;
 class Game;
 
@@ -15,6 +16,7 @@ public:
 private:
     RigidbodyComponent* rigidbody;
     SpriteComponent* sprite;
+    AudioComponent* audio;
 
     Vector2 velocity;
 };

@@ -155,7 +155,8 @@ July:
 12. Refactor how rigidbodies and shapes are being created. [DONE]
 13. Fix debug renderer camera bug. [DONE]
 14. Implement a proper accelerated player movement. [DONE]
-15. Implement a proper force based jumping. [IN PROGRESS]
+15. Implement a proper force based jumping. [DONE]
+16. Add jumping sounds. [IN PROGRESS]
 
 Backlog
 -------

@@ -13,7 +13,7 @@
 #include "Random.h"
 
 const float MaxVelocity = 10.0f;
-const float Acceleration = 30.0f;
+const float Acceleration = 27.5f;
 const float Deceleration = 5.0f;
 const float JumpImpulse = 17.0f;
 
@@ -29,6 +29,8 @@ Player::Player(Game* game) : Actor(game) {
     collider->SetBox(size.x, size.y);
 
     rigidbody = collider->GetAttachedRigidbody();
+
+    audio = new AudioComponent(this);
 }
 
 void Player::ActorInput(const InputState& inputState) {
@@ -49,6 +51,7 @@ void Player::ActorInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
 	rigidbody->ApplyImpulse(Vector2::Up * rigidbody->GetMass() * JumpImpulse);
+	audio->PlayEvent("event:/Jump");
     }
 }
 
