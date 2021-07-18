@@ -26,12 +26,9 @@ DebugRect::DebugRect(float x, float y, float width, float height)
     : x(x), y(y), width(width), height(height) {}
 
 void DebugRect::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
-    int camX = static_cast<int>(camPos.x);
-    int camY = static_cast<int>(camPos.y);
-
     SDL_Rect rect;
-    rect.x = static_cast<int>(x) - camX;
-    rect.y = static_cast<int>(y) - camY;
+    rect.x = static_cast<int>(x - camPos.x);
+    rect.y = static_cast<int>(y - camPos.y);
     rect.w = static_cast<int>(width);
     rect.h = static_cast<int>(height);
 
@@ -51,10 +48,11 @@ DebugLine::DebugLine(float x1, float y1, float x2, float y2)
     : x1(x1), y1(y1), x2(x2), y2(y2) {}
 
 void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
-    int camX = static_cast<int>(camPos.x);
-    int camY = static_cast<int>(camPos.y);
-
-    SDL_RenderDrawLine(renderer, x1 - camX, y1 - camY, x2 - camX, y2 - camY);
+    SDL_RenderDrawLine(renderer,
+		       static_cast<int>(x1 - camPos.x),
+		       static_cast<int>(y1 - camPos.y),
+		       static_cast<int>(x2 - camPos.x),
+		       static_cast<int>(y2 - camPos.y));
 }
 
 std::vector<std::pair<DebugShape*, Color>> DebugRenderer::shapes = {};

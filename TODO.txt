@@ -153,7 +153,7 @@ July:
 10. Remove all the useless pointers in the tile map loader and tile map. [DONE]
 11. Remove tile map pointer from the tile map renderer. [DONE]
 12. Refactor how rigidbodies and shapes are being created. [DONE]
-13. Fix debug renderer camera bug. [IN PROGRESS]
+13. Fix debug renderer camera bug. [DONE]
 
 Backlog
 -------
