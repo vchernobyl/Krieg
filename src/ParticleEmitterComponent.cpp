@@ -64,8 +64,13 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
 	Vector2 pos = particle.position;
 	int size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life);
 
-	SDL_Rect dst = { static_cast<int>(pos.x), static_cast<int>(pos.y), size, size };
-	renderer->GetCamera()->ToScreenSpace(dst);
+	SDL_Rect dst;
+	dst.w = size;
+	dst.h = size;
+
+	Vector2 cameraPos = renderer->GetCamera()->GetPosition();
+	dst.x = static_cast<int>((pos.x - cameraPos.x) * Game::UnitsToPixels);
+	dst.y = static_cast<int>((pos.y - cameraPos.x) * Game::UnitsToPixels);
 
 	SDL_RenderCopyEx(renderer->renderer,
 			 texture->texture,

@@ -7,7 +7,6 @@ public:
     Camera(int viewportWidth, int viewportHeight);
 
     void Follow(class Actor* owner);
-    void ToScreenSpace(struct SDL_Rect& dst) const;
 
     void SetPosition(Vector2 position) { this->position = position; }
     const Vector2& GetPosition() const { return position; }

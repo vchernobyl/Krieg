@@ -19,21 +19,20 @@ void TileMapRenderer::Draw(Renderer* renderer) {
 
 	    // TODO: Tile source should not be using units, it's just an internal representation
 	    // which won't benefit from this conversion. Needs to be kept in pixels as loaded.
-	    SDL_Rect src = {
-		static_cast<int>(rect.position.x * Game::UnitsToPixels),
-		static_cast<int>(rect.position.y * Game::UnitsToPixels),
-		static_cast<int>(rect.size.x * Game::UnitsToPixels),
-		static_cast<int>(rect.size.y * Game::UnitsToPixels)
-	    };
+	    SDL_Rect src;
+	    src.x = static_cast<int>(rect.position.x * Game::UnitsToPixels);
+	    src.y = static_cast<int>(rect.position.y * Game::UnitsToPixels);
+	    src.w = static_cast<int>(rect.size.x * Game::UnitsToPixels);
+	    src.h = static_cast<int>(rect.size.y * Game::UnitsToPixels);
 	    
-	    SDL_Rect dst =  {
-		static_cast<int>(tile.position.x * Game::UnitsToPixels),
-		static_cast<int>(tile.position.y * Game::UnitsToPixels),
-		static_cast<int>(tileWidth * Game::UnitsToPixels),
-		static_cast<int>(tileHeight * Game::UnitsToPixels)
-	    };
+	    SDL_Rect dst;
+	    dst.w = static_cast<int>(tileWidth * Game::UnitsToPixels);
+	    dst.h = static_cast<int>(tileHeight * Game::UnitsToPixels);
 
-	    renderer->GetCamera()->ToScreenSpace(dst);
+	    Vector2 cameraPos = renderer->GetCamera()->GetPosition();
+	    dst.x = static_cast<int>((tile.position.x - cameraPos.x) * Game::UnitsToPixels);
+	    dst.y = static_cast<int>((tile.position.y - cameraPos.y) * Game::UnitsToPixels);
+
 	    SDL_RenderCopyEx(renderer->renderer, tileInfo.texture->texture, &src, &dst, 0, nullptr, SDL_FLIP_NONE);
 	}
     }

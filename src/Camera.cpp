@@ -18,8 +18,3 @@ void Camera::Follow(Actor* owner) {
 
     SetPosition(target);
 }
-
-void Camera::ToScreenSpace(SDL_Rect& dst) const {
-    dst.x -= position.x * Game::UnitsToPixels;
-    dst.y -= position.y * Game::UnitsToPixels;
-}
