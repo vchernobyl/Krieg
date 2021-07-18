@@ -12,9 +12,10 @@
 #include "AudioSystem.h"
 #include "Random.h"
 
-const float MaxVelocity = 8.0f;
+const float MaxVelocity = 10.0f;
 const float Acceleration = 30.0f;
 const float Deceleration = 5.0f;
+const float JumpImpulse = 17.0f;
 
 Player::Player(Game* game) : Actor(game) {
     SetPosition(Vector2(5, 10));
@@ -45,6 +46,10 @@ void Player::ActorInput(const InputState& inputState) {
     }
 
     rigidbody->ApplyForce(Vector2(force, 0.0f));
+
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
+	rigidbody->ApplyImpulse(Vector2::Up * rigidbody->GetMass() * JumpImpulse);
+    }
 }
 
 void Player::UpdateActor(float deltaTime) {

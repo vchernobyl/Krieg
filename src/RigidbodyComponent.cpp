@@ -45,3 +45,17 @@ void RigidbodyComponent::ApplyForce(const Vector2& force) {
 
     body->ApplyForceToCenter(b2Vec2(force.x, force.y), awake);
 }
+
+void RigidbodyComponent::ApplyImpulse(const Vector2& impulse) {
+    bool awake = true;
+
+    if (Math::NearZero(impulse.Length())) {
+	awake = false;
+    }
+
+    body->ApplyLinearImpulseToCenter(b2Vec2(impulse.x, impulse.y), awake);
+}
+
+float RigidbodyComponent::GetMass() const {
+    return body->GetMass();
+}

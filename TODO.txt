@@ -154,7 +154,8 @@ July:
 11. Remove tile map pointer from the tile map renderer. [DONE]
 12. Refactor how rigidbodies and shapes are being created. [DONE]
 13. Fix debug renderer camera bug. [DONE]
-14. Implement a proper accelerated player movement. [IN PROGRESS]
+14. Implement a proper accelerated player movement. [DONE]
+15. Implement a proper force based jumping. [IN PROGRESS]
 
 Backlog
 -------

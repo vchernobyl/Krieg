@@ -18,6 +18,9 @@ public:
     Vector2 GetVelocity() const;
 
     void ApplyForce(const Vector2& force);
+    void ApplyImpulse(const Vector2& impulse);
+
+    float GetMass() const;
 
 private:
     friend class BoxColliderComponent;

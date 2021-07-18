@@ -44,7 +44,7 @@ bool Game::Initialize() {
 	return false;
     }
 
-    const auto gravity = Vector2(0.0f, 9.8f);
+    const auto gravity = Vector2(0.0f, 30.0f);
     physicsWorld = new PhysicsWorld(gravity);
 
     Random::Init();
