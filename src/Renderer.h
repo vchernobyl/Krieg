@@ -21,8 +21,6 @@ public:
     void Draw();
     void End();
 
-    void DrawTexture(SDL_Texture* texture, SDL_Rect* dst, SDL_RendererFlip flip = SDL_FLIP_NONE);
-    void DrawTexture(SDL_Texture* texture, SDL_Rect* src, SDL_Rect* dst, SDL_RendererFlip flip = SDL_FLIP_NONE);
     Texture* GetTexture(const std::string& fileName);
 
     void AddSprite(SpriteComponent* sprite);
