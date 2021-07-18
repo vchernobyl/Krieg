@@ -58,5 +58,5 @@ void Player::UpdateActor(float deltaTime) {
 	isJumping = false;
     }
 
-    GetGame()->GetRenderer()->GetCamera()->Follow(this);
+    GetGame()->GetRenderer()->GetCamera()->CenterAt(GetPosition());
 }

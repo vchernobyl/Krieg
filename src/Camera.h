@@ -6,7 +6,7 @@ class Camera {
 public:
     Camera(int viewportWidth, int viewportHeight);
 
-    void Follow(class Actor* owner);
+    void CenterAt(const Vector2& position);
 
     void SetPosition(Vector2 position) { this->position = position; }
     const Vector2& GetPosition() const { return position; }

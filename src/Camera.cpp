@@ -6,10 +6,8 @@ Camera::Camera(int viewportWidth, int viewportHeight)
     : viewportWidth(viewportWidth),
       viewportHeight(viewportHeight) {}
 
-void Camera::Follow(Actor* owner) {
-    Vector2 target = owner->GetPosition();
-    target.x -= viewportWidth / 2;
-    target.y -= viewportHeight / 2;
+void Camera::CenterAt(const Vector2& position) {
+    auto target = position - Vector2(viewportWidth / 2, viewportHeight / 2);
 
     if (target.x < 0) target.x = 0;
     if (target.y < 0) target.y = 0;
