@@ -156,7 +156,8 @@ July:
 13. Fix debug renderer camera bug. [DONE]
 14. Implement a proper accelerated player movement. [DONE]
 15. Implement a proper force based jumping. [DONE]
-16. Add jumping sounds. [IN PROGRESS]
+16. Add jumping sounds. [DONE]
+17. Add shooting. [IN PROGRESS]
 
 Backlog
 -------

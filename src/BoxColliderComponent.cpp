@@ -10,7 +10,7 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner) : ColliderComponent(own
 
 BoxColliderComponent::~BoxColliderComponent() {}
 
-void BoxColliderComponent::SetBox(float width, float height) {
+void BoxColliderComponent::SetSize(float width, float height) {
     float hw = width * 0.5f;
     float hh = height * 0.5f;
 

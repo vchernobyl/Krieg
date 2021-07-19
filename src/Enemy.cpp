@@ -17,7 +17,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
 
     auto collider = new BoxColliderComponent(this);
     auto size = sprite->GetSize() * GetScale();
-    collider->SetBox(size.x, size.y);
+    collider->SetSize(size.x, size.y);
 }
 
 void Enemy::UpdateActor(float deltaTime) {

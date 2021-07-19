@@ -12,12 +12,25 @@
 #include "AudioSystem.h"
 #include "Random.h"
 
+Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
+    SetPosition(position);
+    
+    auto sprite = new SpriteComponent(this);
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Bullet.png"));
+
+    auto rigidbody = new RigidbodyComponent(this, MotionType::GameplayDriven);
+    rigidbody->SetVelocity(direction * 20.0f);
+
+    auto box = new BoxColliderComponent(this);
+    box->SetSize(sprite->GetSize());
+}
+
 const float MaxVelocity = 10.0f;
 const float Acceleration = 27.5f;
 const float Deceleration = 5.0f;
 const float JumpImpulse = 17.0f;
 
-Player::Player(Game* game) : Actor(game) {
+Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetPosition(Vector2(5, 10));
     SetScale(2.0f);
 
@@ -26,7 +39,7 @@ Player::Player(Game* game) : Actor(game) {
 
     auto collider = new BoxColliderComponent(this);
     auto size = sprite->GetSize() * GetScale();
-    collider->SetBox(size.x, size.y);
+    collider->SetSize(size);
 
     rigidbody = collider->GetAttachedRigidbody();
 
@@ -40,9 +53,11 @@ void Player::ActorInput(const InputState& inputState) {
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) {
 	if (velocity.x < MaxVelocity) force = Acceleration;
 	sprite->flipX = false;
+	direction = Vector2::Right;
     } else if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) {
 	if (velocity.x > -MaxVelocity) force = -Acceleration;
 	sprite->flipX = true;
+	direction = Vector2::Left;
     } else {
 	force = velocity.x * -Deceleration;
     }
@@ -52,6 +67,16 @@ void Player::ActorInput(const InputState& inputState) {
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
 	rigidbody->ApplyImpulse(Vector2::Up * rigidbody->GetMass() * JumpImpulse);
 	audio->PlayEvent("event:/Jump");
+    }
+
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
+	auto offset = Vector2(1.0f, 0.25f);
+	if (direction == Vector2::Left) {
+	    offset = Vector2(-1.0f, 0.25f);
+	}
+
+	auto bullet = new Bullet(GetGame(), direction, GetPosition() + offset);
+	audio->PlayEvent("event:/Shoot");
     }
 }
 

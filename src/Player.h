@@ -8,6 +8,11 @@ class AudioComponent;
 class InputSystem;
 class Game;
 
+class Bullet : public Actor {
+public:
+    Bullet(Game* game, Vector2 direction, Vector2 position);
+};    
+
 class Player : public Actor {
 public:
     Player(Game* game);
@@ -19,4 +24,5 @@ private:
     AudioComponent* audio;
 
     Vector2 velocity;
+    Vector2 direction;
 };
