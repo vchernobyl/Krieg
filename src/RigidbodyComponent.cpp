@@ -23,7 +23,8 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, MotionType type) : Componen
 }
 
 RigidbodyComponent::~RigidbodyComponent() {
-    owner->GetGame()->GetPhysicsWorld()->RemoveRigidbody(this);
+    PhysicsWorld* world = owner->GetGame()->GetPhysicsWorld();
+    world->RemoveRigidbody(this);
 }
 	
 
@@ -58,4 +59,8 @@ void RigidbodyComponent::ApplyImpulse(const Vector2& impulse) {
 
 float RigidbodyComponent::GetMass() const {
     return body->GetMass();
+}
+
+void RigidbodyComponent::SetGravityScale(float scale) {
+    body->SetGravityScale(scale);
 }

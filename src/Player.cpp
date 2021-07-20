@@ -21,9 +21,17 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     // TODO: Maybe set the body to be of 'e_bulletFlag'?
     auto rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
     rigidbody->SetVelocity(direction * 20.0f);
+    rigidbody->SetGravityScale(0.0f);
 
     auto box = new BoxColliderComponent(this);
     box->SetSize(sprite->GetSize(), false);
+}
+
+void Bullet::UpdateActor(float deltaTime) {
+    time += deltaTime;
+    if (time >= 1.0f) {
+	Destroy();
+    }
 }
 
 const float MaxVelocity = 10.0f;

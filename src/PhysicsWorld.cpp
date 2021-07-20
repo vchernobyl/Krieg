@@ -78,6 +78,7 @@ void PhysicsWorld::AddRigidbody(RigidbodyComponent* rigidbody) {
 void PhysicsWorld::RemoveRigidbody(RigidbodyComponent* rigidbody) {
     auto iter = std::find(rigidbodies.begin(), rigidbodies.end(), rigidbody);
     if (iter != rigidbodies.end()) {
+	world->DestroyBody(rigidbody->body);
 	std::iter_swap(iter, rigidbodies.end() - 1);
 	rigidbodies.pop_back();
     }

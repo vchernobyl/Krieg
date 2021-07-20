@@ -22,6 +22,8 @@ public:
 
     float GetMass() const;
 
+    void SetGravityScale(float scale);
+
 private:
     friend class BoxColliderComponent;
     friend class PhysicsWorld;

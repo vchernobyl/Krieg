@@ -11,6 +11,9 @@ class Game;
 class Bullet : public Actor {
 public:
     Bullet(Game* game, Vector2 direction, Vector2 position);
+    void UpdateActor(float deltaTime) override;
+private:
+    float time = 0.0f;
 };    
 
 class Player : public Actor {
