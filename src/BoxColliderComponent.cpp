@@ -10,7 +10,7 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner) : ColliderComponent(own
 
 BoxColliderComponent::~BoxColliderComponent() {}
 
-void BoxColliderComponent::SetSize(float width, float height, bool isSensor) {
+void BoxColliderComponent::SetSize(float width, float height) {
     float hw = width * 0.5f;
     float hh = height * 0.5f;
 
@@ -23,7 +23,6 @@ void BoxColliderComponent::SetSize(float width, float height, bool isSensor) {
     fixtureDef.shape = &box;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
-    fixtureDef.isSensor = isSensor;
 
     // TODO: I don't have better idea yet, but I think this will have to be refactored later on.
     RigidbodyComponent* rb = GetAttachedRigidbody();

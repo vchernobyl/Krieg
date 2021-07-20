@@ -66,3 +66,7 @@ float RigidbodyComponent::GetMass() const {
 void RigidbodyComponent::SetGravityScale(float scale) {
     body->SetGravityScale(scale);
 }
+
+void RigidbodyComponent::SetBullet(bool flag) {
+    body->SetBullet(flag);
+}

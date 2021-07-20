@@ -159,6 +159,7 @@ July:
 16. Add jumping sounds. [DONE]
 17. Add basic shooting. [DONE]
 18. Destroy bullets on impact. [DONE]
+19. Remove bullet-enemy physics impact and only keep collision detection. [IN PROGRESS]
 
 Backlog
 -------

@@ -23,6 +23,7 @@ public:
     float GetMass() const;
 
     void SetGravityScale(float scale);
+    void SetBullet(bool flag);
 
 private:
     friend class BoxColliderComponent;

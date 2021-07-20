@@ -22,9 +22,10 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     auto rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
     rigidbody->SetVelocity(direction * 20.0f);
     rigidbody->SetGravityScale(0.0f);
+    rigidbody->SetBullet(true);
 
     auto box = new BoxColliderComponent(this);
-    box->SetSize(sprite->GetSize(), false);
+    box->SetSize(sprite->GetSize());
 }
 
 void Bullet::OnBeginContact() {
