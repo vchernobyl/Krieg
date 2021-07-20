@@ -29,20 +29,11 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner, const Vector2& size) : 
     rigidbody->body->CreateFixture(&fixtureDef);
 }
 
-void BoxColliderComponent::SetCollisionCategory(CollisionCategory category) {
+void BoxColliderComponent::SetCollisionFilter(const CollisionFilter& filter) {
     RigidbodyComponent* rigidbody = GetAttachedRigidbody();
     b2Fixture* fixture = rigidbody->body->GetFixtureList();
-    b2Filter filter = fixture->GetFilterData();
-    filter.categoryBits = static_cast<uint16>(category);
-    SDL_Log("category bits = %d", filter.categoryBits);
-    fixture->SetFilterData(filter);
-}
-
-void BoxColliderComponent::SetCollisionMask(CollisionCategory category) {
-    RigidbodyComponent* rigidbody = GetAttachedRigidbody();
-    b2Fixture* fixture = rigidbody->body->GetFixtureList();
-    b2Filter filter = fixture->GetFilterData();
-    filter.maskBits = static_cast<uint16>(category);
-    SDL_Log("mask bits = %d", filter.maskBits);
-    fixture->SetFilterData(filter);
+    b2Filter b2Filter = fixture->GetFilterData();
+    b2Filter.maskBits = static_cast<uint16>(filter.category);
+    b2Filter.categoryBits = static_cast<uint16>(filter.mask);
+    fixture->SetFilterData(b2Filter);
 }

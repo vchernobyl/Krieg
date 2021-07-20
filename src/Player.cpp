@@ -45,6 +45,9 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     auto size = sprite->GetSize() * GetScale();
     auto box = new BoxColliderComponent(this, size);
 
+    CollisionFilter filter = { CollisionCategory::Player, CollisionCategory::Ground };
+    box->SetCollisionFilter(filter);
+
     rigidbody = box->GetAttachedRigidbody();
 
     audio = new AudioComponent(this);

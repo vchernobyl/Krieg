@@ -186,7 +186,10 @@ void Game::LoadData() {
 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
 	    new RigidbodyComponent(objectActor, MotionType::Static);
-	    new BoxColliderComponent(objectActor, object.size);
+	    auto box = new BoxColliderComponent(objectActor, object.size);
+
+	    CollisionFilter filter = { CollisionCategory::Ground, CollisionCategory::Default };
+	    box->SetCollisionFilter(filter);
 	}
     }
 }

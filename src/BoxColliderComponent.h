@@ -12,9 +12,15 @@ enum class CollisionCategory {
     Default = 0xFFFF,
 };
 
+struct CollisionFilter {
+    CollisionCategory category;
+    CollisionCategory mask;
+};
+
 class BoxColliderComponent : public ColliderComponent {
 public:
     BoxColliderComponent(class Actor* owner, const Vector2& size);
-    void SetCollisionCategory(CollisionCategory category);
-    void SetCollisionMask(CollisionCategory category);
+
+    // TODO: This will have to be common for all colliders, has to be pulled up the hierarchy.
+    void SetCollisionFilter(const CollisionFilter& filter);
 };
