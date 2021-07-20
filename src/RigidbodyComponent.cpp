@@ -13,9 +13,9 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, MotionType type) : Componen
     bodyDef.position.Set(position.x, position.y);
     bodyDef.fixedRotation = true;
 
-    if (type == MotionType::PhysicsDriven) bodyDef.type = b2BodyType::b2_dynamicBody;
-    if (type == MotionType::GameplayDriven) bodyDef.type = b2BodyType::b2_kinematicBody;
-    if (type == MotionType::Fixed) bodyDef.type = b2BodyType::b2_staticBody;
+    if (type == MotionType::Dynamic) bodyDef.type = b2BodyType::b2_dynamicBody;
+    if (type == MotionType::Kinematic) bodyDef.type = b2BodyType::b2_kinematicBody;
+    if (type == MotionType::Static) bodyDef.type = b2BodyType::b2_staticBody;
 
     PhysicsWorld* physicsWorld = owner->GetGame()->GetPhysicsWorld();
     body = physicsWorld->world->CreateBody(&bodyDef);

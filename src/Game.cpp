@@ -174,7 +174,7 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Player(this);
-    new Enemy(this);
+    //new Enemy(this);
 
     auto tileMap = TileMap(this, "assets/prototype_map.tmx");
     tileMapRenderer = new TileMapRenderer(tileMap);
@@ -185,7 +185,7 @@ void Game::LoadData() {
 	    auto objectActor = new Actor(this);
 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
-	    new RigidbodyComponent(objectActor, MotionType::Fixed);
+	    new RigidbodyComponent(objectActor, MotionType::Static);
 
 	    auto objectCollider = new BoxColliderComponent(objectActor);
 	    objectCollider->SetSize(object.size);

@@ -12,20 +12,39 @@
 #include <cassert>
 #include <b2_math.h>
 #include <b2_world.h>
+#include <b2_contact.h>
+#include <b2_world_callbacks.h>
 #include <box2d.h>
+
+class ContactListener : public b2ContactListener {
+public:
+    void BeginContact(class b2Contact* contact);
+    void EndContact(class b2Contact* contact);
+};
+
+void ContactListener::BeginContact(b2Contact* contact) {
+    SDL_Log("begin contact");
+}
+
+void ContactListener::EndContact(b2Contact* contact) {
+    SDL_Log("end contact");
+}
 
 const int32 VelocityIterations = 8;
 const int32 PositionIterations = 3;
 
 PhysicsWorld::PhysicsWorld(const Vector2& gravity)
     : world(new b2World(b2Vec2(gravity.x, gravity.y))),
-      debugRenderer(new Box2DDebugRenderer()) {
+      debugRenderer(new Box2DDebugRenderer()),
+      contactListener(new ContactListener()) {
     world->SetDebugDraw(debugRenderer);
+    world->SetContactListener(contactListener);
 }
 
 void PhysicsWorld::Shutdown() {
     delete debugRenderer;
     delete world;
+    delete contactListener;
 }
 
 void PhysicsWorld::Step(float timeStep) {

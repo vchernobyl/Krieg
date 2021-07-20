@@ -9,6 +9,6 @@ public:
     BoxColliderComponent(class Actor* owner);
     ~BoxColliderComponent();
 
-    void SetSize(float width, float height);
-    void SetSize(const Vector2& size) { SetSize(size.x, size.y); }
+    void SetSize(float width, float height, bool isSensor);
+    void SetSize(const Vector2& size, bool isSensor = false) { SetSize(size.x, size.y, isSensor); }
 };

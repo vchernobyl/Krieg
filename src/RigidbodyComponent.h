@@ -4,14 +4,14 @@
 #include "Math.h"
 
 enum class MotionType {
-    Fixed,
-    GameplayDriven,
-    PhysicsDriven
+    Static,
+    Kinematic,
+    Dynamic
 };
 
 class RigidbodyComponent : public Component {
 public:
-    RigidbodyComponent(class Actor* owner, MotionType type = MotionType::PhysicsDriven);
+    RigidbodyComponent(class Actor* owner, MotionType type = MotionType::Dynamic);
     ~RigidbodyComponent();
 
     void SetVelocity(const Vector2& velocity);

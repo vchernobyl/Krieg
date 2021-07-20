@@ -15,6 +15,7 @@ public:
 
     void AddRigidbody(class RigidbodyComponent* rigidbody);
     void RemoveRigidbody(class RigidbodyComponent* rigidbody);
+
 private:
     friend class RigidbodyComponent;
     
@@ -23,4 +24,5 @@ private:
 
     class Box2DDebugRenderer* debugRenderer;
     class b2World* world;
+    class ContactListener* contactListener;
 };

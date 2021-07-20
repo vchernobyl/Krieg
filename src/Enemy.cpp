@@ -13,11 +13,11 @@ Enemy::Enemy(Game* game) : Actor(game) {
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Enemy.png"));
 
-    rigidbody = new RigidbodyComponent(this, MotionType::PhysicsDriven);
+    rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
 
-    auto collider = new BoxColliderComponent(this);
+    auto box = new BoxColliderComponent(this);
     auto size = sprite->GetSize() * GetScale();
-    collider->SetSize(size.x, size.y);
+    box->SetSize(size);
 }
 
 void Enemy::UpdateActor(float deltaTime) {

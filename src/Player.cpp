@@ -18,11 +18,12 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Bullet.png"));
 
-    auto rigidbody = new RigidbodyComponent(this, MotionType::GameplayDriven);
+    // TODO: Maybe set the body to be of 'e_bulletFlag'?
+    auto rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
     rigidbody->SetVelocity(direction * 20.0f);
 
     auto box = new BoxColliderComponent(this);
-    box->SetSize(sprite->GetSize());
+    box->SetSize(sprite->GetSize(), false);
 }
 
 const float MaxVelocity = 10.0f;
@@ -37,11 +38,11 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));
 
-    auto collider = new BoxColliderComponent(this);
+    auto box = new BoxColliderComponent(this);
     auto size = sprite->GetSize() * GetScale();
-    collider->SetSize(size);
+    box->SetSize(size);
 
-    rigidbody = collider->GetAttachedRigidbody();
+    rigidbody = box->GetAttachedRigidbody();
 
     audio = new AudioComponent(this);
 }

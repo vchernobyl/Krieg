@@ -157,7 +157,8 @@ July:
 14. Implement a proper accelerated player movement. [DONE]
 15. Implement a proper force based jumping. [DONE]
 16. Add jumping sounds. [DONE]
-17. Add shooting. [IN PROGRESS]
+17. Add basic shooting. [DONE]
+18. Destroy bullets on impact. [IN PROGRESS]
 
 Backlog
 -------
