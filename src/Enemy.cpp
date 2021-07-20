@@ -17,6 +17,9 @@ Enemy::Enemy(Game* game) : Actor(game) {
 
     auto size = sprite->GetSize() * GetScale();
     auto box = new BoxColliderComponent(this, size);
+
+    CollisionFilter filter = { CollisionCategory::Enemy, CollisionCategory::Ground };
+    box->SetCollisionFilter(filter);
 }
 
 void Enemy::UpdateActor(float deltaTime) {

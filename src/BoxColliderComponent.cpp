@@ -8,6 +8,12 @@
 #include <b2_math.h>
 #include <b2_types.h>
 
+CollisionCategory operator|(CollisionCategory lhs, CollisionCategory rhs) {
+    return static_cast<CollisionCategory>(
+	static_cast<unsigned short>(lhs) |
+	static_cast<unsigned short>(rhs));
+}
+
 BoxColliderComponent::BoxColliderComponent(Actor* owner, const Vector2& size) : ColliderComponent(owner) {
     float halfWidth = size.x * 0.5f;
     float halfHeight = size.y * 0.5f;

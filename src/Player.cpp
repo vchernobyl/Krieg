@@ -45,7 +45,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     auto size = sprite->GetSize() * GetScale();
     auto box = new BoxColliderComponent(this, size);
 
-    CollisionFilter filter = { CollisionCategory::Player, CollisionCategory::Ground };
+    CollisionFilter filter = { CollisionCategory::Player, CollisionCategory::Ground | CollisionCategory::Enemy };
     box->SetCollisionFilter(filter);
 
     rigidbody = box->GetAttachedRigidbody();

@@ -3,7 +3,7 @@
 #include "ColliderComponent.h"
 #include "Math.h"
 
-enum class CollisionCategory {
+enum class CollisionCategory : unsigned short {
     None    = 0x0000,
     Player  = 0x0002, // 0x0001 is reserved for the default category bit by the Box2D.
     Enemy   = 0x0004,
@@ -11,6 +11,8 @@ enum class CollisionCategory {
     Ground  = 0x000F,
     Default = 0xFFFF,
 };
+
+CollisionCategory operator|(CollisionCategory lhs, CollisionCategory rhs);
 
 struct CollisionFilter {
     CollisionCategory category;
