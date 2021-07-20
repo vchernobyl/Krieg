@@ -160,6 +160,7 @@ July:
 17. Add basic shooting. [DONE]
 18. Destroy bullets on impact. [DONE]
 19. Remove bullet-enemy physics impact and only keep collision detection. [IN PROGRESS]
+20. Center the debug rect that is drawn to show the center of mass. [DONE]
 
 Backlog
 -------

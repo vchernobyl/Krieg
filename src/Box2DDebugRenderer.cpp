@@ -26,5 +26,5 @@ void Box2DDebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCo
 
 void Box2DDebugRenderer::DrawTransform(const b2Transform& xf) {
     Color color = { 255, 0, 0, 255 };
-    DebugRenderer::DrawRect(xf.p.x, xf.p.y, 0.1f, 0.1f, color);
+    DebugRenderer::DrawRect(xf.p.x, xf.p.y, 0.085f, 0.085f, color);
 }
