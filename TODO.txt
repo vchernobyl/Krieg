@@ -158,7 +158,7 @@ July:
 15. Implement a proper force based jumping. [DONE]
 16. Add jumping sounds. [DONE]
 17. Add basic shooting. [DONE]
-18. Destroy bullets on impact. [IN PROGRESS]
+18. Destroy bullets on impact. [DONE]
 
 Backlog
 -------

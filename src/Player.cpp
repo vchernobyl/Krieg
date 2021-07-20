@@ -27,11 +27,8 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     box->SetSize(sprite->GetSize(), false);
 }
 
-void Bullet::UpdateActor(float deltaTime) {
-    time += deltaTime;
-    if (time >= 1.0f) {
-	Destroy();
-    }
+void Bullet::OnBeginContact() {
+    Destroy();
 }
 
 const float MaxVelocity = 10.0f;
@@ -79,7 +76,7 @@ void Player::ActorInput(const InputState& inputState) {
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
-	auto offset = Vector2(1.0f, 0.25f);
+	auto offset = Vector2(1.5f, 0.25f);
 	if (direction == Vector2::Left) {
 	    offset = Vector2(-1.0f, 0.25f);
 	}

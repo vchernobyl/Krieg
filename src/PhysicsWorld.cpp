@@ -19,15 +19,16 @@
 class ContactListener : public b2ContactListener {
 public:
     void BeginContact(class b2Contact* contact);
-    void EndContact(class b2Contact* contact);
 };
 
 void ContactListener::BeginContact(b2Contact* contact) {
-    SDL_Log("begin contact");
-}
+    uintptr_t data = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+    Actor* owner = reinterpret_cast<Actor*>(data);
+    owner->OnBeginContact();
 
-void ContactListener::EndContact(b2Contact* contact) {
-    SDL_Log("end contact");
+    data = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+    owner = reinterpret_cast<Actor*>(data);
+    owner->OnBeginContact();
 }
 
 const int32 VelocityIterations = 8;

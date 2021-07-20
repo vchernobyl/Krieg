@@ -12,6 +12,7 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, MotionType type) : Componen
     const Vector2& position = owner->GetPosition();
     bodyDef.position.Set(position.x, position.y);
     bodyDef.fixedRotation = true;
+    bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(owner);
 
     if (type == MotionType::Dynamic) bodyDef.type = b2BodyType::b2_dynamicBody;
     if (type == MotionType::Kinematic) bodyDef.type = b2BodyType::b2_kinematicBody;
@@ -19,6 +20,7 @@ RigidbodyComponent::RigidbodyComponent(Actor* owner, MotionType type) : Componen
 
     PhysicsWorld* physicsWorld = owner->GetGame()->GetPhysicsWorld();
     body = physicsWorld->world->CreateBody(&bodyDef);
+    
     physicsWorld->AddRigidbody(this);
 }
 

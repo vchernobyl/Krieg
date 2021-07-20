@@ -50,8 +50,7 @@ public:
     void AddComponent(Component* component);
     void RemoveComponent(Component* component);
 
-    virtual void OnCollisionEnter(const CollisionInfo& info) {}
-    virtual void OnTriggerEnter(ColliderComponent* other) {}
+    virtual void OnBeginContact() {}
 
     template <typename T> T* GetComponent() {
 	for (auto component : components) {
