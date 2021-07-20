@@ -6,21 +6,17 @@
 #include <b2_body.h>
 #include <b2_math.h>
 
-BoxColliderComponent::BoxColliderComponent(Actor* owner) : ColliderComponent(owner) {}
+BoxColliderComponent::BoxColliderComponent(Actor* owner, const Vector2& size) : ColliderComponent(owner) {
+    float halfWidth = size.x * 0.5f;
+    float halfHeight = size.y * 0.5f;
 
-BoxColliderComponent::~BoxColliderComponent() {}
+    b2Vec2 center(halfWidth, halfHeight);
+    b2PolygonShape shape;
 
-void BoxColliderComponent::SetSize(float width, float height) {
-    float hw = width * 0.5f;
-    float hh = height * 0.5f;
-
-    b2Vec2 center(hw, hh);
-    b2PolygonShape box;
-
-    box.SetAsBox(hw, hh, center, 0.0f);
+    shape.SetAsBox(halfWidth, halfHeight, center, 0.0f);
 
     b2FixtureDef fixtureDef;
-    fixtureDef.shape = &box;
+    fixtureDef.shape = &shape;
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
 

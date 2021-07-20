@@ -24,8 +24,7 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     rigidbody->SetGravityScale(0.0f);
     rigidbody->SetBullet(true);
 
-    auto box = new BoxColliderComponent(this);
-    box->SetSize(sprite->GetSize());
+    new BoxColliderComponent(this, sprite->GetSize());
 }
 
 void Bullet::OnBeginContact() {
@@ -44,9 +43,8 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));
 
-    auto box = new BoxColliderComponent(this);
     auto size = sprite->GetSize() * GetScale();
-    box->SetSize(size);
+    auto box = new BoxColliderComponent(this, size);
 
     rigidbody = box->GetAttachedRigidbody();
 

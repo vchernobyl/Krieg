@@ -4,11 +4,13 @@
 #include "RigidbodyComponent.h"
 #include "Math.h"
 
+enum class CollisionCategory {
+    Player = 0x0001,
+    Enemy  = 0x0002,
+    Bullet = 0x0004,
+};
+
 class BoxColliderComponent : public ColliderComponent {
 public:
-    BoxColliderComponent(class Actor* owner);
-    ~BoxColliderComponent();
-
-    void SetSize(float width, float height);
-    void SetSize(const Vector2& size) { SetSize(size.x, size.y); }
+    BoxColliderComponent(class Actor* owner, const Vector2& size);
 };

@@ -186,9 +186,7 @@ void Game::LoadData() {
 	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
 
 	    new RigidbodyComponent(objectActor, MotionType::Static);
-
-	    auto objectCollider = new BoxColliderComponent(objectActor);
-	    objectCollider->SetSize(object.size);
+	    new BoxColliderComponent(objectActor, object.size);
 	}
     }
 }

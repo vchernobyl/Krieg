@@ -15,9 +15,8 @@ Enemy::Enemy(Game* game) : Actor(game) {
 
     rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
 
-    auto box = new BoxColliderComponent(this);
     auto size = sprite->GetSize() * GetScale();
-    box->SetSize(size);
+    new BoxColliderComponent(this, size);
 }
 
 void Enemy::UpdateActor(float deltaTime) {
