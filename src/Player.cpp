@@ -18,7 +18,6 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Bullet.png"));
 
-    // TODO: Maybe set the body to be of 'e_bulletFlag'?
     auto rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
     rigidbody->SetVelocity(direction * 20.0f);
     rigidbody->SetGravityScale(0.0f);
