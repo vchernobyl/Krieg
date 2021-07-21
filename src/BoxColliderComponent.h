@@ -14,15 +14,11 @@ enum class CollisionCategory : unsigned short {
 
 CollisionCategory operator|(CollisionCategory lhs, CollisionCategory rhs);
 
-struct CollisionFilter {
-    CollisionCategory category;
-    CollisionCategory mask;
-};
-
 class BoxColliderComponent : public ColliderComponent {
 public:
     BoxColliderComponent(class Actor* owner, const Vector2& size);
 
     // TODO: This will have to be common for all colliders, has to be pulled up the hierarchy.
-    void SetCollisionFilter(const CollisionFilter& filter);
+    // This will do for now until we have other types of colliders.
+    void SetCollisionFilter(CollisionCategory category, CollisionCategory mask);
 };

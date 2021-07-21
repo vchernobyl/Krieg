@@ -159,8 +159,9 @@ July:
 16. Add jumping sounds. [DONE]
 17. Add basic shooting. [DONE]
 18. Destroy bullets on impact. [DONE]
-19. Remove bullet-enemy physics impact and only keep collision detection. [IN PROGRESS]
+19. Remove bullet-enemy physics impact and only keep collision detection. [DONE]
 20. Center the debug rect that is drawn to show the center of mass. [DONE]
+21. Don't allow for bullets to push other dynamic bodies. [IN PROGRESS]
 
 Backlog
 -------

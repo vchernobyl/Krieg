@@ -24,9 +24,8 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     rigidbody->SetBullet(true);
 
     auto box = new BoxColliderComponent(this, sprite->GetSize());
-    CollisionFilter filter = { CollisionCategory::Bullet, CollisionCategory::Ground |
-	CollisionCategory::Enemy };
-    box->SetCollisionFilter(filter);
+    box->SetCollisionFilter(CollisionCategory::Bullet,
+			    CollisionCategory::Ground | CollisionCategory::Enemy);
 }
 
 void Bullet::OnBeginContact() {
@@ -47,9 +46,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
 
     auto size = sprite->GetSize() * GetScale();
     auto box = new BoxColliderComponent(this, size);
-
-    CollisionFilter filter = { CollisionCategory::Player, CollisionCategory::Ground };
-    box->SetCollisionFilter(filter);
+    box->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Ground);
 
     rigidbody = box->GetAttachedRigidbody();
 
