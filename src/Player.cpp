@@ -12,6 +12,11 @@
 #include "AudioSystem.h"
 #include "Random.h"
 
+MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
+    auto sprite = new SpriteComponent(this);
+    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Muzzle.png"));
+}
+
 Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     SetPosition(position);
     

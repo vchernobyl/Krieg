@@ -9,6 +9,8 @@ struct SDL_Texture;
 class Texture {
 public:
     int width, height;
+
+    // TODO: Hide this guy.
     SDL_Texture* texture;
 
     Texture();

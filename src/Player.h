@@ -8,6 +8,10 @@ class AudioComponent;
 class InputSystem;
 class Game;
 
+class MuzzleFlash : public Actor {
+    MuzzleFlash(Game* game);
+};
+
 class Bullet : public Actor {
 public:
     Bullet(Game* game, Vector2 direction, Vector2 position);

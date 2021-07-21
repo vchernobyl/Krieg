@@ -161,7 +161,8 @@ July:
 18. Destroy bullets on impact. [DONE]
 19. Remove bullet-enemy physics impact and only keep collision detection. [DONE]
 20. Center the debug rect that is drawn to show the center of mass. [DONE]
-21. Don't allow for bullets to push other dynamic bodies. [IN PROGRESS]
+21. Don't allow for bullets to push other dynamic bodies. [DONE]
+22. Add muzzle flash. [IN PROGRESS]
 
 Backlog
 -------
