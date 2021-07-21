@@ -9,7 +9,11 @@ class InputSystem;
 class Game;
 
 class MuzzleFlash : public Actor {
+public:
     MuzzleFlash(Game* game);
+    void UpdateActor(float deltaTime) override;
+private:
+    float time = 0.0f;
 };
 
 class Bullet : public Actor {

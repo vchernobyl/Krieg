@@ -13,8 +13,17 @@
 #include "Random.h"
 
 MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
-    auto sprite = new SpriteComponent(this);
+    SetScale(2.0f);
+    
+    auto sprite = new SpriteComponent(this, 200);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Muzzle.png"));
+}
+
+void MuzzleFlash::UpdateActor(float deltaTime) {
+    time += deltaTime;
+    if (time >= 0.015f) {
+	Destroy();
+    }
 }
 
 Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
@@ -82,12 +91,15 @@ void Player::ActorInput(const InputState& inputState) {
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
-	auto offset = Vector2(1.5f, 0.25f);
+	auto offset = Vector2(1.0f, 0.25f);
 	if (direction == Vector2::Left) {
 	    offset = Vector2(-1.0f, 0.25f);
 	}
 
 	auto bullet = new Bullet(GetGame(), direction, GetPosition() + offset);
+	auto flash = new MuzzleFlash(GetGame());
+	flash->SetPosition(GetPosition() + Vector2(offset.x, 0.0f));
+	
 	audio->PlayEvent("event:/Shoot");
     }
 }
