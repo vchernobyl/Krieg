@@ -163,7 +163,8 @@ July:
 20. Center the debug rect that is drawn to show the center of mass. [DONE]
 21. Don't allow for bullets to push other dynamic bodies. [DONE]
 22. Add muzzle flash. [DONE]
-23. Add a small randomness to the bullet trajectory. [IN PROGRESS]
+23. Add a small randomness to the bullet trajectory. [DONE]
+24. Add jumping particles. [IN PROGRESS]
 
 Backlog
 -------

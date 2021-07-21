@@ -26,8 +26,8 @@ void MuzzleFlash::UpdateActor(float deltaTime) {
     }
 }
 
-const float BulletSpeed = 30.0f;
-const float SpreadVariation = 1.0f;
+const float Bullet::Speed = 30.0f;
+const float Bullet::SpreadVariation = 1.0f;
 
 Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     SetPosition(position);
@@ -36,7 +36,7 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Bullet.png"));
 
     auto rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
-    auto velocity = Vector2(direction.x * BulletSpeed, Random::GetFloatRange(-SpreadVariation, SpreadVariation));
+    auto velocity = Vector2(direction.x * Speed, Random::GetFloatRange(-SpreadVariation, SpreadVariation));
     rigidbody->SetVelocity(velocity);
     rigidbody->SetGravityScale(0.0f);
     rigidbody->SetBullet(true);
@@ -50,10 +50,10 @@ void Bullet::OnBeginContact() {
     Destroy();
 }
 
-const float MaxVelocity = 10.0f;
-const float Acceleration = 27.5f;
-const float Deceleration = 5.0f;
-const float JumpImpulse = 17.0f;
+const float Player::MaxVelocity = 10.0f;
+const float Player::Acceleration = 27.5f;
+const float Player::Deceleration = 5.0f;
+const float Player::JumpImpulse = 17.0f;
 
 Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetPosition(Vector2(2, 20));
@@ -69,6 +69,9 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     rigidbody = box->GetAttachedRigidbody();
 
     audio = new AudioComponent(this);
+    
+    particles = new ParticleEmitterComponent(this);
+    particles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));
 }
 
 void Player::ActorInput(const InputState& inputState) {
@@ -92,6 +95,24 @@ void Player::ActorInput(const InputState& inputState) {
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
 	rigidbody->ApplyImpulse(Vector2::Up * rigidbody->GetMass() * JumpImpulse);
 	audio->PlayEvent("event:/Jump");
+
+	// TODO: Move particle props to the class level.
+	ParticleProps props;
+	props.position = GetPosition();
+	props.position.y += 1.0f;
+	props.position.x += 0.5f;
+	props.velocity = rigidbody->GetVelocity() / 10;
+	props.velocityVariation = Vector2(2.0f, 2.0f);
+	props.colorBegin = Vector4(255, 255, 255, 255);
+	props.colorEnd = Vector4(255 / 2, 255 / 2, 255 / 2, 0);
+	props.sizeBegin = 5.0f;
+	props.sizeEnd = 2.5f;
+	props.sizeVariation = 1.5f;
+	props.rotationBegin = 0.0f;
+	props.rotationSpeed = 1.0f;
+	props.lifetime = 0.5f;
+
+	particles->Emit(props, 10);
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {

@@ -15,18 +15,22 @@ struct ParticleProps {
     float lifetime = 1.0f;
 };
 
+class Actor;
+class Renderer;
+class Texture;
+
 // TODO: Probably need to rename to ParticleComponent.
 class ParticleEmitterComponent : public Component {
 public:
-    ParticleEmitterComponent(class Actor* owner, int drawOrder = 200);
+    ParticleEmitterComponent(Actor* owner, int drawOrder = 200);
     ~ParticleEmitterComponent();
 
     void Update(float deltaTime) override;
-    void Draw(class Renderer* renderer);
+    void Draw(Renderer* renderer);
 
     void Emit(const ParticleProps& props, int amount);
 
-    void SetTexture(class Texture* texture) { this->texture = texture; }
+    void SetTexture(Texture* texture) { this->texture = texture; }
     void SetOnEmissionEnd(std::function<void(void)> onEmissionEnd) { this->onEmissionEnd = onEmissionEnd; }
 
     int GetDrawOrder() const { return drawOrder; }
@@ -46,7 +50,7 @@ private:
     std::vector<Particle> particlePool;
     size_t poolIndex = 0;
 
-    class Texture* texture;
+    Texture* texture;
     
     int drawOrder;
 

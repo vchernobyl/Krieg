@@ -70,7 +70,7 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
 
 	Vector2 cameraPos = renderer->GetCamera()->GetPosition();
 	dst.x = static_cast<int>((pos.x - cameraPos.x) * Game::UnitsToPixels);
-	dst.y = static_cast<int>((pos.y - cameraPos.x) * Game::UnitsToPixels);
+	dst.y = static_cast<int>((pos.y - cameraPos.y) * Game::UnitsToPixels);
 
 	SDL_RenderCopyEx(renderer->renderer,
 			 texture->texture,
