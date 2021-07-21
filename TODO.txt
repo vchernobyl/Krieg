@@ -165,8 +165,8 @@ July:
 22. Add muzzle flash. [DONE]
 23. Add a small randomness to the bullet trajectory. [DONE]
 24. Add jumping particles. [DONE]
-25. Add bullet impact particles. [IN PROGRESS]
-26. Add contact information to the actor contact callbacks. [IN PROGRESS]
+25. Add bullet impact particles. [DONE]
+26. Add contact information to the actor contact callbacks. [DONE]
 
 Backlog
 -------
