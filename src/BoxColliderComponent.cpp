@@ -32,14 +32,16 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner, const Vector2& size) : 
     RigidbodyComponent* rigidbody = GetAttachedRigidbody();
     if (rigidbody == nullptr) rigidbody = new RigidbodyComponent(owner);
     
-    rigidbody->body->CreateFixture(&fixtureDef);
+    fixture = rigidbody->body->CreateFixture(&fixtureDef);
 }
 
 void BoxColliderComponent::SetCollisionFilter(CollisionCategory category, CollisionCategory mask) {
-    RigidbodyComponent* rigidbody = GetAttachedRigidbody();
-    b2Fixture* fixture = rigidbody->body->GetFixtureList();
     b2Filter filter = fixture->GetFilterData();
     filter.categoryBits = static_cast<uint16>(category);
     filter.maskBits = static_cast<uint16>(mask);
     fixture->SetFilterData(filter);
+}
+
+void BoxColliderComponent::SetSensor(bool flag) {
+    fixture->SetSensor(flag);
 }

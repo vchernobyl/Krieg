@@ -21,4 +21,8 @@ public:
     // TODO: This will have to be common for all colliders, has to be pulled up the hierarchy.
     // This will do for now until we have other types of colliders.
     void SetCollisionFilter(CollisionCategory category, CollisionCategory mask);
+    void SetSensor(bool flag);
+
+private:
+    class b2Fixture* fixture;
 };

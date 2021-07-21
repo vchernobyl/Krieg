@@ -38,7 +38,7 @@ const float Deceleration = 5.0f;
 const float JumpImpulse = 17.0f;
 
 Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
-    SetPosition(Vector2(5, 10));
+    SetPosition(Vector2(2, 20));
     SetScale(2.0f);
 
     sprite = new SpriteComponent(this);
