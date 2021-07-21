@@ -26,6 +26,9 @@ void MuzzleFlash::UpdateActor(float deltaTime) {
     }
 }
 
+const float BulletSpeed = 30.0f;
+const float SpreadVariation = 1.0f;
+
 Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     SetPosition(position);
     
@@ -33,7 +36,8 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Bullet.png"));
 
     auto rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
-    rigidbody->SetVelocity(direction * 20.0f);
+    auto velocity = Vector2(direction.x * BulletSpeed, Random::GetFloatRange(-SpreadVariation, SpreadVariation));
+    rigidbody->SetVelocity(velocity);
     rigidbody->SetGravityScale(0.0f);
     rigidbody->SetBullet(true);
 
@@ -91,9 +95,9 @@ void Player::ActorInput(const InputState& inputState) {
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
-	auto offset = Vector2(1.0f, 0.25f);
+	auto offset = Vector2(0.75f, 0.25f);
 	if (direction == Vector2::Left) {
-	    offset = Vector2(-1.0f, 0.25f);
+	    offset = Vector2(-0.75f, 0.25f);
 	}
 
 	auto bullet = new Bullet(GetGame(), direction, GetPosition() + offset);
