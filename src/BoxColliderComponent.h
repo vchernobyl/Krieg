@@ -8,7 +8,7 @@ enum class CollisionCategory : unsigned short {
     Player  = 0x0002, // 0x0001 is reserved for the default category bit by the Box2D.
     Enemy   = 0x0004,
     Bullet  = 0x0008,
-    Ground  = 0x000F,
+    Ground  = 0x0010,
     Default = 0xFFFF,
 };
 
