@@ -46,8 +46,28 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
 			    CollisionCategory::Ground | CollisionCategory::Enemy);
 }
 
-void Bullet::OnBeginContact() {
+void Bullet::OnBeginContact(const Manifold& manifold) {
     Destroy();
+
+    auto sparks = new Actor(GetGame());
+    auto particles = new ParticleEmitterComponent(sparks);
+    particles->SetTexture(GetGame()->GetRenderer()->GetTexture("assets/Particle.png"));
+    particles->SetOnEmissionEnd([sparks]() { sparks->Destroy(); });
+
+    ParticleProps props;
+    props.position = GetPosition();
+    props.velocity = Vector2(5.0f * manifold.contactNormal.x, 2.0f);
+    props.velocityVariation = Vector2(2.0f, 2.0f);
+    props.colorBegin = Vector4(255, 0, 0, 255);
+    props.colorEnd = Vector4(255 / 2, 0, 0, 0);
+    props.sizeBegin = 8.0f;
+    props.sizeEnd = 2.5f;
+    props.sizeVariation = 1.5f;
+    props.rotationBegin = 0.0f;
+    props.rotationSpeed = 1.0f;
+    props.lifetime = 0.5f;
+
+    particles->Emit(props, 20);
 }
 
 const float Player::MaxVelocity = 10.0f;
@@ -94,6 +114,7 @@ void Player::ActorInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
 	rigidbody->ApplyImpulse(Vector2::Up * rigidbody->GetMass() * JumpImpulse);
+
 	audio->PlayEvent("event:/Jump");
 
 	// TODO: Move particle props to the class level.

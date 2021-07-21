@@ -164,7 +164,9 @@ July:
 21. Don't allow for bullets to push other dynamic bodies. [DONE]
 22. Add muzzle flash. [DONE]
 23. Add a small randomness to the bullet trajectory. [DONE]
-24. Add jumping particles. [IN PROGRESS]
+24. Add jumping particles. [DONE]
+25. Add bullet impact particles. [IN PROGRESS]
+26. Add contact information to the actor contact callbacks. [IN PROGRESS]
 
 Backlog
 -------

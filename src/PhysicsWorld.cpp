@@ -1,20 +1,21 @@
 #include "PhysicsWorld.h"
+#include "DebugRenderer.h"
+#include "Box2DDebugRenderer.h"
 #include "ColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "BoxColliderComponent.h"
 #include "Player.h"
 #include "Actor.h"
 #include "Math.h"
-#include "DebugRenderer.h"
-#include "Box2DDebugRenderer.h"
 
 #include <algorithm>
 #include <cassert>
+
 #include <b2_math.h>
 #include <b2_world.h>
 #include <b2_contact.h>
+#include <b2_collision.h>
 #include <b2_world_callbacks.h>
-#include <box2d.h>
 
 class ContactListener : public b2ContactListener {
 public:
@@ -22,13 +23,23 @@ public:
 };
 
 void ContactListener::BeginContact(b2Contact* contact) {
+    b2WorldManifold worldManifold;
+    contact->GetWorldManifold(&worldManifold);
+    
+    Manifold manifold;
+    b2Vec2 contactNormal = worldManifold.normal;
+    b2Vec2 contactPoint = worldManifold.points[0];
+
+    manifold.contactNormal = Vector2(contactNormal.x, contactNormal.y);
+    manifold.contactPoint = Vector2(contactPoint.x, contactPoint.y);
+
     uintptr_t data = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
     Actor* owner = reinterpret_cast<Actor*>(data);
-    owner->OnBeginContact();
+    owner->OnBeginContact(manifold);
 
     data = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
     owner = reinterpret_cast<Actor*>(data);
-    owner->OnBeginContact();
+    owner->OnBeginContact(manifold);
 }
 
 const int32 VelocityIterations = 8;

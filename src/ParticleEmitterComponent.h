@@ -55,6 +55,5 @@ private:
     int drawOrder;
 
     bool isRunning = false;
-    bool destroyOnEnd = false;
     std::function<void(void)> onEmissionEnd;
 };
