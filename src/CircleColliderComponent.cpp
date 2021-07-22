@@ -7,8 +7,8 @@
 
 CircleColliderComponent::CircleColliderComponent(Actor* owner, float radius) : ColliderComponent(owner) {
     b2CircleShape shape;
-    shape.m_p.Set(0, 0);
-    shape.m_radius = 1;
+    shape.m_p.Set(0.5f, 0.5f);
+    shape.m_radius = radius;
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;

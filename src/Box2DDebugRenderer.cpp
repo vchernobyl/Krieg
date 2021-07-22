@@ -28,3 +28,13 @@ void Box2DDebugRenderer::DrawTransform(const b2Transform& xf) {
     Color color = { 255, 0, 0, 255 };
     DebugRenderer::DrawRect(xf.p.x, xf.p.y, 0.085f, 0.085f, color);
 }
+
+void Box2DDebugRenderer::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2& axis, const b2Color& color) {
+    Color c = {
+	static_cast<uint8_t>(color.r * 255),
+	static_cast<uint8_t>(color.g * 255),
+	static_cast<uint8_t>(color.b * 255),
+	static_cast<uint8_t>(color.a * 255),
+    };
+    DebugRenderer::DrawCircle(center.x, center.y, radius, c);
+}

@@ -5,6 +5,7 @@
 #include "SpriteComponent.h"
 #include "ColliderComponent.h"
 #include "BoxColliderComponent.h"
+#include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "ParticleEmitterComponent.h"
 #include "AudioComponent.h"
@@ -85,10 +86,12 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));
 
     auto size = sprite->GetSize() * GetScale();
-    auto box = new BoxColliderComponent(this, size);
-    box->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Ground);
+    // auto box = new BoxColliderComponent(this, size);
+    // box->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Ground);
 
-    rigidbody = box->GetAttachedRigidbody();
+    auto circle = new CircleColliderComponent(this, 0.5f);
+
+    rigidbody = circle->GetAttachedRigidbody();
 
     audio = new AudioComponent(this);
     
