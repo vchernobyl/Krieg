@@ -29,24 +29,27 @@ void MuzzleFlash::UpdateActor(float deltaTime) {
     }
 }
 
-const float Bullet::Speed = 30.0f;
-const float Bullet::SpreadVariation = 1.0f;
+const float Bullet::Speed = 15.0f;
+const float Bullet::SpreadVariation = 0.4f;
 
 Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     SetPosition(position);
-    
+
     auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Bullet.png"));
 
-    auto rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
-    auto velocity = Vector2(direction.x * Speed, Random::GetFloatRange(-SpreadVariation, SpreadVariation));
+    auto rigidbody = new RigidbodyComponent(this);
+    auto velocity = Vector2(direction.x * Speed,
+			    Random::GetFloatRange(-SpreadVariation, SpreadVariation));
+    
     rigidbody->SetVelocity(velocity);
     rigidbody->SetGravityScale(0.0f);
     rigidbody->SetBullet(true);
 
-    auto box = new BoxColliderComponent(this, sprite->GetSize());
-    box->SetCollisionFilter(CollisionCategory::Bullet,
-			    CollisionCategory::Ground | CollisionCategory::Enemy);
+    auto center = sprite->GetSize() * GetScale() * 0.5f;
+    auto circle = new CircleColliderComponent(this, center, 0.25f);
+    circle->SetCollisionFilter(CollisionCategory::Bullet,
+			       CollisionCategory::Ground | CollisionCategory::Enemy);
 }
 
 void Bullet::OnBeginContact(const Manifold& manifold) {
@@ -58,7 +61,7 @@ void Bullet::OnBeginContact(const Manifold& manifold) {
     particles->SetOnEmissionEnd([sparks]() { sparks->Destroy(); });
 
     ParticleProps props;
-    props.position = GetPosition();
+    props.position = manifold.contactPoint;
     props.velocity = Vector2(2.0f * manifold.contactNormal.x, 0.0f);
     props.velocityVariation = Vector2(2.0f, 3.0f);
     props.colorBegin = Vector4(252, 186, 3, 255);
@@ -85,9 +88,10 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));
 
-    auto circle = new CircleColliderComponent(this, 0.5f);
-    rigidbody = circle->GetAttachedRigidbody();
+    auto center = sprite->GetSize() * GetScale() * 0.5f;
+    auto circle = new CircleColliderComponent(this, center, 0.5f);
 
+    rigidbody = circle->GetAttachedRigidbody();
     audio = new AudioComponent(this);
     
     particles = new ParticleEmitterComponent(this);

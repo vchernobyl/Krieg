@@ -1,13 +1,15 @@
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
+#include "Actor.h"
 
 #include <b2_circle_shape.h>
 #include <b2_fixture.h>
 #include <b2_body.h>
 
-CircleColliderComponent::CircleColliderComponent(Actor* owner, float radius) : ColliderComponent(owner) {
+CircleColliderComponent::CircleColliderComponent(Actor* owner, const Vector2& center, float radius)
+    : ColliderComponent(owner) {
     b2CircleShape shape;
-    shape.m_p.Set(0.5f, 0.5f);
+    shape.m_p.Set(center.x, center.y);
     shape.m_radius = radius;
 
     b2FixtureDef fixtureDef;
@@ -20,4 +22,5 @@ CircleColliderComponent::CircleColliderComponent(Actor* owner, float radius) : C
     
     fixture = rigidbody->body->CreateFixture(&fixtureDef);
 }
+
 

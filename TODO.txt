@@ -168,6 +168,7 @@ July:
 25. Add bullet impact particles. [DONE]
 26. Add contact information to the actor contact callbacks. [DONE]
 27. Implement circle collider. [DONE]
+28. Fix bullet impact contact position on the right side. [IN PROGRESS]
 
 Backlog
 -------
