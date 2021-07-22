@@ -18,6 +18,6 @@ CircleColliderComponent::CircleColliderComponent(Actor* owner, float radius) : C
     RigidbodyComponent* rigidbody = GetAttachedRigidbody();
     if (rigidbody == nullptr) rigidbody = new RigidbodyComponent(owner);
     
-    rigidbody->body->CreateFixture(&fixtureDef);
+    fixture = rigidbody->body->CreateFixture(&fixtureDef);
 }
 

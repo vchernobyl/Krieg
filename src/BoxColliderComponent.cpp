@@ -6,13 +6,6 @@
 #include <b2_fixture.h>
 #include <b2_body.h>
 #include <b2_math.h>
-#include <b2_types.h>
-
-CollisionCategory operator|(CollisionCategory lhs, CollisionCategory rhs) {
-    return static_cast<CollisionCategory>(
-	static_cast<uint16>(lhs) |
-	static_cast<uint16>(rhs));
-}
 
 BoxColliderComponent::BoxColliderComponent(Actor* owner, const Vector2& size) : ColliderComponent(owner) {
     float halfWidth = size.x * 0.5f;
@@ -28,20 +21,8 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner, const Vector2& size) : 
     fixtureDef.density = 1.0f;
     fixtureDef.friction = 0.3f;
 
-    // TODO: I don't have better idea yet, but I think this will have to be refactored later on.
     RigidbodyComponent* rigidbody = GetAttachedRigidbody();
     if (rigidbody == nullptr) rigidbody = new RigidbodyComponent(owner);
     
     fixture = rigidbody->body->CreateFixture(&fixtureDef);
-}
-
-void BoxColliderComponent::SetCollisionFilter(CollisionCategory category, CollisionCategory mask) {
-    b2Filter filter = fixture->GetFilterData();
-    filter.categoryBits = static_cast<uint16>(category);
-    filter.maskBits = static_cast<uint16>(mask);
-    fixture->SetFilterData(filter);
-}
-
-void BoxColliderComponent::SetSensor(bool flag) {
-    fixture->SetSensor(flag);
 }

@@ -85,10 +85,6 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));
 
-    auto size = sprite->GetSize() * GetScale();
-    // auto box = new BoxColliderComponent(this, size);
-    // box->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Ground);
-
     auto circle = new CircleColliderComponent(this, 0.5f);
     rigidbody = circle->GetAttachedRigidbody();
 
