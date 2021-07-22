@@ -31,6 +31,5 @@ private:
     friend class PhysicsWorld;
     
     class b2Body* body;
-    MotionType type;
     Vector2 velocity;
 };

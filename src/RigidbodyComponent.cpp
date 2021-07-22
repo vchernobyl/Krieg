@@ -1,7 +1,7 @@
 #include "RigidbodyComponent.h"
+#include "PhysicsWorld.h"
 #include "Actor.h"
 #include "Game.h"
-#include "PhysicsWorld.h"
 
 #include <b2_world.h>
 #include <b2_body.h>

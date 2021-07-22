@@ -23,7 +23,10 @@ private:
 };
 
 DebugRect::DebugRect(float x, float y, float width, float height)
-    : x(x), y(y), width(width), height(height) {}
+    : x(x * Game::UnitsToPixels),
+      y(y * Game::UnitsToPixels),
+      width(width * Game::UnitsToPixels),
+      height(height * Game::UnitsToPixels) {}
 
 void DebugRect::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
     SDL_Rect rect;
@@ -45,7 +48,10 @@ private:
 };
 
 DebugLine::DebugLine(float x1, float y1, float x2, float y2)
-    : x1(x1), y1(y1), x2(x2), y2(y2) {}
+    : x1(x1 * Game::UnitsToPixels),
+      y1(y1 * Game::UnitsToPixels),
+      x2(x2 * Game::UnitsToPixels),
+      y2(y2 * Game::UnitsToPixels) {}
 
 void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
     SDL_RenderDrawLine(renderer,
@@ -55,18 +61,65 @@ void DebugLine::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
 		       static_cast<int>(y2 - camPos.y));
 }
 
+class DebugCircle : public DebugShape {
+public:
+    DebugCircle(float centerX, float centerY, float radius);
+    void Draw(SDL_Renderer* renderer, const Vector2& camPos) override;
+private:
+    float centerX, centerY;
+    float radius;
+};
+
+DebugCircle::DebugCircle(float centerX, float centerY, float radius)
+    : centerX(centerX * Game::UnitsToPixels),
+      centerY(centerY * Game::UnitsToPixels),
+      radius(radius * Game::UnitsToPixels) {}
+
+void DebugCircle::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
+    const float diameter = (radius * 2);
+
+    float x = (radius - 1);
+    float y = 0.0f;
+    float tx = 1.0f;
+    float ty = 1.0f;
+    float error = (tx - diameter);
+
+    while (x >= 0) {
+	SDL_RenderDrawPoint(renderer, centerX + x - camPos.x, centerY - y - camPos.y);
+	SDL_RenderDrawPoint(renderer, centerX + x - camPos.x, centerY + y - camPos.y);
+	SDL_RenderDrawPoint(renderer, centerX - x - camPos.x, centerY - y - camPos.y);
+	SDL_RenderDrawPoint(renderer, centerX - x - camPos.x, centerY + y - camPos.y);
+	SDL_RenderDrawPoint(renderer, centerX + y - camPos.x, centerY - x - camPos.y);
+	SDL_RenderDrawPoint(renderer, centerX + y - camPos.x, centerY + x - camPos.y);
+	SDL_RenderDrawPoint(renderer, centerX - y - camPos.x, centerY - x - camPos.y);
+	SDL_RenderDrawPoint(renderer, centerX - y - camPos.x, centerY + x - camPos.y);
+
+	if (error <= 0.0f) {
+	    ++y;
+	    error += ty;
+	    ty += 2.0f;
+	}
+
+	if (error > 0.0f) {
+	    --x;
+	    tx += 2.0f;
+	    error += (tx - diameter);
+	}
+    }
+}
+
 std::vector<std::pair<DebugShape*, Color>> DebugRenderer::shapes = {};
 
 void DebugRenderer::DrawRect(float x, float y, float width, float height, Color color) {
-    const float toPixels = Game::UnitsToPixels;
-    DebugShape* rect = new DebugRect(x * toPixels, y * toPixels, width * toPixels, height * toPixels);
-    shapes.emplace_back(rect, color);
+    shapes.emplace_back(new DebugRect(x, y, width, height), color);
 }
 
 void DebugRenderer::DrawLine(float x1, float y1, float x2, float y2, Color color) {
-    const float toPixels = Game::UnitsToPixels;
-    DebugShape* line = new DebugLine(x1 * toPixels, y1 * toPixels, x2 * toPixels, y2 * toPixels);
-    shapes.emplace_back(line, color);
+    shapes.emplace_back(new DebugLine(x1, y1, x2, y2), color);
+}
+
+void DebugRenderer::DrawCircle(float centerX, float centerY, float radius, Color color) {
+    shapes.emplace_back(new DebugCircle(centerX, centerY, radius), color);
 }
 
 void DebugRenderer::Draw(Renderer* renderer) {

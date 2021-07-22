@@ -12,6 +12,8 @@
 #include "AudioSystem.h"
 #include "Random.h"
 
+#include "DebugRenderer.h"
+
 MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
     SetScale(2.0f);
     

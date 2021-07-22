@@ -11,6 +11,7 @@ class DebugRenderer {
 public:
     static void DrawRect(float x, float y, float width, float height, Color color);
     static void DrawLine(float x1, float y1, float x2, float y2, Color color);
+    static void DrawCircle(float centerX, float centerY, float radius, Color color);
 private:
     friend class Renderer;
 
