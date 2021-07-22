@@ -76,15 +76,15 @@ DebugCircle::DebugCircle(float centerX, float centerY, float radius)
       radius(radius * Game::UnitsToPixels) {}
 
 void DebugCircle::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
-    const float diameter = (radius * 2);
+    const float diameter = (radius * 2.0f);
 
-    float x = (radius - 1);
+    float x = radius;
     float y = 0.0f;
     float tx = 1.0f;
     float ty = 1.0f;
     float error = (tx - diameter);
 
-    while (x >= 0) {
+    while (x >= y) {
 	SDL_RenderDrawPoint(renderer, centerX + x - camPos.x, centerY - y - camPos.y);
 	SDL_RenderDrawPoint(renderer, centerX + x - camPos.x, centerY + y - camPos.y);
 	SDL_RenderDrawPoint(renderer, centerX - x - camPos.x, centerY - y - camPos.y);

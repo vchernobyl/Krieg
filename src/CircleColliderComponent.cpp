@@ -13,7 +13,7 @@ CircleColliderComponent::CircleColliderComponent(Actor* owner, float radius) : C
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
     fixtureDef.density = 1.0f;
-    fixtureDef.friction = 0.3f;
+    fixtureDef.friction = 0.1f;
 
     RigidbodyComponent* rigidbody = GetAttachedRigidbody();
     if (rigidbody == nullptr) rigidbody = new RigidbodyComponent(owner);

@@ -90,7 +90,6 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     // box->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Ground);
 
     auto circle = new CircleColliderComponent(this, 0.5f);
-
     rigidbody = circle->GetAttachedRigidbody();
 
     audio = new AudioComponent(this);
