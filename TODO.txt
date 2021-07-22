@@ -167,6 +167,7 @@ July:
 24. Add jumping particles. [DONE]
 25. Add bullet impact particles. [DONE]
 26. Add contact information to the actor contact callbacks. [DONE]
+27. Implement circle collider. [IN PROGRESS]
 
 Backlog
 -------
