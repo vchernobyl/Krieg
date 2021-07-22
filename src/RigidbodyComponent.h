@@ -26,6 +26,7 @@ public:
     void SetBullet(bool flag);
 
 private:
+    friend class CircleColliderComponent;
     friend class BoxColliderComponent;
     friend class PhysicsWorld;
     
