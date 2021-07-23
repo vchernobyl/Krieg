@@ -22,6 +22,6 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    float gravity = rigidbody->GetVelocity().y;
-    rigidbody->SetVelocity(Vector2(-velocity, gravity));
+    // float gravity = rigidbody->GetVelocity().y;
+    // rigidbody->SetVelocity(Vector2(-velocity, gravity));
 }

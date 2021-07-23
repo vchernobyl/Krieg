@@ -57,8 +57,8 @@ void Bullet::OnBeginContact(const Manifold& manifold) {
 
     ParticleProps props;
     props.position = manifold.contactPoint;
-    props.velocity = Vector2(2.0f * manifold.contactNormal.x, 0.0f);
-    props.velocityVariation = Vector2(1.0f, 3.0f);
+    props.velocity = Vector2(3.0f * manifold.contactNormal.x, 3.0f * manifold.contactNormal.y);
+    props.velocityVariation = Vector2(2.0f, 2.0f);
     props.colorBegin = Vector4(252, 186, 3, 255);
     props.colorEnd = Vector4(255, 233, 173, 0);
     props.sizeBegin = 0.3f;
