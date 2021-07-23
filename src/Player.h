@@ -22,8 +22,8 @@ public:
     Bullet(Game* game, Vector2 direction, Vector2 position);
     void OnBeginContact(const Manifold& manifold) override;
 private:
-    static const float Speed;
-    static const float SpreadVariation;
+    static constexpr float Speed = 15.0f;
+    static constexpr float SpreadVariation = 0.4f;
 };    
 
 class Player : public Actor {
@@ -32,10 +32,10 @@ public:
     void ActorInput(const InputState& inputState) override;
     void UpdateActor(float deltaTime) override;
 private:
-    static const float MaxVelocity;
-    static const float Acceleration;
-    static const float Deceleration;
-    static const float JumpImpulse;
+    static constexpr float MaxVelocity = 10.0f;
+    static constexpr float Acceleration = 27.5f;
+    static constexpr float Deceleration = 5.0f;
+    static constexpr float JumpImpulse = 17.0f;
 
     ParticleEmitterComponent* particles;
     RigidbodyComponent* rigidbody;

@@ -13,8 +13,6 @@
 #include "AudioSystem.h"
 #include "Random.h"
 
-#include "DebugRenderer.h"
-
 MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
     SetScale(2.0f);
     
@@ -28,9 +26,6 @@ void MuzzleFlash::UpdateActor(float deltaTime) {
 	Destroy();
     }
 }
-
-const float Bullet::Speed = 15.0f;
-const float Bullet::SpreadVariation = 0.4f;
 
 Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
     SetPosition(position);
@@ -63,23 +58,18 @@ void Bullet::OnBeginContact(const Manifold& manifold) {
     ParticleProps props;
     props.position = manifold.contactPoint;
     props.velocity = Vector2(2.0f * manifold.contactNormal.x, 0.0f);
-    props.velocityVariation = Vector2(2.0f, 3.0f);
+    props.velocityVariation = Vector2(1.0f, 3.0f);
     props.colorBegin = Vector4(252, 186, 3, 255);
     props.colorEnd = Vector4(255, 233, 173, 0);
-    props.sizeBegin = 8.0f;
-    props.sizeEnd = 2.0f;
-    props.sizeVariation = 1.5f;
+    props.sizeBegin = 0.3f;
+    props.sizeEnd = 0.05f;
+    props.sizeVariation = 0.1f;
     props.rotationBegin = 0.0f;
     props.rotationSpeed = 0.0f;
     props.lifetime = 0.35f;
 
     particles->Emit(props, 20);
 }
-
-const float Player::MaxVelocity = 10.0f;
-const float Player::Acceleration = 27.5f;
-const float Player::Deceleration = 5.0f;
-const float Player::JumpImpulse = 17.0f;
 
 Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetPosition(Vector2(2, 20));
@@ -130,9 +120,9 @@ void Player::ActorInput(const InputState& inputState) {
 	props.velocityVariation = Vector2(2.0f, 2.0f);
 	props.colorBegin = Vector4(255, 255, 255, 255);
 	props.colorEnd = Vector4(255 / 2, 255 / 2, 255 / 2, 0);
-	props.sizeBegin = 5.0f;
-	props.sizeEnd = 2.5f;
-	props.sizeVariation = 1.5f;
+	props.sizeBegin = 0.15f;
+	props.sizeEnd = 0.075f;
+	props.sizeVariation = 0.025f;
 	props.rotationBegin = 0.0f;
 	props.rotationSpeed = 1.0f;
 	props.lifetime = 0.5f;

@@ -62,15 +62,15 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
 	texture->SetColor(color);
 	
 	Vector2 pos = particle.position;
-	int size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life);
+	float size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life) * Game::UnitsToPixels;
 
 	SDL_Rect dst;
-	dst.w = size;
-	dst.h = size;
+	dst.w = static_cast<int>(size);
+	dst.h = static_cast<int>(size);
 
 	Vector2 cameraPos = renderer->GetCamera()->GetPosition();
-	dst.x = static_cast<int>((pos.x - cameraPos.x) * Game::UnitsToPixels);
-	dst.y = static_cast<int>((pos.y - cameraPos.y) * Game::UnitsToPixels);
+	dst.x = static_cast<int>((pos.x - cameraPos.x) * Game::UnitsToPixels - (size * 0.5f));
+	dst.y = static_cast<int>((pos.y - cameraPos.y) * Game::UnitsToPixels - (size * 0.5f));
 
 	SDL_RenderCopyEx(renderer->renderer,
 			 texture->texture,
