@@ -169,8 +169,10 @@ July:
 26. Add contact information to the actor contact callbacks. [DONE]
 27. Implement circle collider. [DONE]
 28. Fix bullet impact contact position on the right side. [DONE]
-29. Make flash effect when enemy is hit. [IN PROGRESS]
-30. Add support for sprite regions. [IN PROGRESS]
+29. Make flash effect when enemy is hit. [DONE]
+30. Add support for sprite regions. [DONE]
+31. Implement smooth camera follow (lerp/smoothdamp).
+32. Implement camera as a component. [IN PROGRESS]
 
 Backlog
 -------
