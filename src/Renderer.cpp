@@ -78,6 +78,26 @@ void Renderer::End() {
     SDL_RenderPresent(renderer);
 }
 
+void Renderer::DrawTexture(const Texture* texture, const Rectangle& src, const Rectangle& dst,
+			   double angle, SpriteEffect effect) {
+    SDL_Rect srcRect;
+    srcRect.x = src.position.x;
+    srcRect.y = src.position.y;
+    srcRect.w = src.size.x;
+    srcRect.h = src.size.y;
+
+    Vector2 cameraPosition = camera->GetPosition();
+
+    SDL_Rect dstRect;
+    dstRect.x = (dst.position.x - cameraPosition.x) * Game::UnitsToPixels;
+    dstRect.y = (dst.position.y - cameraPosition.y) * Game::UnitsToPixels;
+    dstRect.w = dst.size.x * Game::UnitsToPixels;
+    dstRect.h = dst.size.y * Game::UnitsToPixels;
+
+    // TODO: Add a proper texture flip.
+    SDL_RenderCopyEx(renderer, texture->texture, &srcRect, &dstRect, angle, nullptr, SDL_FLIP_NONE);
+}
+
 Texture* Renderer::GetTexture(const std::string& fileName) {
     Texture* tex = nullptr;
     auto iter = textures.find(fileName);

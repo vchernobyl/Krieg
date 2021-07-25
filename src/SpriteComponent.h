@@ -8,6 +8,12 @@ class Actor;
 class Texture;
 class Renderer;
 
+enum SpriteEffect {
+    None             = 0x0000,
+    FlipHorizontally = 0x0001,
+    FlipVertically   = 0x0002,
+};
+
 class SpriteComponent : public Component {
 public:
     bool flipX, flipY;

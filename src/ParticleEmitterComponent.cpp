@@ -6,8 +6,6 @@
 #include "Actor.h"
 #include "Game.h"
 
-#include <SDL.h>
-
 const size_t MaxParticles = 1000;
 
 ParticleEmitterComponent::ParticleEmitterComponent(Actor* owner, int drawOrder)
@@ -57,28 +55,19 @@ void ParticleEmitterComponent::Draw(Renderer* renderer) {
     for (auto& particle : particlePool) {
 	if (!particle.active) continue;
 
-	float life = particle.lifeRemaining / particle.lifetime;
-	Vector4 color = Vector4::Lerp(particle.colorEnd, particle.colorBegin, life);
+	auto life = particle.lifeRemaining / particle.lifetime;
+	auto color = Vector4::Lerp(particle.colorEnd, particle.colorBegin, life);
+
+	// TODO (Bug): This sets the color to the same texture pointer, making all particles
+	// to be of the same color, which is not what we want.
 	texture->SetColor(color);
 	
-	Vector2 pos = particle.position;
-	float size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life) * Game::UnitsToPixels;
+	auto pos = particle.position;
+	auto size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life);
 
-	SDL_Rect dst;
-	dst.w = static_cast<int>(size);
-	dst.h = static_cast<int>(size);
-
-	Vector2 cameraPos = renderer->GetCamera()->GetPosition();
-	dst.x = static_cast<int>((pos.x - cameraPos.x) * Game::UnitsToPixels - (size * 0.5f));
-	dst.y = static_cast<int>((pos.y - cameraPos.y) * Game::UnitsToPixels - (size * 0.5f));
-
-	SDL_RenderCopyEx(renderer->renderer,
-			 texture->texture,
-			 nullptr,
-			 &dst,
-			 Math::ToDegrees(particle.rotation),
-			 nullptr, // Rotate around the center of the texture
-			 SDL_FLIP_NONE);
+	auto src = Rectangle(Vector2::Zero, texture->GetSize());
+	auto dst = Rectangle(particle.position, Vector2(size, size));
+	renderer->DrawTexture(texture, src, dst, 0, SpriteEffect::None);
     }
 }
 

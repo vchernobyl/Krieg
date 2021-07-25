@@ -1,13 +1,17 @@
 #pragma once
 
+#include "SpriteComponent.h"
+
 #include <SDL.h>
 #include <vector>
 #include <unordered_map>
 
 class Game;
 class Camera;
-class SpriteComponent;
 class Texture;
+class Vector2;
+class Rectangle;
+class SpriteComponent;
 class ParticleEmitterComponent;
 
 class Renderer {
@@ -21,6 +25,9 @@ public:
     void Draw();
     void End();
 
+    void DrawTexture(const Texture* texture, const Rectangle& src, const Rectangle& dst,
+		     double angle, SpriteEffect effect);
+
     Texture* GetTexture(const std::string& fileName);
 
     void AddSprite(SpriteComponent* sprite);
@@ -31,6 +38,7 @@ public:
 
     Camera* GetCamera() const { return camera; }
 private:
+    // TODO: Remove these after DrawTexture() is implemented.
     friend class SpriteComponent;
     friend class ParticleEmitterComponent;
     friend class TileMapRenderer;

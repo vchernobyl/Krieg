@@ -10,6 +10,8 @@ class Texture {
 public:
     Texture();
 
+    Vector2 GetSize() const { return Vector2(width, height); }
+
     void SetColor(const Vector3& color);
     void SetColor(const Vector4& color);
 
