@@ -2,23 +2,32 @@
 
 #include "Component.h"
 #include "Math.h"
+#include "Game.h"
+
+class Actor;
+class Texture;
+class Renderer;
 
 class SpriteComponent : public Component {
 public:
     bool flipX, flipY;
 
-    SpriteComponent(class Actor* owner, int drawOrder = 100);
+    SpriteComponent(Actor* owner, int drawOrder = 100);
     ~SpriteComponent();
 
-    virtual void Draw(class Renderer* renderer);
-    virtual void SetTexture(class Texture* texture);
+    void Draw(Renderer* renderer);
+    void SetTexture(Texture* texture);
 
     int GetDrawOrder() const { return drawOrder; }
-    Vector2 GetSize() const { return Vector2(width, height); }
+    Vector2 GetSize() const { return Vector2(width, height) * Game::PixelsToUnits; }
+
+    void SetDrawRegion(const Rectangle& region) { this->region = region; }
 
 protected:
-    class Texture* texture;
+    Texture* texture;
+    Rectangle region;
+
+    int width;
+    int height;
     int drawOrder;
-    float width;
-    float height;
 };

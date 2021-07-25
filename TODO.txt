@@ -170,6 +170,7 @@ July:
 27. Implement circle collider. [DONE]
 28. Fix bullet impact contact position on the right side. [DONE]
 29. Make flash effect when enemy is hit. [IN PROGRESS]
+30. Add support for sprite regions. [IN PROGRESS]
 
 Backlog
 -------

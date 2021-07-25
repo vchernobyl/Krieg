@@ -22,9 +22,9 @@ MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
 
 void MuzzleFlash::UpdateActor(float deltaTime) {
     time += deltaTime;
-    if (time >= 0.015f) {
-	Destroy();
-    }
+
+    // Flash for one frame.
+    if (time >= 0.016f) Destroy();
 }
 
 Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
