@@ -12,6 +12,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Enemy.png"));
+    sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 
     rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
 
@@ -22,6 +23,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    // float gravity = rigidbody->GetVelocity().y;
-    // rigidbody->SetVelocity(Vector2(-velocity, gravity));
 }
+
+// void Enemy::OnBeginContact(const Manifold& manifold) {
+// }

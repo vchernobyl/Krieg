@@ -50,7 +50,7 @@ public:
     void AddComponent(Component* component);
     void RemoveComponent(Component* component);
 
-    virtual void OnBeginContact(const class Manifold& manifold) {}
+    virtual void OnBeginContact(const struct Contact& contact) {}
 
     template <typename T> T* GetComponent() {
 	for (auto component : components) {

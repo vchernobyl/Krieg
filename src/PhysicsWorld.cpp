@@ -26,20 +26,20 @@ void ContactListener::BeginContact(b2Contact* contact) {
     b2WorldManifold worldManifold;
     contact->GetWorldManifold(&worldManifold);
     
-    Manifold manifold;
+    Contact contactInfo;
     b2Vec2 contactNormal = worldManifold.normal;
     b2Vec2 contactPoint = worldManifold.points[0];
 
-    manifold.contactNormal = Vector2(contactNormal.x, contactNormal.y);
-    manifold.contactPoint = Vector2(contactPoint.x, contactPoint.y);
+    contactInfo.normal = Vector2(contactNormal.x, contactNormal.y);
+    contactInfo.point = Vector2(contactPoint.x, contactPoint.y);
 
     uintptr_t data = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
     Actor* owner = reinterpret_cast<Actor*>(data);
-    owner->OnBeginContact(manifold);
+    owner->OnBeginContact(contactInfo);
 
     data = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
     owner = reinterpret_cast<Actor*>(data);
-    owner->OnBeginContact(manifold);
+    owner->OnBeginContact(contactInfo);
 }
 
 const int32 VelocityIterations = 8;

@@ -2,12 +2,18 @@
 
 #include "Actor.h"
 
+class RigidbodyComponent;
+class SpriteComponent;
+class Game;
+
 class Enemy : public Actor {
 public:
-    Enemy(class Game* game);
+    Enemy(Game* game);
     void UpdateActor(float deltaTime) override;
+//    void OnBeginContact(const struct Manifold& manifold) override;
 private:
-    struct RigidbodyComponent* rigidbody;
-    class SpriteComponent* sprite;
-    float velocity = -2.0f;
+    RigidbodyComponent* rigidbody;
+    SpriteComponent* sprite;
+
+    float hitTime = 0.0f;
 };

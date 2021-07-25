@@ -18,9 +18,10 @@ enum class CollisionCategory : unsigned short {
 
 CollisionCategory operator|(CollisionCategory lhs, CollisionCategory rhs);
 
-struct Manifold {
-    Vector2 contactNormal;
-    Vector2 contactPoint;
+struct Contact {
+    Vector2 normal;
+    Vector2 point;
+    Actor* other;
 };
 
 class ColliderComponent : public Component {

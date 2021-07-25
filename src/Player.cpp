@@ -47,7 +47,7 @@ Bullet::Bullet(Game* game, Vector2 direction, Vector2 position) : Actor(game) {
 			       CollisionCategory::Ground | CollisionCategory::Enemy);
 }
 
-void Bullet::OnBeginContact(const Manifold& manifold) {
+void Bullet::OnBeginContact(const Contact& contact) {
     Destroy();
 
     auto sparks = new Actor(GetGame());
@@ -56,8 +56,8 @@ void Bullet::OnBeginContact(const Manifold& manifold) {
     particles->SetOnEmissionEnd([sparks]() { sparks->Destroy(); });
 
     ParticleProps props;
-    props.position = manifold.contactPoint;
-    props.velocity = Vector2(3.0f * manifold.contactNormal.x, 3.0f * manifold.contactNormal.y);
+    props.position = contact.point;
+    props.velocity = Vector2(3.0f * contact.normal.x, 3.0f * contact.normal.y);
     props.velocityVariation = Vector2(2.0f, 2.0f);
     props.colorBegin = Vector4(252, 186, 3, 255);
     props.colorEnd = Vector4(255, 233, 173, 0);

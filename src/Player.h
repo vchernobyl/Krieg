@@ -20,7 +20,7 @@ private:
 class Bullet : public Actor {
 public:
     Bullet(Game* game, Vector2 direction, Vector2 position);
-    void OnBeginContact(const Manifold& manifold) override;
+    void OnBeginContact(const Contact& contact) override;
 private:
     static constexpr float Speed = 15.0f;
     static constexpr float SpreadVariation = 0.4f;

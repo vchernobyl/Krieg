@@ -11,9 +11,7 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
       texture(nullptr),
       drawOrder(drawOrder),
       flipX(false),
-      flipY(false),
-      width(0),
-      height(0) {
+      flipY(false) {
     owner->GetGame()->GetRenderer()->AddSprite(this);
 }
 
@@ -23,6 +21,9 @@ SpriteComponent::~SpriteComponent() {
 
 void SpriteComponent::Draw(Renderer* renderer) {
     if (!texture) return;
+
+    const auto width = region.size.x;
+    const auto height = region.size.y;
 
     SDL_Rect dst;
     dst.w = static_cast<int>(width * owner->GetScale());
@@ -37,8 +38,8 @@ void SpriteComponent::Draw(Renderer* renderer) {
     if (flipY) spriteFlip = (SDL_RendererFlip (spriteFlip | SDL_FLIP_VERTICAL));
 
     SDL_Rect src;
-    src.x = 0;
-    src.y = 0;
+    src.x = region.position.x;
+    src.y = region.position.y;
     src.w = width;
     src.h = height;
 
@@ -47,6 +48,5 @@ void SpriteComponent::Draw(Renderer* renderer) {
 
 void SpriteComponent::SetTexture(Texture* texture) {
     this->texture = texture;
-    this->width = texture->width;
-    this->height = texture->height;
+    this->region = Rectangle(0.0f, 0.0f, texture->width, texture->height);
 }
