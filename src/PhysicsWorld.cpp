@@ -33,13 +33,17 @@ void ContactListener::BeginContact(b2Contact* contact) {
     contactInfo.normal = Vector2(contactNormal.x, contactNormal.y);
     contactInfo.point = Vector2(contactPoint.x, contactPoint.y);
 
-    uintptr_t data = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-    Actor* owner = reinterpret_cast<Actor*>(data);
-    owner->OnBeginContact(contactInfo);
+    uintptr_t pointerA = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+    Actor* ownerA = reinterpret_cast<Actor*>(pointerA);
 
-    data = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-    owner = reinterpret_cast<Actor*>(data);
-    owner->OnBeginContact(contactInfo);
+    uintptr_t pointerB = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+    Actor* ownerB = reinterpret_cast<Actor*>(pointerB);
+
+    contactInfo.other = ownerB;
+    ownerA->OnBeginContact(contactInfo);
+
+    contactInfo.other = ownerA;
+    ownerB->OnBeginContact(contactInfo);
 }
 
 const int32 VelocityIterations = 8;

@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include "Game.h"
+#include "Player.h"
 #include "Renderer.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
@@ -23,7 +24,21 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
+    if (isHit) {
+	hitTime += deltaTime;
+
+	// Flash the enemy for 3 full frames.
+	if (hitTime >= 0.016f * 3.0f) {
+	    sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
+	    hitTime = 0.0f;
+	    isHit = false;
+	}
+    }
 }
 
-// void Enemy::OnBeginContact(const Manifold& manifold) {
-// }
+void Enemy::OnBeginContact(const Contact& contact) {
+    if (dynamic_cast<Bullet*>(contact.other)) {
+	isHit = true;
+	sprite->SetDrawRegion(Rectangle(16, 0, 16, 16));
+    }
+}
