@@ -9,9 +9,9 @@ class Texture;
 class Renderer;
 
 enum SpriteEffect {
-    None             = 0x0000,
-    FlipHorizontally = 0x0001,
-    FlipVertically   = 0x0002,
+    None             = 0,
+    FlipHorizontally = 1,
+    FlipVertically   = 2,
 };
 
 class SpriteComponent : public Component {

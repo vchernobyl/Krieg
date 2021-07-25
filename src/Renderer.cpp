@@ -94,8 +94,15 @@ void Renderer::DrawTexture(const Texture* texture, const Rectangle& src, const R
     dstRect.w = dst.size.x * Game::UnitsToPixels;
     dstRect.h = dst.size.y * Game::UnitsToPixels;
 
-    // TODO: Add a proper texture flip.
-    SDL_RenderCopyEx(renderer, texture->texture, &srcRect, &dstRect, angle, nullptr, SDL_FLIP_NONE);
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+
+    if ((effect & SpriteEffect::FlipHorizontally) != 0)
+	flip = static_cast<SDL_RendererFlip>(flip | SDL_FLIP_HORIZONTAL);
+
+    if ((effect & SpriteEffect::FlipVertically) != 0)
+	flip = static_cast<SDL_RendererFlip>(flip | SDL_FLIP_VERTICAL);
+
+    SDL_RenderCopyEx(renderer, texture->texture, &srcRect, &dstRect, angle, nullptr, flip);
 }
 
 Texture* Renderer::GetTexture(const std::string& fileName) {
