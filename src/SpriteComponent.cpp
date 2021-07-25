@@ -20,8 +20,6 @@ SpriteComponent::~SpriteComponent() {
 void SpriteComponent::Draw(Renderer* renderer) {
     if (!texture) return;
 
-    const auto width = region.size.x;
-    const auto height = region.size.y;
     const auto size = region.size * Game::PixelsToUnits;
     const auto dst = Rectangle(owner->GetPosition(), size * owner->GetScale());
 

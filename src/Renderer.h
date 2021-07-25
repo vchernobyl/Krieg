@@ -39,9 +39,6 @@ public:
     Camera* GetCamera() const { return camera; }
 private:
     // TODO: Remove these after DrawTexture() is implemented.
-    friend class SpriteComponent;
-    friend class ParticleEmitterComponent;
-    friend class TileMapRenderer;
     friend class DebugRenderer;
     
     SDL_Window* window;
