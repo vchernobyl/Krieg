@@ -11,6 +11,8 @@ class Game;
 struct TileInfo {
     int id;
     Texture* texture;
+
+    // TODO: Rename this to 'source'.
     Rectangle rect;
 };
 
