@@ -1,7 +1,7 @@
 @echo off
 
 set application=Game
-set compile_flags=/nologo /DDEBUG /EHsc /MP /Zi
+set compile_flags=/nologo /DDEBUG /EHsc /MP /Zi /std:c++17
 set link_flags=/DEBUG:FASTLINK /SUBSYSTEM:CONSOLE
 
 set include_flags=/I ..\external\box2d\include^

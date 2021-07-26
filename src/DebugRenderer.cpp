@@ -122,14 +122,11 @@ void DebugRenderer::DrawCircle(float centerX, float centerY, float radius, Vecto
 }
 
 void DebugRenderer::Draw(Renderer* renderer) {
-    SDL_Renderer* sdlRenderer = renderer->renderer;
-    Vector2 cameraView = renderer->GetView() * Game::UnitsToPixels;
+    auto sdlRenderer = renderer->renderer;
+    auto cameraView = renderer->GetView() * Game::UnitsToPixels;
 
-    for (auto pair : shapes) {
-	const auto color = pair.second;
+    for (auto [shape, color] : shapes) {
 	SDL_SetRenderDrawColor(sdlRenderer, color.x, color.y, color.z, color.w);
-
-	const auto shape = pair.first;
 	shape->Draw(sdlRenderer, cameraView);
 	delete shape;
     }
