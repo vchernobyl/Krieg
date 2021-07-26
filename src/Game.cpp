@@ -137,6 +137,8 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
+    physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.
+
     updatingActors = true;
     for (auto actor : actors) {
 	actor->Update(deltaTime);
@@ -159,7 +161,6 @@ void Game::UpdateGame() {
 	delete actor;
     }
 
-    physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.
     audioSystem->Update(deltaTime);
 }
 

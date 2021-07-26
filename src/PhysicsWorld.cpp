@@ -67,8 +67,8 @@ void PhysicsWorld::Step(float timeStep) {
     world->Step(timeStep, VelocityIterations, PositionIterations);
 
     for (const auto rb : rigidbodies) {
-	const b2Vec2& position = rb->body->GetPosition();
-	Actor* owner = rb->GetOwner();
+	const auto& position = rb->body->GetPosition();
+	auto owner = rb->GetOwner();
 	owner->SetPosition(Vector2(position.x, position.y));
     }
 
