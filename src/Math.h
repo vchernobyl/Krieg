@@ -46,8 +46,7 @@ namespace Math {
 	return sqrtf(value);
     }
 
-    template <typename T>
-    inline int Sign(T value) {
+    inline float Sign(float value) {
 	return (value > 0) ? 1 : (value < 0) ? -1 : 0;
     }
 }

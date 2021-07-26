@@ -1,6 +1,5 @@
 #include "DebugRenderer.h"
 #include "Renderer.h"
-#include "Camera.h"
 #include "Math.h"
 #include "Game.h"
 
@@ -30,10 +29,10 @@ DebugRect::DebugRect(float x, float y, float width, float height)
 
 void DebugRect::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
     SDL_Rect rect;
-    rect.x = static_cast<int>(x - camPos.x);
-    rect.y = static_cast<int>(y - camPos.y);
-    rect.w = static_cast<int>(width);
-    rect.h = static_cast<int>(height);
+    rect.x = (x - camPos.x);
+    rect.y = (y - camPos.y);
+    rect.w = width;
+    rect.h = height;
 
     SDL_RenderDrawRect(renderer, &rect);
 }
@@ -124,14 +123,14 @@ void DebugRenderer::DrawCircle(float centerX, float centerY, float radius, Vecto
 
 void DebugRenderer::Draw(Renderer* renderer) {
     SDL_Renderer* sdlRenderer = renderer->renderer;
-    Vector2 camPos = renderer->GetCamera()->GetPosition() * Game::UnitsToPixels;
-    
+    Vector2 cameraView = renderer->GetView() * Game::UnitsToPixels;
+
     for (auto pair : shapes) {
 	const auto color = pair.second;
 	SDL_SetRenderDrawColor(sdlRenderer, color.x, color.y, color.z, color.w);
 
 	const auto shape = pair.first;
-	shape->Draw(sdlRenderer, camPos);
+	shape->Draw(sdlRenderer, cameraView);
 	delete shape;
     }
 

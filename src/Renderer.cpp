@@ -1,7 +1,6 @@
 #include "Renderer.h"
 #include "SpriteComponent.h"
 #include "Game.h"
-#include "Camera.h"
 #include "Texture.h"
 #include "ParticleEmitterComponent.h"
 #include "DebugRenderer.h"
@@ -11,13 +10,13 @@
 
 Renderer::Renderer(Game* game) : game(game) {}
 
-bool Renderer::Initialize(int screenWidth, int screenHeight) {
+bool Renderer::Initialize(int windowWidth, int windowHeight) {
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
 	SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 	return false;
     }
 
-    window = SDL_CreateWindow("Game", 100, 100, screenWidth, screenHeight, 0);
+    window = SDL_CreateWindow("Game", 100, 100, windowWidth, windowHeight, 0);
     if (!window) {
 	SDL_Log("Unable to create a window: %s", SDL_GetError());
 	return false;
@@ -34,17 +33,12 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 	return false;
     }
 
-    camera = new Camera(screenWidth * Game::PixelsToUnits, screenHeight * Game::PixelsToUnits);
-
-    const int worldWidth = 42;
-    const int worldHeight = 32;
-    camera->SetWorldSize(worldWidth, worldHeight);
+    windowSize = Vector2(windowWidth, windowHeight);
 
     return true;
 }
 
 void Renderer::Shutdown() {
-    delete camera;
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
 }
@@ -86,11 +80,9 @@ void Renderer::DrawTexture(const Texture* texture, const Rectangle& src, const R
     srcRect.w = src.size.x;
     srcRect.h = src.size.y;
 
-    Vector2 cameraPosition = camera->GetPosition();
-
     SDL_Rect dstRect;
-    dstRect.x = (dst.position.x - cameraPosition.x) * Game::UnitsToPixels;
-    dstRect.y = (dst.position.y - cameraPosition.y) * Game::UnitsToPixels;
+    dstRect.x = (dst.position.x - cameraView.x) * Game::UnitsToPixels;
+    dstRect.y = (dst.position.y - cameraView.y) * Game::UnitsToPixels;
     dstRect.w = dst.size.x * Game::UnitsToPixels;
     dstRect.h = dst.size.y * Game::UnitsToPixels;
 

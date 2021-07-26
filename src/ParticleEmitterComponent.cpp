@@ -1,7 +1,6 @@
 #include "ParticleEmitterComponent.h"
 #include "Renderer.h"
 #include "Random.h"
-#include "Camera.h"
 #include "Texture.h"
 #include "Actor.h"
 #include "Game.h"

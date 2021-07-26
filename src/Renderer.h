@@ -8,7 +8,6 @@
 #include <unordered_map>
 
 class Game;
-class Camera;
 class Texture;
 class Vector2;
 class Rectangle;
@@ -18,7 +17,7 @@ class ParticleEmitterComponent;
 class Renderer {
 public:
     Renderer(Game*);
-    bool Initialize(int screenWidth, int screenHeight);
+    bool Initialize(int windowWidth, int windowHeight);
     void Shutdown();
     void UnloadData();
 
@@ -37,10 +36,10 @@ public:
     void AddParticles(ParticleEmitterComponent* emitter);
     void RemoveParticles(ParticleEmitterComponent* emitter);
     
-    // TODO(Refactoring): Remove this once CameraComponent is done.
-    Camera* GetCamera() const { return camera; }
-
     void SetView(const Vector2& view) { cameraView = view; }
+    const Vector2& GetView() const { return cameraView; }
+    const Vector2& GetWindowSize() const { return windowSize; }
+    
 private:
     friend class DebugRenderer;
     
@@ -54,8 +53,6 @@ private:
 
     Game* game;
 
-    // TODO(Refactoring): Remove this once CameraComponent is done.
-    Camera* camera;
-
     Vector2 cameraView;
+    Vector2 windowSize;
 };

@@ -1,13 +1,12 @@
 #include "Player.h"
 #include "Game.h"
 #include "Renderer.h"
-#include "Camera.h"
+#include "CameraComponent.h"
 #include "SpriteComponent.h"
-#include "ColliderComponent.h"
 #include "BoxColliderComponent.h"
 #include "CircleColliderComponent.h"
-#include "RigidbodyComponent.h"
 #include "ParticleEmitterComponent.h"
+#include "RigidbodyComponent.h"
 #include "AudioComponent.h"
 #include "InputSystem.h"
 #include "AudioSystem.h"
@@ -86,6 +85,9 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     
     particles = new ParticleEmitterComponent(this);
     particles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));
+
+    auto camera = new CameraComponent(this);
+    camera->SetBounds(Rectangle(0, 0, 42, 32));
 }
 
 void Player::ActorInput(const InputState& inputState) {
@@ -145,5 +147,4 @@ void Player::ActorInput(const InputState& inputState) {
 }
 
 void Player::UpdateActor(float deltaTime) {
-    GetGame()->GetRenderer()->GetCamera()->CenterAt(GetPosition());
 }
