@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SpriteComponent.h"
+#include "Math.h"
 
 #include <SDL.h>
 #include <vector>
@@ -35,10 +36,12 @@ public:
 
     void AddParticles(ParticleEmitterComponent* emitter);
     void RemoveParticles(ParticleEmitterComponent* emitter);
-
+    
+    // TODO(Refactoring): Remove this once CameraComponent is done.
     Camera* GetCamera() const { return camera; }
+
+    void SetView(const Vector2& view) { cameraView = view; }
 private:
-    // TODO: Remove these after DrawTexture() is implemented.
     friend class DebugRenderer;
     
     SDL_Window* window;
@@ -50,5 +53,9 @@ private:
     std::unordered_map<std::string, Texture*> textures;
 
     Game* game;
+
+    // TODO(Refactoring): Remove this once CameraComponent is done.
     Camera* camera;
+
+    Vector2 cameraView;
 };
