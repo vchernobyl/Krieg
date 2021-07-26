@@ -108,17 +108,17 @@ void DebugCircle::Draw(SDL_Renderer* renderer, const Vector2& camPos) {
     }
 }
 
-std::vector<std::pair<DebugShape*, Color>> DebugRenderer::shapes = {};
+std::vector<std::pair<DebugShape*, Vector4>> DebugRenderer::shapes = {};
 
-void DebugRenderer::DrawRect(float x, float y, float width, float height, Color color) {
+void DebugRenderer::DrawRect(float x, float y, float width, float height, Vector4 color) {
     shapes.emplace_back(new DebugRect(x, y, width, height), color);
 }
 
-void DebugRenderer::DrawLine(float x1, float y1, float x2, float y2, Color color) {
+void DebugRenderer::DrawLine(float x1, float y1, float x2, float y2, Vector4 color) {
     shapes.emplace_back(new DebugLine(x1, y1, x2, y2), color);
 }
 
-void DebugRenderer::DrawCircle(float centerX, float centerY, float radius, Color color) {
+void DebugRenderer::DrawCircle(float centerX, float centerY, float radius, Vector4 color) {
     shapes.emplace_back(new DebugCircle(centerX, centerY, radius), color);
 }
 
@@ -128,7 +128,7 @@ void DebugRenderer::Draw(Renderer* renderer) {
     
     for (auto pair : shapes) {
 	const auto color = pair.second;
-	SDL_SetRenderDrawColor(sdlRenderer, color.r, color.g, color.b, color.a);
+	SDL_SetRenderDrawColor(sdlRenderer, color.x, color.y, color.z, color.w);
 
 	const auto shape = pair.first;
 	shape->Draw(sdlRenderer, camPos);

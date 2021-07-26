@@ -32,5 +32,5 @@ void SpriteComponent::Draw(Renderer* renderer) {
 
 void SpriteComponent::SetTexture(Texture* texture) {
     this->texture = texture;
-    this->region = Rectangle(0.0f, 0.0f, texture->width, texture->height);
+    this->region = Rectangle(Vector2::Zero, texture->GetSize());
 }

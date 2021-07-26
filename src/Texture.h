@@ -17,9 +17,6 @@ public:
 
 private:
     friend class Renderer;
-    friend class TileMapRenderer;
-    friend class SpriteComponent;
-    friend class ParticleEmitterComponent;
     
     bool Load(const std::string& fileName, SDL_Renderer* renderer);
     void Unload();
