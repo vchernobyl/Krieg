@@ -39,6 +39,11 @@ Vector2 RigidbodyComponent::GetVelocity() const {
     return Vector2(vel.x, vel.y);
 }
 
+Vector2 RigidbodyComponent::GetPosition() const {
+    b2Vec2 pos = body->GetPosition();
+    return Vector2(pos.x, pos.y);
+}
+
 void RigidbodyComponent::ApplyForce(const Vector2& force) {
     bool awake = true;
 

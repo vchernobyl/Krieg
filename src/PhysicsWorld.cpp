@@ -67,9 +67,8 @@ void PhysicsWorld::Step(float timeStep) {
     world->Step(timeStep, VelocityIterations, PositionIterations);
 
     for (const auto rb : rigidbodies) {
-	const auto& position = rb->body->GetPosition();
 	auto owner = rb->GetOwner();
-	owner->SetPosition(Vector2(position.x, position.y));
+	owner->SetPosition(rb->GetPosition());
     }
 
     world->DebugDraw();

@@ -16,6 +16,7 @@ public:
 
     void SetVelocity(const Vector2& velocity);
     Vector2 GetVelocity() const;
+    Vector2 GetPosition() const;
 
     void ApplyForce(const Vector2& force);
     void ApplyImpulse(const Vector2& impulse);
