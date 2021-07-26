@@ -11,6 +11,9 @@ public:
 private:
     void SetView(const Vector2& view);
 
+    Vector2 position;
     Vector2 viewport;
     Rectangle bounds;
+
+    float time = 0.0f;
 };

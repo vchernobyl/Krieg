@@ -155,6 +155,8 @@ public:
     }
 
     static Vector2 Lerp(const Vector2& a, const Vector2& b, float t) {
+	if (t < 0.0f) return a;
+	if (t > 1.0f) return b;
 	return Vector2(a + t * (b - a));
     }
 
