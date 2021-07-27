@@ -1,7 +1,6 @@
 #include "TileMapRenderer.h"
 #include "TileMap.h"
 #include "Renderer.h"
-#include "Camera.h"
 #include "Texture.h"
 #include "Game.h"
 

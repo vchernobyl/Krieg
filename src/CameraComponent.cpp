@@ -5,7 +5,7 @@
 
 CameraComponent::CameraComponent(Actor* owner)
     : Component(owner) {
-    position = Vector2(20, 20);//owner->GetPosition();
+    position = owner->GetPosition();
     viewport = owner->GetGame()->GetRenderer()->GetWindowSize() * Game::PixelsToUnits;
 }
 

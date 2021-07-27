@@ -14,6 +14,4 @@ private:
     Vector2 position;
     Vector2 viewport;
     Rectangle bounds;
-
-    float time = 0.0f;
 };

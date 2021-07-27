@@ -1,6 +1,5 @@
-#include "Actor.h"
 #include "SpriteComponent.h"
-#include "Camera.h"
+#include "Actor.h"
 #include "Renderer.h"
 #include "Texture.h"
 
