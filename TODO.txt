@@ -176,6 +176,7 @@ July:
 33. Remove Color struct from debug renderer and use Vector3/4 instead. What the fuck was I thinking? [DONE]
 34. Fix camera component lagging behind the owner. Probably because position is being updated in the physics step. [DONE]
 35. Fix camera/world stutter when using smooth camera follow. [IN PROGRESS]
+36. DrawTexture should accept parameters in pixels instead of units for precise rendering.
 
 Backlog
 -------

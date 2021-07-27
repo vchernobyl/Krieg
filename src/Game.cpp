@@ -184,10 +184,10 @@ void Game::LoadData() {
     for (auto objectGroup : objectGroups) {
 	for (const auto& object : objectGroup.objects) {
 	    auto objectActor = new Actor(this);
-	    objectActor->SetPosition(Vector2(object.position.x, object.position.y));
+	    objectActor->SetPosition(object.position * Game::PixelsToUnits);
 
 	    new RigidbodyComponent(objectActor, MotionType::Static);
-	    auto box = new BoxColliderComponent(objectActor, object.size);
+	    auto box = new BoxColliderComponent(objectActor, object.size * Game::PixelsToUnits);
 	    box->SetCollisionFilter(CollisionCategory::Ground, CollisionCategory::Default);
 	}
     }

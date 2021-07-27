@@ -38,8 +38,8 @@ namespace {
 	imagePath << "assets/" << imageName;
 
 	return TileSet(game->GetRenderer()->GetTexture(imagePath.str()),
-		       tileSetNode.attribute("tilewidth").as_int() * Game::PixelsToUnits,
-		       tileSetNode.attribute("tileheight").as_int() * Game::PixelsToUnits,
+		       tileSetNode.attribute("tilewidth").as_int(),
+		       tileSetNode.attribute("tileheight").as_int(),
 		       tileSetNode.attribute("tilecount").as_int(),
 		       tileSetNode.attribute("columns").as_int());
     }
@@ -58,7 +58,7 @@ namespace {
     }
 
     std::vector<Tile> CreateTiles(const std::vector<int>& tileIds, TileSet tileSet,
-					int layerWidth, int layerHeight) {
+				  int layerWidth, int layerHeight) {
 	std::vector<Tile> tiles;
 	for (int row = 0; row < layerHeight; ++row) {
 	    for (int col = 0; col < layerWidth; ++col) {
@@ -87,8 +87,8 @@ namespace {
 		auto width = objectNode.attribute("width").as_int();
 		auto height = objectNode.attribute("height").as_int();
 
-		auto position = Vector2(x, y) * Game::PixelsToUnits;
-		auto size = Vector2(width, height) * Game::PixelsToUnits;
+		auto position = Vector2(x, y);
+		auto size = Vector2(width, height);
 		auto object = Rectangle(position, size);
 
 		objects.push_back(object);

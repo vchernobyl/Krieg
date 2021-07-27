@@ -9,4 +9,7 @@ public:
     void Draw(class Renderer* renderer);
 private:
     TileMap tileMap;
+
+    float tileWidth;
+    float tileHeight;
 };
