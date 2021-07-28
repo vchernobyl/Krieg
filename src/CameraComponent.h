@@ -5,7 +5,7 @@
 
 class CameraComponent : public Component {
 public:
-    CameraComponent(class Actor* owner);
+    CameraComponent(class Actor* owner, int updateOrder = 300);
     void Update(float deltaTime) override;
     void SetBounds(const Rectangle& bounds) { this->bounds = bounds; }
 private:
@@ -14,4 +14,7 @@ private:
     Vector2 position;
     Vector2 viewport;
     Rectangle bounds;
+
+    float velocityX = 0.0f;
+    float velocityY = 0.0f;
 };
