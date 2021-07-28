@@ -71,7 +71,7 @@ void Bullet::OnBeginContact(const Contact& contact) {
 }
 
 Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
-    SetPosition(Vector2(2, 20));
+    SetPosition(Vector2(20, 15));
     SetScale(2.0f);
 
     sprite = new SpriteComponent(this);
