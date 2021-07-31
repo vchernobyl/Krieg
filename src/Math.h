@@ -188,6 +188,10 @@ public:
 	return a.x * b.y - a.y * b.x;
     }
 
+    static float Distance(const Vector2& a, const Vector2& b) {
+	return (b - a).LengthSq();
+    }
+
     static Vector2 Reflect(const Vector2& v, const Vector2& n) {
 	return v - 2.0f * Vector2::Dot(v, n) * n;
     }

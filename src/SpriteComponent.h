@@ -8,6 +8,7 @@ class Actor;
 class Texture;
 class Renderer;
 
+// TODO: This should probably be moved to the Texture class.
 enum SpriteEffect {
     None             = 0,
     FlipHorizontally = 1,

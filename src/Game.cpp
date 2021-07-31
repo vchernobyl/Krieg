@@ -167,7 +167,7 @@ void Game::UpdateGame() {
 void Game::DrawGame() {
     renderer->Begin();
 
-//    tileMapRenderer->Draw(renderer);
+    tileMapRenderer->Draw(renderer);
     renderer->Draw();
 
     renderer->End();
