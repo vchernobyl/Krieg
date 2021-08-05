@@ -175,10 +175,21 @@ July:
 32. Implement camera as a component. [DONE]
 33. Remove Color struct from debug renderer and use Vector3/4 instead. What the fuck was I thinking? [DONE]
 34. Fix camera component lagging behind the owner. Probably because position is being updated in the physics step. [DONE]
-35. Fix camera/world stutter when using smooth camera follow. [IN PROGRESS]
-36. Update the camera component inside the late update. [DONE]
-37. Faster bullets
-38. Camera shake.
+35. Update the camera component inside the late update. [DONE]
+
+August:
+-------
+1. Faster bullets
+2. Camera shake.
+3. Fix camera/world stutter when using smooth camera follow.
+4. Add /Fo flag to the build script to keep intermediate object files separately from the executables.
+
+Notes from 'Game Engine Architecture':
+- Whenever we want to express a IS-A relationship via inheritence, think about whether or not
+  it could be expressed better as a HAS-A relationship. Should AnimatedSprite inherit from Sprite?
+  Maybe it could be designed better without inheritende and with a composition instead.
+- C++11 has a very useful 'final' keyword to restrict overriding of virtual functions and
+  inheriting from class/struct which wasn't designed for it.
 
 Backlog
 -------
