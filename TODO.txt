@@ -179,10 +179,12 @@ July:
 
 August:
 -------
-1. Faster bullets. [IN PROGRESS]
+1. Faster bullets. [DONE]
 2. Camera shake.
 3. Fix camera/world stutter when using smooth camera follow.
 4. Add /Fo flag to the build script to keep intermediate object files separately from the executables.
+5. Merge SDL_image and SDL externals into a single folder. [DONE]
+6. Convert rendering to use OpenGL. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

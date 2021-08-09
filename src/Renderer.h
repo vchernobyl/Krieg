@@ -47,6 +47,7 @@ private:
     
     SDL_Window* window;
     SDL_Renderer* renderer;
+    SDL_GLContext context;
 
     std::vector<SpriteComponent*> sprites;
     std::vector<ParticleEmitterComponent*> particles;

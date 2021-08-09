@@ -6,6 +6,7 @@
 #include "DebugRenderer.h"
 
 #include <SDL_image.h>
+#include <glew.h>
 #include <algorithm>
 
 Renderer::Renderer(Game* game) : game(game) {}
@@ -16,11 +17,41 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 	return false;
     }
 
-    window = SDL_CreateWindow("Game", 100, 100, windowWidth, windowHeight, 0);
+    // Disable deprecated OpenGL functions.
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+    // Set OpenGL version to 3.3.
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+    SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+
+    // Set 8-bits per RGBA channel.
+    SDL_GL_SetAttribute(SDL_GL_RED_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_GREEN_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_BLUE_SIZE, 8);
+    SDL_GL_SetAttribute(SDL_GL_ALPHA_SIZE, 8);
+
+    // Enable double buffer.
+    SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
+    // Enable hardware acceleration.
+    SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
+
+    window = SDL_CreateWindow("Game", 100, 100, windowWidth, windowHeight, SDL_WINDOW_OPENGL);
     if (!window) {
 	SDL_Log("Unable to create a window: %s", SDL_GetError());
 	return false;
     }
+
+    context = SDL_GL_CreateContext(window);
+    
+    glewExperimental = GL_TRUE;
+    if (glewInit() != GLEW_OK) {
+	SDL_Log("Failed to initialize GLEW.");
+	return false;
+    }
+
+    // Clear benign error.
+//    glGetError();
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer) {
@@ -40,6 +71,7 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 
 void Renderer::Shutdown() {
     SDL_DestroyRenderer(renderer);
+    SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
 }
 
