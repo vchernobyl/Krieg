@@ -19,10 +19,10 @@ private:
 
 class Bullet : public Actor {
 public:
-    Bullet(Game* game, Vector2 direction, Vector2 position);
+    Bullet(Game* game, const Vector2& direction, const Vector2& position, const Vector2& velocity);
     void OnBeginContact(const Contact& contact) override;
 private:
-    static constexpr float Speed = 15.0f;
+    static constexpr float Speed = 35.0f;
     static constexpr float SpreadVariation = 0.4f;
 };    
 

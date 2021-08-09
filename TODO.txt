@@ -179,7 +179,7 @@ July:
 
 August:
 -------
-1. Faster bullets
+1. Faster bullets. [IN PROGRESS]
 2. Camera shake.
 3. Fix camera/world stutter when using smooth camera follow.
 4. Add /Fo flag to the build script to keep intermediate object files separately from the executables.
