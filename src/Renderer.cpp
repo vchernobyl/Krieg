@@ -5,8 +5,8 @@
 #include "ParticleEmitterComponent.h"
 #include "DebugRenderer.h"
 
-#include <SDL_image.h>
 #include <glew.h>
+#include <SDL_image.h>
 #include <algorithm>
 
 Renderer::Renderer(Game* game) : game(game) {}
@@ -51,7 +51,7 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
     }
 
     // Clear benign error.
-//    glGetError();
+    glGetError();
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer) {
