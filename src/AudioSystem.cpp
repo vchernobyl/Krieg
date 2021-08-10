@@ -26,8 +26,8 @@ bool AudioSystem::Initialize() {
 	return false;
     }
     
-    LoadBank("assets/Master.strings.bank");
-    LoadBank("assets/Master.bank");
+    LoadBank("data/Master.strings.bank");
+    LoadBank("data/Master.bank");
 	
     return true;
 }

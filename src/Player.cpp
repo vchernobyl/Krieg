@@ -16,7 +16,7 @@ MuzzleFlash::MuzzleFlash(Game* game) : Actor(game) {
     SetScale(2.0f);
     
     auto sprite = new SpriteComponent(this, 200);
-    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Muzzle.png"));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("data/Muzzle.png"));
 }
 
 void MuzzleFlash::UpdateActor(float deltaTime) {
@@ -31,7 +31,7 @@ Bullet::Bullet(Game* game, const Vector2& direction, const Vector2& position, co
     SetPosition(position);
 
     auto sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Bullet.png"));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("data/Bullet.png"));
 
     auto rigidbody = new RigidbodyComponent(this);
     auto newDirection = Vector2(direction.x * Speed + velocity.x,
@@ -52,7 +52,7 @@ void Bullet::OnBeginContact(const Contact& contact) {
 
     auto sparks = new Actor(GetGame());
     auto particles = new ParticleEmitterComponent(sparks);
-    particles->SetTexture(GetGame()->GetRenderer()->GetTexture("assets/Particle.png"));
+    particles->SetTexture(GetGame()->GetRenderer()->GetTexture("data/Particle.png"));
     particles->SetOnEmissionEnd([sparks]() { sparks->Destroy(); });
 
     ParticleProps props;
@@ -76,7 +76,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     SetScale(2.0f);
 
     sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Player.png"));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("data/Player.png"));
 
     auto center = sprite->GetSize() * GetScale() * 0.5f;
     auto circle = new CircleColliderComponent(this, center, 0.5f);
@@ -85,7 +85,7 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     audio = new AudioComponent(this);
     
     particles = new ParticleEmitterComponent(this);
-    particles->SetTexture(game->GetRenderer()->GetTexture("assets/Particle.png"));
+    particles->SetTexture(game->GetRenderer()->GetTexture("data/Particle.png"));
 
     auto camera = new CameraComponent(this);
     camera->SetBounds(Rectangle(0, 0, 42, 32));

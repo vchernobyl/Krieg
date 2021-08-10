@@ -35,7 +35,7 @@ namespace {
 	auto tileSetNode = root.child("tileset");
 	auto imageName = tileSetNode.child("image").attribute("source").value();
 	std::stringstream imagePath;
-	imagePath << "assets/" << imageName;
+	imagePath << "data/" << imageName;
 
 	return TileSet(game->GetRenderer()->GetTexture(imagePath.str()),
 		       tileSetNode.attribute("tilewidth").as_int(),
