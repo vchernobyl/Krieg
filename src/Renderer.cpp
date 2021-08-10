@@ -83,12 +83,14 @@ void Renderer::UnloadData() {
     textures.clear();
 }
 
-void Renderer::Begin() {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderClear(renderer);
-}
-
 void Renderer::Draw() {
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    // TODO: Sprites, particles, tilemap etc. should all be places in a single polymorphic collection.
+    // In that case we won't have to create a separate collection for separate drawables. Also they
+    // will all be properly sorted between themselves via the `drawOrder` field.
+    // An interface with Draw(Renderer*) and GetDrawOrder() should do the job.
     for (auto sprite : sprites) {
 	sprite->Draw(this);
     }
@@ -98,10 +100,8 @@ void Renderer::Draw() {
     }
 
     DebugRenderer::Draw(this);
-}
 
-void Renderer::End() {
-    SDL_RenderPresent(renderer);
+    SDL_GL_SwapWindow(window);
 }
 
 void Renderer::DrawTexture(const Texture* texture, const Rectangle& src, const Rectangle& dst,

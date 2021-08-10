@@ -23,10 +23,7 @@ public:
     void Shutdown();
     void UnloadData();
 
-    void Begin();
     void Draw();
-    void End();
-
     void DrawTexture(const Texture* texture, const Rectangle& src, const Rectangle& dst,
 		     double angle, SpriteEffect effect);
 
