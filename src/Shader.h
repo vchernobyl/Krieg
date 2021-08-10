@@ -9,6 +9,7 @@ public:
     ~Shader();
 
     bool Load(const std::string& vertName, const std::string& fragName);
+    void Unload();
     void SetActive();
 
 private:
