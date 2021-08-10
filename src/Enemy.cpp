@@ -12,7 +12,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
     SetScale(2.0f);
 
     sprite = new SpriteComponent(this);
-    sprite->SetTexture(game->GetRenderer()->GetTexture("assets/Enemy.png"));
+    sprite->SetTexture(game->GetRenderer()->GetTexture("data/Enemy.png"));
     sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 
     rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
