@@ -96,16 +96,15 @@ void Renderer::Draw() {
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
+    spriteShader->SetActive();
+    spriteVertices->SetActive();
+
     // TODO: Sprites, particles, tilemap etc. should all be places in a single polymorphic collection.
     // In that case we won't have to create a separate collection for separate drawables. Also they
     // will all be properly sorted between themselves via the `drawOrder` field.
     // An interface with Draw(Renderer*) and GetDrawOrder() should do the job.
     for (auto sprite : sprites) {
-	sprite->Draw(this);
-    }
-
-    for (auto emitter : particles) {
-	emitter->Draw(this);
+	sprite->Draw(spriteShader);
     }
 
     DebugRenderer::Draw(this);
@@ -201,7 +200,7 @@ void Renderer::CreateSpriteVertices() {
 	2, 3, 0
     };
 
-    spriteVerts = new VertexArray(vertices, 4, indices, 6);
+    spriteVertices = new VertexArray(vertices, 4, indices, 6);
 }
 
 bool Renderer::LoadShaders() {

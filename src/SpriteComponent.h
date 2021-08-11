@@ -4,10 +4,6 @@
 #include "Math.h"
 #include "Game.h"
 
-class Actor;
-class Texture;
-class Renderer;
-
 // TODO: This should probably be moved to the Texture class.
 enum SpriteEffect {
     None             = 0,
@@ -19,11 +15,11 @@ class SpriteComponent : public Component {
 public:
     bool flipX, flipY;
 
-    SpriteComponent(Actor* owner, int drawOrder = 100);
+    SpriteComponent(class Actor* owner, int drawOrder = 100);
     ~SpriteComponent();
 
-    void Draw(Renderer* renderer);
-    void SetTexture(Texture* texture);
+    void Draw(class Shader* shader);
+    void SetTexture(class Texture* texture);
 
     int GetDrawOrder() const { return drawOrder; }
     Vector2 GetSize() const { return region.size * Game::PixelsToUnits; }
@@ -31,7 +27,7 @@ public:
     void SetDrawRegion(const Rectangle& region) { this->region = region; }
 
 protected:
-    Texture* texture;
+    class Texture* texture;
     Rectangle region;
 
     int drawOrder;

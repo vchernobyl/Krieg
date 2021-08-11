@@ -2,6 +2,7 @@
 #include "Actor.h"
 #include "Renderer.h"
 #include "Texture.h"
+#include "Shader.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
@@ -16,17 +17,8 @@ SpriteComponent::~SpriteComponent() {
     owner->GetGame()->GetRenderer()->RemoveSprite(this);
 }
 
-void SpriteComponent::Draw(Renderer* renderer) {
-    if (!texture) return;
-
-    const auto size = region.size * Game::PixelsToUnits;
-    const auto dst = Rectangle(owner->GetPosition(), size * owner->GetScale());
-
-    auto effect = SpriteEffect::None;
-    if (flipX) effect = static_cast<SpriteEffect>(effect | FlipHorizontally);
-    if (flipY) effect = static_cast<SpriteEffect>(effect | FlipVertically);
-
-    renderer->DrawTexture(texture, region, dst, 0, effect);
+void SpriteComponent::Draw(Shader* shader) {
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 
 void SpriteComponent::SetTexture(Texture* texture) {

@@ -20,6 +20,7 @@ class Renderer;
 class Texture;
 
 // TODO: Probably need to rename to ParticleComponent.
+// TODO: Convert to OpenGL.
 class ParticleEmitterComponent : public Component {
 public:
     ParticleEmitterComponent(Actor* owner, int drawOrder = 200);

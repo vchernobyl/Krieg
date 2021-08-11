@@ -51,7 +51,7 @@ private:
     SDL_Renderer* renderer;
     SDL_GLContext context;
 
-    VertexArray* spriteVerts;
+    VertexArray* spriteVertices;
     Shader* spriteShader;
 
     std::vector<SpriteComponent*> sprites;
