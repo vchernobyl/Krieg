@@ -4,12 +4,6 @@
 #include <fstream>
 #include <sstream>
 
-Shader::Shader() {
-}
-
-Shader::~Shader() {
-}
-
 bool Shader::Load(const std::string& vertName, const std::string& fragName) {
     if (!CompileShader(vertName, GL_VERTEX_SHADER, vertexShader) ||
 	!CompileShader(fragName, GL_FRAGMENT_SHADER, fragmentShader)) {

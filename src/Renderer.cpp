@@ -4,6 +4,8 @@
 #include "Texture.h"
 #include "ParticleEmitterComponent.h"
 #include "DebugRenderer.h"
+#include "VertexArray.h"
+#include "Shader.h"
 
 #include <glew.h>
 #include <SDL_image.h>
@@ -52,6 +54,13 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 
     // Clear benign error.
     glGetError();
+
+    if (!LoadShaders()) {
+	SDL_Log("Failed to load shaders.");
+	return false;
+    }
+
+    CreateSpriteVertices();
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer) {
@@ -176,4 +185,31 @@ void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
     if (iter != particles.end()) {
 	particles.erase(iter);
     }
+}
+
+
+void Renderer::CreateSpriteVertices() {
+    const float vertices[] = {
+	-0.5f, 0.5f, 0.f,
+	0.5f, 0.5f, 0.f,
+	0.5f, -0.5f, 0.f,
+	-0.5f, -0.5f, 0.f
+    };
+
+    const unsigned int indices[] = {
+	0, 1, 2,
+	2, 3, 0
+    };
+
+    spriteVerts = new VertexArray(vertices, 4, indices, 6);
+}
+
+bool Renderer::LoadShaders() {
+    spriteShader = new Shader();
+    if (!spriteShader->Load("data/shaders/Basic.vert", "data/shaders/Basic.frag")) {
+	return false;
+    }
+
+    spriteShader->SetActive();
+    return true;
 }

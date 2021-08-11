@@ -11,6 +11,7 @@ class InputSystem;
 class TileMapRenderer;
 class TileMap;
 class VertexArray;
+class Shader;
 
 class Game {
 public:
@@ -33,9 +34,6 @@ private:
     void LoadData();
     void UnloadData();
 
-    // TODO: Remove this later.
-    void CreateSpriteVerts();
-
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
 
@@ -46,7 +44,6 @@ private:
 
     // Game specific - will be in a Scene later on
     TileMapRenderer* tileMapRenderer;
-    VertexArray* spriteVerts;
 
     bool isRunning;
     bool updatingActors;

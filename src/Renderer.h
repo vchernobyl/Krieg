@@ -15,6 +15,8 @@ class Vector2;
 class Rectangle;
 class SpriteComponent;
 class ParticleEmitterComponent;
+class VertexArray;
+class Shader;
 
 class Renderer {
 public:
@@ -41,10 +43,16 @@ public:
     
 private:
     friend class DebugRenderer;
+
+    bool LoadShaders();
+    void CreateSpriteVertices();
     
     SDL_Window* window;
     SDL_Renderer* renderer;
     SDL_GLContext context;
+
+    VertexArray* spriteVerts;
+    Shader* spriteShader;
 
     std::vector<SpriteComponent*> sprites;
     std::vector<ParticleEmitterComponent*> particles;

@@ -50,6 +50,7 @@ private:
 
 class TileMap {
 public:
+    // TODO: Pass the texture directly instead of game.
     TileMap(Game* game, const std::string& filename);
 
     const std::vector<TileMapLayer>& GetLayers() const { return layers; }

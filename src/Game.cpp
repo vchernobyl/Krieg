@@ -1,19 +1,17 @@
 #include "Game.h"
 #include "Actor.h"
-#include "InputSystem.h"
 #include "AudioSystem.h"
+#include "InputSystem.h"
 #include "PhysicsWorld.h"
 #include "Renderer.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
-#include "ParticleEmitterComponent.h"
 #include "TileMap.h"
 #include "TileMapRenderer.h"
 #include "Player.h"
 #include "Enemy.h"
 #include "Random.h"
 #include "Math.h"
-#include "VertexArray.h"
 
 #include <algorithm>
 #include <memory>
@@ -194,25 +192,8 @@ void Game::UnloadData() {
     renderer->UnloadData();
     
     delete tileMapRenderer;
-    delete spriteVerts;
 
     while (!actors.empty()) {
 	delete actors.back();
     }
-}
-
-void Game::CreateSpriteVerts() {
-    const float vertices[] = {
-	-0.5f, 0.5f, 0.f,
-	0.5f, 0.5f, 0.f,
-	0.5f, -0.5f, 0.f,
-	-0.5f, -0.5f, 0.f
-    };
-
-    const unsigned int indices[] = {
-	0, 1, 2,
-	2, 3, 0
-    };
-
-    spriteVerts = new VertexArray(vertices, 4, indices, 6);
 }

@@ -5,9 +5,6 @@
 
 class Shader {
 public:
-    Shader();
-    ~Shader();
-
     bool Load(const std::string& vertName, const std::string& fragName);
     void Unload();
     void SetActive();
@@ -17,7 +14,7 @@ private:
     bool IsCompiled(GLuint shader);
     bool IsValidProgram();
 
-    GLuint vertexShader;
-    GLuint fragmentShader;
-    GLuint shaderProgram;
+    GLuint vertexShader = 0;
+    GLuint fragmentShader = 0;
+    GLuint shaderProgram = 0;
 };
