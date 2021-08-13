@@ -233,6 +233,48 @@ public:
 	return Vector3(v.x * scalar, v.y * scalar, v.z * scalar);
     }
 
+    Vector3& operator*=(float scalar) {
+	x *= scalar;
+	y *= scalar;
+	z *= scalar;
+	return *this;
+    }
+
+    Vector3& operator+=(const Vector3& right) {
+	x += right.x;
+	y += right.y;
+	z += right.z;
+	return *this;
+    }
+
+    Vector3& operator-=(const Vector3& right) {
+	x -= right.x;
+	y -= right.y;
+	z -= right.z;
+	return *this;
+    }
+
+    float LengthSq() const {
+	return (x*x + y*y + z*z);
+    }
+
+    float Length() const {
+	return Math::Sqrt(LengthSq());
+    }
+
+    void Normalize() {
+	float length = Length();
+	x /= length;
+	y /= length;
+	z /= length;
+    }
+
+    static Vector3 Normalize(const Vector3& vec) {
+	Vector3 temp = vec;
+	temp.Normalize();
+	return temp;
+    }
+
     static Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
 	if (t < 0.0f) return a;
 	if (t > 1.0f) return b;
@@ -281,4 +323,133 @@ public:
     
     bool Contains(const Vector2& point) const;
     bool Intersects(const Rectangle& rect) const;
+};
+
+class Matrix4 {
+public:
+    float mat[4][4];
+
+    Matrix4() { *this = Matrix4::Identity; }
+
+    explicit Matrix4(float inMat[4][4]) { memcpy(mat, inMat, 16 * sizeof(float)); }
+
+    friend Matrix4 operator*(const Matrix4& a, const Matrix4& b) {
+	Matrix4 retVal;
+	// row 0
+	retVal.mat[0][0] = 
+	    a.mat[0][0] * b.mat[0][0] + 
+	    a.mat[0][1] * b.mat[1][0] + 
+	    a.mat[0][2] * b.mat[2][0] +
+	    a.mat[0][3] * b.mat[3][0];
+
+	retVal.mat[0][1] = 
+	    a.mat[0][0] * b.mat[0][1] + 
+	    a.mat[0][1] * b.mat[1][1] + 
+	    a.mat[0][2] * b.mat[2][1] + 
+	    a.mat[0][3] * b.mat[3][1];
+
+	retVal.mat[0][2] = 
+	    a.mat[0][0] * b.mat[0][2] + 
+	    a.mat[0][1] * b.mat[1][2] + 
+	    a.mat[0][2] * b.mat[2][2] + 
+	    a.mat[0][3] * b.mat[3][2];
+		
+	retVal.mat[0][3] = 
+	    a.mat[0][0] * b.mat[0][3] + 
+	    a.mat[0][1] * b.mat[1][3] + 
+	    a.mat[0][2] * b.mat[2][3] + 
+	    a.mat[0][3] * b.mat[3][3];
+
+	// row 1
+	retVal.mat[1][0] = 
+	    a.mat[1][0] * b.mat[0][0] + 
+	    a.mat[1][1] * b.mat[1][0] + 
+	    a.mat[1][2] * b.mat[2][0] + 
+	    a.mat[1][3] * b.mat[3][0];
+
+	retVal.mat[1][1] = 
+	    a.mat[1][0] * b.mat[0][1] + 
+	    a.mat[1][1] * b.mat[1][1] + 
+	    a.mat[1][2] * b.mat[2][1] + 
+	    a.mat[1][3] * b.mat[3][1];
+
+	retVal.mat[1][2] = 
+	    a.mat[1][0] * b.mat[0][2] + 
+	    a.mat[1][1] * b.mat[1][2] + 
+	    a.mat[1][2] * b.mat[2][2] + 
+	    a.mat[1][3] * b.mat[3][2];
+
+	retVal.mat[1][3] = 
+	    a.mat[1][0] * b.mat[0][3] +
+	    a.mat[1][1] * b.mat[1][3] +
+	    a.mat[1][2] * b.mat[2][3] +
+	    a.mat[1][3] * b.mat[3][3];
+
+	// row 2
+	retVal.mat[2][0] = 
+	    a.mat[2][0] * b.mat[0][0] +
+	    a.mat[2][1] * b.mat[1][0] +
+	    a.mat[2][2] * b.mat[2][0] +
+	    a.mat[2][3] * b.mat[3][0];
+
+	retVal.mat[2][1] = 
+	    a.mat[2][0] * b.mat[0][1] + 
+	    a.mat[2][1] * b.mat[1][1] + 
+	    a.mat[2][2] * b.mat[2][1] + 
+	    a.mat[2][3] * b.mat[3][1];
+
+	retVal.mat[2][2] = 
+	    a.mat[2][0] * b.mat[0][2] +
+	    a.mat[2][1] * b.mat[1][2] + 
+	    a.mat[2][2] * b.mat[2][2] + 
+	    a.mat[2][3] * b.mat[3][2];
+
+	retVal.mat[2][3] = 
+	    a.mat[2][0] * b.mat[0][3] + 
+	    a.mat[2][1] * b.mat[1][3] + 
+	    a.mat[2][2] * b.mat[2][3] + 
+	    a.mat[2][3] * b.mat[3][3];
+
+	// row 3
+	retVal.mat[3][0] = 
+	    a.mat[3][0] * b.mat[0][0] + 
+	    a.mat[3][1] * b.mat[1][0] + 
+	    a.mat[3][2] * b.mat[2][0] + 
+	    a.mat[3][3] * b.mat[3][0];
+
+	retVal.mat[3][1] = 
+	    a.mat[3][0] * b.mat[0][1] + 
+	    a.mat[3][1] * b.mat[1][1] + 
+	    a.mat[3][2] * b.mat[2][1] + 
+	    a.mat[3][3] * b.mat[3][1];
+
+	retVal.mat[3][2] = 
+	    a.mat[3][0] * b.mat[0][2] +
+	    a.mat[3][1] * b.mat[1][2] +
+	    a.mat[3][2] * b.mat[2][2] +
+	    a.mat[3][3] * b.mat[3][2];
+
+	retVal.mat[3][3] = 
+	    a.mat[3][0] * b.mat[0][3] +
+	    a.mat[3][1] * b.mat[1][3] +
+	    a.mat[3][2] * b.mat[2][3] +
+	    a.mat[3][3] * b.mat[3][3];
+		
+	return retVal;
+    }
+
+    Matrix4 operator*=(const Matrix4& right)  {
+	*this = *this * right;
+	return *this;
+    }
+
+    Vector3 GetTranslation() const {
+	return Vector3(mat[3][0], mat[3][1], mat[3][2]);
+    }
+
+    Vector3 GetXAxis() const {
+	return Vector3::Normalize(Vector3(mat[0][0], mat[0][1], mat[0][2]));
+    }
+
+    static const Matrix4 Identity;
 };
