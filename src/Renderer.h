@@ -37,8 +37,6 @@ public:
     void AddParticles(ParticleEmitterComponent* emitter);
     void RemoveParticles(ParticleEmitterComponent* emitter);
     
-    void SetView(const Vector2& view) { cameraView = view; }
-    const Vector2& GetView() const { return cameraView; }
     const Vector2& GetWindowSize() const { return windowSize; }
     
 private:
@@ -61,6 +59,5 @@ private:
 
     Game* game;
 
-    Vector2 cameraView;
     Vector2 windowSize;
 };

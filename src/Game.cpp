@@ -145,6 +145,7 @@ void Game::UpdateGame() {
     updatingActors = false;
 
     for (auto pending : pendingActors) {
+	pending->ComputeWorldTransform();
 	actors.emplace_back(pending);
     }
     pendingActors.clear();

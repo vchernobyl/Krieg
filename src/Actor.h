@@ -23,16 +23,18 @@ public:
     virtual ~Actor();
 
     const Vector2& GetPosition() const { return position; }
-    void SetPosition(const Vector2& v) { position = v; }
-    void Translate(const Vector2& v) { position += v; }
+    void SetPosition(const Vector2& v) { position = v; recomputeWorldTransform = true; }
 
     float GetScale() const { return scale; }
-    void SetScale(float scale) { this->scale = scale; }
+    void SetScale(float scale) { this->scale = scale; recomputeWorldTransform = true; }
 
     float GetRotation() const { return rotation; }
-    void SetRotation(float rotation) { this->rotation = rotation; }
+    void SetRotation(float rotation) { this->rotation = rotation; recomputeWorldTransform = true; }
 
-    Vector2 GetForward() const { return Vector2(Math::Cos(rotation), -Math::Sin(rotation)); }
+    void ComputeWorldTransform();
+    const Matrix4& GetWorldTransform() const { return worldTransform; }
+
+    Vector2 GetForward() const { return Vector2(Math::Cos(rotation), Math::Sin(rotation)); }
 
     ActorState GetState() const { return actorState; }
     void SetState(ActorState s) { actorState = s; }
@@ -63,9 +65,13 @@ public:
 
 private:
     ActorState actorState;
+
+    Matrix4 worldTransform;
     Vector2 position;
     float scale;
     float rotation; // In radians
+    bool recomputeWorldTransform;
+
     std::vector<Component*> components;
     Game* game;
 };

@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "Game.h"
 #include "Renderer.h"
-#include "CameraComponent.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
 #include "CircleColliderComponent.h"
@@ -86,9 +85,6 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
     
     particles = new ParticleEmitterComponent(this);
     particles->SetTexture(game->GetRenderer()->GetTexture("data/Particle.png"));
-
-    auto camera = new CameraComponent(this);
-    camera->SetBounds(Rectangle(0, 0, 42, 32));
 }
 
 void Player::ActorInput(const InputState& inputState) {

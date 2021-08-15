@@ -114,27 +114,7 @@ void Renderer::Draw() {
 
 void Renderer::DrawTexture(const Texture* texture, const Rectangle& src, const Rectangle& dst,
 			   double angle, SpriteEffect effect) {
-    SDL_Rect srcRect;
-    srcRect.x = src.position.x;
-    srcRect.y = src.position.y;
-    srcRect.w = src.size.x;
-    srcRect.h = src.size.y;
-
-    SDL_Rect dstRect;
-    dstRect.x = (dst.position.x - cameraView.x) * Game::UnitsToPixels;
-    dstRect.y = (dst.position.y - cameraView.y) * Game::UnitsToPixels;
-    dstRect.w = dst.size.x * Game::UnitsToPixels;
-    dstRect.h = dst.size.y * Game::UnitsToPixels;
-
-    SDL_RendererFlip flip = SDL_FLIP_NONE;
-
-    if ((effect & SpriteEffect::FlipHorizontally) != 0)
-	flip = static_cast<SDL_RendererFlip>(flip | SDL_FLIP_HORIZONTAL);
-
-    if ((effect & SpriteEffect::FlipVertically) != 0)
-	flip = static_cast<SDL_RendererFlip>(flip | SDL_FLIP_VERTICAL);
-
-    SDL_RenderCopyEx(renderer, texture->texture, &srcRect, &dstRect, angle, nullptr, flip);
+    // TODO: Implement this bitch later on.
 }
 
 Texture* Renderer::GetTexture(const std::string& fileName) {
@@ -205,10 +185,14 @@ void Renderer::CreateSpriteVertices() {
 
 bool Renderer::LoadShaders() {
     spriteShader = new Shader();
-    if (!spriteShader->Load("data/shaders/Basic.vert", "data/shaders/Basic.frag")) {
+    if (!spriteShader->Load("data/shaders/Transform.vert", "data/shaders/Basic.frag")) {
 	return false;
     }
 
     spriteShader->SetActive();
+
+    Matrix4 viewProjection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
+    spriteShader->SetMatrixUniform("viewProjection", viewProjection);
+
     return true;
 }

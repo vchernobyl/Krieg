@@ -18,6 +18,10 @@ SpriteComponent::~SpriteComponent() {
 }
 
 void SpriteComponent::Draw(Shader* shader) {
+    Vector2 size = texture->GetSize();
+    Matrix4 scale = Matrix4::CreateScale(size.x, size.y, 1.0f);
+    Matrix4 world = scale * owner->GetWorldTransform();
+    shader->SetMatrixUniform("worldTransform", world);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 }
 

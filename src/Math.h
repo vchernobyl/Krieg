@@ -333,6 +333,10 @@ public:
 
     explicit Matrix4(float inMat[4][4]) { memcpy(mat, inMat, 16 * sizeof(float)); }
 
+    const float* GetAsFloatPtr() const {
+	return reinterpret_cast<const float*>(&mat[0][0]);
+    }
+
     friend Matrix4 operator*(const Matrix4& a, const Matrix4& b) {
 	Matrix4 retVal;
 	// row 0
@@ -451,5 +455,89 @@ public:
 	return Vector3::Normalize(Vector3(mat[0][0], mat[0][1], mat[0][2]));
     }
 
+    Vector3 GetYAxis() const {
+	return Vector3::Normalize(Vector3(mat[1][0], mat[1][1], mat[1][2]));
+    }
+
+    Vector3 GetZAxis() const {
+	return Vector3::Normalize(Vector3(mat[2][0], mat[2][1], mat[2][2]));
+    }
+
+    Vector3 GetScale() const {
+	Vector3 scale;
+	scale.x = Vector3(mat[0][0], mat[0][1], mat[0][2]).Length();
+	scale.y = Vector3(mat[1][0], mat[1][1], mat[1][2]).Length();
+	scale.z = Vector3(mat[2][0], mat[2][1], mat[2][2]).Length();
+	return scale;
+    }
+
+    static Matrix4 CreateScale(float xScale, float yScale, float zScale) {
+	float scale[4][4] = {
+	    { xScale, 0.0f, 0.0f, 0.0f },
+	    { 0.0f, yScale, 0.0f, 0.0f },
+	    { 0.0f, 0.0f, zScale, 0.0f },
+	    { 0.0f, 0.0f, 0.0f, 1.0f },
+	};
+	return Matrix4(scale);
+    }
+
+    static Matrix4 CreateScale(const Vector3& scale) {
+	return CreateScale(scale.x, scale.y, scale.y);
+    }
+
+    static Matrix4 CreateScale(float scale) {
+	return CreateScale(scale, scale, scale);
+    }
+
+    static Matrix4 CreateRotationX(float theta) {
+	float rotation[4][4] = {
+	    { 1.0f, 0.0f, 0.0f, 0.0f },
+	    { 0.0f, Math::Cos(theta), Math::Sin(theta), 0.0f },
+	    { 0.0f, -Math::Sin(theta), Math::Cos(theta), 0.0f },
+	    { 0.0f, 0.0f, 0.0f, 1.0f }
+	};
+	return Matrix4(rotation);
+    }
+
+    static Matrix4 CreateRotationY(float theta) {
+	float rotation[4][4] = {
+	    { Math::Cos(theta), 0.0f, -Math::Sin(theta), 0.0f },
+	    { 0.0f, 1.0f, 0.0f, 0.0f },
+	    { Math::Sin(theta), 0.0f, Math::Cos(theta), 0.0f },
+	    { 0.0f, 0.0f, 0.0f, 1.0f }
+	};
+	return Matrix4(rotation);
+    }
+
+    static Matrix4 CreateRotationZ(float theta) {
+	float rotation[4][4] = {
+	    { Math::Cos(theta), Math::Sin(theta), 0.0f, 0.0f },
+	    { -Math::Sin(theta), Math::Cos(theta), 0.0f, 0.0f },
+	    { 0.0f, 0.0f, 1.0f, 0.0f },
+	    { 0.0f, 0.0f, 0.0f, 1.0f }
+	};
+	return Matrix4(rotation);
+    }
+
+    static Matrix4 CreateTranslation(const Vector3& t) {
+	float translation[4][4] = {
+	    { 1.0f, 0.0f, 0.0f, 0.0f },
+	    { 0.0f, 1.0f, 0.0f, 0.0f },
+	    { 0.0f, 0.0f, 1.0f, 0.0f },
+	    { t.x, t.y, t.z, 1.0f }
+	};
+	return Matrix4(translation);
+    }
+
+    static Matrix4 CreateSimpleViewProjection(float width, float height) {
+	float projection[4][4] = {
+	    { 2.0f/width, 0.0f, 0.0f, 0.0f },
+	    { 0.0f, 2.0f/height, 0.0f, 0.0f },
+	    { 0.0f, 0.0f, 1.0f, 0.0f },
+	    { 0.0f, 0.0f, 1.0f, 1.0f }
+	};
+	return Matrix4(projection);
+    }
+    
     static const Matrix4 Identity;
 };

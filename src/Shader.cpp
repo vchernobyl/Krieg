@@ -32,6 +32,11 @@ void Shader::SetActive() {
     glUseProgram(shaderProgram);
 }
 
+void Shader::SetMatrixUniform(const char* name, const Matrix4& matrix) {
+    GLuint loc = glGetUniformLocation(shaderProgram, name);
+    glUniformMatrix4fv(loc, 1, GL_TRUE, matrix.GetAsFloatPtr());
+}
+
 bool Shader::CompileShader(const std::string& fileName, GLenum shaderType, GLuint& outShader) {
     std::ifstream shaderFile(fileName);
     if (shaderFile.is_open()) {
