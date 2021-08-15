@@ -1,39 +1,40 @@
 #include "Texture.h"
 
+#include <SOIL.h>
 #include <SDL.h>
-#include <SDL_image.h>
+#include <glew.h>
 
-Texture::Texture() : width(0), height(0), texture(nullptr) {}
+bool Texture::Load(const std::string& fileName) {
+    int channels = 0;
+    unsigned char* image = SOIL_load_image(fileName.c_str(), &width, &height, &channels, SOIL_LOAD_AUTO);
 
-void Texture::SetColor(const Vector3& color) {
-    SDL_SetTextureColorMod(texture, color.x, color.y, color.z);
-}
-
-void Texture::SetColor(const Vector4& color) {
-    SDL_SetTextureAlphaMod(texture, color.w);
-    SDL_SetTextureColorMod(texture, color.x, color.y, color.z);
-}
-
-bool Texture::Load(const std::string& fileName, SDL_Renderer* renderer) {
-    SDL_Surface* surf = IMG_Load(fileName.c_str());
-    if (!surf) {
-	SDL_Log("Failed to load texture file %s", fileName.c_str());
+    if (image == nullptr) {
+	SDL_Log("SOIL failed to load image %s: %s", fileName.c_str(), SOIL_last_result());
 	return false;
     }
 
-    texture = SDL_CreateTextureFromSurface(renderer, surf);
-    width = surf->w;
-    height = surf->h;
-    SDL_FreeSurface(surf);
-
-    if (!texture) {
-	SDL_Log("Failed to convert surface to texture for %s", fileName.c_str());
-	return false;
+    int format = GL_RGB;
+    if (channels == 4) {
+	format = GL_RGBA;
     }
+
+    glGenTextures(1, &textureID);
+    glBindTexture(GL_TEXTURE_2D, textureID);
+    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image);
+
+    SOIL_free_image_data(image);
+
+    // Enable bilinear filtering.
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
     return true;
 }
 
 void Texture::Unload() {
-    SDL_DestroyTexture(texture);
+    glDeleteTextures(1, &textureID);
+}
+
+void Texture::SetActive() {
+    glBindTexture(GL_TEXTURE_2D, textureID);
 }

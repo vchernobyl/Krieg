@@ -8,8 +8,8 @@ SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
       texture(nullptr),
       drawOrder(drawOrder),
-      flipX(false),
-      flipY(false) {
+      textureWidth(0),
+      textureHeight(0) {
     owner->GetGame()->GetRenderer()->AddSprite(this);
 }
 
@@ -18,14 +18,22 @@ SpriteComponent::~SpriteComponent() {
 }
 
 void SpriteComponent::Draw(Shader* shader) {
-    Vector2 size = texture->GetSize();
-    Matrix4 scale = Matrix4::CreateScale(size.x, size.y, 1.0f);
-    Matrix4 world = scale * owner->GetWorldTransform();
-    shader->SetMatrixUniform("worldTransform", world);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    if (texture) {
+	Matrix4 scale = Matrix4::CreateScale(
+	    static_cast<float>(textureWidth),
+	    static_cast<float>(textureHeight),
+	    1.0f);
+    
+	Matrix4 world = scale * owner->GetWorldTransform();
+	shader->SetMatrixUniform("uWorldTransform", world);
+	texture->SetActive();
+    
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+    }
 }
 
 void SpriteComponent::SetTexture(Texture* texture) {
     this->texture = texture;
-    this->region = Rectangle(Vector2::Zero, texture->GetSize());
+    this->textureWidth = texture->GetWidth();
+    this->textureHeight = texture->GetHeight();
 }

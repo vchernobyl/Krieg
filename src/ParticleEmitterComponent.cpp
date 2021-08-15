@@ -49,25 +49,6 @@ void ParticleEmitterComponent::Update(float deltaTime) {
 }
 
 void ParticleEmitterComponent::Draw(Renderer* renderer) {
-    if (!texture) return;
-
-    for (auto& particle : particlePool) {
-	if (!particle.active) continue;
-
-	auto life = particle.lifeRemaining / particle.lifetime;
-	auto color = Vector4::Lerp(particle.colorEnd, particle.colorBegin, life);
-
-	// TODO (Bug): This sets the color to the same texture pointer, making all particles
-	// to be of the same color, which is not what we want.
-	texture->SetColor(color);
-	
-	auto pos = particle.position;
-	auto size = Math::Lerp(particle.sizeEnd, particle.sizeBegin, life);
-
-	auto src = Rectangle(Vector2::Zero, texture->GetSize());
-	auto dst = Rectangle(particle.position, Vector2(size, size));
-	renderer->DrawTexture(texture, src, dst, 0, SpriteEffect::None);
-    }
 }
 
 void ParticleEmitterComponent::Emit(const ParticleProps& props, int amount) {

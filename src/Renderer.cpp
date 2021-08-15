@@ -112,11 +112,6 @@ void Renderer::Draw() {
     SDL_GL_SwapWindow(window);
 }
 
-void Renderer::DrawTexture(const Texture* texture, const Rectangle& src, const Rectangle& dst,
-			   double angle, SpriteEffect effect) {
-    // TODO: Implement this bitch later on.
-}
-
 Texture* Renderer::GetTexture(const std::string& fileName) {
     Texture* tex = nullptr;
     auto iter = textures.find(fileName);
@@ -124,7 +119,7 @@ Texture* Renderer::GetTexture(const std::string& fileName) {
 	tex = iter->second;
     } else {
 	tex = new Texture();
-	if (tex->Load(fileName, renderer)) {
+	if (tex->Load(fileName)) {
 	    textures.emplace(fileName, tex);
 	} else {
 	    delete tex;
@@ -168,11 +163,12 @@ void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
 
 
 void Renderer::CreateSpriteVertices() {
+    // Store vertex data in form (x, y, z, u, v).
     const float vertices[] = {
-	-0.5f, 0.5f, 0.f,
-	0.5f, 0.5f, 0.f,
-	0.5f, -0.5f, 0.f,
-	-0.5f, -0.5f, 0.f
+	-0.5f, 0.5f, 0.0f, 0.0f, 0.0f, // top left
+ 	0.5f, 0.5f, 0.0f, 1.0f, 0.0f,  // top right
+	0.5f, -0.5f, 0.0f, 1.0f, 1.0f, // bottom right
+	-0.5f, -0.5f, 0.0, 0.0f, 1.0f  // bottom left
     };
 
     const unsigned int indices[] = {
@@ -185,14 +181,14 @@ void Renderer::CreateSpriteVertices() {
 
 bool Renderer::LoadShaders() {
     spriteShader = new Shader();
-    if (!spriteShader->Load("data/shaders/Transform.vert", "data/shaders/Basic.frag")) {
+    if (!spriteShader->Load("data/shaders/Sprite.vert", "data/shaders/Sprite.frag")) {
 	return false;
     }
 
     spriteShader->SetActive();
 
     Matrix4 viewProjection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
-    spriteShader->SetMatrixUniform("viewProjection", viewProjection);
+    spriteShader->SetMatrixUniform("uViewProjection", viewProjection);
 
     return true;
 }

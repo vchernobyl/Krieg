@@ -4,17 +4,8 @@
 #include "Math.h"
 #include "Game.h"
 
-// TODO: This should probably be moved to the Texture class.
-enum SpriteEffect {
-    None             = 0,
-    FlipHorizontally = 1,
-    FlipVertically   = 2,
-};
-
 class SpriteComponent : public Component {
 public:
-    bool flipX, flipY;
-
     SpriteComponent(class Actor* owner, int drawOrder = 100);
     ~SpriteComponent();
 
@@ -22,13 +13,13 @@ public:
     void SetTexture(class Texture* texture);
 
     int GetDrawOrder() const { return drawOrder; }
-    Vector2 GetSize() const { return region.size * Game::PixelsToUnits; }
-
-    void SetDrawRegion(const Rectangle& region) { this->region = region; }
+    int GetTextureWidth() const { return textureWidth; }
+    int GetTextureHeight() const { return textureHeight; }
+    Vector2 GetSize() const { return Vector2(textureWidth, textureHeight); }
 
 protected:
     class Texture* texture;
-    Rectangle region;
-
     int drawOrder;
+    int textureWidth;
+    int textureHeight;
 };

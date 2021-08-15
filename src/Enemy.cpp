@@ -13,7 +13,6 @@ Enemy::Enemy(Game* game) : Actor(game) {
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/Enemy.png"));
-    sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 
     rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
 
@@ -29,7 +28,6 @@ void Enemy::UpdateActor(float deltaTime) {
 
 	// Flash the enemy for 3 full frames.
 	if (hitTime >= 0.016f * 3.0f) {
-	    sprite->SetDrawRegion(Rectangle(0, 0, 16, 16));
 	    hitTime = 0.0f;
 	    isHit = false;
 	}
@@ -39,6 +37,5 @@ void Enemy::UpdateActor(float deltaTime) {
 void Enemy::OnBeginContact(const Contact& contact) {
     if (dynamic_cast<Bullet*>(contact.other)) {
 	isHit = true;
-	sprite->SetDrawRegion(Rectangle(16, 0, 16, 16));
     }
 }

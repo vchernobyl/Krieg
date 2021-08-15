@@ -16,7 +16,7 @@ void TileMapRenderer::Draw(Renderer* renderer) {
 	    auto tileInfo = tile.tileInfo;
 	    auto src = Rectangle(tileInfo.source.position, tileInfo.source.size);
 	    auto dst = Rectangle(tile.position * Game::PixelsToUnits, Vector2(tileWidth, tileHeight));
-	    renderer->DrawTexture(tileInfo.texture, src, dst, 0, SpriteEffect::None);
+	    //renderer->DrawTexture(tileInfo.texture, src, dst, 0, SpriteEffect::None);
 	}
     }
 }

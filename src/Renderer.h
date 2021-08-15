@@ -21,14 +21,11 @@ class Shader;
 class Renderer {
 public:
     Renderer(Game*);
+
     bool Initialize(int windowWidth, int windowHeight);
     void Shutdown();
     void UnloadData();
-
     void Draw();
-    void DrawTexture(const Texture* texture, const Rectangle& src, const Rectangle& dst,
-		     double angle, SpriteEffect effect);
-
     Texture* GetTexture(const std::string& fileName);
 
     void AddSprite(SpriteComponent* sprite);

@@ -1,26 +1,18 @@
 #pragma once
 
-#include "Math.h"
 #include <string>
-
-struct SDL_Renderer;
-struct SDL_Texture;
 
 class Texture {
 public:
-    Texture();
+    bool Load(const std::string& fileName);
+    void Unload();
+    void SetActive();
 
-    Vector2 GetSize() const { return Vector2(width, height); }
-
-    void SetColor(const Vector3& color);
-    void SetColor(const Vector4& color);
+    int GetWidth() const { return width; }
+    int GetHeight() const { return height; }
 
 private:
-    friend class Renderer;
-    
-    bool Load(const std::string& fileName, SDL_Renderer* renderer);
-    void Unload();
-
-    SDL_Texture* texture;
-    int width, height;
+    unsigned int textureID = 0;
+    int width = 0;
+    int height = 0;
 };

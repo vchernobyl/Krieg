@@ -93,11 +93,9 @@ void Player::ActorInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_RIGHT)) {
 	if (velocity.x < MaxVelocity) force = Acceleration;
-	sprite->flipX = false;
 	direction = Vector2::Right;
     } else if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) {
 	if (velocity.x > -MaxVelocity) force = -Acceleration;
-	sprite->flipX = true;
 	direction = Vector2::Left;
     } else {
 	force = velocity.x * -Deceleration;
