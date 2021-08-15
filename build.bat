@@ -9,7 +9,8 @@ set include_flags=/I ..\external\box2d\include^
     /I ..\external\SDL\include^
     /I ..\external\FMOD\api\studio\include^
     /I ..\external\FMOD\api\core\include^
-    /I ..\external\glew\include\GL
+    /I ..\external\glew\include\GL^
+    /I ..\external\SOIL\include\
 
 set libs=shell32.lib^
     ..\external\pugixml\lib\pugixml.lib^
@@ -20,6 +21,7 @@ set libs=shell32.lib^
     ..\external\SDL\lib\x64\SDL2_image.lib^
     ..\external\FMOD\api\studio\lib\x64\fmodstudio_vc.lib^
     ..\external\glew\lib\x64\glew32.lib^
+    ..\external\SOIL\lib\x64\SOIL.lib^
     opengl32.lib
     
 if not exist build mkdir build
