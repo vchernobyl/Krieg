@@ -55,6 +55,8 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
     // Clear benign error.
     glGetError();
 
+    windowSize = Vector2(windowWidth, windowHeight);
+    
     if (!LoadShaders()) {
 	SDL_Log("Failed to load shaders.");
 	return false;
@@ -72,8 +74,6 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 	SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
 	return false;
     }
-
-    windowSize = Vector2(windowWidth, windowHeight);
 
     return true;
 }
