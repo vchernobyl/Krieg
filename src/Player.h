@@ -30,7 +30,6 @@ class Player : public Actor {
 public:
     Player(Game* game);
     void ActorInput(const InputState& inputState) override;
-    void UpdateActor(float deltaTime) override;
 private:
     static constexpr float MaxVelocity = 10.0f;
     static constexpr float Acceleration = 27.5f;

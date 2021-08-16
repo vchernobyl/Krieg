@@ -184,7 +184,9 @@ August:
 3. Fix camera/world stutter when using smooth camera follow.
 4. Add /Fo flag to the build script to keep intermediate object files separately from the executables.
 5. Merge SDL_image and SDL externals into a single folder. [DONE]
-6. Convert rendering to use OpenGL. [IN PROGRESS]
+6. Convert rendering to use OpenGL. [DONE]
+7. Draw tile map using the shader. [IN PROGRESS]
+8. Implement debug rendering using OpenGL.
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

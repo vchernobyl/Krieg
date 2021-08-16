@@ -140,6 +140,3 @@ void Player::ActorInput(const InputState& inputState) {
 	audio->PlayEvent("event:/Shoot");
     }
 }
-
-void Player::UpdateActor(float deltaTime) {
-}
