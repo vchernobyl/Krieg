@@ -184,13 +184,11 @@ void Renderer::CreateSpriteVertices() {
     spriteVertices = new VertexArray(vertices, 4, indices, 6);
 
     const float lineVertices[] = {
-	-0.5f, 0.0f,
-	0.5f, 0.0f
+	-0.25f, 0.5f, 0.0f, 0.0f, 0.0f,
+	0.75f, -0.5f, 0.0f, 0.0f, 0.0f
     };
 
-    const unsigned int lineIndices[] = {
-	0, 1
-    };
+    const unsigned int lineIndices[] = { 0, 1 };
 
     shapeVertices = new VertexArray(lineVertices, 2, lineIndices, 2);
 }
