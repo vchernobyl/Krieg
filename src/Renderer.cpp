@@ -93,7 +93,7 @@ void Renderer::UnloadData() {
 }
 
 void Renderer::Draw() {
-    glClearColor(0.86f, 0.86f, 0.86f, 1.0f);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 
     glEnable(GL_BLEND);
@@ -110,7 +110,9 @@ void Renderer::Draw() {
 	sprite->Draw(spriteShader);
     }
 
-    DebugRenderer::Draw(this);
+    shapeShader->SetActive();
+    shapeVertices->SetActive();
+    DebugRenderer::Draw(shapeShader);
 
     SDL_GL_SwapWindow(window);
 }
@@ -180,6 +182,17 @@ void Renderer::CreateSpriteVertices() {
     };
 
     spriteVertices = new VertexArray(vertices, 4, indices, 6);
+
+    const float lineVertices[] = {
+	-0.5f, 0.0f,
+	0.5f, 0.0f
+    };
+
+    const unsigned int lineIndices[] = {
+	0, 1
+    };
+
+    shapeVertices = new VertexArray(lineVertices, 2, lineIndices, 2);
 }
 
 bool Renderer::LoadShaders() {
@@ -189,9 +202,13 @@ bool Renderer::LoadShaders() {
     }
 
     spriteShader->SetActive();
-
     Matrix4 viewProjection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
     spriteShader->SetMatrixUniform("uViewProjection", viewProjection);
+
+    shapeShader = new Shader();
+    if (!shapeShader->Load("data/shaders/Shape.vert", "data/shaders/Shape.frag")) {
+	return false;
+    }
 
     return true;
 }

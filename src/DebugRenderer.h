@@ -13,6 +13,6 @@ public:
 private:
     friend class Renderer;
 
-    static void Draw(class Renderer* renderer);
+    static void Draw(class Shader* shader);
     static std::vector<std::pair<class DebugShape*, Vector4>> shapes;
 };
