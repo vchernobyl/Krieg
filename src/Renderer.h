@@ -47,10 +47,7 @@ private:
     SDL_GLContext context;
 
     VertexArray* spriteVertices;
-    VertexArray* shapeVertices;
-    
     Shader* spriteShader;
-    Shader* shapeShader;
 
     std::vector<SpriteComponent*> sprites;
     std::vector<ParticleEmitterComponent*> particles;

@@ -66,7 +66,7 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer) {
-	SDL_Log("Unable to create a renderer: %s", SDL_GetError());
+	SDL_Log("Unable to create the renderer: %s", SDL_GetError());
 	return false;
     }
 
@@ -75,10 +75,16 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 	return false;
     }
 
+    if (!DebugRenderer::Initialize()) {
+	SDL_Log("Unable to initialize the debug renderer");
+	return false;
+    }
+
     return true;
 }
 
 void Renderer::Shutdown() {
+    DebugRenderer::Shutdown();
     SDL_DestroyRenderer(renderer);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
@@ -110,9 +116,7 @@ void Renderer::Draw() {
 	sprite->Draw(spriteShader);
     }
 
-    shapeShader->SetActive();
-    shapeVertices->SetActive();
-    DebugRenderer::Draw(shapeShader);
+    DebugRenderer::Draw(nullptr);
 
     SDL_GL_SwapWindow(window);
 }
@@ -166,7 +170,6 @@ void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
     }
 }
 
-
 void Renderer::CreateSpriteVertices() {
     // Store vertex data in form (x, y, z, u, v).
     const float vertices[] = {
@@ -182,15 +185,6 @@ void Renderer::CreateSpriteVertices() {
     };
 
     spriteVertices = new VertexArray(vertices, 4, indices, 6);
-
-    const float lineVertices[] = {
-	-0.25f, 0.5f, 0.0f, 0.0f, 0.0f,
-	0.75f, -0.5f, 0.0f, 0.0f, 0.0f
-    };
-
-    const unsigned int lineIndices[] = { 0, 1 };
-
-    shapeVertices = new VertexArray(lineVertices, 2, lineIndices, 2);
 }
 
 bool Renderer::LoadShaders() {
@@ -202,11 +196,6 @@ bool Renderer::LoadShaders() {
     spriteShader->SetActive();
     Matrix4 viewProjection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
     spriteShader->SetMatrixUniform("uViewProjection", viewProjection);
-
-    shapeShader = new Shader();
-    if (!shapeShader->Load("data/shaders/Shape.vert", "data/shaders/Shape.frag")) {
-	return false;
-    }
 
     return true;
 }
