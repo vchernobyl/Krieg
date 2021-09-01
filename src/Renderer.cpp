@@ -80,6 +80,8 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 	return false;
     }
 
+    debugDraw.Initialize();
+
     return true;
 }
 
@@ -112,11 +114,15 @@ void Renderer::Draw() {
     // In that case we won't have to create a separate collection for separate drawables. Also they
     // will all be properly sorted between themselves via the `drawOrder` field.
     // An interface with Draw(Renderer*) and GetDrawOrder() should do the job.
-    for (auto sprite : sprites) {
-	sprite->Draw(spriteShader);
-    }
+    // for (auto sprite : sprites) {
+    // 	sprite->Draw(spriteShader);
+    // }
 
-    DebugRenderer::Draw(nullptr);
+    //DebugRenderer::Draw(nullptr);
+    debugDraw.DrawBox(Vector4(0.0f, 0.0f, 0.5f, 0.5f), Vector4(255.0f, 255.0f, 255.0f, 255.0f), 0.0f);
+    debugDraw.End();
+    Matrix4 projection;
+    debugDraw.Draw(projection, 1.0f);
 
     SDL_GL_SwapWindow(window);
 }
