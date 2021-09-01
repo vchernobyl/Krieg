@@ -119,7 +119,7 @@ void Renderer::Draw() {
     // }
 
     //DebugRenderer::Draw(nullptr);
-    debugDraw.DrawBox(Vector4(0.0f, 0.0f, 0.5f, 0.5f), Vector4(255.0f, 255.0f, 255.0f, 255.0f), 0.0f);
+    debugDraw.DrawBox(Vector4(0.0f, 0.0f, 0.5f, 0.5f), Vector4(1.0f, 0.0f, 0.5f, 1.0f), 0.0f);
     debugDraw.End();
     Matrix4 projection;
     debugDraw.Draw(projection, 1.0f);

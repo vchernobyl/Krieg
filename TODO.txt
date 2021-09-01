@@ -180,20 +180,22 @@ July:
 August:
 -------
 1. Faster bullets. [DONE]
-2. Camera shake.
-3. Fix camera/world stutter when using smooth camera follow.
-4. Add /Fo flag to the build script to keep intermediate object files separately from the executables.
-5. Merge SDL_image and SDL externals into a single folder. [DONE]
-6. Convert rendering to use OpenGL. [DONE]
-7. Draw tile map using the shader.
-8. Implement debug rendering using OpenGL.
-  8.1. Draw a simple line. [DONE]
-  8.2. Draw collision boxes. [IN PROGRESS]
+2. Merge SDL_image and SDL externals into a single folder. [DONE]
+3. Convert rendering to use OpenGL. [DONE]
+4. Draw debug box. [DONE]
+
+September:
+----------
+1. Clean up the DrawBox API. Make sure the origin/center of the box is used consistently.
+2. Pass the color to the fragment shader.
+3. Fix crash when rendering box sprites and debug shapes.
+4. Add DrawCircle function.
+5. Replace DebugRenderer with DebugDraw and make it globally available.
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
   it could be expressed better as a HAS-A relationship. Should AnimatedSprite inherit from Sprite?
-  Maybe it could be designed better without inheritende and with a composition instead.
+  Maybe it could be designed better without inheritence and with a composition instead.
 - C++11 has a very useful 'final' keyword to restrict overriding of virtual functions and
   inheriting from class/struct which wasn't designed for it.
 

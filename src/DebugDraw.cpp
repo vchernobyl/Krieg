@@ -100,6 +100,5 @@ void DebugDraw::Draw(const Matrix4& projectionMatrix, float lineWidth) {
     glLineWidth(lineWidth);
     glBindVertexArray(vao);
     glDrawElements(GL_LINES, numElements, GL_UNSIGNED_INT, 0);
-    SDL_Log("elements=%d", numElements);
     glBindVertexArray(0);
 }
