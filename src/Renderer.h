@@ -9,8 +9,6 @@
 #include <vector>
 #include <unordered_map>
 
-#include "DebugDraw.h"
-
 class Game;
 class Texture;
 class Vector2;
@@ -59,5 +57,4 @@ private:
     Game* game;
 
     Vector2 windowSize;
-    DebugDraw debugDraw;
 };

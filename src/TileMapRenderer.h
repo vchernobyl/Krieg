@@ -1,15 +1,18 @@
 #pragma once
 
 #include "TileMap.h"
+#include "Shader.h"
+#include "VertexArray.h"
 
-// TODO: Move this guy to the TileMap header.
 class TileMapRenderer {
 public:
     TileMapRenderer(TileMap tileMap);
-    void Draw(class Renderer* renderer);
+    void Draw();
 private:
     TileMap tileMap;
+    int tileWidth;
+    int tileHeight;
 
-    float tileWidth;
-    float tileHeight;
+    Shader spriteShader;
+    VertexArray spriteVertices;
 };

@@ -1,6 +1,8 @@
 #include "VertexArray.h"
 #include <glew.h>
 
+VertexArray::VertexArray() {}
+
 VertexArray::VertexArray(const float* vertices, unsigned int vertexCount,
 			 const unsigned int* indices, unsigned int indexCount) {
     // Create the vertex array object (VAO).

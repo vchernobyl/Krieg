@@ -186,11 +186,12 @@ August:
 
 September:
 ----------
-1. Clean up the DrawBox API. Make sure the origin/center of the box is used consistently.
+1. Clean up the DrawBox API. Make sure the origin/center of the box is used consistently. [IN PROGRESS]
 2. Pass the color to the fragment shader.
 3. Fix crash when rendering box sprites and debug shapes.
 4. Add DrawCircle function.
 5. Replace DebugRenderer with DebugDraw and make it globally available.
+6. Draw tile map. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

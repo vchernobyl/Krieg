@@ -10,12 +10,12 @@ public:
     DebugDraw();
     ~DebugDraw();
 
-    void Initialize();
-    void Shutdown();
-    void DrawBox(const Vector4& dst, const Vector4& color, float angle);
-    void DrawCircle(const Vector2& center, const Vector4& color, float radius);
-    void End();
-    void Draw(const Matrix4& projectionMatrix, float lineWidth);
+    static void Initialize();
+    static void Shutdown();
+    static void DrawBox(const Vector4& dst, const Vector4& color, float angle);
+    static void DrawCircle(const Vector2& center, const Vector4& color, float radius);
+    static void End();
+    static void Draw(const Matrix4& projectionMatrix, float lineWidth);
     
 private:
     struct DebugVertex {
@@ -23,9 +23,9 @@ private:
 	Vector4 color;
     };
 
-    Shader shader;
-    std::vector<DebugVertex> vertices;
-    std::vector<GLuint> indices;
-    GLuint vao = 0, vbo = 0, ibo = 0;
-    int numElements = 0;
+    static Shader shader;
+    static std::vector<DebugVertex> vertices;
+    static std::vector<GLuint> indices;
+    static GLuint vao, vbo, ibo;
+    static int numElements;
 };

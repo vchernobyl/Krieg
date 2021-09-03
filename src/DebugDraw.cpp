@@ -1,5 +1,12 @@
 #include "DebugDraw.h"
-#include <SDL.h>
+
+Shader DebugDraw::shader;
+std::vector<DebugDraw::DebugVertex> DebugDraw::vertices = {};
+std::vector<GLuint> DebugDraw::indices = {};
+GLuint DebugDraw::vao = 0;
+GLuint DebugDraw::vbo = 0;
+GLuint DebugDraw::ibo = 0;
+int DebugDraw::numElements = 0;
 
 DebugDraw::DebugDraw() {
     // Empty.
@@ -35,13 +42,12 @@ void DebugDraw::Shutdown() {
     glDeleteBuffers(1, &ibo);
 }
 
-void DebugDraw::DrawBox(const Vector4& center, const Vector4& color, float angle) {
+void DebugDraw::DrawBox(const Vector4& dst, const Vector4& color, float angle) {
     // For every call to DrawBox function, reserve space for four debug vertices.
     int i = vertices.size();
     vertices.resize(vertices.size() + 4);
 
-    SDL_Log("size=%d", vertices.size());
-    auto halfDims = Vector2(center.z / 2.0f, center.w / 2.0f);
+    auto halfDims = Vector2(dst.z / 2.0f, dst.w / 2.0f);
 
     // Get points centered at the origin.
     auto topLeft = Vector2(-halfDims.x, halfDims.y);
@@ -49,7 +55,7 @@ void DebugDraw::DrawBox(const Vector4& center, const Vector4& color, float angle
     auto bottomRight = Vector2(halfDims.x, - halfDims.y);
     auto topRight = Vector2(halfDims.x, halfDims.y);
 
-    auto positionOffset = Vector2(center.x, center.y);
+    auto positionOffset = Vector2(dst.x, dst.y);
 
     // Rotate the points.
     vertices[i].position = Vector2::Rotate(topLeft, angle) + halfDims + positionOffset;

@@ -29,5 +29,9 @@ pushd build
 cl %compile_flags% %include_flags% ..\src\*.cpp %libs% /link %link_flags% /out:%application%.exe
 popd
 
+if not exist .\build\SDL2.dll copy external\SDL\lib\x64\SDL2.dll .\build
+if not exist .\build\SDL2_image.dll copy external\SDL\lib\x64\SDL2_image.dll .\build
+if not exist .\build\glew32.dll copy external\glew\lib\x64\glew32.dll .\build
+
 echo.
 echo [Build completed]

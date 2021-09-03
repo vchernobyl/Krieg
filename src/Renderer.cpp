@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Texture.h"
 #include "ParticleEmitterComponent.h"
-#include "DebugRenderer.h"
+#include "DebugDraw.h"
 #include "VertexArray.h"
 #include "Shader.h"
 
@@ -75,18 +75,12 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 	return false;
     }
 
-    if (!DebugRenderer::Initialize()) {
-	SDL_Log("Unable to initialize the debug renderer");
-	return false;
-    }
-
-    debugDraw.Initialize();
+    DebugDraw::Initialize();
 
     return true;
 }
 
 void Renderer::Shutdown() {
-    DebugRenderer::Shutdown();
     SDL_DestroyRenderer(renderer);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
@@ -118,11 +112,9 @@ void Renderer::Draw() {
     // 	sprite->Draw(spriteShader);
     // }
 
-    //DebugRenderer::Draw(nullptr);
-    debugDraw.DrawBox(Vector4(0.0f, 0.0f, 0.5f, 0.5f), Vector4(1.0f, 0.0f, 0.5f, 1.0f), 0.0f);
-    debugDraw.End();
-    Matrix4 projection;
-    debugDraw.Draw(projection, 1.0f);
+    DebugDraw::End();
+    Matrix4 projection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
+    DebugDraw::Draw(projection, 1.0f);
 
     SDL_GL_SwapWindow(window);
 }

@@ -3,6 +3,7 @@
 #include "AudioSystem.h"
 #include "InputSystem.h"
 #include "PhysicsWorld.h"
+#include "DebugDraw.h"
 #include "Renderer.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
@@ -165,13 +166,13 @@ void Game::UpdateGame() {
 }
 
 void Game::DrawGame() {
-    tileMapRenderer->Draw(renderer);
+    tileMapRenderer->Draw();
     renderer->Draw();
 }
 
 void Game::LoadData() {
     new Player(this);
-    new Enemy(this);
+    // new Enemy(this);
 
     auto tileMap = TileMap(this, "data/prototype_map.tmx");
     tileMapRenderer = new TileMapRenderer(tileMap);
