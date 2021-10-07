@@ -202,7 +202,7 @@ public:
 	return Vector2(a + t * (b - a));
     }
 
-    static Vector2 Rotate(const Vector2& point, float angle) {
+    static Vector2 RotatePoint(const Vector2& point, float angle) {
 	Vector2 rotated;
 	rotated.x = point.x * Math::Cos(angle) - point.y * Math::Sin(angle);
 	rotated.y = point.x * Math::Sin(angle) + point.y * Math::Cos(angle);
@@ -319,7 +319,7 @@ public:
     }
 };
 
-// TODO: Extract to a separate header.
+// TODO: Remove this shit, use vec4 instead.
 class Rectangle {
 public:
     Vector2 position;

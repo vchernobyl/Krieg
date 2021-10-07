@@ -10,6 +10,7 @@
 #include <glew.h>
 #include <SDL_image.h>
 #include <algorithm>
+#include <cassert>
 
 Renderer::Renderer(Game* game) : game(game) {}
 
@@ -101,20 +102,20 @@ void Renderer::Draw() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+    // TODO: Currently the *second* call to Draw of sprite crashes the app.
+    // Implement a GL_CALL wrapper to assert any graphics related errors
+    // and put a breakpoint on that file and line.
+    //assert(false);
+    
     spriteShader->SetActive();
     spriteVertices->SetActive();
+    for (auto sprite : sprites) {
+	sprite->Draw(spriteShader);
+    }
 
-    // TODO: Sprites, particles, tilemap etc. should all be places in a single polymorphic collection.
-    // In that case we won't have to create a separate collection for separate drawables. Also they
-    // will all be properly sorted between themselves via the `drawOrder` field.
-    // An interface with Draw(Renderer*) and GetDrawOrder() should do the job.
-    // for (auto sprite : sprites) {
-    // 	sprite->Draw(spriteShader);
-    // }
-
-    DebugDraw::End();
-    Matrix4 projection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
-    DebugDraw::Draw(projection, 1.0f);
+    // DebugDraw::End();
+    // Matrix4 projection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
+    // DebugDraw::Draw(projection, 1.0f);
 
     SDL_GL_SwapWindow(window);
 }

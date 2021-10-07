@@ -31,7 +31,7 @@ void DebugDraw::Initialize() {
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(DebugVertex), (void*)offsetof(DebugVertex, position));
     
     glEnableVertexAttribArray(1);
-    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(DebugVertex), (void*)offsetof(DebugVertex, color));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(DebugVertex), (void*)offsetof(DebugVertex, color));
     
     glBindVertexArray(0);
 }
@@ -58,10 +58,10 @@ void DebugDraw::DrawBox(const Vector4& dst, const Vector4& color, float angle) {
     auto positionOffset = Vector2(dst.x, dst.y);
 
     // Rotate the points.
-    vertices[i].position = Vector2::Rotate(topLeft, angle) + halfDims + positionOffset;
-    vertices[i + 1].position = Vector2::Rotate(bottomLeft, angle) + halfDims + positionOffset;
-    vertices[i + 2].position = Vector2::Rotate(bottomRight, angle) + halfDims + positionOffset;
-    vertices[i + 3].position = Vector2::Rotate(topRight, angle) + halfDims + positionOffset;
+    vertices[i].position = Vector2::RotatePoint(topLeft, angle) + halfDims + positionOffset;
+    vertices[i + 1].position = Vector2::RotatePoint(bottomLeft, angle) + halfDims + positionOffset;
+    vertices[i + 2].position = Vector2::RotatePoint(bottomRight, angle) + halfDims + positionOffset;
+    vertices[i + 3].position = Vector2::RotatePoint(topRight, angle) + halfDims + positionOffset;
 
     for (int j = i; j < i + 4; j++) {
 	vertices[j].color = color;

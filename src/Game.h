@@ -15,9 +15,6 @@ class Shader;
 
 class Game {
 public:
-    static constexpr float PixelsToUnits = 1.0f / 32.0f;
-    static constexpr float UnitsToPixels = 1.0f / PixelsToUnits;
-
     Game();
     bool Initialize();
     void RunLoop();

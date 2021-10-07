@@ -71,7 +71,7 @@ void Bullet::OnBeginContact(const Contact& contact) {
 }
 
 Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
-    SetPosition(Vector2(20, 15));
+    SetPosition(Vector2(0.0f, 0.0f));
     SetScale(2.0f);
 
     sprite = new SpriteComponent(this);
@@ -79,6 +79,8 @@ Player::Player(Game* game) : Actor(game), direction(Vector2::Right) {
 
     auto center = sprite->GetSize() * GetScale() * 0.5f;
     auto circle = new CircleColliderComponent(this, center, 0.5f);
+    auto rb = circle->GetAttachedRigidbody();
+    rb->SetGravityScale(0.0f);
 
     rigidbody = circle->GetAttachedRigidbody();
     audio = new AudioComponent(this);
@@ -105,26 +107,7 @@ void Player::ActorInput(const InputState& inputState) {
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_UP) == ButtonState::Pressed) {
 	rigidbody->ApplyImpulse(Vector2::Up * rigidbody->GetMass() * JumpImpulse);
-
 	audio->PlayEvent("event:/Jump");
-
-	// TODO: Move particle props to the class level.
-	ParticleProps props;
-	props.position = GetPosition();
-	props.position.y += 1.0f;
-	props.position.x += 0.5f;
-	props.velocity = rigidbody->GetVelocity() / 10;
-	props.velocityVariation = Vector2(2.0f, 2.0f);
-	props.colorBegin = Vector4(255, 255, 255, 255);
-	props.colorEnd = Vector4(255 / 2, 255 / 2, 255 / 2, 0);
-	props.sizeBegin = 0.15f;
-	props.sizeEnd = 0.075f;
-	props.sizeVariation = 0.025f;
-	props.rotationBegin = 0.0f;
-	props.rotationSpeed = 1.0f;
-	props.lifetime = 0.5f;
-
-	particles->Emit(props, 10);
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
