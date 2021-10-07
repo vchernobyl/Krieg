@@ -10,9 +10,8 @@ class AudioSystem;
 class InputSystem;
 class TileMapRenderer;
 class TileMap;
-class VertexArray;
-class Shader;
 
+// TODO: Extract game interface to hold all game generic functionality.
 class Game {
 public:
     Game();
@@ -24,6 +23,11 @@ public:
     Renderer* GetRenderer() const { return renderer; }
     PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
     AudioSystem* GetAudioSystem() { return audioSystem; }
+
+    // TODO: Game specific, remove later.
+    void AddAsteroid(class Asteroid* asteroid);
+    void RemoveAsteroid(class Asteroid* asteroid);
+    
 private:
     void ProcessInput();
     void UpdateGame();
@@ -39,8 +43,9 @@ private:
     AudioSystem* audioSystem;
     PhysicsWorld* physicsWorld;
 
-    // Game specific - will be in a Scene later on
+    // TODO: Game specific, remove it all later.
     TileMapRenderer* tileMapRenderer;
+    std::vector<class Asteroid*> asteroids;
 
     bool isRunning;
     bool updatingActors;

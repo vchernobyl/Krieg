@@ -17,6 +17,10 @@
 #include <algorithm>
 #include <memory>
 
+// Game specific, remove later.
+#include "Asteroid.h"
+#include "Ship.h"
+
 Game::Game() :
     renderer(nullptr),
     inputSystem(nullptr),
@@ -166,27 +170,33 @@ void Game::UpdateGame() {
 }
 
 void Game::DrawGame() {
-    tileMapRenderer->Draw();
     renderer->Draw();
 }
 
 void Game::LoadData() {
-    new Player(this);
-    new Enemy(this);
+    // new Player(this);
+    // new Enemy(this);
 
-    auto tileMap = TileMap(this, "data/prototype_map.tmx");
-    tileMapRenderer = new TileMapRenderer(tileMap);
+    // auto tileMap = TileMap(this, "data/prototype_map.tmx");
+    // tileMapRenderer = new TileMapRenderer(tileMap);
 
-    auto objectGroups = tileMap.GetObjectGroups();
-    for (auto objectGroup : objectGroups) {
-	for (const auto& object : objectGroup.objects) {
-	    auto objectActor = new Actor(this);
-	    objectActor->SetPosition(object.position);
+    // auto objectGroups = tileMap.GetObjectGroups();
+    // for (auto objectGroup : objectGroups) {
+    // 	for (const auto& object : objectGroup.objects) {
+    // 	    auto objectActor = new Actor(this);
+    // 	    objectActor->SetPosition(object.position);
 
-	    new RigidbodyComponent(objectActor, MotionType::Static);
-	    auto box = new BoxColliderComponent(objectActor, object.size);
-	    box->SetCollisionFilter(CollisionCategory::Ground, CollisionCategory::Default);
-	}
+    // 	    new RigidbodyComponent(objectActor, MotionType::Static);
+    // 	    auto box = new BoxColliderComponent(objectActor, object.size);
+    // 	    box->SetCollisionFilter(CollisionCategory::Ground, CollisionCategory::Default);
+    // 	}
+    // }
+
+    new Ship(this);
+
+    const int numAsteroids = 20;
+    for (int i = 0; i < numAsteroids; i++) {
+	new Asteroid(this);
     }
 }
 
@@ -197,5 +207,16 @@ void Game::UnloadData() {
 
     while (!actors.empty()) {
 	delete actors.back();
+    }
+}
+
+void Game::AddAsteroid(Asteroid* asteroid) {
+    asteroids.emplace_back(asteroid);
+}
+
+void Game::RemoveAsteroid(Asteroid* asteroid) {
+    auto iter = std::find(asteroids.begin(), asteroids.end(), asteroid);
+    if (iter != asteroids.end()) {
+	asteroids.erase(iter);
     }
 }

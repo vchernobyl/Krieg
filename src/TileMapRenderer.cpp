@@ -25,7 +25,7 @@ TileMapRenderer::TileMapRenderer(TileMap tileMap) : tileMap(tileMap) {
 }
 
 void TileMapRenderer::Draw() {
-    spriteShader.SetActive();
+    //spriteShader.SetActive();
     
     for (auto layer : tileMap.GetLayers()) {
 	for (auto tile : layer.tiles) {
