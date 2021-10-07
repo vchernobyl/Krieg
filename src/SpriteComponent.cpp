@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "Texture.h"
 #include "Shader.h"
+#include "Assert.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
@@ -28,7 +29,7 @@ void SpriteComponent::Draw(Shader* shader) {
 	shader->SetMatrixUniform("uWorldTransform", world);
 	texture->SetActive();
     
-	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+	GL_CALL(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
     }
 }
 
