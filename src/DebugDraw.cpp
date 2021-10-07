@@ -85,15 +85,14 @@ void DebugDraw::DrawBox(const Vector4& dst, const Vector4& color, float angle) {
 void DebugDraw::DrawCircle(const Vector2& center, const Vector4& color, float radius) { }
 
 void DebugDraw::End() {
+    GL_CALL(glBindVertexArray(vao));
     GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, vbo));
     GL_CALL(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(DebugVertex), nullptr, GL_DYNAMIC_DRAW));
     GL_CALL(glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(DebugVertex), vertices.data()));
-    GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
 
     GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
     GL_CALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), nullptr, GL_DYNAMIC_DRAW));
     GL_CALL(glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices.size() * sizeof(GLuint), indices.data()));
-    GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 
     numElements = indices.size();
     indices.clear();

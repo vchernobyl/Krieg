@@ -1,11 +1,16 @@
 #include "Ship.h"
 #include "SpriteComponent.h"
+#include "BoxColliderComponent.h"
+#include "Texture.h"
 #include "Renderer.h"
 #include "Game.h"
 
 Ship::Ship(Game* game) : Actor(game), laserCooldown(0.0f) {
     SpriteComponent* sprite = new SpriteComponent(this, 150);
-    sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
+    Texture* texture = game->GetRenderer()->GetTexture("data/textures/Ship.png");
+    sprite->SetTexture(texture);
+
+    BoxColliderComponent* box = new BoxColliderComponent(this, texture->GetSize());
 }
 
 void Ship::UpdateActor(float deltaTime) {

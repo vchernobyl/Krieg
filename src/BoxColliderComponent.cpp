@@ -11,7 +11,7 @@ BoxColliderComponent::BoxColliderComponent(Actor* owner, const Vector2& size) : 
     float halfWidth = size.x * 0.5f;
     float halfHeight = size.y * 0.5f;
 
-//    b2Vec2 center(halfWidth, halfHeight);
+ //    b2Vec2 center(halfWidth, halfHeight);
     b2PolygonShape shape;
 
     shape.SetAsBox(halfWidth, halfHeight);//, center, 0.0f);
