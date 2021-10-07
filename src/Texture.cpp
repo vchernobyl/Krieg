@@ -1,4 +1,5 @@
 #include "Texture.h"
+#include "Assert.h"
 
 #include <SOIL.h>
 #include <SDL.h>
@@ -18,26 +19,26 @@ bool Texture::Load(const std::string& fileName) {
 	format = GL_RGBA;
     }
 
-    glGenTextures(1, &textureID);
-    glBindTexture(GL_TEXTURE_2D, textureID);
-    glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image);
+    GL_CALL(glGenTextures(1, &textureID));
+    GL_CALL(glBindTexture(GL_TEXTURE_2D, textureID));
+    GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, image));
 
     SOIL_free_image_data(image);
 
     // Enable bilinear filtering.
     // TODO: For pixelated look use GL_NEAREST instead.
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
+    GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 
-    glGenerateMipmap(GL_TEXTURE_2D);
+    GL_CALL(glGenerateMipmap(GL_TEXTURE_2D));
 
     return true;
 }
 
 void Texture::Unload() {
-    glDeleteTextures(1, &textureID);
+    GL_CALL(glDeleteTextures(1, &textureID));
 }
 
 void Texture::SetActive() {
-    glBindTexture(GL_TEXTURE_2D, textureID);
+    GL_CALL(glBindTexture(GL_TEXTURE_2D, textureID));
 }

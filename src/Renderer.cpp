@@ -6,6 +6,7 @@
 #include "DebugDraw.h"
 #include "VertexArray.h"
 #include "Shader.h"
+#include "Assert.h"
 
 #include <glew.h>
 #include <SDL_image.h>
@@ -96,26 +97,21 @@ void Renderer::UnloadData() {
 }
 
 void Renderer::Draw() {
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    GL_CALL(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+    GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
 
-    glEnable(GL_BLEND);
-    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    GL_CALL(glEnable(GL_BLEND));
+    GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-    // TODO: Currently the *second* call to Draw of sprite crashes the app.
-    // Implement a GL_CALL wrapper to assert any graphics related errors
-    // and put a breakpoint on that file and line.
-    //assert(false);
-    
     spriteShader->SetActive();
     spriteVertices->SetActive();
     for (auto sprite : sprites) {
 	sprite->Draw(spriteShader);
     }
 
-    // DebugDraw::End();
-    // Matrix4 projection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
-    // DebugDraw::Draw(projection, 1.0f);
+    DebugDraw::End();
+    Matrix4 projection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
+    DebugDraw::Draw(projection, 1.0f);
 
     SDL_GL_SwapWindow(window);
 }

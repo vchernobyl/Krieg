@@ -1,4 +1,5 @@
 #include "Shader.h"
+#include "Assert.h"
 
 #include <SDL.h>
 #include <fstream>
@@ -12,10 +13,10 @@ bool Shader::Load(const std::string& vertName, const std::string& fragName) {
 	return false;
     }
 
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    glLinkProgram(shaderProgram);
+    GL_CALL(shaderProgram = glCreateProgram());
+    GL_CALL(glAttachShader(shaderProgram, vertexShader));
+    GL_CALL(glAttachShader(shaderProgram, fragmentShader));
+    GL_CALL(glLinkProgram(shaderProgram));
 
     if (!IsValidProgram()) {
 	return false;
@@ -25,18 +26,18 @@ bool Shader::Load(const std::string& vertName, const std::string& fragName) {
 }
 
 void Shader::Unload() {
-    glDeleteProgram(shaderProgram);
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    GL_CALL(glDeleteProgram(shaderProgram));
+    GL_CALL(glDeleteShader(vertexShader));
+    GL_CALL(glDeleteShader(fragmentShader));
 }
 
 void Shader::SetActive() {
-    glUseProgram(shaderProgram);
+    GL_CALL(glUseProgram(shaderProgram));
 }
 
 void Shader::SetMatrixUniform(const char* name, const Matrix4& matrix) {
-    GLuint loc = glGetUniformLocation(shaderProgram, name);
-    glUniformMatrix4fv(loc, 1, GL_TRUE, matrix.GetAsFloatPtr());
+    GL_CALL(GLuint loc = glGetUniformLocation(shaderProgram, name));
+    GL_CALL(glUniformMatrix4fv(loc, 1, GL_TRUE, matrix.GetAsFloatPtr()));
 }
 
 bool Shader::CompileShader(const std::string& fileName, GLenum shaderType, GLuint& outShader) {
@@ -49,9 +50,9 @@ bool Shader::CompileShader(const std::string& fileName, GLenum shaderType, GLuin
 	const char* contentsChar = contents.c_str();
 
 	// Create a shader of the specified type. In our case either vertex or fragment shader.
-	outShader = glCreateShader(shaderType);
-	glShaderSource(outShader, 1, &(contentsChar), nullptr);
-	glCompileShader(outShader);
+	GL_CALL(outShader = glCreateShader(shaderType));
+	GL_CALL(glShaderSource(outShader, 1, &(contentsChar), nullptr));
+	GL_CALL(glCompileShader(outShader));
 
 	if (!IsCompiled(outShader)) {
 	    SDL_Log("Failed to compile shader: %s", fileName.c_str());
@@ -67,12 +68,12 @@ bool Shader::CompileShader(const std::string& fileName, GLenum shaderType, GLuin
 
 bool Shader::IsCompiled(GLuint shader) {
     GLint status;
-    glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
+    GL_CALL(glGetShaderiv(shader, GL_COMPILE_STATUS, &status));
 
     if (status != GL_TRUE) {
 	char buffer[512];
 	memset(buffer, 0, 512);
-	glGetShaderInfoLog(shader, 511, nullptr, buffer);
+	GL_CALL(glGetShaderInfoLog(shader, 511, nullptr, buffer));
 	SDL_Log("GLSL compilation failed:\n%s", buffer);
 	return false;
     }
@@ -82,12 +83,12 @@ bool Shader::IsCompiled(GLuint shader) {
 
 bool Shader::IsValidProgram() {
     GLint status;
-    glGetProgramiv(shaderProgram, GL_LINK_STATUS, &status);
+    GL_CALL(glGetProgramiv(shaderProgram, GL_LINK_STATUS, &status));
 
     if (status != GL_TRUE) {
 	char buffer[512];
 	memset(buffer, 0, 512);
-	glGetProgramInfoLog(shaderProgram, 511, nullptr, buffer);
+	GL_CALL(glGetProgramInfoLog(shaderProgram, 511, nullptr, buffer));
 	SDL_Log("GLSL linking failed:\n%s", buffer);
 	return false;
     }
