@@ -186,12 +186,10 @@ August:
 
 September:
 ----------
-1. Clean up the DrawBox API. Make sure the origin/center of the box is used consistently. [IN PROGRESS]
-2. Pass the color to the fragment shader.
-3. Fix crash when rendering box sprites and debug shapes.
-4. Add DrawCircle function.
-5. Replace DebugRenderer with DebugDraw and make it globally available.
-6. Draw tile map. [IN PROGRESS]
+1. Learn basics of OpenGL. [DONE]
+2. Pass the color to the fragment shader. [DONE]
+3. Fix crash when rendering box sprites and debug shapes. [DONE]
+5. Replace DebugRenderer with DebugDraw and make it globally available. [DONE]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
@@ -199,6 +197,10 @@ Notes from 'Game Engine Architecture':
   Maybe it could be designed better without inheritence and with a composition instead.
 - C++11 has a very useful 'final' keyword to restrict overriding of virtual functions and
   inheriting from class/struct which wasn't designed for it.
+
+October:
+--------
+1. Implement Camera class.
 
 Backlog
 -------
