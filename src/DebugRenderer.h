@@ -5,10 +5,10 @@
 #include <vector>
 #include <glew.h>
 
-class DebugDraw {
+class DebugRenderer {
 public:
-    DebugDraw();
-    ~DebugDraw();
+    DebugRenderer();
+    ~DebugRenderer();
 
     static void Initialize();
     static void Shutdown();

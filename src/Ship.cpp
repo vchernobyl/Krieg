@@ -1,6 +1,7 @@
 #include "Ship.h"
 #include "SpriteComponent.h"
 #include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
 #include "Texture.h"
 #include "Renderer.h"
 #include "Game.h"
@@ -11,6 +12,8 @@ Ship::Ship(Game* game) : Actor(game), laserCooldown(0.0f) {
     sprite->SetTexture(texture);
 
     BoxColliderComponent* box = new BoxColliderComponent(this, texture->GetSize());
+    RigidbodyComponent* rigidbody = box->GetAttachedRigidbody();
+    rigidbody->SetGravityScale(0.0f);
 }
 
 void Ship::UpdateActor(float deltaTime) {

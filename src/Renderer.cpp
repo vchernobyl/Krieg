@@ -3,7 +3,7 @@
 #include "Game.h"
 #include "Texture.h"
 #include "ParticleEmitterComponent.h"
-#include "DebugDraw.h"
+#include "DebugRenderer.h"
 #include "VertexArray.h"
 #include "Shader.h"
 #include "Assert.h"
@@ -77,7 +77,7 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 	return false;
     }
 
-    DebugDraw::Initialize();
+    DebugRenderer::Initialize();
 
     return true;
 }
@@ -109,9 +109,9 @@ void Renderer::Draw() {
 	sprite->Draw(spriteShader);
     }
 
-    DebugDraw::End();
+    DebugRenderer::End();
     Matrix4 projection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
-    DebugDraw::Draw(projection, 1.0f);
+    DebugRenderer::Draw(projection, 1.0f);
 
     SDL_GL_SwapWindow(window);
 }

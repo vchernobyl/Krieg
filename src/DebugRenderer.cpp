@@ -1,23 +1,23 @@
-#include "DebugDraw.h"
+#include "DebugRenderer.h"
 #include "Assert.h"
 
-Shader DebugDraw::shader;
-std::vector<DebugDraw::DebugVertex> DebugDraw::vertices = {};
-std::vector<GLuint> DebugDraw::indices = {};
-GLuint DebugDraw::vao = 0;
-GLuint DebugDraw::vbo = 0;
-GLuint DebugDraw::ibo = 0;
-int DebugDraw::numElements = 0;
+Shader DebugRenderer::shader;
+std::vector<DebugRenderer::DebugVertex> DebugRenderer::vertices = {};
+std::vector<GLuint> DebugRenderer::indices = {};
+GLuint DebugRenderer::vao = 0;
+GLuint DebugRenderer::vbo = 0;
+GLuint DebugRenderer::ibo = 0;
+int DebugRenderer::numElements = 0;
 
-DebugDraw::DebugDraw() {
+DebugRenderer::DebugRenderer() {
     // Empty.
 }
 
-DebugDraw::~DebugDraw() {
+DebugRenderer::~DebugRenderer() {
     Shutdown();
 }
 
-void DebugDraw::Initialize() {
+void DebugRenderer::Initialize() {
     shader.Load("data/shaders/Shape.vert", "data/shaders/Shape.frag");
 
     GL_CALL(glGenVertexArrays(1, &vao));
@@ -37,13 +37,13 @@ void DebugDraw::Initialize() {
     GL_CALL(glBindVertexArray(0));
 }
 
-void DebugDraw::Shutdown() {
+void DebugRenderer::Shutdown() {
     GL_CALL(glDeleteVertexArrays(1, &vao));
     GL_CALL(glDeleteBuffers(1, &vbo));
     GL_CALL(glDeleteBuffers(1, &ibo));
 }
 
-void DebugDraw::DrawBox(const Vector4& dst, const Vector4& color, float angle) {
+void DebugRenderer::DrawBox(const Vector4& dst, const Vector4& color, float angle) {
     // For every call to DrawBox function, reserve space for four debug vertices.
     int i = vertices.size();
     vertices.resize(vertices.size() + 4);
@@ -82,9 +82,11 @@ void DebugDraw::DrawBox(const Vector4& dst, const Vector4& color, float angle) {
     indices.push_back(i);
 }
 
-void DebugDraw::DrawCircle(const Vector2& center, const Vector4& color, float radius) { }
+void DebugRenderer::DrawCircle(const Vector2& center, const Vector4& color, float radius) {
+    
+}
 
-void DebugDraw::End() {
+void DebugRenderer::End() {
     GL_CALL(glBindVertexArray(vao));
     GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, vbo));
     GL_CALL(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(DebugVertex), nullptr, GL_DYNAMIC_DRAW));
@@ -99,7 +101,7 @@ void DebugDraw::End() {
     vertices.clear();
 }
 
-void DebugDraw::Draw(const Matrix4& projectionMatrix, float lineWidth) {
+void DebugRenderer::Draw(const Matrix4& projectionMatrix, float lineWidth) {
     shader.SetActive();
     shader.SetMatrixUniform("P", projectionMatrix);
 

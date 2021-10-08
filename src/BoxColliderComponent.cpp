@@ -8,13 +8,11 @@
 #include <b2_math.h>
 
 BoxColliderComponent::BoxColliderComponent(Actor* owner, const Vector2& size) : ColliderComponent(owner) {
-    float halfWidth = size.x * 0.5f;
-    float halfHeight = size.y * 0.5f;
-
- //    b2Vec2 center(halfWidth, halfHeight);
     b2PolygonShape shape;
 
-    shape.SetAsBox(halfWidth, halfHeight);//, center, 0.0f);
+    const Vector2& position = owner->GetPosition();
+    Vector2 center = Vector2(position.x - size.x / 2.0f, position.y - size.y / 2.0f);
+    shape.SetAsBox(size.x / 2.0f, size.y / 2.0f, b2Vec2(center.x, center.y), 0.0f);
 
     b2FixtureDef fixtureDef;
     fixtureDef.shape = &shape;
