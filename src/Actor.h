@@ -1,15 +1,14 @@
 #pragma once
 
 #include "Math.h"
-#include "InputSystem.h"
 
 #include <vector>
 
 class Game;
-class InputState;
 class Component;
 class ColliderComponent;
 struct CollisionInfo;
+struct InputState;
 
 class Actor {
 public:

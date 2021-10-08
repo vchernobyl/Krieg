@@ -545,6 +545,16 @@ public:
 	};
 	return Matrix4(projection);
     }
+
+    static Matrix4 CreateOrtho(float width, float height, float near, float far) {
+	float ortho[4][4] = {
+	    { 2.0f / width, 0.0f, 0.0f, 0.0f },
+	    { 0.0f, 2.0f / height, 0.0f, 0.0f },
+	    { 0.0f, 0.0f, 1.0f / (far - near), 0.0f },
+	    { 0.0f, 0.0f, near / (near - far), 1.0f }
+	};
+	return Matrix4(ortho);
+    }
     
     static const Matrix4 Identity;
 };

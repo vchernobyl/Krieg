@@ -201,6 +201,7 @@ Notes from 'Game Engine Architecture':
 October:
 --------
 1. Implement Camera class.
+2. Fix external includes to have a namespace.
 
 Backlog
 -------

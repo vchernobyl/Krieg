@@ -18,14 +18,14 @@ void MoveComponent::Update(float deltaTime) {
 	Vector2 pos = owner->GetPosition();
 	pos += owner->GetForward() * forwardSpeed * deltaTime;
 
-	if (pos.x < -512.0f) {
-	    pos.x = 510.0f;
-	} else if (pos.x > 512.0f) {
-	    pos.x = -510.0f;
-	} else if (pos.y > 384.0f) {
-	    pos.y = -382.0f;
-	} else if (pos.y < -384.0) {
-	    pos.y = 382.0f;
+	if (pos.x < -8.0f) {
+	    pos.x = 8.0f;
+	} else if (pos.x > 8.0f) {
+	    pos.x = -8.0f;
+	} else if (pos.y > 6.0f) {
+	    pos.y = -6.0f;
+	} else if (pos.y < -6.0) {
+	    pos.y = 6.0f;
 	}
 
 	owner->SetPosition(pos);

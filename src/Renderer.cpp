@@ -15,7 +15,10 @@
 
 Renderer::Renderer(Game* game) : game(game) {}
 
-bool Renderer::Initialize(int windowWidth, int windowHeight) {
+bool Renderer::Initialize(int screenWidth, int screenHeight) {
+    this->screenWidth = screenWidth;
+    this->screenHeight = screenHeight;
+
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
 	SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
 	return false;
@@ -40,7 +43,7 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
     // Enable hardware acceleration.
     SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);
 
-    window = SDL_CreateWindow("Game", 100, 100, windowWidth, windowHeight, SDL_WINDOW_OPENGL);
+    window = SDL_CreateWindow("Game", 100, 100, screenWidth, screenHeight, SDL_WINDOW_OPENGL);
     if (!window) {
 	SDL_Log("Unable to create a window: %s", SDL_GetError());
 	return false;
@@ -57,8 +60,6 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
     // Clear benign error.
     glGetError();
 
-    windowSize = Vector2(windowWidth, windowHeight);
-    
     if (!LoadShaders()) {
 	SDL_Log("Failed to load shaders.");
 	return false;
@@ -79,10 +80,18 @@ bool Renderer::Initialize(int windowWidth, int windowHeight) {
 
     DebugRenderer::Initialize();
 
+    view = Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
+    view *= Matrix4::CreateScale(64.0f);
+
     return true;
 }
 
 void Renderer::Shutdown() {
+    delete spriteVertices;
+
+    spriteShader->Unload();
+    delete spriteShader;
+
     SDL_DestroyRenderer(renderer);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
@@ -104,13 +113,15 @@ void Renderer::Draw() {
     GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
     spriteShader->SetActive();
+    spriteShader->SetMatrixUniform("uViewProjection", view);
+
     spriteVertices->SetActive();
     for (auto sprite : sprites) {
 	sprite->Draw(spriteShader);
     }
 
     DebugRenderer::End();
-    Matrix4 projection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
+    Matrix4 projection = Matrix4::CreateSimpleViewProjection(screenWidth, screenHeight);
     DebugRenderer::Draw(projection, 1.0f);
 
     SDL_GL_SwapWindow(window);
@@ -189,7 +200,7 @@ bool Renderer::LoadShaders() {
     }
 
     spriteShader->SetActive();
-    Matrix4 viewProjection = Matrix4::CreateSimpleViewProjection(windowSize.x, windowSize.y);
+    Matrix4 viewProjection = Matrix4::CreateSimpleViewProjection(screenWidth, screenHeight);
     spriteShader->SetMatrixUniform("uViewProjection", viewProjection);
 
     return true;

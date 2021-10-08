@@ -22,7 +22,7 @@ class Renderer {
 public:
     Renderer(Game*);
 
-    bool Initialize(int windowWidth, int windowHeight);
+    bool Initialize(int screenWidth, int screenHeight);
     void Shutdown();
     void UnloadData();
     void Draw();
@@ -34,8 +34,8 @@ public:
     void AddParticles(ParticleEmitterComponent* emitter);
     void RemoveParticles(ParticleEmitterComponent* emitter);
     
-    const Vector2& GetWindowSize() const { return windowSize; }
-    
+    void SetViewMatrix(const Matrix4& view) { this->view = view; }
+
 private:
     friend class DebugRenderer;
 
@@ -49,6 +49,9 @@ private:
     VertexArray* spriteVertices;
     Shader* spriteShader;
 
+    Matrix4 view;
+    Matrix4 projection;
+
     std::vector<SpriteComponent*> sprites;
     std::vector<ParticleEmitterComponent*> particles;
 
@@ -56,5 +59,6 @@ private:
 
     Game* game;
 
-    Vector2 windowSize;
+    int screenWidth;
+    int screenHeight;
 };
