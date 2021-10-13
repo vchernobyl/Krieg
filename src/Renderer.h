@@ -43,7 +43,6 @@ private:
     void CreateSpriteVertices();
     
     SDL_Window* window;
-    SDL_Renderer* renderer;
     SDL_GLContext context;
 
     VertexArray* spriteVertices;

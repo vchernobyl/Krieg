@@ -8,8 +8,7 @@
 #include "Shader.h"
 #include "Assert.h"
 
-#include <glew.h>
-#include <SDL_image.h>
+#include <GL/glew.h>
 #include <algorithm>
 #include <cassert>
 
@@ -67,17 +66,6 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 
     CreateSpriteVertices();
 
-    renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-    if (!renderer) {
-	SDL_Log("Unable to create the renderer: %s", SDL_GetError());
-	return false;
-    }
-
-    if (IMG_Init(IMG_INIT_PNG) == 0) {
-	SDL_Log("Unable to initialize SDL_image: %s", SDL_GetError());
-	return false;
-    }
-
     DebugRenderer::Initialize();
 
     view = Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
@@ -92,7 +80,6 @@ void Renderer::Shutdown() {
     spriteShader->Unload();
     delete spriteShader;
 
-    SDL_DestroyRenderer(renderer);
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
 }

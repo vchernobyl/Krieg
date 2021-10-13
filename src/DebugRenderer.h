@@ -3,7 +3,7 @@
 #include "Shader.h"
 #include "Math.h"
 #include <vector>
-#include <glew.h>
+#include <GL/glew.h>
 
 class DebugRenderer {
 public:

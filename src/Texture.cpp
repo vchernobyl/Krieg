@@ -3,7 +3,7 @@
 
 #include <SOIL.h>
 #include <SDL.h>
-#include <glew.h>
+#include <GL/glew.h>
 
 bool Texture::Load(const std::string& fileName) {
     int channels = 0;

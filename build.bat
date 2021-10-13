@@ -9,7 +9,7 @@ set include_flags=/I ..\external\box2d\include^
     /I ..\external\SDL\include^
     /I ..\external\FMOD\api\studio\include^
     /I ..\external\FMOD\api\core\include^
-    /I ..\external\glew\include\GL^
+    /I ..\external\glew\include^
     /I ..\external\SOIL\include\
 
 set libs=shell32.lib^
