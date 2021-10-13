@@ -46,7 +46,6 @@ private:
     Shader* spriteShader;
 
     Matrix4 view;
-    Matrix4 projection;
 
     std::vector<SpriteComponent*> sprites;
     std::vector<ParticleEmitterComponent*> particles;

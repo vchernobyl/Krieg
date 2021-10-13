@@ -108,8 +108,7 @@ void Renderer::Draw() {
     }
 
     DebugRenderer::End();
-    Matrix4 projection = Matrix4::CreateSimpleViewProjection(screenWidth, screenHeight);
-    DebugRenderer::Draw(projection, 1.0f);
+    DebugRenderer::Draw(view, 1.0f);
 
     SDL_GL_SwapWindow(window);
 }

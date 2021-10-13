@@ -1,6 +1,8 @@
 #include "Ship.h"
 #include "SpriteComponent.h"
 #include "MoveComponent.h"
+#include "BoxColliderComponent.h"
+#include "RigidbodyComponent.h"
 #include "Texture.h"
 #include "Renderer.h"
 #include "Game.h"
@@ -11,6 +13,9 @@ Ship::Ship(Game* game) : Actor(game), laserCooldown(0.0f) {
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
 
     new MoveComponent(this);
+    auto box = new BoxColliderComponent(this, Vector2(1.0f, 1.0f));
+    rigidbody = box->GetAttachedRigidbody();
+    box->GetAttachedRigidbody()->SetGravityScale(0.0f);
 }
 
 void Ship::UpdateActor(float deltaTime) {
@@ -21,7 +26,7 @@ void Ship::ActorInput(const InputState& inputState) {
     Vector2 position = GetPosition();
     float rotation = GetRotation();
 
-    const float speed = 0.05f;
+    const float speed = 3.5f;
     const float rotationSpeed = 0.1f;
 
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_LEFT)) {
@@ -31,9 +36,11 @@ void Ship::ActorInput(const InputState& inputState) {
 	rotation -= rotationSpeed;
     }
     if (inputState.Keyboard.GetKeyValue(SDL_SCANCODE_UP)) {
-	position += GetForward() * speed;
+	rigidbody->SetVelocity(GetForward() * speed);
+    } else {
+	rigidbody->SetVelocity(Vector2(0.0f, 0.0f));
     }
-
+    
     SetRotation(rotation);
     SetPosition(position);
 }

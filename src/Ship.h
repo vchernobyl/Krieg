@@ -11,4 +11,5 @@ public:
 
 private:
     float laserCooldown;
+    class RigidbodyComponent* rigidbody;
 };
