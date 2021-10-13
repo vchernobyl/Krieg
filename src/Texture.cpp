@@ -2,7 +2,7 @@
 #include "Assert.h"
 
 #include <SOIL/SOIL.h>
-#include <SDL.h>
+#include <SDL/SDL.h>
 #include <GL/glew.h>
 
 bool Texture::Load(const std::string& fileName) {

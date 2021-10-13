@@ -1,7 +1,7 @@
 #include "AudioSystem.h"
 #include "Game.h"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 #include <fmod_studio.hpp>
 #include <fmod_errors.h>
 #include <vector>

@@ -1,7 +1,7 @@
 #include "Shader.h"
 #include "Assert.h"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 #include <fstream>
 #include <sstream>
 

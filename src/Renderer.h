@@ -1,11 +1,8 @@
 #pragma once
 
-// TODO: Remove this header once SpriteEffect enum is moved to the texture.
-#include "SpriteComponent.h"
-
 #include "Math.h"
 
-#include <SDL.h>
+#include <SDL/SDL.h>
 #include <vector>
 #include <unordered_map>
 
