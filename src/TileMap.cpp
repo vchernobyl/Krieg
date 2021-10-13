@@ -3,7 +3,7 @@
 #include "Texture.h"
 #include "Game.h"
 
-#include <pugixml.hpp>
+#include <pugixml/pugixml.hpp>
 #include <sstream>
 #include <iostream>
 
