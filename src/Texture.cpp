@@ -1,7 +1,7 @@
 #include "Texture.h"
 #include "Assert.h"
 
-#include <SOIL.h>
+#include <SOIL/SOIL.h>
 #include <SDL.h>
 #include <GL/glew.h>
 
