@@ -200,8 +200,10 @@ Notes from 'Game Engine Architecture':
 
 October:
 --------
-1. Implement Camera class.
+1. Implement renderer view/projection functionality. [DONE]
 2. Fix external includes to have a namespace.
+3. Fix collider position/drawing.
+4. Fix renderer rotation projection.
 
 Backlog
 -------

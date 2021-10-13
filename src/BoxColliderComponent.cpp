@@ -2,10 +2,10 @@
 #include "RigidbodyComponent.h"
 #include "Actor.h"
 
-#include <b2_polygon_shape.h>
-#include <b2_fixture.h>
-#include <b2_body.h>
-#include <b2_math.h>
+#include <box2d/b2_polygon_shape.h>
+#include <box2d/b2_fixture.h>
+#include <box2d/b2_body.h>
+#include <box2d/b2_math.h>
 
 BoxColliderComponent::BoxColliderComponent(Actor* owner, const Vector2& size) : ColliderComponent(owner) {
     b2PolygonShape shape;

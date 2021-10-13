@@ -1,7 +1,7 @@
 #pragma once
 
-#include <b2_draw.h>
-#include <b2_math.h>
+#include <box2d/b2_draw.h>
+#include <box2d/b2_math.h>
 
 class Box2DDebugRenderer : public b2Draw {
 public:

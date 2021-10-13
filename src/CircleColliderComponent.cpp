@@ -2,9 +2,9 @@
 #include "RigidbodyComponent.h"
 #include "Actor.h"
 
-#include <b2_circle_shape.h>
-#include <b2_fixture.h>
-#include <b2_body.h>
+#include <box2d/b2_circle_shape.h>
+#include <box2d/b2_fixture.h>
+#include <box2d/b2_body.h>
 
 CircleColliderComponent::CircleColliderComponent(Actor* owner, const Vector2& center, float radius)
     : ColliderComponent(owner) {

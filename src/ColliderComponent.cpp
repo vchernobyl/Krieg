@@ -4,8 +4,8 @@
 #include "Game.h"
 #include "Actor.h"
 
-#include <b2_fixture.h>
-#include <b2_types.h>
+#include <box2d/b2_fixture.h>
+#include <box2d/b2_types.h>
 #include <cassert>
 
 CollisionCategory operator|(CollisionCategory lhs, CollisionCategory rhs) {

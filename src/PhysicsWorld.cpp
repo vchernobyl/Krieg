@@ -10,11 +10,11 @@
 #include <algorithm>
 #include <cassert>
 
-#include <b2_math.h>
-#include <b2_world.h>
-#include <b2_contact.h>
-#include <b2_collision.h>
-#include <b2_world_callbacks.h>
+#include <box2d/b2_math.h>
+#include <box2d/b2_world.h>
+#include <box2d/b2_contact.h>
+#include <box2d/b2_collision.h>
+#include <box2d/b2_world_callbacks.h>
 
 class ContactListener : public b2ContactListener {
 public:

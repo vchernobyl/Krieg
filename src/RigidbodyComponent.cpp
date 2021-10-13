@@ -3,9 +3,9 @@
 #include "Actor.h"
 #include "Game.h"
 
-#include <b2_world.h>
-#include <b2_body.h>
-#include <b2_math.h>
+#include <box2d/b2_world.h>
+#include <box2d/b2_body.h>
+#include <box2d/b2_math.h>
 
 RigidbodyComponent::RigidbodyComponent(Actor* owner, MotionType type) : Component(owner) {
     b2BodyDef bodyDef;
