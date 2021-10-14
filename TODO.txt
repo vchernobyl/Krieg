@@ -202,8 +202,8 @@ October:
 --------
 1. Implement renderer view/projection functionality. [DONE]
 2. Fix external includes to have a namespace. [DONE]
-3. Fix collider position/drawing. [IN PROGRESS]
-4. Fix renderer rotation projection.
+3. Fix collider position/drawing. [DONE]
+4. Fix renderer rotation projection. [DONE]
 
 Backlog
 -------

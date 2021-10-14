@@ -18,7 +18,7 @@ DebugRenderer::~DebugRenderer() {
 }
 
 void DebugRenderer::Initialize() {
-    shader.Load("data/shaders/Shape.vert", "data/shaders/Shape.frag");
+    shader.Load("data/shaders/Debug.vert", "data/shaders/Debug.frag");
 
     GL_CALL(glGenVertexArrays(1, &vao));
     GL_CALL(glGenBuffers(1, &vbo));
@@ -103,7 +103,7 @@ void DebugRenderer::End() {
 
 void DebugRenderer::Draw(const Matrix4& projectionMatrix, float lineWidth) {
     shader.SetActive();
-    shader.SetMatrixUniform("P", projectionMatrix);
+    shader.SetMatrixUniform("uViewProjection", projectionMatrix);
 
     GL_CALL(glLineWidth(lineWidth));
     GL_CALL(glBindVertexArray(vao));

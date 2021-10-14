@@ -68,8 +68,9 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 
     DebugRenderer::Initialize();
 
-    view = Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
-    view *= Matrix4::CreateScale(64.0f);
+    view = Matrix4::CreateScale(64.0f);
+    view *= Matrix4::CreateRotationZ(0.0f);
+    view *= Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
 
     return true;
 }
@@ -93,7 +94,7 @@ void Renderer::UnloadData() {
 }
 
 void Renderer::Draw() {
-    GL_CALL(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+    GL_CALL(glClearColor(0.86f, 0.86f, 0.86f, 1.0f));
     GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
 
     GL_CALL(glEnable(GL_BLEND));
@@ -184,10 +185,6 @@ bool Renderer::LoadShaders() {
     if (!spriteShader->Load("data/shaders/Sprite.vert", "data/shaders/Sprite.frag")) {
 	return false;
     }
-
-    spriteShader->SetActive();
-    Matrix4 viewProjection = Matrix4::CreateSimpleViewProjection(screenWidth, screenHeight);
-    spriteShader->SetMatrixUniform("uViewProjection", viewProjection);
 
     return true;
 }
