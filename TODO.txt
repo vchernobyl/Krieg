@@ -204,6 +204,8 @@ October:
 2. Fix external includes to have a namespace. [DONE]
 3. Fix collider position/drawing. [DONE]
 4. Fix renderer rotation projection. [DONE]
+5. Investigate kinematic/static body collision.
+6. Draw non-rectangle shape sprites.
 
 Backlog
 -------
