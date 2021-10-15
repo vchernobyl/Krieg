@@ -12,10 +12,10 @@ Ship::Ship(Game* game) : Actor(game), laserCooldown(0.0f) {
     SpriteComponent* sprite = new SpriteComponent(this, 150);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
 
+    rigidbody = new RigidbodyComponent(this, MotionType::Kinematic);
+
+    new BoxColliderComponent(this, Vector2(1.0f, 1.0f));
     new MoveComponent(this);
-    auto box = new BoxColliderComponent(this, Vector2(1.0f, 1.0f));
-    rigidbody = box->GetAttachedRigidbody();
-    box->GetAttachedRigidbody()->SetGravityScale(0.0f);
 }
 
 void Ship::UpdateActor(float deltaTime) {
