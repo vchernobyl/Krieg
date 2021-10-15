@@ -5,6 +5,7 @@
 #include "PhysicsWorld.h"
 #include "Renderer.h"
 #include "BoxColliderComponent.h"
+#include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "TileMap.h"
 #include "TileMapRenderer.h"
@@ -47,7 +48,7 @@ bool Game::Initialize() {
 	return false;
     }
 
-    const auto gravity = Vector2(0.0f, -30.0f);
+    const auto gravity = Vector2(0.0f, -10.0f);
     physicsWorld = new PhysicsWorld(gravity);
 
     Random::Init();
@@ -197,6 +198,11 @@ void Game::LoadData() {
     for (int i = 0; i < numAsteroids; i++) {
 	new Asteroid(this);
     }
+
+    auto ground = new Actor(this);
+    ground->SetPosition(Vector2(6.0f, -4.0f));
+    new RigidbodyComponent(ground, MotionType::Static);
+    auto box = new BoxColliderComponent(ground, Vector2(32.0f, 2.0f));
 }
 
 void Game::UnloadData() {

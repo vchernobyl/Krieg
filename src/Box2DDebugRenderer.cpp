@@ -11,7 +11,8 @@ void Box2DDebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCo
     // TODO: This is not a polygon but a box. Create a proper polygon.
     const auto width = vertices[1].x - vertices[0].x;
     const auto height = vertices[3].y - vertices[0].y;
-    const auto center = Vector2(vertices[0].x + width / 2.0f, vertices[0].y + height / 2.0f);
+//    const auto center = Vector2(vertices[0].x + width / 2.0f, vertices[0].y + height / 2.0f);
+    const auto center = Vector2(vertices[0].x, vertices[0].y);
     const auto box = Vector4(center.x, center.y, width, height);
     DebugRenderer::DrawBox(box, Vector4(0.0f, 1.0f, 0.0f, 1.0f), 0);
 }
@@ -20,4 +21,5 @@ void Box2DDebugRenderer::DrawTransform(const b2Transform& xf) {
 }
 
 void Box2DDebugRenderer::DrawSolidCircle(const b2Vec2& center, float radius, const b2Vec2& axis, const b2Color& color) {
+    DebugRenderer::DrawCircle(Vector2(center.x, center.y), Vector4(0.0f, 1.0f, 0.0f, 1.0f), radius);
 }

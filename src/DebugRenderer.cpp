@@ -83,7 +83,28 @@ void DebugRenderer::DrawBox(const Vector4& dst, const Vector4& color, float angl
 }
 
 void DebugRenderer::DrawCircle(const Vector2& center, const Vector4& color, float radius) {
-    
+    const int vertexCount = 100;
+    const size_t start = vertices.size();
+
+    // Resize vector for additional vertices for the new circle.
+    vertices.resize(start + vertexCount);
+
+    for (int i = 0; i < vertexCount; i++) {
+	const float angle = static_cast<float>(i) / vertexCount * 2 * Math::Pi;
+	vertices[start + i].position.x = Math::Cos(angle) * radius + center.x;
+	vertices[start + i].position.y = Math::Sin(angle) * radius + center.y;
+	vertices[start + i].color = color;
+    }
+
+    indices.reserve(indices.size() + vertexCount * 2);
+
+    for (int i = 0; i < vertexCount - 1; i++) {
+	indices.push_back(start + i);
+	indices.push_back(start + i + 1);
+    }
+
+    indices.push_back(start + vertexCount - 1);
+    indices.push_back(start);
 }
 
 void DebugRenderer::End() {

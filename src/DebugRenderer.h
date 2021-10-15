@@ -12,8 +12,13 @@ public:
 
     static void Initialize();
     static void Shutdown();
+
+    // TODO: Make color optional.
     static void DrawBox(const Vector4& dst, const Vector4& color, float angle);
+
+    // TODO: Make color optional.
     static void DrawCircle(const Vector2& center, const Vector4& color, float radius);
+    
     static void End();
     static void Draw(const Matrix4& projectionMatrix, float lineWidth);
     
