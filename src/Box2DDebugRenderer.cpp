@@ -8,13 +8,15 @@ Box2DDebugRenderer::Box2DDebugRenderer() : b2Draw() {
 };
 
 void Box2DDebugRenderer::DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color) {
-    // TODO: This is not a polygon but a box. Create a proper polygon.
-    const auto width = vertices[1].x - vertices[0].x;
-    const auto height = vertices[3].y - vertices[0].y;
-//    const auto center = Vector2(vertices[0].x + width / 2.0f, vertices[0].y + height / 2.0f);
-    const auto center = Vector2(vertices[0].x, vertices[0].y);
-    const auto box = Vector4(center.x, center.y, width, height);
-    DebugRenderer::DrawBox(box, Vector4(0.0f, 1.0f, 0.0f, 1.0f), 0);
+    for (int32 i = 0; i < vertexCount - 1; i++) {
+	auto from = Vector2(vertices[i].x, vertices[i].y);
+	auto to = Vector2(vertices[i + 1].x, vertices[i + 1].y);
+	DebugRenderer::DrawLine(from, to, Vector4(0.0f, 1.0f, 0.0f, 1.0f));
+    }
+
+    auto first = Vector2(vertices[0].x, vertices[0].y);
+    auto last = Vector2(vertices[vertexCount - 1].x, vertices[vertexCount - 1].y);
+    DebugRenderer::DrawLine(first, last, Vector4(0.0f, 1.0f, 0.0f, 1.0f));
 }
 
 void Box2DDebugRenderer::DrawTransform(const b2Transform& xf) {
