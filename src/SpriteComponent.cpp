@@ -20,12 +20,14 @@ SpriteComponent::~SpriteComponent() {
 
 void SpriteComponent::Draw(Shader* shader) {
     if (texture) {
+	float smallest = textureWidth < textureHeight ? textureWidth : textureHeight;
+	
 	Matrix4 scale = Matrix4::CreateScale(
-	    static_cast<float>(textureWidth),
-	    static_cast<float>(textureHeight),
+	    static_cast<float>(textureWidth / smallest),
+	    static_cast<float>(textureHeight / smallest),
 	    1.0f);
     
-	Matrix4 world = owner->GetWorldTransform();
+	Matrix4 world = scale * owner->GetWorldTransform();
 	shader->SetMatrixUniform("uWorldTransform", world);
 	texture->SetActive();
     

@@ -175,7 +175,7 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     // new Player(this);
-    // new Enemy(this);
+    new Enemy(this);
 
     // auto tileMap = TileMap(this, "data/prototype_map.tmx");
     // tileMapRenderer = new TileMapRenderer(tileMap);

@@ -8,18 +8,12 @@
 #include "RigidbodyComponent.h"
 
 Enemy::Enemy(Game* game) : Actor(game) {
-    SetPosition(Vector2(5, 20));
-    SetScale(2.0f);
+    SetPosition(Vector2::Zero);
 
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/Enemy.png"));
 
-    rigidbody = new RigidbodyComponent(this, MotionType::Dynamic);
-
-    auto size = sprite->GetSize() * GetScale();
-    auto box = new BoxColliderComponent(this, size);
-    box->SetCollisionFilter(CollisionCategory::Enemy,
-			    CollisionCategory::Ground | CollisionCategory::Bullet);
+    new BoxColliderComponent(this, Vector2(2.0f, 1.0f) * GetScale());
 }
 
 void Enemy::UpdateActor(float deltaTime) {
