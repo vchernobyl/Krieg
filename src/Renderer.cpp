@@ -68,7 +68,7 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 
     DebugRenderer::Initialize();
 
-    view = Matrix4::CreateScale(24.0f);
+    view = Matrix4::CreateScale(32.0f);
     view *= Matrix4::CreateRotationZ(0.0f);
     view *= Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
 

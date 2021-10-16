@@ -206,6 +206,9 @@ October:
 4. Fix renderer rotation projection. [DONE]
 5. Investigate kinematic/static body collision.
 6. Draw non-rectangle shape sprites.
+7. Add DrawLine function. [DONE]
+8. Draw polygon shapes using DrawLine. [IN PROGRESS]
+9. Provide default color to the debug draw functions.
 
 Backlog
 -------

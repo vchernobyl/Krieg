@@ -107,6 +107,23 @@ void DebugRenderer::DrawCircle(const Vector2& center, const Vector4& color, floa
     indices.push_back(start);
 }
 
+void DebugRenderer::DrawLine(const Vector2& from, const Vector2& to, const Vector4& color) {
+    const size_t start = vertices.size();
+
+    // Add two vertices for a straight line.
+    vertices.resize(start + 2);
+
+    vertices[start].position = from;
+    vertices[start].color = color;
+
+    vertices[start + 1].position = to;
+    vertices[start + 1].color = color;
+
+    indices.reserve(indices.size() + 2);
+    indices.push_back(start);
+    indices.push_back(start + 1);
+}
+
 void DebugRenderer::End() {
     GL_CALL(glBindVertexArray(vao));
     GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, vbo));
