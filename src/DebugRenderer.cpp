@@ -43,7 +43,7 @@ void DebugRenderer::Shutdown() {
     GL_CALL(glDeleteBuffers(1, &ibo));
 }
 
-void DebugRenderer::DrawBox(const Vector4& dst, const Vector4& color, float angle) {
+void DebugRenderer::DrawBox(const Vector4& dst, float angle, const Vector4& color) {
     // For every call to DrawBox function, reserve space for four debug vertices.
     int i = vertices.size();
     vertices.resize(vertices.size() + 4);
@@ -82,7 +82,7 @@ void DebugRenderer::DrawBox(const Vector4& dst, const Vector4& color, float angl
     indices.push_back(i);
 }
 
-void DebugRenderer::DrawCircle(const Vector2& center, const Vector4& color, float radius) {
+void DebugRenderer::DrawCircle(const Vector2& center, float radius, const Vector4& color) {
     const int vertexCount = 100;
     const size_t start = vertices.size();
 

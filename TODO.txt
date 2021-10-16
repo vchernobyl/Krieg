@@ -208,7 +208,7 @@ October:
 6. Draw non-rectangle shape sprites.
 7. Add DrawLine function. [DONE]
 8. Draw polygon shapes using DrawLine. [DONE]
-9. Provide default color to the debug draw functions.
+9. Provide default color to the debug draw functions [DONE].
 
 Backlog
 -------

@@ -13,13 +13,9 @@ public:
     static void Initialize();
     static void Shutdown();
 
-    // TODO: Make color optional.
-    static void DrawBox(const Vector4& dst, const Vector4& color, float angle);
-
-    // TODO: Make color optional.
-    static void DrawCircle(const Vector2& center, const Vector4& color, float radius);
-
-    static void DrawLine(const Vector2& from, const Vector2& to, const Vector4& color);
+    static void DrawBox(const Vector4& dst, float angle, const Vector4& color = Color::Green);
+    static void DrawCircle(const Vector2& center, float radius, const Vector4& color = Color::Green);
+    static void DrawLine(const Vector2& from, const Vector2& to, const Vector4& color = Color::Green);
     
     static void End();
     static void Draw(const Matrix4& projectionMatrix, float lineWidth);

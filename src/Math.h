@@ -209,6 +209,7 @@ public:
 	return rotated;
     }
 
+    // TODO: Can we instantiate them here directly?
     static const Vector2 Zero;
     static const Vector2 One;
     static const Vector2 Up;
@@ -557,4 +558,10 @@ public:
     }
     
     static const Matrix4 Identity;
+};
+
+namespace Color {
+    static const Vector4 Red(1.0f, 0.0f, 0.0f, 1.0f);
+    static const Vector4 Green(0.0f, 1.0f, 0.0f, 1.0f);
+    static const Vector4 Blue(0.0f, 0.0f, 1.0f, 1.0f);
 };
