@@ -191,24 +191,26 @@ September:
 3. Fix crash when rendering box sprites and debug shapes. [DONE]
 5. Replace DebugRenderer with DebugDraw and make it globally available. [DONE]
 
-Notes from 'Game Engine Architecture':
-- Whenever we want to express a IS-A relationship via inheritence, think about whether or not
-  it could be expressed better as a HAS-A relationship. Should AnimatedSprite inherit from Sprite?
-  Maybe it could be designed better without inheritence and with a composition instead.
-- C++11 has a very useful 'final' keyword to restrict overriding of virtual functions and
-  inheriting from class/struct which wasn't designed for it.
-
 October:
 --------
 1. Implement renderer view/projection functionality. [DONE]
 2. Fix external includes to have a namespace. [DONE]
 3. Fix collider position/drawing. [DONE]
 4. Fix renderer rotation projection. [DONE]
-5. Investigate kinematic/static body collision.
+5. Investigate kinematic/static body collision. [DONE]
+   (Box2D docs: Static bodies do NOT collide with other static or kinematic bodies.)
 6. Draw non-rectangle shape sprites. [DONE]
 7. Add DrawLine function. [DONE]
 8. Draw polygon shapes using DrawLine. [DONE]
 9. Provide default color to the debug draw functions [DONE].
+10. Integrate sprite batch into the renderer and sprite component. [IN PROGRESS]
+
+Notes from 'Game Engine Architecture':
+- Whenever we want to express a IS-A relationship via inheritence, think about whether or not
+  it could be expressed better as a HAS-A relationship. Should AnimatedSprite inherit from Sprite?
+  Maybe it could be designed better without inheritence and with a composition instead.
+- C++11 has a very useful 'final' keyword to restrict overriding of virtual functions and
+  inheriting from class/struct which wasn't designed for it.
 
 Backlog
 -------
