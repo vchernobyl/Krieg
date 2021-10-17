@@ -13,6 +13,9 @@ public:
     int GetHeight() const { return height; }
     Vector2 GetSize() const { return Vector2(width, height); }
 
+    // TODO: Refactor later.
+    unsigned int GetID() const { return textureID; }
+
 private:
     unsigned int textureID = 0;
     int width = 0;

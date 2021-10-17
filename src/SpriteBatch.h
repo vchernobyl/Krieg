@@ -53,7 +53,7 @@ public:
 class SpriteBatch {
 public:
     SpriteBatch();
-    void Init();
+    void Initialize();
     void Begin(SpriteSortType sortType = SpriteSortType::Texture);
     void End();
 
@@ -73,10 +73,9 @@ private:
     void CreateVertexArray();
     void SortSpriteBatchItems();
 
-    // TODO: Header initialize values right here.
-    GLuint vbo;
-    GLuint vao;
-    SpriteSortType sortType;
+    GLuint vbo = 0;
+    GLuint vao = 0;
+    SpriteSortType sortType = SpriteSortType::Texture;
 
     std::vector<SpriteBatchItem*> spriteBatchItemPtrs;
     std::vector<SpriteBatchItem> spriteBatchItems;

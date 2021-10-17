@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Math.h"
+#include "SpriteBatch.h"
 
 #include <SDL/SDL.h>
 #include <vector>
@@ -8,8 +9,6 @@
 
 class Game;
 class Texture;
-class Vector2;
-class Rectangle;
 class SpriteComponent;
 class ParticleEmitterComponent;
 class VertexArray;
@@ -17,7 +16,7 @@ class Shader;
 
 class Renderer {
 public:
-    Renderer(Game*);
+    Renderer(Game* game);
 
     bool Initialize(int screenWidth, int screenHeight);
     void Shutdown();
@@ -42,8 +41,10 @@ private:
     SDL_Window* window;
     SDL_GLContext context;
 
+    SpriteBatch spriteBatch;
     VertexArray* spriteVertices;
     Shader* spriteShader;
+    Shader* textureShader;
 
     Matrix4 view;
 

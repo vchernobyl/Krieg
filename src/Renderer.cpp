@@ -8,6 +8,8 @@
 #include "Shader.h"
 #include "Assert.h"
 
+#include "SpriteBatch.h"
+
 #include <GL/glew.h>
 #include <algorithm>
 #include <cassert>
@@ -64,6 +66,8 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 	return false;
     }
 
+    spriteBatch.Initialize();
+
     CreateSpriteVertices();
 
     DebugRenderer::Initialize();
@@ -107,6 +111,18 @@ void Renderer::Draw() {
     for (auto sprite : sprites) {
 	sprite->Draw(spriteShader);
     }
+
+    textureShader->SetActive();
+    textureShader->SetMatrixUniform("P", view);
+    spriteBatch.Begin();
+    Texture* texture = GetTexture("data/Enemy.png");
+    spriteBatch.Draw(Vector4(0.0f, 0.0f, 2.0f, 1.0f),
+		     Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+		     texture->GetID(),
+		     1.0f,
+		     Color::White);
+    spriteBatch.End();
+    spriteBatch.DrawBatch();
 
     DebugRenderer::End();
     DebugRenderer::Draw(view, 1.0f);
@@ -183,6 +199,11 @@ void Renderer::CreateSpriteVertices() {
 bool Renderer::LoadShaders() {
     spriteShader = new Shader();
     if (!spriteShader->Load("data/shaders/Sprite.vert", "data/shaders/Sprite.frag")) {
+	return false;
+    }
+
+    textureShader = new Shader();
+    if (!textureShader->Load("data/shaders/Texture.vert", "data/shaders/Texture.frag")) {
 	return false;
     }
 

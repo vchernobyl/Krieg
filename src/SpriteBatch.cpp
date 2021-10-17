@@ -62,10 +62,10 @@ Vector2 SpriteBatchItem::RotatePoint(const Vector2& point, float angle) {
     return rotated;
 }
 
-SpriteBatch::SpriteBatch() : vbo(0), vao(0) {
+SpriteBatch::SpriteBatch() {
 }
 
-void SpriteBatch::Init() {
+void SpriteBatch::Initialize() {
     CreateVertexArray();
 }
 
@@ -171,7 +171,7 @@ void SpriteBatch::CreateVertexArray() {
     glEnableVertexAttribArray(2);
 
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
-    glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
     
     glBindVertexArray(0);
