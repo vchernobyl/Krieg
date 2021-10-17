@@ -9,8 +9,7 @@ out vec4 fragmentColor;
 uniform mat4 uViewProjection;
 
 void main() {
-     vec4 pos = vec4(vertexPosition, 0.0, 1.0);
-     gl_Position = pos * uViewProjection;
+     gl_Position = vec4(vertexPosition, 0.0, 1.0) * uViewProjection;
 
      fragmentPosition = vertexPosition;
      fragmentColor = vertexColor;

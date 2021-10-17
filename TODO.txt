@@ -204,7 +204,7 @@ October:
 8. Draw polygon shapes using DrawLine. [DONE]
 9. Provide default color to the debug draw functions [DONE].
 10. Integrate sprite batch into the renderer. [DONE]
-11. Integrate sprite batch into the sprite component. [DONE]
+11. Integrate sprite batch into the sprite component. [DONE ]
 12. Refactor/clean-up the texture shader. [DONE]
 
 Notes from 'Game Engine Architecture':

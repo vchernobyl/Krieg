@@ -175,34 +175,19 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     // new Player(this);
-    //new Enemy(this);
-
-    // auto tileMap = TileMap(this, "data/prototype_map.tmx");
-    // tileMapRenderer = new TileMapRenderer(tileMap);
-
-    // auto objectGroups = tileMap.GetObjectGroups();
-    // for (auto objectGroup : objectGroups) {
-    // 	for (const auto& object : objectGroup.objects) {
-    // 	    auto objectActor = new Actor(this);
-    // 	    objectActor->SetPosition(object.position);
-
-    // 	    new RigidbodyComponent(objectActor, MotionType::Static);
-    // 	    auto box = new BoxColliderComponent(objectActor, object.size);
-    // 	    box->SetCollisionFilter(CollisionCategory::Ground, CollisionCategory::Default);
-    // 	}
-    // }
+    // new Enemy(this);
 
     new Ship(this);
 
-    // const int numAsteroids = 20;
-    // for (int i = 0; i < numAsteroids; i++) {
-    // 	new Asteroid(this);
-    // }
+    const int numAsteroids = 20;
+    for (int i = 0; i < numAsteroids; i++) {
+	new Asteroid(this);
+    }
 
-    // auto ground = new Actor(this);
-    // ground->SetPosition(Vector2(6.0f, -4.0f));
-    // new RigidbodyComponent(ground, MotionType::Static);
-    // auto box = new BoxColliderComponent(ground, Vector2(32.0f, 2.0f));
+    auto ground = new Actor(this);
+    ground->SetPosition(Vector2(6.0f, -7.0f));
+    new RigidbodyComponent(ground, MotionType::Static);
+    auto box = new BoxColliderComponent(ground, Vector2(32.0f, 2.0f));
 }
 
 void Game::UnloadData() {

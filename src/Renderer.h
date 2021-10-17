@@ -11,7 +11,6 @@ class Game;
 class Texture;
 class SpriteComponent;
 class ParticleEmitterComponent;
-class VertexArray;
 class Shader;
 
 class Renderer {
@@ -33,17 +32,12 @@ public:
     void SetViewMatrix(const Matrix4& view) { this->view = view; }
 
 private:
-    friend class DebugRenderer;
-
     bool LoadShaders();
-    void CreateSpriteVertices();
     
     SDL_Window* window;
     SDL_GLContext context;
 
     SpriteBatch spriteBatch;
-    VertexArray* spriteVertices;
-    Shader* spriteShader;
     Shader* textureShader;
 
     Matrix4 view;

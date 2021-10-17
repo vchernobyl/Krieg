@@ -1,18 +1,15 @@
 #include "Renderer.h"
 #include "SpriteComponent.h"
+#include "SpriteBatch.h"
 #include "Game.h"
 #include "Texture.h"
 #include "ParticleEmitterComponent.h"
 #include "DebugRenderer.h"
-#include "VertexArray.h"
 #include "Shader.h"
 #include "Assert.h"
 
-#include "SpriteBatch.h"
-
 #include <GL/glew.h>
 #include <algorithm>
-#include <cassert>
 
 Renderer::Renderer(Game* game) : game(game) {}
 
@@ -67,12 +64,9 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
     }
 
     spriteBatch.Initialize();
-
-    CreateSpriteVertices();
-
     DebugRenderer::Initialize();
 
-    view = Matrix4::CreateScale(64.0f);
+    view = Matrix4::CreateScale(32.0f);
     view *= Matrix4::CreateRotationZ(0.0f);
     view *= Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
 
@@ -80,10 +74,8 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 }
 
 void Renderer::Shutdown() {
-    delete spriteVertices;
-
-    spriteShader->Unload();
-    delete spriteShader;
+    textureShader->Unload();
+    delete textureShader;
 
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
@@ -104,13 +96,6 @@ void Renderer::Draw() {
     GL_CALL(glEnable(GL_BLEND));
     GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-    // spriteShader->SetActive();
-    // spriteShader->SetMatrixUniform("uViewProjection", view);
-
-    // spriteVertices->SetActive();
-
-    DebugRenderer::DrawCircle(Vector2::Zero, 0.05f, Color::Red);
-
     textureShader->SetActive();
     textureShader->SetMatrixUniform("uViewProjection", view);
 
@@ -121,23 +106,6 @@ void Renderer::Draw() {
     spriteBatch.End();
     spriteBatch.DrawBatch();
 
-    // {
-    // 	textureShader->SetActive();
-    // 	textureShader->SetMatrixUniform("uViewProjection", view);
-
-    // 	spriteBatch.Begin();
-
-    // 	Texture* texture = GetTexture("data/Enemy.png");
-    // 	spriteBatch.Draw(Vector4(0.0f, 0.0f, 2.0f, 1.0f),
-    // 			 Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-    // 			 texture->GetID(),
-    // 			 1.0f,
-    // 			 Color::White);
-
-    // 	spriteBatch.End();
-    // 	spriteBatch.DrawBatch();
-    // }
-    
     DebugRenderer::End();
     DebugRenderer::Draw(view, 1.0f);
 
@@ -193,29 +161,7 @@ void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
     }
 }
 
-void Renderer::CreateSpriteVertices() {
-    // Store vertex data in form (x, y, z, u, v).
-    const float vertices[] = {
-	-0.5f, 0.5f, 0.0f, 0.0f, 0.0f, // top left
- 	0.5f, 0.5f, 0.0f, 1.0f, 0.0f,  // top right
-	0.5f, -0.5f, 0.0f, 1.0f, 1.0f, // bottom right
-	-0.5f, -0.5f, 0.0, 0.0f, 1.0f  // bottom left
-    };
-
-    const unsigned int indices[] = {
-	0, 1, 2,
-	2, 3, 0
-    };
-
-    spriteVertices = new VertexArray(vertices, 4, indices, 6);
-}
-
 bool Renderer::LoadShaders() {
-    spriteShader = new Shader();
-    if (!spriteShader->Load("data/shaders/Sprite.vert", "data/shaders/Sprite.frag")) {
-	return false;
-    }
-
     textureShader = new Shader();
     if (!textureShader->Load("data/shaders/Texture.vert", "data/shaders/Texture.frag")) {
 	return false;

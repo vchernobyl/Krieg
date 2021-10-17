@@ -20,19 +20,6 @@ SpriteComponent::~SpriteComponent() {
 
 void SpriteComponent::Draw(SpriteBatch& spriteBatch) {
     if (texture) {
-	// float smallest = textureWidth < textureHeight ? textureWidth : textureHeight;
-	
-	// Matrix4 scale = Matrix4::CreateScale(
-	//     static_cast<float>(textureWidth / smallest),
-	//     static_cast<float>(textureHeight / smallest),
-	//     1.0f);
-    
-	// Matrix4 world = scale * owner->GetWorldTransform();
-	// shader->SetMatrixUniform("uWorldTransform", world);
-	// texture->SetActive();
-    
-	// GL_CALL(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
-
 	float smallest = textureWidth < textureHeight ? textureWidth : textureHeight;
 	Vector2 position = owner->GetPosition();
 	float width = textureWidth / smallest;

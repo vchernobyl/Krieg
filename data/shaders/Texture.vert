@@ -11,7 +11,7 @@ out vec2 fragmentUV;
 uniform mat4 uViewProjection;
 
 void main() {
-    gl_Position = uViewProjection * vec4(vertexPosition, 0.0, 1.0);
+    gl_Position = vec4(vertexPosition, 0.0, 1.0) * uViewProjection;
 
     fragmentPosition = vertexPosition;
     fragmentColor = vertexColor;
