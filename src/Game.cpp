@@ -194,15 +194,15 @@ void Game::LoadData() {
 
     new Ship(this);
 
-    const int numAsteroids = 20;
-    for (int i = 0; i < numAsteroids; i++) {
-	new Asteroid(this);
-    }
+    // const int numAsteroids = 20;
+    // for (int i = 0; i < numAsteroids; i++) {
+    // 	new Asteroid(this);
+    // }
 
-    auto ground = new Actor(this);
-    ground->SetPosition(Vector2(6.0f, -4.0f));
-    new RigidbodyComponent(ground, MotionType::Static);
-    auto box = new BoxColliderComponent(ground, Vector2(32.0f, 2.0f));
+    // auto ground = new Actor(this);
+    // ground->SetPosition(Vector2(6.0f, -4.0f));
+    // new RigidbodyComponent(ground, MotionType::Static);
+    // auto box = new BoxColliderComponent(ground, Vector2(32.0f, 2.0f));
 }
 
 void Game::UnloadData() {

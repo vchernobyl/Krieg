@@ -4,13 +4,6 @@
 #include <GL/glew.h>
 #include <vector>
 
-enum class SpriteSortType {
-    None,
-    FrontToBack,
-    BackToFront,
-    Texture
-};
-
 struct Vertex {
     Vector2 position;
     Vector4 color;
@@ -35,9 +28,6 @@ public:
     Vertex bottomLeft;
     Vertex bottomRight;
     Vertex topRight;
-
-private:
-    Vector2 RotatePoint(const Vector2& point, float angle);
 };
 
 class RenderBatch {
@@ -48,6 +38,13 @@ public:
     GLuint offset;
     GLuint numVertices;
     GLuint texture;
+};
+
+enum class SpriteSortType {
+    None,
+    FrontToBack,
+    BackToFront,
+    Texture
 };
 
 class SpriteBatch {

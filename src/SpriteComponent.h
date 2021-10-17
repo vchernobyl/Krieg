@@ -2,14 +2,13 @@
 
 #include "Component.h"
 #include "Math.h"
-#include "Game.h"
 
 class SpriteComponent : public Component {
 public:
     SpriteComponent(class Actor* owner, int drawOrder = 100);
     ~SpriteComponent();
 
-    void Draw(class Shader* shader);
+    void Draw(class SpriteBatch& spriteBatch);
     void SetTexture(class Texture* texture);
 
     int GetDrawOrder() const { return drawOrder; }

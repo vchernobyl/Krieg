@@ -33,10 +33,10 @@ SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
     Vector2 br(halfDims.x, -halfDims.y);
     Vector2 tr(halfDims.x, halfDims.y);
 
-    tl = RotatePoint(tl, angle) + halfDims;
-    bl = RotatePoint(bl, angle) + halfDims;
-    br = RotatePoint(br, angle) + halfDims;
-    tr = RotatePoint(tr, angle) + halfDims;
+    tl = Vector2::RotatePoint(tl, angle) + halfDims;
+    bl = Vector2::RotatePoint(bl, angle) + halfDims;
+    br = Vector2::RotatePoint(br, angle) + halfDims;
+    tr = Vector2::RotatePoint(tr, angle) + halfDims;
     
     topLeft.color = color;
     topLeft.SetPosition(destRect.x + tl.x, destRect.y + tl.y);
@@ -53,13 +53,6 @@ SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
     topRight.color = color;
     topRight.SetPosition(destRect.x + tr.x, destRect.y + tr.y);
     topRight.SetUV(uvRect.x + uvRect.z, uvRect.y + uvRect.w);
-}
-
-Vector2 SpriteBatchItem::RotatePoint(const Vector2& point, float angle) {
-    Vector2 rotated;
-    rotated.x = point.x * cos(angle) - point.y * sin(angle);
-    rotated.y = point.x * sin(angle) + point.y * cos(angle);
-    return rotated;
 }
 
 SpriteBatch::SpriteBatch() {

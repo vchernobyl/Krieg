@@ -72,7 +72,7 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 
     DebugRenderer::Initialize();
 
-    view = Matrix4::CreateScale(32.0f);
+    view = Matrix4::CreateScale(64.0f);
     view *= Matrix4::CreateRotationZ(0.0f);
     view *= Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
 
@@ -104,26 +104,40 @@ void Renderer::Draw() {
     GL_CALL(glEnable(GL_BLEND));
     GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-    spriteShader->SetActive();
-    spriteShader->SetMatrixUniform("uViewProjection", view);
+    // spriteShader->SetActive();
+    // spriteShader->SetMatrixUniform("uViewProjection", view);
 
-    spriteVertices->SetActive();
-    for (auto sprite : sprites) {
-	sprite->Draw(spriteShader);
-    }
+    // spriteVertices->SetActive();
+
+    DebugRenderer::DrawCircle(Vector2::Zero, 0.05f, Color::Red);
 
     textureShader->SetActive();
-    textureShader->SetMatrixUniform("P", view);
+    textureShader->SetMatrixUniform("uViewProjection", view);
+
     spriteBatch.Begin();
-    Texture* texture = GetTexture("data/Enemy.png");
-    spriteBatch.Draw(Vector4(0.0f, 0.0f, 2.0f, 1.0f),
-		     Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-		     texture->GetID(),
-		     1.0f,
-		     Color::White);
+    for (auto sprite : sprites) {
+	sprite->Draw(spriteBatch);
+    }
     spriteBatch.End();
     spriteBatch.DrawBatch();
 
+    // {
+    // 	textureShader->SetActive();
+    // 	textureShader->SetMatrixUniform("uViewProjection", view);
+
+    // 	spriteBatch.Begin();
+
+    // 	Texture* texture = GetTexture("data/Enemy.png");
+    // 	spriteBatch.Draw(Vector4(0.0f, 0.0f, 2.0f, 1.0f),
+    // 			 Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+    // 			 texture->GetID(),
+    // 			 1.0f,
+    // 			 Color::White);
+
+    // 	spriteBatch.End();
+    // 	spriteBatch.DrawBatch();
+    // }
+    
     DebugRenderer::End();
     DebugRenderer::Draw(view, 1.0f);
 
