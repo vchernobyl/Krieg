@@ -13,6 +13,7 @@ enum class ButtonState {
 class KeyboardState {
 public:
     friend class InputSystem;
+
     bool GetKeyValue(SDL_Scancode keyCode) const; // TODO: Rename this to IsKeyPressed(..).
     ButtonState GetKeyState(SDL_Scancode keyCode) const;
 private:
@@ -23,7 +24,11 @@ private:
 class MouseState {
 public:
     friend class InputSystem;
+
     const Vector2& GetPosition() const { return mousePosition; }
+    const Vector2& GetScrollWheel() const { return scrollWheel; }
+    bool IsRelative() const { return isRelative; }
+
     bool IsButtonPressed(int button) const;
     ButtonState GetButtonState(int button) const;
 private:
@@ -49,6 +54,8 @@ public:
 
     // Called right after SDL_PollEvents loop
     void Update();
+
+    void ProcessEvent(SDL_Event& event);
 
     const InputState& GetState() const { return state; }
     void SetRelativeMouseMode(bool value);

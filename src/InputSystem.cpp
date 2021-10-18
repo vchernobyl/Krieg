@@ -76,6 +76,17 @@ void InputSystem::Update() {
     state.Mouse.mousePosition.y = static_cast<float>(y);
 }
 
+void InputSystem::ProcessEvent(SDL_Event& event) {
+    switch (event.type) {
+    case SDL_MOUSEWHEEL:
+	state.Mouse.scrollWheel.x = static_cast<float>(event.wheel.x);
+	state.Mouse.scrollWheel.y = static_cast<float>(event.wheel.y);
+	break;
+    default:
+	break;
+    }
+}
+
 void InputSystem::SetRelativeMouseMode(bool value) {
     SDL_bool relative = value ? SDL_TRUE : SDL_FALSE;
     SDL_SetRelativeMouseMode(relative);

@@ -117,6 +117,11 @@ void Game::ProcessInput() {
 	case SDL_QUIT:
 	    isRunning = false;
 	    break;
+	case SDL_MOUSEWHEEL:
+	    inputSystem->ProcessEvent(event);
+	    break;
+	default:
+	    break;
 	}
     }
 
