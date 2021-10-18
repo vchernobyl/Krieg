@@ -40,6 +40,16 @@ void Ship::ActorInput(const InputState& inputState) {
     } else {
 	rigidbody->SetVelocity(Vector2(0.0f, 0.0f));
     }
+
+    if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_LEFT)) {
+	SDL_Log("left");
+    }
+    if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_RIGHT)) {
+	SDL_Log("right");
+    }
+    if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_MIDDLE)) {
+	SDL_Log("middle");
+    }
     
     SetRotation(rotation);
     SetPosition(position);

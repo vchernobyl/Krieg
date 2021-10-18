@@ -21,9 +21,34 @@ ButtonState KeyboardState::GetKeyState(SDL_Scancode keyCode) const {
     }
 }
 
+bool MouseState::IsButtonPressed(int button) const {
+    return (SDL_BUTTON(button) & currButtons) != 0;
+}
+
+ButtonState MouseState::GetButtonState(int button) const {
+    int mask = SDL_BUTTON(button);
+    if ((mask & prevButtons) == 0) {
+	if ((mask & currButtons) == 0) {
+	    return ButtonState::None;
+	} else {
+	    return ButtonState::Pressed;
+	}
+    } else {
+	if ((mask & currButtons) == 0) {
+	    return ButtonState::Released;
+	} else {
+	    return ButtonState::Held;
+	}
+    }
+}
+
 bool InputSystem::Initialize() {
     state.Keyboard.currState = SDL_GetKeyboardState(NULL);
     memset(state.Keyboard.prevState, 0, SDL_NUM_SCANCODES);
+
+    state.Mouse.currButtons = 0;
+    state.Mouse.prevButtons = 0;
+
     return true;
 }
 
@@ -33,8 +58,12 @@ void InputSystem::Shutdown() {
 
 void InputSystem::PrepareForUpdate() {
     memcpy(state.Keyboard.prevState, state.Keyboard.currState, SDL_NUM_SCANCODES);
+    state.Mouse.prevButtons = state.Mouse.currButtons;
 }
 
 void InputSystem::Update() {
-    return;
+    int x = 0, y = 0;
+    state.Mouse.currButtons = SDL_GetMouseState(&x, &y);
+    state.Mouse.mousePosition.x = static_cast<float>(x);
+    state.Mouse.mousePosition.y = static_cast<float>(y);
 }
