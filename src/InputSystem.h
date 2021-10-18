@@ -30,6 +30,8 @@ private:
     Vector2 mousePosition;
     Uint32 currButtons;
     Uint32 prevButtons;
+    bool isRelative;
+    Vector2 scrollWheel;
 };
 
 struct InputState {
@@ -49,6 +51,7 @@ public:
     void Update();
 
     const InputState& GetState() const { return state; }
+    void SetRelativeMouseMode(bool value);
 private:
     InputState state;
 };

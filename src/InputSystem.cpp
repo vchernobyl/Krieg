@@ -58,12 +58,26 @@ void InputSystem::Shutdown() {
 
 void InputSystem::PrepareForUpdate() {
     memcpy(state.Keyboard.prevState, state.Keyboard.currState, SDL_NUM_SCANCODES);
+
     state.Mouse.prevButtons = state.Mouse.currButtons;
+    state.Mouse.isRelative = false;
+    state.Mouse.scrollWheel = Vector2::Zero;
 }
 
 void InputSystem::Update() {
     int x = 0, y = 0;
-    state.Mouse.currButtons = SDL_GetMouseState(&x, &y);
+    if (state.Mouse.isRelative) {
+	state.Mouse.currButtons = SDL_GetRelativeMouseState(&x, &y);
+    } else {
+	state.Mouse.currButtons = SDL_GetMouseState(&x, &y);
+    }
+    
     state.Mouse.mousePosition.x = static_cast<float>(x);
     state.Mouse.mousePosition.y = static_cast<float>(y);
+}
+
+void InputSystem::SetRelativeMouseMode(bool value) {
+    SDL_bool relative = value ? SDL_TRUE : SDL_FALSE;
+    SDL_SetRelativeMouseMode(relative);
+    state.Mouse.isRelative = relative;
 }

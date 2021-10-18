@@ -50,6 +50,9 @@ void Ship::ActorInput(const InputState& inputState) {
     if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_MIDDLE)) {
 	SDL_Log("middle");
     }
+
+    auto pos = inputState.Mouse.GetPosition();
+    SDL_Log("x=%f,y=%f", pos.x, pos.y);
     
     SetRotation(rotation);
     SetPosition(position);
