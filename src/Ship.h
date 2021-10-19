@@ -12,4 +12,5 @@ public:
 private:
     float laserCooldown;
     class RigidbodyComponent* rigidbody;
+    Vector2 target;
 };

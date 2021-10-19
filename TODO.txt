@@ -207,8 +207,10 @@ October:
 11. Integrate sprite batch into the sprite component. [DONE ]
 12. Refactor/clean-up the texture shader. [DONE]
 13. Add mouse state to the input system. [DONE]
-14. Implement camera zoom in/out. [IN PROGRESS]
+14. Implement camera zoom in/out. [DONE]
 15. Transform mouse screen position to world position. [DONE]
+16. Implement camera translation. [DONE]
+17. Don't always zoom the camera at (0, 0) but instead at the center of the camera position.
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

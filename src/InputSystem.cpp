@@ -1,7 +1,7 @@
 #include "InputSystem.h"
 #include <cstring>
 
-bool KeyboardState::GetKeyValue(SDL_Scancode keyCode) const {
+bool KeyboardState::IsKeyPressed(SDL_Scancode keyCode) const {
     return currState[keyCode] == 1;
 }
 

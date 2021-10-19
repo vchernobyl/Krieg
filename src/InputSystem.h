@@ -14,7 +14,7 @@ class KeyboardState {
 public:
     friend class InputSystem;
 
-    bool GetKeyValue(SDL_Scancode keyCode) const; // TODO: Rename this to IsKeyPressed(..).
+    bool IsKeyPressed(SDL_Scancode keyCode) const;
     ButtonState GetKeyState(SDL_Scancode keyCode) const;
 private:
     const Uint8* currState;

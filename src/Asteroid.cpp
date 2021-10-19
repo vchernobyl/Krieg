@@ -22,12 +22,6 @@ Asteroid::Asteroid(Game* game) : Actor(game) {
 //    MoveComponent* movement = new MoveComponent(this);
 //    movement->SetForwardSpeed(1.8f);
 
-    game->AddAsteroid(this);
-
     new RigidbodyComponent(this);
     new CircleColliderComponent(this, Vector2(0.0f, 0.0f), 0.5f);
-}
-
-Asteroid::~Asteroid() {
-    GetGame()->RemoveAsteroid(this);
 }

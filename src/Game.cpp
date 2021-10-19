@@ -9,8 +9,6 @@
 #include "RigidbodyComponent.h"
 #include "TileMap.h"
 #include "TileMapRenderer.h"
-#include "Player.h"
-#include "Enemy.h"
 #include "Random.h"
 #include "Math.h"
 
@@ -179,9 +177,6 @@ void Game::DrawGame() {
 }
 
 void Game::LoadData() {
-    // new Player(this);
-    // new Enemy(this);
-
     new Ship(this);
 
     const int numAsteroids = 20;
@@ -202,16 +197,5 @@ void Game::UnloadData() {
 
     while (!actors.empty()) {
 	delete actors.back();
-    }
-}
-
-void Game::AddAsteroid(Asteroid* asteroid) {
-    asteroids.emplace_back(asteroid);
-}
-
-void Game::RemoveAsteroid(Asteroid* asteroid) {
-    auto iter = std::find(asteroids.begin(), asteroids.end(), asteroid);
-    if (iter != asteroids.end()) {
-	asteroids.erase(iter);
     }
 }
