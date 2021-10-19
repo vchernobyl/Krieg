@@ -66,27 +66,6 @@ namespace Math {
     inline float Sign(float value) {
 	return (value > 0) ? 1 : (value < 0) ? -1 : 0;
     }
-
-    inline float SmoothDamp(float current, float target, float& currentVelocity,
-			    float smoothTime, float maxSpeed, float deltaTime) {
-	smoothTime = Math::Max(0.0001f, smoothTime);
-	const float num = 2.0f / smoothTime;
-	const float num2 = num * deltaTime;
-	const float num3 = 1.0f / (1.0f + num2 + 0.48f * num2 * num2 + 0.235f * num2 * num2 * num2);
-	float num4 = current - target;
-	const float num5 = target;
-	const float num6 = maxSpeed * smoothTime;
-	num4 = Math::Clamp(num4, -num6, num6);
-	target = current - num4;
-	const float num7 = (currentVelocity + num * num4) * deltaTime;
-	currentVelocity = (currentVelocity - num * num7) * num3;
-	float num8 = target + (num4 + num7) * num3;
-	if (num5 - current > 0.0f == num8 > num5) {
-	    num8 = num5;
-	    currentVelocity = (num8 - num5) / deltaTime;
-	}
-	return num8;
-    }
 }
 
 class Vector2 {
@@ -138,6 +117,12 @@ public:
     Vector2& operator*=(const Vector2& v) {
 	x *= v.x;
 	y *= v.y;
+	return *this;
+    }
+
+    Vector2& operator/=(float scalar) {
+	x /= scalar;
+	y /= scalar;
 	return *this;
     }
 

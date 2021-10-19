@@ -51,11 +51,14 @@ void Ship::ActorInput(const InputState& inputState) {
 	SDL_Log("middle");
     }
 
-    // auto pos = inputState.Mouse.GetPosition();
-    // SDL_Log("x=%f,y=%f", pos.x, pos.y);
+    auto pos = inputState.Mouse.GetPosition();
+    auto world = GetGame()->GetRenderer()->ScreenToWorld(pos);
+    SDL_Log("screen.x=%f, screen.y=%f, world.x=%f, world.y=%f", pos.x, pos.y, world.x, world.y);
 
     auto scroll = inputState.Mouse.GetScrollWheel();
-    SDL_Log("x=%f, y=%f", scroll.x, scroll.y);
+    if (scroll != Vector2::Zero) {
+	SDL_Log("x=%f, y=%f", scroll.x, scroll.y);
+    }
     
     SetRotation(rotation);
     SetPosition(position);

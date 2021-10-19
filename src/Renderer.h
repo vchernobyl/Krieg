@@ -28,7 +28,8 @@ public:
 
     void AddParticles(ParticleEmitterComponent* emitter);
     void RemoveParticles(ParticleEmitterComponent* emitter);
-    
+
+    Vector2 ScreenToWorld(Vector2 screenCoords);
     void SetViewMatrix(const Matrix4& view) { this->view = view; }
 
 private:
@@ -41,6 +42,7 @@ private:
     Shader* textureShader;
 
     Matrix4 view;
+    float scale = 64.0;
 
     std::vector<SpriteComponent*> sprites;
     std::vector<ParticleEmitterComponent*> particles;

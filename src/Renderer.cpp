@@ -66,7 +66,7 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
     spriteBatch.Initialize();
     DebugRenderer::Initialize();
 
-    view = Matrix4::CreateScale(32.0f);
+    view = Matrix4::CreateScale(scale);
     view *= Matrix4::CreateRotationZ(0.0f);
     view *= Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
 
@@ -159,6 +159,16 @@ void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
     if (iter != particles.end()) {
 	particles.erase(iter);
     }
+}
+
+Vector2 Renderer::ScreenToWorld(Vector2 screenCoords) {
+    // Invert the y coords.
+    screenCoords.y = screenHeight - screenCoords.y;
+
+    // Make (0, 0) to be at the center of the screen.
+    screenCoords -= Vector2(screenWidth / 2.0f, screenHeight / 2.0f);
+    screenCoords /= scale;
+    return screenCoords;
 }
 
 bool Renderer::LoadShaders() {

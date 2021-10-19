@@ -206,9 +206,9 @@ October:
 10. Integrate sprite batch into the renderer. [DONE]
 11. Integrate sprite batch into the sprite component. [DONE ]
 12. Refactor/clean-up the texture shader. [DONE]
-13. Add mouse state to the input system. [IN PROGRESS]
-14. Internalize SDL_Scancode (and SDL dependency) inside the input system.
-15. Implement custom logger.
+13. Add mouse state to the input system. [DONE]
+14. Implement camera zoom in/out. [IN PROGRESS]
+15. Transform mouse screen position to world position. [DONE]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
@@ -221,6 +221,8 @@ Backlog
 -------
 11. Clean up the SDL main initialization: https://wiki.libsdl.org/SDL_SetMainReady
 12. Load default texture if texture with a given name is missing.
+14. Internalize SDL_Scancode (and SDL dependency) inside the input system.
+15. Implement custom logger.
 
 How be brutally effective:
 --------------------------
