@@ -10,7 +10,6 @@ public:
     void ActorInput(const struct InputState& inputState) override;
 
 private:
-    float laserCooldown;
     class RigidbodyComponent* rigidbody;
-    Vector2 target;
+    class CameraComponent* camera;
 };

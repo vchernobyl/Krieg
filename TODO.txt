@@ -210,7 +210,10 @@ October:
 14. Implement camera zoom in/out. [DONE]
 15. Transform mouse screen position to world position. [DONE]
 16. Implement camera translation. [DONE]
-17. Don't always zoom the camera at (0, 0) but instead at the center of the camera position.
+17. Don't always zoom the camera at (0, 0) but instead at the center of the camera position. [DONE]
+18. Smooth zooming.
+19. Moving of camera with middle mouse button.
+20. Move screen to world projection from renderer to the camera component. [DONE]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

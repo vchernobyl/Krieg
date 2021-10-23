@@ -66,10 +66,6 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
     spriteBatch.Initialize();
     DebugRenderer::Initialize();
 
-    view = Matrix4::CreateScale(64.0f);
-    view *= Matrix4::CreateRotationZ(0.0f);
-    view *= Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
-
     return true;
 }
 
@@ -106,7 +102,8 @@ void Renderer::Draw() {
     spriteBatch.End();
     spriteBatch.DrawBatch();
 
-    DebugRenderer::End();
+    DebugRenderer::DrawCircle(Vector2::Zero, 0.15f, Color::Red);
+    DebugRenderer::End(); // TODO: We probably don't need this function.
     DebugRenderer::Draw(view, 1.0f);
 
     SDL_GL_SwapWindow(window);
@@ -159,16 +156,6 @@ void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
     if (iter != particles.end()) {
 	particles.erase(iter);
     }
-}
-
-Vector2 Renderer::ScreenToWorld(Vector2 screenCoords) {
-    // Invert the y coords.
-    screenCoords.y = screenHeight - screenCoords.y;
-
-    // Make (0, 0) to be at the center of the screen.
-    screenCoords -= Vector2(screenWidth / 2.0f, screenHeight / 2.0f);
-    screenCoords /= scale;
-    return screenCoords;
 }
 
 bool Renderer::LoadShaders() {

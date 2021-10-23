@@ -9,7 +9,7 @@
 #include "Game.h"
 #include "InputSystem.h"
 
-Ship::Ship(Game* game) : Actor(game), laserCooldown(0.0f) {
+Ship::Ship(Game* game) : Actor(game) {
     SpriteComponent* sprite = new SpriteComponent(this, 150);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
 
@@ -17,11 +17,10 @@ Ship::Ship(Game* game) : Actor(game), laserCooldown(0.0f) {
 
     new BoxColliderComponent(this, Vector2(1.0f, 1.0f));
     new MoveComponent(this);
-    new CameraComponent(this);
+    camera = new CameraComponent(this);
 }
 
 void Ship::UpdateActor(float deltaTime) {
-    laserCooldown -= deltaTime;
 }
 
 void Ship::ActorInput(const InputState& inputState) {
@@ -42,6 +41,9 @@ void Ship::ActorInput(const InputState& inputState) {
     } else {
 	rigidbody->SetVelocity(Vector2(0.0f, 0.0f));
     }
+
+    const auto pos = camera->ScreenToWorld(inputState.Mouse.GetPosition());
+    SDL_Log("x=%f, y=%f ", pos.x, pos.y);
 
     SetRotation(rotation);
     SetPosition(position);
