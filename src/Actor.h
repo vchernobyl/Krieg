@@ -37,7 +37,6 @@ public:
 
     ActorState GetState() const { return actorState; }
     void SetState(ActorState s) { actorState = s; }
-    void Destroy() { actorState = ActorState::Dead; }
 
     Game* GetGame() const { return game; }
 
@@ -55,8 +54,8 @@ public:
 
     template <typename T> T* GetComponent() {
 	for (auto component : components) {
-	    if (dynamic_cast<T*>(component)) {
-		return dynamic_cast<T*>(component);
+	    if (auto target = dynamic_cast<T*>(component)) {
+		return target;
 	    }
 	}
 	return nullptr;

@@ -17,7 +17,7 @@ public:
 private:
     bool needsUpdate = true;
 
-    float scale = 32.0f;
+    float scale = 48.0f;
     float screenWidth = 0.0f;
     float screenHeight = 0.0f;
 

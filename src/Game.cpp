@@ -46,7 +46,7 @@ bool Game::Initialize() {
 	return false;
     }
 
-    const auto gravity = Vector2(0.0f, -10.0f);
+    const auto gravity = Vector2::Zero;
     physicsWorld = new PhysicsWorld(gravity);
 
     Random::Init();
@@ -184,10 +184,10 @@ void Game::LoadData() {
 	new Asteroid(this);
     }
 
-    auto ground = new Actor(this);
-    ground->SetPosition(Vector2(6.0f, -7.0f));
-    new RigidbodyComponent(ground, MotionType::Static);
-    auto box = new BoxColliderComponent(ground, Vector2(32.0f, 2.0f));
+    // auto ground = new Actor(this);
+    // ground->SetPosition(Vector2(6.0f, -7.0f));
+    // new RigidbodyComponent(ground, BodyType::Static);
+    // auto box = new BoxColliderComponent(ground, Vector2(32.0f, 2.0f));
 }
 
 void Game::UnloadData() {

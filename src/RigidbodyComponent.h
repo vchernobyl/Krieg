@@ -3,7 +3,7 @@
 #include "Component.h"
 #include "Math.h"
 
-enum class MotionType {
+enum class BodyType {
     Static,
     Kinematic,
     Dynamic
@@ -11,7 +11,7 @@ enum class MotionType {
 
 class RigidbodyComponent : public Component {
 public:
-    RigidbodyComponent(class Actor* owner, MotionType type = MotionType::Dynamic);
+    RigidbodyComponent(class Actor* owner, BodyType type = BodyType::Dynamic);
     ~RigidbodyComponent();
 
     void SetVelocity(const Vector2& velocity);

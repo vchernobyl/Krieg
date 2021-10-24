@@ -102,7 +102,6 @@ void Renderer::Draw() {
     spriteBatch.End();
     spriteBatch.DrawBatch();
 
-    DebugRenderer::DrawCircle(Vector2::Zero, 0.15f, Color::Red);
     DebugRenderer::End(); // TODO: We probably don't need this function.
     DebugRenderer::Draw(view, 1.0f);
 

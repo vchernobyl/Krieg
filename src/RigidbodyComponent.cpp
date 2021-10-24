@@ -7,16 +7,16 @@
 #include <box2d/b2_body.h>
 #include <box2d/b2_math.h>
 
-RigidbodyComponent::RigidbodyComponent(Actor* owner, MotionType type) : Component(owner) {
+RigidbodyComponent::RigidbodyComponent(Actor* owner, BodyType type) : Component(owner) {
     b2BodyDef bodyDef;
     const Vector2& position = owner->GetPosition();
     bodyDef.position.Set(position.x, position.y);
     bodyDef.fixedRotation = true;
     bodyDef.userData.pointer = reinterpret_cast<uintptr_t>(owner);
 
-    if (type == MotionType::Dynamic) bodyDef.type = b2BodyType::b2_dynamicBody;
-    if (type == MotionType::Kinematic) bodyDef.type = b2BodyType::b2_kinematicBody;
-    if (type == MotionType::Static) bodyDef.type = b2BodyType::b2_staticBody;
+    if (type == BodyType::Dynamic) bodyDef.type = b2BodyType::b2_dynamicBody;
+    if (type == BodyType::Kinematic) bodyDef.type = b2BodyType::b2_kinematicBody;
+    if (type == BodyType::Static) bodyDef.type = b2BodyType::b2_staticBody;
 
     PhysicsWorld* physicsWorld = owner->GetGame()->GetPhysicsWorld();
     body = physicsWorld->world->CreateBody(&bodyDef);

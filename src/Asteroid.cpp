@@ -5,7 +5,6 @@
 #include "Random.h"
 #include "Renderer.h"
 #include "SpriteComponent.h"
-#include "MoveComponent.h"
 #include "RigidbodyComponent.h"
 #include "CircleColliderComponent.h"
 
@@ -18,9 +17,6 @@ Asteroid::Asteroid(Game* game) : Actor(game) {
 
     SpriteComponent* sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Asteroid.png"));
-
-//    MoveComponent* movement = new MoveComponent(this);
-//    movement->SetForwardSpeed(1.8f);
 
     new RigidbodyComponent(this);
     new CircleColliderComponent(this, Vector2(0.0f, 0.0f), 0.5f);

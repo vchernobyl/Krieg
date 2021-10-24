@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor.h"
+#include "Math.h"
 
 class Ship : public Actor {
 public:
@@ -10,6 +11,9 @@ public:
     void ActorInput(const struct InputState& inputState) override;
 
 private:
-    class RigidbodyComponent* rigidbody;
     class CameraComponent* camera;
+    class RigidbodyComponent* rigidbody;
+    Vector2 targetPosition;
+    Vector2 direction;
+    float targetRotation;
 };
