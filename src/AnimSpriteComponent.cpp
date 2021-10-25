@@ -23,7 +23,7 @@ void AnimSpriteComponent::Update(float deltaTime) {
 	}
 	int imageNum = animData.frameInfo[animNum].startFrame + frameNum;
 	SetTexture(animData.images[imageNum]);
-	frameTime = Math::Fmod(frameTime, 1.0f / animFPS);
+	frameTime = Math::Mod(frameTime, 1.0f / animFPS);
     }
 }
 

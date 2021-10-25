@@ -29,9 +29,9 @@ void Ship::UpdateActor(float deltaTime) {
 
     const auto rotationSpeed = 3.0f;
     const auto rotation = Math::Lerp(GetRotation(), targetRotation, rotationSpeed * deltaTime);
-    if (Math::Abs(rotation - targetRotation) > 0.01f) {
-	SetRotation(rotation);
-    }
+    SetRotation(rotation);
+
+    SDL_Log("rotation=%f, target=%f", rotation, targetRotation);
 
     DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Blue);
 }
@@ -41,5 +41,6 @@ void Ship::ActorInput(const InputState& inputState) {
 	targetPosition = camera->ScreenToWorld(inputState.Mouse.GetPosition());
 	direction = Vector2::Normalize(targetPosition - GetPosition());
 	targetRotation = Math::Atan2(direction.y, direction.x);
+	DebugRenderer::DrawCircle(targetPosition, 0.1f, Color::Red);
     }
 }

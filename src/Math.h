@@ -21,6 +21,10 @@ namespace Math {
 	return cosf(angle);
     }
 
+    inline float Acos(float angle) {
+	return acos(angle);
+    }
+
     inline float Atan2(float y, float x) {
 	return atan2(y, x);
     }
@@ -29,7 +33,7 @@ namespace Math {
 	return fabs(val) <= epsilon;
     }
 
-    inline float Fmod(float number, float denom) {
+    inline float Mod(float number, float denom) {
 	return fmod(number, denom);
     }
 

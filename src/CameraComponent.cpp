@@ -22,24 +22,14 @@ void CameraComponent::ProcessInput(const InputState& inputState) {
 	needsUpdate = true;
     }
 
-    const float camSpeed = 0.4f;
-    if (inputState.Keyboard.IsKeyPressed(SDL_SCANCODE_W)) {
-	position.y += camSpeed;
-	needsUpdate = true;
+    if (inputState.Mouse.GetButtonState(SDL_BUTTON_MIDDLE) == ButtonState::Pressed) {
+	dragStart = ScreenToWorld(inputState.Mouse.GetPosition());
     }
 
-    if (inputState.Keyboard.IsKeyPressed(SDL_SCANCODE_S)) {
-	position.y -= camSpeed;
-	needsUpdate = true;
-    }
-
-    if (inputState.Keyboard.IsKeyPressed(SDL_SCANCODE_A)) {
-	position.x -= camSpeed;
-	needsUpdate = true;
-    }
-
-    if (inputState.Keyboard.IsKeyPressed(SDL_SCANCODE_D)) {
-	position.x += camSpeed;
+    if (inputState.Mouse.GetButtonState(SDL_BUTTON_MIDDLE) == ButtonState::Held) {
+	dragEnd = ScreenToWorld(inputState.Mouse.GetPosition());
+	const Vector2 distance = dragEnd - dragStart;
+	position -= distance;
 	needsUpdate = true;
     }
 }
@@ -66,5 +56,7 @@ Vector2 CameraComponent::ScreenToWorld(const Vector2& screenPoint) {
     // Make (0, 0) to be at the center of the screen.
     worldPoint -= Vector2(screenWidth / 2.0f, screenHeight / 2.0f);
     worldPoint /= scale;
+    worldPoint += position;
+    
     return worldPoint;
 }

@@ -16,6 +16,8 @@ public:
 
 private:
     bool needsUpdate = true;
+    Vector2 dragStart;
+    Vector2 dragEnd;
 
     float scale = 48.0f;
     float screenWidth = 0.0f;
