@@ -27,11 +27,9 @@ void Ship::UpdateActor(float deltaTime) {
 	rigidbody->SetVelocity(direction * movementSpeed * deltaTime);
     }
 
-    const auto rotationSpeed = 3.0f;
-    const auto rotation = Math::Lerp(GetRotation(), targetRotation, rotationSpeed * deltaTime);
-    SetRotation(rotation);
-
-    SDL_Log("rotation=%f, target=%f", rotation, targetRotation);
+    const auto rotationSpeed = 6.0f;
+    const auto step = Vector2::Lerp(GetForward(), direction, rotationSpeed * deltaTime);
+    SetRotation(Math::Atan2(step.y, step.x));
 
     DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Blue);
 }
@@ -40,7 +38,6 @@ void Ship::ActorInput(const InputState& inputState) {
     if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_LEFT)) {
 	targetPosition = camera->ScreenToWorld(inputState.Mouse.GetPosition());
 	direction = Vector2::Normalize(targetPosition - GetPosition());
-	targetRotation = Math::Atan2(direction.y, direction.x);
 	DebugRenderer::DrawCircle(targetPosition, 0.1f, Color::Red);
     }
 }
