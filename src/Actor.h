@@ -3,6 +3,7 @@
 #include "Math.h"
 
 #include <vector>
+#include <string>
 
 class Game;
 class Component;
@@ -38,6 +39,9 @@ public:
     ActorState GetState() const { return actorState; }
     void SetState(ActorState s) { actorState = s; }
 
+    const std::string& GetTag() const { return tag; }
+    void SetTag(const std::string& tag) { this->tag = tag; }
+
     Game* GetGame() const { return game; }
 
     void ProcessInput(const InputState& inputState);
@@ -68,6 +72,7 @@ private:
     Vector2 position;
     float scale;
     float rotation; // In radians
+    std::string tag;
     bool recomputeWorldTransform;
 
     std::vector<Component*> components;

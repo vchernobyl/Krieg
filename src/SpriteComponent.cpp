@@ -7,10 +7,7 @@
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
-      texture(nullptr),
-      drawOrder(drawOrder),
-      textureWidth(0),
-      textureHeight(0) {
+      drawOrder(drawOrder) {
     owner->GetGame()->GetRenderer()->AddSprite(this);
 }
 
@@ -27,7 +24,7 @@ void SpriteComponent::Draw(SpriteBatch& spriteBatch) {
 	Vector4 dest(position.x - width / 2.0f, position.y - height / 2.0f, width, height);
 	Vector4 uv(0.0f, 0.0f, 1.0f, 1.0f);
 
-	spriteBatch.Draw(dest, uv, texture->GetID(), 1.0f, Color::White, owner->GetRotation());
+	spriteBatch.Draw(dest, uv, texture->GetID(), 1.0f, color, owner->GetRotation());
     }
 }
 

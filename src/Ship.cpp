@@ -17,6 +17,8 @@ Ship::Ship(Game* game) : Actor(game) {
     new CircleColliderComponent(this, Vector2::Zero, 0.5f);
 
     camera = new CameraComponent(this);
+
+    SetTag("Player");
 }
 
 void Ship::UpdateActor(float deltaTime) {

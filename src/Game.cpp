@@ -4,11 +4,6 @@
 #include "InputSystem.h"
 #include "PhysicsWorld.h"
 #include "Renderer.h"
-#include "BoxColliderComponent.h"
-#include "CircleColliderComponent.h"
-#include "RigidbodyComponent.h"
-#include "TileMap.h"
-#include "TileMapRenderer.h"
 #include "Random.h"
 #include "Math.h"
 
@@ -18,12 +13,13 @@
 // Game specific, remove later.
 #include "Asteroid.h"
 #include "Ship.h"
+#include "Enemy.h"
+// End
 
 Game::Game() :
     renderer(nullptr),
     inputSystem(nullptr),
     physicsWorld(nullptr),
-    tileMapRenderer(nullptr),
     isRunning(true),
     updatingActors(false) {}
 
@@ -106,6 +102,15 @@ void Game::RemoveActor(Actor* actor) {
     }
 }
 
+Actor* Game::GetActorByTag(const std::string& tag) {
+    auto iter = std::find_if(actors.begin(), actors.end(),
+			     [&tag](const Actor* actor) { return actor->GetTag() == tag; });
+    if (iter != actors.end()) {
+	return *iter;
+    }
+    return nullptr;
+}
+
 void Game::ProcessInput() {
     inputSystem->PrepareForUpdate();
 
@@ -178,23 +183,17 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Ship(this);
+    new Enemy(this);
 
     const int numAsteroids = 20;
     for (int i = 0; i < numAsteroids; i++) {
 	new Asteroid(this);
     }
-
-    // auto ground = new Actor(this);
-    // ground->SetPosition(Vector2(6.0f, -7.0f));
-    // new RigidbodyComponent(ground, BodyType::Static);
-    // auto box = new BoxColliderComponent(ground, Vector2(32.0f, 2.0f));
 }
 
 void Game::UnloadData() {
     renderer->UnloadData();
     
-    delete tileMapRenderer;
-
     while (!actors.empty()) {
 	delete actors.back();
     }

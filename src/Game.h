@@ -2,6 +2,7 @@
 
 #include <SDL/SDL.h>
 #include <vector>
+#include <string>
 
 class Actor;
 class Renderer;
@@ -19,6 +20,7 @@ public:
     void Shutdown();
     void AddActor(Actor* actor);
     void RemoveActor(Actor* actor);
+    Actor* GetActorByTag(const std::string& tag);
     Renderer* GetRenderer() const { return renderer; }
     PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
     AudioSystem* GetAudioSystem() { return audioSystem; }
@@ -39,7 +41,6 @@ private:
     PhysicsWorld* physicsWorld;
 
     // TODO: Game specific, remove it all later.
-    TileMapRenderer* tileMapRenderer;
     std::vector<class Asteroid*> asteroids;
 
     bool isRunning;
