@@ -11,10 +11,14 @@
 
 Enemy::Enemy(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this);
-    auto texture = game->GetRenderer()->GetTexture("data/textures/Ship.png");
-    sprite->SetTexture(texture);
+    sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
     sprite->SetColor(Color::Red);
-    SetPosition(Vector2(1.0f, 1.5f));
+
+    auto circle = new SpriteComponent(this);
+    circle->SetTexture(game->GetRenderer()->GetTexture("data/textures/Circle.png"));
+    circle->SetColor(Color::Red);
+
+    SetPosition(Vector2(3.0f, 2.5f));
 
     auto collider = new CircleColliderComponent(this, Vector2::Zero, 0.5f);
     rigidbody = collider->GetAttachedRigidbody();

@@ -17,12 +17,13 @@ SpriteComponent::~SpriteComponent() {
 
 void SpriteComponent::Draw(SpriteBatch& spriteBatch) {
     if (texture) {
-	float smallest = textureWidth < textureHeight ? textureWidth : textureHeight;
-	Vector2 position = owner->GetPosition();
-	float width = textureWidth / smallest;
-	float height = textureHeight / smallest;
-	Vector4 dest(position.x - width / 2.0f, position.y - height / 2.0f, width, height);
-	Vector4 uv(0.0f, 0.0f, 1.0f, 1.0f);
+	const float pixelsPerUnit = 64.0f;
+	float width = textureWidth / pixelsPerUnit * owner->GetScale();
+	float height = textureHeight / pixelsPerUnit * owner->GetScale();
+
+	auto position = owner->GetPosition();
+	auto dest = Vector4(position.x - width / 2.0f, position.y - height / 2.0f, width, height);
+	auto uv = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
 	spriteBatch.Draw(dest, uv, texture->GetID(), 1.0f, color, owner->GetRotation());
     }
