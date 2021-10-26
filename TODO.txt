@@ -217,6 +217,7 @@ October:
 21. Rotate ship by the closest angle. [DONE]
 22. Simple enemy class without movement. [DONE]
 23. Enemy tries to follow the player. [DONE]
+24. Add enemy ship selection. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

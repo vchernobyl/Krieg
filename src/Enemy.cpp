@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Texture.h"
 #include "Renderer.h"
+#include "DebugRenderer.h"
 #include "Game.h"
 #include "SpriteComponent.h"
 #include "CircleColliderComponent.h"
@@ -27,5 +28,8 @@ void Enemy::UpdateActor(float deltaTime) {
     auto direction = followTarget->GetPosition() - GetPosition();
     direction.Normalize();
 
-    rigidbody->SetVelocity(direction * 25.0f * deltaTime);
+    rigidbody->SetVelocity(direction * 35.0f * deltaTime);
+    SetRotation(Math::Atan2(direction.y, direction.x));
+
+    DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Red);
 }
