@@ -95,7 +95,7 @@ void Renderer::Draw() {
     textureShader->SetActive();
     textureShader->SetMatrixUniform("uViewProjection", view);
 
-    spriteBatch.Begin();
+    spriteBatch.Begin(SpriteBatch::SortType::FrontToBack);
     for (auto sprite : sprites) {
 	if (sprite->IsEnabled()) {
 	    sprite->Draw(spriteBatch);

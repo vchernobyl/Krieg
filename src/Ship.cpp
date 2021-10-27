@@ -12,7 +12,7 @@
 #include "Enemy.h"
 
 Ship::Ship(Game* game) : Actor(game) {
-    auto sprite = new SpriteComponent(this, 150);
+    auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
 
     rigidbody = new RigidbodyComponent(this);

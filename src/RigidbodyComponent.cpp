@@ -28,7 +28,12 @@ RigidbodyComponent::~RigidbodyComponent() {
     PhysicsWorld* world = owner->GetGame()->GetPhysicsWorld();
     world->RemoveRigidbody(this);
 }
-	
+
+void RigidbodyComponent::OnUpdateWorldTransform() {
+    // SDL_Log("update position");
+    // auto newPosition = owner->GetPosition();
+    // body->SetTransform(b2Vec2(newPosition.x, newPosition.y), body->GetAngle());
+}
 
 void RigidbodyComponent::SetVelocity(const Vector2& velocity) {
     body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));

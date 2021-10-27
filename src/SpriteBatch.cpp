@@ -3,7 +3,7 @@
 #include <algorithm>
 
 SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
-				 GLuint texture, float depth, const Vector4& color) :
+				 GLuint texture, int depth, const Vector4& color) :
     texture(texture), depth(depth) {
     topLeft.color = color;
     topLeft.SetPosition(destRect.x, destRect.y + destRect.w);
@@ -23,7 +23,7 @@ SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
 }
 
 SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
-				 GLuint texture, float depth, const Vector4& color, float angle) :
+				 GLuint texture, int depth, const Vector4& color, float angle) :
     texture(texture), depth(depth) {
 
     Vector2 halfDims(destRect.z / 2.0f, destRect.w / 2.0f);
@@ -62,7 +62,7 @@ void SpriteBatch::Initialize() {
     CreateVertexArray();
 }
 
-void SpriteBatch::Begin(SpriteSortType sortType) {
+void SpriteBatch::Begin(SortType sortType) {
     this->sortType = sortType;
     spriteBatchItems.clear();
     renderBatches.clear();
@@ -79,17 +79,17 @@ void SpriteBatch::End() {
 }
 
 void SpriteBatch::Draw(const Vector4& destRect, const Vector4& uvRect,
-		       GLuint texture, float depth, const Vector4& color) {
+		       GLuint texture, int depth, const Vector4& color) {
     spriteBatchItems.emplace_back(destRect, uvRect, texture, depth, color);
 }
 
 void SpriteBatch::Draw(const Vector4& destRect, const Vector4& uvRect,
-		       GLuint texture, float depth, const Vector4& color, float angle) {
+		       GLuint texture, int depth, const Vector4& color, float angle) {
     spriteBatchItems.emplace_back(destRect, uvRect, texture, depth, color, angle);
 }
 
 void SpriteBatch::Draw(const Vector4& destRect, const Vector4& uvRect,
-		       GLuint texture, float depth, const Vector4& color, const Vector2& direction) {
+		       GLuint texture, int depth, const Vector4& color, const Vector2& direction) {
     Vector2 right(1.0f, 0.0f);
     float angle = acos(Vector2::Dot(right, direction));
 
@@ -172,15 +172,15 @@ void SpriteBatch::CreateVertexArray() {
 
 void SpriteBatch::SortSpriteBatchItems() {
     switch (sortType) {
-    case SpriteSortType::BackToFront:
+    case SortType::BackToFront:
 	std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
 			 [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->depth > b->depth; });
 	break;
-    case SpriteSortType::FrontToBack:
+    case SortType::FrontToBack:
 	std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
 			 [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->depth < b->depth; });
 	break;
-    case SpriteSortType::Texture:
+    case SortType::Texture:
 	std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
 			 [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->texture < b->texture; });
 	break;

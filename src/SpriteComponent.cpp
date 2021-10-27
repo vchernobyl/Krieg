@@ -25,7 +25,7 @@ void SpriteComponent::Draw(SpriteBatch& spriteBatch) {
 	auto dest = Vector4(position.x - width / 2.0f, position.y - height / 2.0f, width, height);
 	auto uv = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
-	spriteBatch.Draw(dest, uv, texture->GetID(), 1.0f, color, owner->GetRotation());
+	spriteBatch.Draw(dest, uv, texture->GetID(), drawOrder, color, owner->GetRotation());
     }
 }
 

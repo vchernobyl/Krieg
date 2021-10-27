@@ -14,6 +14,8 @@ public:
     RigidbodyComponent(class Actor* owner, BodyType type = BodyType::Dynamic);
     ~RigidbodyComponent();
 
+    void OnUpdateWorldTransform() override;
+
     void SetVelocity(const Vector2& velocity);
     Vector2 GetVelocity() const;
     Vector2 GetPosition() const;

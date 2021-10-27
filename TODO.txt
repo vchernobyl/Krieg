@@ -220,6 +220,7 @@ October:
 24. Add enemy ship selection sprite. [DONE]
 25. Implement basic point/object overlap querying. [DONE]
 26. Implement enemy selection. [DONE]
+27. Fix AABB query, currently it's not a point but a unit size box.
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

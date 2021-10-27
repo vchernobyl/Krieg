@@ -17,13 +17,13 @@ struct Vertex {
 class SpriteBatchItem {
 public:
     SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
-		    GLuint texture, float depth, const Vector4& color);
+		    GLuint texture, int depth, const Vector4& color);
 
     SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
-		    GLuint texture, float depth, const Vector4& color, float angle);
+		    GLuint texture, int depth, const Vector4& color, float angle);
     
     GLuint texture;
-    float depth;
+    int depth;
     Vertex topLeft;
     Vertex bottomLeft;
     Vertex bottomRight;
@@ -40,28 +40,28 @@ public:
     GLuint texture;
 };
 
-enum class SpriteSortType {
-    None,
-    FrontToBack,
-    BackToFront,
-    Texture
-};
-
 class SpriteBatch {
 public:
+    enum class SortType {
+	None,
+	FrontToBack,
+	BackToFront,
+	Texture
+    };
+
     SpriteBatch();
     void Initialize();
-    void Begin(SpriteSortType sortType = SpriteSortType::Texture);
+    void Begin(SortType sortType = SortType::Texture);
     void End();
 
     void Draw(const Vector4& destRect, const Vector4& uvRect,
-	      GLuint texture, float depth, const Vector4& color);
+	      GLuint texture, int depth, const Vector4& color);
 
     void Draw(const Vector4& destRect, const Vector4& uvRect,
-	      GLuint texture, float depth, const Vector4& color, float angle);
+	      GLuint texture, int depth, const Vector4& color, float angle);
 
     void Draw(const Vector4& destRect, const Vector4& uvRect,
-	      GLuint texture, float depth, const Vector4& color, const Vector2& direction);
+	      GLuint texture, int depth, const Vector4& color, const Vector2& direction);
 
     void DrawBatch();
 
@@ -72,7 +72,7 @@ private:
 
     GLuint vbo = 0;
     GLuint vao = 0;
-    SpriteSortType sortType = SpriteSortType::Texture;
+    SortType sortType = SortType::Texture;
 
     std::vector<SpriteBatchItem*> spriteBatchItemPtrs;
     std::vector<SpriteBatchItem> spriteBatchItems;

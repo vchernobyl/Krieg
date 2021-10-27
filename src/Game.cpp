@@ -183,7 +183,12 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Ship(this);
-    new Enemy(this);
+
+    auto enemy1 = new Enemy(this);
+    enemy1->SetPosition(Vector2(3.0f, 2.5f));
+
+    // auto enemy2 = new Enemy(this);
+    // enemy2->SetPosition(Vector2(-5.0f, -5.0f));
 
     const int numAsteroids = 20;
     for (int i = 0; i < numAsteroids; i++) {
