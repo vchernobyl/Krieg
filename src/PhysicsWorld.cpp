@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <cassert>
+#include <SDL/SDL.h>
 
 #include <box2d/b2_math.h>
 #include <box2d/b2_world.h>
@@ -17,40 +18,47 @@
 
 class ContactListener : public b2ContactListener {
 public:
-    void BeginContact(class b2Contact* contact);
+    void BeginContact(class b2Contact* contact) {
+	b2WorldManifold worldManifold;
+	contact->GetWorldManifold(&worldManifold);
+    
+	Contact contactInfo;
+	b2Vec2 contactNormal = worldManifold.normal;
+	b2Vec2 contactPoint = worldManifold.points[0];
+
+	contactInfo.normal = Vector2(contactNormal.x, contactNormal.y);
+	contactInfo.point = Vector2(contactPoint.x, contactPoint.y);
+
+	uintptr_t pointerA = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
+	Actor* ownerA = reinterpret_cast<Actor*>(pointerA);
+
+	uintptr_t pointerB = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
+	Actor* ownerB = reinterpret_cast<Actor*>(pointerB);
+
+	contactInfo.other = ownerB;
+	ownerA->OnBeginContact(contactInfo);
+
+	contactInfo.other = ownerA;
+	ownerB->OnBeginContact(contactInfo);
+    }
 };
 
-void ContactListener::BeginContact(b2Contact* contact) {
-    b2WorldManifold worldManifold;
-    contact->GetWorldManifold(&worldManifold);
-    
-    Contact contactInfo;
-    b2Vec2 contactNormal = worldManifold.normal;
-    b2Vec2 contactPoint = worldManifold.points[0];
-
-    contactInfo.normal = Vector2(contactNormal.x, contactNormal.y);
-    contactInfo.point = Vector2(contactPoint.x, contactPoint.y);
-
-    uintptr_t pointerA = contact->GetFixtureA()->GetBody()->GetUserData().pointer;
-    Actor* ownerA = reinterpret_cast<Actor*>(pointerA);
-
-    uintptr_t pointerB = contact->GetFixtureB()->GetBody()->GetUserData().pointer;
-    Actor* ownerB = reinterpret_cast<Actor*>(pointerB);
-
-    contactInfo.other = ownerB;
-    ownerA->OnBeginContact(contactInfo);
-
-    contactInfo.other = ownerA;
-    ownerB->OnBeginContact(contactInfo);
-}
+class QueryCallback : public b2QueryCallback {
+public:
+    bool ReportFixture(b2Fixture* fixture) {
+	SDL_Log("aabb hit!");
+	return false;
+    }
+};
 
 const int32 VelocityIterations = 8;
 const int32 PositionIterations = 3;
 
 PhysicsWorld::PhysicsWorld(const Vector2& gravity)
     : world(new b2World(b2Vec2(gravity.x, gravity.y))),
-      debugRenderer(new Box2DDebugRenderer()),
-      contactListener(new ContactListener()) {
+      debugRenderer(new Box2DDebugRenderer),
+      contactListener(new ContactListener),
+      queryCallback(new QueryCallback) {
     world->SetDebugDraw(debugRenderer);
     world->SetContactListener(contactListener);
 }
@@ -70,6 +78,13 @@ void PhysicsWorld::Step(float timeStep) {
     }
 
     world->DebugDraw();
+}
+
+void PhysicsWorld::CheckOverlap(const Vector2& point) {
+    b2Vec2 lowerBounds(point.x, point.y);
+    b2Vec2 upperBounds(point.x, point.y);
+    const b2AABB aabb = { lowerBounds, upperBounds };
+    world->QueryAABB(queryCallback, aabb);
 }
 
 void PhysicsWorld::AddCollider(ColliderComponent* collider) {

@@ -6,7 +6,6 @@
 #include "SpriteComponent.h"
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
-#include "Assert.h"
 #include <cassert>
 
 Enemy::Enemy(Game* game) : Actor(game) {
@@ -14,9 +13,10 @@ Enemy::Enemy(Game* game) : Actor(game) {
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
     sprite->SetColor(Color::Red);
 
-    auto circle = new SpriteComponent(this);
-    circle->SetTexture(game->GetRenderer()->GetTexture("data/textures/Circle.png"));
-    circle->SetColor(Color::Red);
+    auto outline = new SpriteComponent(this);
+    outline->SetTexture(game->GetRenderer()->GetTexture("data/textures/Circle.png"));
+    outline->SetColor(Color::Red);
+    outline->SetEnabled(false);
 
     SetPosition(Vector2(3.0f, 2.5f));
 
@@ -32,7 +32,8 @@ void Enemy::UpdateActor(float deltaTime) {
     auto direction = followTarget->GetPosition() - GetPosition();
     direction.Normalize();
 
-    rigidbody->SetVelocity(direction * 35.0f * deltaTime);
+    const auto movementSpeed = 35.0f;
+    rigidbody->SetVelocity(direction * movementSpeed * deltaTime);
     SetRotation(Math::Atan2(direction.y, direction.x));
 
     DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Red);

@@ -11,8 +11,14 @@ public:
     
     int GetUpdateOrder() const { return updateOrder; }
     class Actor* GetOwner() const { return owner; }
+
+    void SetEnabled(bool enabled) { this->enabled = enabled; }
+    bool IsEnabled() const { return enabled; }
     
 protected:
     class Actor* owner;
     int updateOrder;
+
+private:
+    bool enabled = true;
 };

@@ -97,7 +97,9 @@ void Renderer::Draw() {
 
     spriteBatch.Begin();
     for (auto sprite : sprites) {
-	sprite->Draw(spriteBatch);
+	if (sprite->IsEnabled()) {
+	    sprite->Draw(spriteBatch);
+	}
     }
     spriteBatch.End();
     spriteBatch.DrawBatch();

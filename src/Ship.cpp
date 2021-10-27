@@ -8,6 +8,7 @@
 #include "Renderer.h"
 #include "Game.h"
 #include "InputSystem.h"
+#include "PhysicsWorld.h"
 
 Ship::Ship(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this, 150);
@@ -41,5 +42,11 @@ void Ship::ActorInput(const InputState& inputState) {
 	targetPosition = camera->ScreenToWorld(inputState.Mouse.GetPosition());
 	direction = Vector2::Normalize(targetPosition - GetPosition());
 	DebugRenderer::DrawCircle(targetPosition, 0.1f, Color::Red);
+    }
+
+    if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_RIGHT)) {
+	auto physics = GetGame()->GetPhysicsWorld();
+	auto mousePos = camera->ScreenToWorld(inputState.Mouse.GetPosition());
+	physics->CheckOverlap(mousePos);
     }
 }
