@@ -13,7 +13,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
     sprite->SetColor(Color::Red);
 
-    auto outline = new SpriteComponent(this);
+    outline = new SpriteComponent(this);
     outline->SetTexture(game->GetRenderer()->GetTexture("data/textures/Circle.png"));
     outline->SetColor(Color::Red);
     outline->SetEnabled(false);
@@ -37,4 +37,9 @@ void Enemy::UpdateActor(float deltaTime) {
     SetRotation(Math::Atan2(direction.y, direction.x));
 
     DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Red);
+}
+
+void Enemy::Select() {
+    isSelected = !isSelected;
+    outline->SetEnabled(isSelected);
 }

@@ -9,7 +9,7 @@ public:
     void Shutdown();
     
     void Step(float timeStep);
-    void CheckOverlap(const Vector2& point);
+    class Actor* CheckOverlap(const Vector2& point);
 
     void AddCollider(class ColliderComponent* collider);
     void RemoveCollider(class ColliderComponent* collider);

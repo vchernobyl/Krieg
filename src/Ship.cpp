@@ -9,6 +9,7 @@
 #include "Game.h"
 #include "InputSystem.h"
 #include "PhysicsWorld.h"
+#include "Enemy.h"
 
 Ship::Ship(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this, 150);
@@ -44,9 +45,15 @@ void Ship::ActorInput(const InputState& inputState) {
 	DebugRenderer::DrawCircle(targetPosition, 0.1f, Color::Red);
     }
 
-    if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_RIGHT)) {
+    if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
 	auto physics = GetGame()->GetPhysicsWorld();
 	auto mousePos = camera->ScreenToWorld(inputState.Mouse.GetPosition());
-	physics->CheckOverlap(mousePos);
+	if (auto target = physics->CheckOverlap(mousePos)) {
+	    SDL_Log("overlap");
+	    if (auto enemy = dynamic_cast<Enemy*>(target)) {
+		SDL_Log("enemy found");
+		enemy->Select();
+	    }
+	}
     }
 }

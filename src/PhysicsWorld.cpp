@@ -45,9 +45,22 @@ public:
 
 class QueryCallback : public b2QueryCallback {
 public:
+    b2Fixture* target;
+    
     bool ReportFixture(b2Fixture* fixture) {
-	SDL_Log("aabb hit!");
+	SDL_Log("query hit");
+	target = fixture;
 	return false;
+    }
+
+    // TODO: This needs to be improved, very hacky at the moment.
+    Actor* GetActor() {
+	if (target) {
+	    uintptr_t data = target->GetBody()->GetUserData().pointer;
+	    target = nullptr;
+	    return reinterpret_cast<Actor*>(data);
+	}
+	return nullptr;
     }
 };
 
@@ -80,11 +93,12 @@ void PhysicsWorld::Step(float timeStep) {
     world->DebugDraw();
 }
 
-void PhysicsWorld::CheckOverlap(const Vector2& point) {
+Actor* PhysicsWorld::CheckOverlap(const Vector2& point) {
     b2Vec2 lowerBounds(point.x, point.y);
     b2Vec2 upperBounds(point.x, point.y);
     const b2AABB aabb = { lowerBounds, upperBounds };
     world->QueryAABB(queryCallback, aabb);
+    return queryCallback->GetActor();
 }
 
 void PhysicsWorld::AddCollider(ColliderComponent* collider) {

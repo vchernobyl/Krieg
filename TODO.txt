@@ -218,7 +218,8 @@ October:
 22. Simple enemy class without movement. [DONE]
 23. Enemy tries to follow the player. [DONE]
 24. Add enemy ship selection sprite. [DONE]
-25. Implement basic point/object overlap querying. [IN PROGRESS]
+25. Implement basic point/object overlap querying. [DONE]
+26. Implement enemy selection. [DONE]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
