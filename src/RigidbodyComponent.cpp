@@ -29,12 +29,6 @@ RigidbodyComponent::~RigidbodyComponent() {
     world->RemoveRigidbody(this);
 }
 
-void RigidbodyComponent::OnUpdateWorldTransform() {
-    // SDL_Log("update position");
-    // auto newPosition = owner->GetPosition();
-    // body->SetTransform(b2Vec2(newPosition.x, newPosition.y), body->GetAngle());
-}
-
 void RigidbodyComponent::SetVelocity(const Vector2& velocity) {
     body->SetLinearVelocity(b2Vec2(velocity.x, velocity.y));
 }
@@ -80,3 +74,8 @@ void RigidbodyComponent::SetGravityScale(float scale) {
 void RigidbodyComponent::SetBullet(bool flag) {
     body->SetBullet(flag);
 }
+
+void RigidbodyComponent::SetPosition(const Vector2& position) {
+    body->SetTransform(b2Vec2(position.x, position.y), body->GetAngle());
+}
+

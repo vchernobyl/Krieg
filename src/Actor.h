@@ -7,8 +7,6 @@
 
 class Game;
 class Component;
-class ColliderComponent;
-struct CollisionInfo;
 struct InputState;
 
 class Actor {
@@ -23,7 +21,7 @@ public:
     virtual ~Actor();
 
     const Vector2& GetPosition() const { return position; }
-    void SetPosition(const Vector2& v) { position = v; recomputeWorldTransform = true; }
+    void SetPosition(const Vector2& position) { this->position = position; recomputeWorldTransform = true; }
 
     float GetScale() const { return scale; }
     void SetScale(float scale) { this->scale = scale; recomputeWorldTransform = true; }

@@ -2,7 +2,6 @@
 #include "Math.h"
 #include "Game.h"
 #include "Component.h"
-#include "ColliderComponent.h"
 #include "InputSystem.h"
 
 #include <algorithm>

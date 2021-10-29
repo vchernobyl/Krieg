@@ -149,6 +149,8 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
+    SDL_Log("dt=%f", deltaTime);
+
     physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.
 
     updatingActors = true;
@@ -183,12 +185,14 @@ void Game::DrawGame() {
 
 void Game::LoadData() {
     new Ship(this);
-
-    auto enemy1 = new Enemy(this);
-    enemy1->SetPosition(Vector2(3.0f, 2.5f));
-
-    // auto enemy2 = new Enemy(this);
-    // enemy2->SetPosition(Vector2(-5.0f, -5.0f));
+    auto e1 = new Enemy(this);
+    e1->SetPosition(Vector2(5.0f, -3.5f));
+    
+    auto e2 = new Enemy(this);
+    e2->SetPosition(Vector2(-5.5f, 0.0f));
+    
+    auto e3 = new Enemy(this);
+    e3->SetPosition(Vector2(7.3f, 2.5f));
 
     const int numAsteroids = 20;
     for (int i = 0; i < numAsteroids; i++) {

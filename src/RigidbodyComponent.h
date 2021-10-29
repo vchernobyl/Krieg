@@ -14,10 +14,10 @@ public:
     RigidbodyComponent(class Actor* owner, BodyType type = BodyType::Dynamic);
     ~RigidbodyComponent();
 
-    void OnUpdateWorldTransform() override;
-
     void SetVelocity(const Vector2& velocity);
     Vector2 GetVelocity() const;
+
+    void SetPosition(const Vector2& position);
     Vector2 GetPosition() const;
 
     void ApplyForce(const Vector2& force);

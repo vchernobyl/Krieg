@@ -17,6 +17,8 @@ Enemy::Enemy(Game* game) : Actor(game) {
     outline->SetTexture(game->GetRenderer()->GetTexture("data/textures/Circle.png"));
     outline->SetEnabled(false);
 
+    SetPosition(Vector2(3.0f, 6.0f));
+
     auto collider = new CircleColliderComponent(this, Vector2::Zero, 0.5f);
     rigidbody = collider->GetAttachedRigidbody();
     followTarget = game->GetActorByTag("Player");

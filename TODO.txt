@@ -221,6 +221,13 @@ October:
 25. Implement basic point/object overlap querying. [DONE]
 26. Implement enemy selection. [DONE]
 27. Fix AABB query, currently it's not a point but a unit size box.
+28. Move rigidbody position whenever actor position is changed. [DONE]
+29. After some time a single frame takes more than 16ms (~45ms) to render/update. [DONE]
+The GameProgramming code example (chapter 6) has the exact same issue. Since it's not a critical
+issue and happening only rarely (plus it is not caused by the gameplay code,
+but the engine code, most likely rendering), I will leave this one slide for now.
+As a note - it looks like the SDL_GL_SwapWindow function was the one that was chugging.
+
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

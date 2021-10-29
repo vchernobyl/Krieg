@@ -45,6 +45,10 @@ void Ship::ActorInput(const InputState& inputState) {
 	DebugRenderer::DrawCircle(targetPosition, 0.1f, Color::Red);
     }
 
+    if (inputState.Keyboard.IsKeyPressed(SDL_SCANCODE_SPACE)) {
+	SetPosition(Vector2::Zero);
+    }
+
     if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
 	auto physics = GetGame()->GetPhysicsWorld();
 	auto mousePos = camera->ScreenToWorld(inputState.Mouse.GetPosition());
