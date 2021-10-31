@@ -18,7 +18,7 @@ set libs=shell32.lib^
     ..\external\box2d\lib\x64\box2d.lib^
     ..\external\SDL\lib\x64\SDL2.lib^
     ..\external\SDL\lib\x64\SDL2main.lib^
-    ..\external\SDL\lib\x64\SDL2_image.lib^
+    ..\external\SDL\lib\x64\SDL2_ttf.lib^
     ..\external\FMOD\api\studio\lib\x64\fmodstudio_vc.lib^
     ..\external\glew\lib\x64\glew32.lib^
     ..\external\SOIL\lib\x64\SOIL.lib^
@@ -30,7 +30,7 @@ cl %compile_flags% %include_flags% ..\src\*.cpp %libs% /link %link_flags% /out:%
 popd
 
 if not exist .\build\SDL2.dll copy external\SDL\lib\x64\SDL2.dll .\build
-if not exist .\build\SDL2_image.dll copy external\SDL\lib\x64\SDL2_image.dll .\build
+if not exist .\build\SDL2_ttf.dll copy external\SDL\lib\x64\SDL2_ttf.dll .\build
 if not exist .\build\glew32.dll copy external\glew\lib\x64\glew32.dll .\build
 
 echo.

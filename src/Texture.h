@@ -7,11 +7,12 @@ class Texture {
 public:
     bool Load(const std::string& fileName);
     void Unload();
+    void CreateFromSurface(struct SDL_Surface* surface);
+    
     void SetActive();
 
     int GetWidth() const { return width; }
     int GetHeight() const { return height; }
-    Vector2 GetSize() const { return Vector2(width, height); }
 
     // TODO: Refactor later.
     unsigned int GetID() const { return textureID; }

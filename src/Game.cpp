@@ -6,7 +6,9 @@
 #include "Renderer.h"
 #include "Random.h"
 #include "Math.h"
+#include "Font.h"
 
+#include <SDL/SDL_ttf.h>
 #include <algorithm>
 #include <memory>
 
@@ -46,6 +48,11 @@ bool Game::Initialize() {
     physicsWorld = new PhysicsWorld(gravity);
 
     Random::Init();
+
+    if (TTF_Init() != 0) {
+	SDL_Log("Failed to initialize SDL_ttf");
+	return false;
+    }
 
     LoadData();
 
@@ -99,6 +106,33 @@ void Game::RemoveActor(Actor* actor) {
     if (iter != actors.end()) {
 	std::iter_swap(iter, actors.end() - 1);
 	actors.pop_back();
+    }
+}
+
+Font* Game::GetFont(const std::string& fileName) {
+    auto iter = fonts.find(fileName);
+    if (iter != fonts.end()) {
+	return iter->second;
+    } else {
+	Font* font = new Font(this);
+	if (font->Load(fileName)) {
+	    fonts.emplace(fileName, font);
+	} else {
+	    font->Unload();
+	    delete font;
+	    font = nullptr;
+	}
+	return font;
+    }
+}
+
+const std::string& Game::GetText(const std::string& key) {
+    static std::string errorMessage("***KEY NOT FOUND***");
+    auto iter = text.find(key);
+    if (iter != text.end()) {
+	return iter->second;
+    } else {
+	return errorMessage;
     }
 }
 

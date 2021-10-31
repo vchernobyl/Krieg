@@ -3,6 +3,7 @@
 #include <SDL/SDL.h>
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 class Actor;
 class Renderer;
@@ -18,9 +19,15 @@ public:
     bool Initialize();
     void RunLoop();
     void Shutdown();
+
     void AddActor(Actor* actor);
     void RemoveActor(Actor* actor);
+
+    class Font* GetFont(const std::string& fileName);
+    const std::string& GetText(const std::string& key);
+    
     Actor* GetActorByTag(const std::string& tag);
+
     Renderer* GetRenderer() const { return renderer; }
     PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
     AudioSystem* GetAudioSystem() { return audioSystem; }
@@ -34,6 +41,9 @@ private:
 
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
+
+    std::unordered_map<std::string, class Font*> fonts;
+    std::unordered_map<std::string, std::string> text;
 
     Renderer* renderer;
     InputSystem* inputSystem;
