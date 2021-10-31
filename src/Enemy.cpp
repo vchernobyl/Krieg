@@ -19,7 +19,8 @@ Enemy::Enemy(Game* game) : Actor(game) {
 
     SetPosition(Vector2(3.0f, 6.0f));
 
-    auto collider = new CircleColliderComponent(this, Vector2::Zero, 0.5f);
+    auto collider = new CircleColliderComponent(this, 0.5f);
+    collider->SetCollisionFilter(CollisionCategory::Enemy);
     rigidbody = collider->GetAttachedRigidbody();
     followTarget = game->GetActorByTag("Player");
 

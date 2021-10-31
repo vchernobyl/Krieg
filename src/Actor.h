@@ -11,7 +11,7 @@ struct InputState;
 
 class Actor {
 public:
-    enum class ActorState {
+    enum class State {
 	Active,
 	Paused,
 	Dead
@@ -34,8 +34,8 @@ public:
 
     Vector2 GetForward() const { return Vector2(Math::Cos(rotation), Math::Sin(rotation)); }
 
-    ActorState GetState() const { return actorState; }
-    void SetState(ActorState s) { actorState = s; }
+    State GetState() const { return state; }
+    void SetState(State state) { this->state = state; }
 
     const std::string& GetTag() const { return tag; }
     void SetTag(const std::string& tag) { this->tag = tag; }
@@ -64,7 +64,7 @@ public:
     }
 
 private:
-    ActorState actorState;
+    State state;
 
     Matrix4 worldTransform;
     Vector2 position;

@@ -35,7 +35,7 @@ void ColliderComponent::SetCollisionFilter(CollisionCategory category, Collision
     fixture->SetFilterData(filter);
 }
 
-void ColliderComponent::SetSensor(bool flag) {
+void ColliderComponent::SetIsSensor(bool flag) {
     assert(fixture != nullptr);
     fixture->SetSensor(flag);
 }

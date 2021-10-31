@@ -220,13 +220,16 @@ October:
 24. Add enemy ship selection sprite. [DONE]
 25. Implement basic point/object overlap querying. [DONE]
 26. Implement enemy selection. [DONE]
-27. Fix AABB query, currently it's not a point but a unit size box.
+27. Fix AABB query, currently it's not a point but a unit size box. [DONE]
 28. Move rigidbody position whenever actor position is changed. [DONE]
 29. After some time a single frame takes more than 16ms (~45ms) to render/update. [DONE]
 The GameProgramming code example (chapter 6) has the exact same issue. Since it's not a critical
 issue and happening only rarely (plus it is not caused by the gameplay code,
 but the engine code, most likely rendering), I will leave this one slide for now.
 As a note - it looks like the SDL_GL_SwapWindow function was the one that was chugging.
+30. Add basic shooting at selected targets. [DONE]
+31. Add basic font rendering.
+32. Add textual debug info on the screen.
 
 
 Notes from 'Game Engine Architecture':

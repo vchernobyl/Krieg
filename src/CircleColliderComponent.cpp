@@ -6,7 +6,7 @@
 #include <box2d/b2_fixture.h>
 #include <box2d/b2_body.h>
 
-CircleColliderComponent::CircleColliderComponent(Actor* owner, const Vector2& center, float radius)
+CircleColliderComponent::CircleColliderComponent(Actor* owner, float radius, const Vector2& center)
     : ColliderComponent(owner) {
     b2CircleShape shape;
     shape.m_p.Set(center.x, center.y);

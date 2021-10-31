@@ -149,8 +149,6 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
-    SDL_Log("dt=%f", deltaTime);
-
     physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.
 
     updatingActors = true;
@@ -167,7 +165,7 @@ void Game::UpdateGame() {
 
     std::vector<Actor*> deadActors;
     for (auto actor : actors) {
-	if (actor->GetState() == Actor::ActorState::Dead) {
+	if (actor->GetState() == Actor::State::Dead) {
 	    deadActors.emplace_back(actor);
 	}
     }

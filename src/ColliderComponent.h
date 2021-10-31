@@ -7,6 +7,8 @@ class Actor;
 class RigidbodyComponent;
 class b2Fixture;
 
+// TODO: This is currently very gameplay specific, our
+// mask should probably be a regular numeric value instead.
 enum class CollisionCategory : unsigned short {
     None    = 0x0000,
     Player  = 0x0002, // 0x0001 is reserved for the default category bit by the Box2D.
@@ -31,8 +33,8 @@ public:
 
     RigidbodyComponent* GetAttachedRigidbody() const;
 
-    void SetCollisionFilter(CollisionCategory category, CollisionCategory mask);
-    void SetSensor(bool flag);
+    void SetCollisionFilter(CollisionCategory category, CollisionCategory mask = CollisionCategory::Default);
+    void SetIsSensor(bool flag);
 
 protected:
     b2Fixture* fixture;

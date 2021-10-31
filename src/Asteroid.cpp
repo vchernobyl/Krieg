@@ -18,6 +18,6 @@ Asteroid::Asteroid(Game* game) : Actor(game) {
     SpriteComponent* sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Asteroid.png"));
 
-    new RigidbodyComponent(this);
-    new CircleColliderComponent(this, Vector2(0.0f, 0.0f), 0.5f);
+    auto collider = new CircleColliderComponent(this, 0.5f);
+    collider->SetCollisionFilter(CollisionCategory::Ground);
 }
