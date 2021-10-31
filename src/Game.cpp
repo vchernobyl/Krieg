@@ -136,6 +136,10 @@ const std::string& Game::GetText(const std::string& key) {
     }
 }
 
+void Game::PushUI(UIScreen* screen) {
+    uiStack.emplace_back(screen);
+}
+
 Actor* Game::GetActorByTag(const std::string& tag) {
     auto iter = std::find_if(actors.begin(), actors.end(),
 			     [&tag](const Actor* actor) { return actor->GetTag() == tag; });

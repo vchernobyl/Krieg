@@ -26,6 +26,9 @@ public:
     class Font* GetFont(const std::string& fileName);
     const std::string& GetText(const std::string& key);
     
+    const std::vector<class UIScreen*>& GetUIStack() { return uiStack; }
+    void PushUI(class UIScreen* screen);
+
     Actor* GetActorByTag(const std::string& tag);
 
     Renderer* GetRenderer() const { return renderer; }
@@ -41,6 +44,7 @@ private:
 
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
+    std::vector<class UIScreen*> uiStack;
 
     std::unordered_map<std::string, class Font*> fonts;
     std::unordered_map<std::string, std::string> text;
