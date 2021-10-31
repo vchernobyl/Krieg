@@ -43,35 +43,13 @@ public:
     }
 };
 
-class QueryCallback : public b2QueryCallback {
-public:
-    b2Fixture* target;
-    
-    bool ReportFixture(b2Fixture* fixture) {
-	SDL_Log("query hit");
-	target = fixture;
-	return false;
-    }
-
-    // TODO: This needs to be improved, very hacky at the moment.
-    Actor* GetActor() {
-	if (target) {
-	    uintptr_t data = target->GetBody()->GetUserData().pointer;
-	    target = nullptr;
-	    return reinterpret_cast<Actor*>(data);
-	}
-	return nullptr;
-    }
-};
-
 const int32 VelocityIterations = 8;
 const int32 PositionIterations = 3;
 
 PhysicsWorld::PhysicsWorld(const Vector2& gravity)
     : world(new b2World(b2Vec2(gravity.x, gravity.y))),
       debugRenderer(new Box2DDebugRenderer),
-      contactListener(new ContactListener),
-      queryCallback(new QueryCallback) {
+      contactListener(new ContactListener) {
     world->SetDebugDraw(debugRenderer);
     world->SetContactListener(contactListener);
 }
@@ -100,12 +78,15 @@ void PhysicsWorld::Step(float timeStep) {
     world->DebugDraw();
 }
 
-Actor* PhysicsWorld::CheckOverlap(const Vector2& point) {
-    b2Vec2 lowerBounds(point.x, point.y);
-    b2Vec2 upperBounds(point.x, point.y);
-    const b2AABB aabb = { lowerBounds, upperBounds };
-    world->QueryAABB(queryCallback, aabb);
-    return queryCallback->GetActor();
+RigidbodyComponent* PhysicsWorld::GetRigidbodyAt(const Vector2& point) {
+    for (auto rb : rigidbodies) {
+	for (const b2Fixture* f = rb->body->GetFixtureList(); f != nullptr; f = f->GetNext()) {
+	    if (f->TestPoint(b2Vec2(point.x, point.y))) {
+		return rb;
+	    }
+	}
+    }
+    return nullptr;
 }
 
 void PhysicsWorld::AddCollider(ColliderComponent* collider) {

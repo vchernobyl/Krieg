@@ -51,11 +51,9 @@ void Ship::ActorInput(const InputState& inputState) {
 
     if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
 	auto physics = GetGame()->GetPhysicsWorld();
-	auto mousePos = camera->ScreenToWorld(inputState.Mouse.GetPosition());
-	if (auto target = physics->CheckOverlap(mousePos)) {
-	    SDL_Log("overlap");
-	    if (auto enemy = dynamic_cast<Enemy*>(target)) {
-		SDL_Log("enemy found");
+	auto worldPos = camera->ScreenToWorld(inputState.Mouse.GetPosition());
+	if (auto rb = physics->GetRigidbodyAt(worldPos)) {
+	    if (auto enemy = dynamic_cast<Enemy*>(rb->GetOwner())) {
 		enemy->Select();
 	    }
 	}

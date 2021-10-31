@@ -9,7 +9,7 @@ public:
     void Shutdown();
     
     void Step(float timeStep);
-    class Actor* CheckOverlap(const Vector2& point);
+    class RigidbodyComponent* GetRigidbodyAt(const Vector2& point);
 
     void AddCollider(class ColliderComponent* collider);
     void RemoveCollider(class ColliderComponent* collider);
@@ -26,5 +26,4 @@ private:
     class Box2DDebugRenderer* debugRenderer;
     class b2World* world;
     class ContactListener* contactListener;
-    class QueryCallback* queryCallback;
 };
