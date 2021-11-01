@@ -24,7 +24,6 @@ public:
     void RemoveActor(Actor* actor);
 
     class Font* GetFont(const std::string& fileName);
-    const std::string& GetText(const std::string& key);
     
     const std::vector<class UIScreen*>& GetUIStack() { return uiStack; }
     void PushUI(class UIScreen* screen);

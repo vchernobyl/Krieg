@@ -7,12 +7,14 @@
 #include "Random.h"
 #include "Math.h"
 #include "Font.h"
+#include "UIScreen.h"
 
 #include <SDL/SDL_ttf.h>
 #include <algorithm>
 #include <memory>
 
 // Game specific, remove later.
+#include "SpriteComponent.h"
 #include "Asteroid.h"
 #include "Ship.h"
 #include "Enemy.h"
@@ -126,16 +128,6 @@ Font* Game::GetFont(const std::string& fileName) {
     }
 }
 
-const std::string& Game::GetText(const std::string& key) {
-    static std::string errorMessage("***KEY NOT FOUND***");
-    auto iter = text.find(key);
-    if (iter != text.end()) {
-	return iter->second;
-    } else {
-	return errorMessage;
-    }
-}
-
 void Game::PushUI(UIScreen* screen) {
     uiStack.emplace_back(screen);
 }
@@ -213,6 +205,22 @@ void Game::UpdateGame() {
     }
 
     audioSystem->Update(deltaTime);
+
+    for (auto ui : uiStack) {
+	if (ui->GetState() == UIScreen::UIState::Active) {
+	    ui->Update(deltaTime);
+	}
+    }
+
+    auto iter = uiStack.begin();
+    while (iter != uiStack.end()) {
+	if ((*iter)->GetState() == UIScreen::UIState::Closing) {
+	    delete *iter;
+	    iter = uiStack.erase(iter);
+	} else {
+	    ++iter;
+	}
+    }
 }
 
 void Game::DrawGame() {
@@ -234,6 +242,16 @@ void Game::LoadData() {
     for (int i = 0; i < numAsteroids; i++) {
 	new Asteroid(this);
     }
+
+    // Test UI.
+    auto font = new Font(this);
+    font->Load("data/fonts/Carlito-Regular.ttf");
+
+    auto uiActor = new Actor(this);
+    uiActor->SetPosition(Vector2(-6.0f, 6.0f));
+
+    auto textSprite = new SpriteComponent(uiActor, 300);
+    textSprite->SetTexture(font->RenderText("Debug Info"));
 }
 
 void Game::UnloadData() {

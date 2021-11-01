@@ -23,6 +23,7 @@ public:
 private:
     class CameraComponent* camera;
     class RigidbodyComponent* rigidbody;
+
     Vector2 targetPosition;
     Vector2 direction = Vector2::Right;
 };

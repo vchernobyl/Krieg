@@ -84,16 +84,51 @@ void UIScreen::Draw(SpriteBatch& spriteBatch) {
     if (background) {
 	DrawTexture(spriteBatch, background, backgroundPosition);
     }
-    // TODO: Finish
-    assert(false);
+
+    if (title) {
+	DrawTexture(spriteBatch, title, titlePosition);
+    }
+
+    for (auto b : buttons) {
+	Texture* texture = b->GetHighlighted() ? buttonOn : buttonOff;
+	DrawTexture(spriteBatch, texture, b->GetPosition());
+	DrawTexture(spriteBatch, b->GetNameTexture(), b->GetPosition());
+    }
 }
 
 void UIScreen::ProcessInput(const InputState& inputState) {
-    assert(false); // not implemented yet.
+    if (!buttons.empty()) {
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+	Vector2 mousePos(static_cast<float>(x), static_cast<float>(y));
+	mousePos.x -= game->GetRenderer()->GetScreenWidth() * 0.5f;
+	mousePos.y -= game->GetRenderer()->GetScreenHeight() * 0.5f - mousePos.y;
+
+	for (auto b : buttons) {
+	    if (b->ContainsPoint(mousePos)) {
+		b->SetHighlighted(true);
+	    } else {
+		b->SetHighlighted(false);
+	    }
+	}
+    }
 }
 
 void UIScreen::HandleKeyPress(int key) {
-    assert(false); // not implemented yet.
+    switch (key) {
+    case SDL_BUTTON_LEFT:
+	if (!buttons.empty()) {
+	    for (auto b : buttons) {
+		if (b->GetHighlighted()) {
+		    b->OnClick();
+		    break;
+		}
+	    }
+	}
+	break;
+    default:
+	break;
+    }
 }
 
 void UIScreen::SetTitle(const std::string& text, const Vector4& color, int pointSize) {
@@ -107,14 +142,28 @@ void UIScreen::SetTitle(const std::string& text, const Vector4& color, int point
 }
 
 void UIScreen::AddButton(const std::string& name, std::function<void()> onClick) {
-    assert(false); // not implemented yet.
+    auto dims = Vector2(static_cast<float>(buttonOn->GetWidth()),
+			static_cast<float>(buttonOn->GetHeight()));
+    auto button = new Button(name, font, onClick, nextButtonPosition, dims);
+    buttons.emplace_back(button);
+    nextButtonPosition.y -= buttonOff->GetHeight() + 20.0f;
 }
 
 void UIScreen::DrawTexture(SpriteBatch& spriteBatch, Texture* texture,
 			   const Vector2& offset, float scale) {
-    assert(false); // not implemented yet.
+    const float pixelsPerUnit = 64.0f;
+    float width = texture->GetWidth() / pixelsPerUnit * scale;
+    float height = texture->GetHeight() / pixelsPerUnit * scale;
+    auto dest = Vector4(offset.x, offset.y, width, height);
+    spriteBatch.Draw(dest, Vector4(0.0f, 0.0f, 1.0f, 1.0f), texture->GetID(), 0, Color::White);
 }
 
 void UIScreen::SetRelativeMouseMode(bool relative) {
-    assert(false); // not implemented yet.
+    if (relative) {
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+	// Make an initial call to get relative to clear out.
+	SDL_GetRelativeMouseState(nullptr, nullptr);
+    } else {
+	SDL_SetRelativeMouseMode(SDL_FALSE);
+    }
 }

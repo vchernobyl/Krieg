@@ -35,7 +35,7 @@ void Font::Unload() {
     }
 }
 
-Texture* Font::RenderText(const std::string& textKey, const Vector4& color, int pointSize) {
+Texture* Font::RenderText(const std::string& text, const Vector4& color, int pointSize) {
     Texture* texture = nullptr;
 
     SDL_Color sdlColor;
@@ -48,8 +48,7 @@ Texture* Font::RenderText(const std::string& textKey, const Vector4& color, int 
     auto iter = fontData.find(pointSize);
     if (iter != fontData.end()) {
 	TTF_Font* font = iter->second;
-	const std::string& actualText = game->GetText(textKey);
-	SDL_Surface* surface = TTF_RenderUTF8_Blended(font, actualText.c_str(), sdlColor);
+	SDL_Surface* surface = TTF_RenderUTF8_Blended(font, text.c_str(), sdlColor);
 	if (surface != nullptr) {
 	    texture = new Texture();
 	    texture->CreateFromSurface(surface);

@@ -6,6 +6,7 @@
 #include "ParticleEmitterComponent.h"
 #include "DebugRenderer.h"
 #include "Shader.h"
+#include "UIScreen.h"
 #include "Assert.h"
 
 #include <GL/glew.h>
@@ -96,11 +97,17 @@ void Renderer::Draw() {
     textureShader->SetMatrixUniform("uViewProjection", view);
 
     spriteBatch.Begin(SpriteBatch::SortType::FrontToBack);
+
     for (auto sprite : sprites) {
 	if (sprite->IsEnabled()) {
 	    sprite->Draw(spriteBatch);
 	}
     }
+
+    for (auto ui : game->GetUIStack()) {
+	ui->Draw(spriteBatch);
+    }
+
     spriteBatch.End();
     spriteBatch.DrawBatch();
 

@@ -3,6 +3,7 @@
 #include "Math.h"
 #include <GL/glew.h>
 #include <vector>
+#include <cassert>
 
 struct Vertex {
     Vector2 position;
@@ -53,6 +54,14 @@ public:
     void Initialize();
     void Begin(SortType sortType = SortType::Texture);
     void End();
+
+    // TODO: Better API would be:
+    void Draw(class Texture* texture, const Vector4& dest,
+	      const Vector4& uv = Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+	      const Vector4& color = Color::White,
+	      int depth = 0) {
+	assert(false); // Not implemented.
+    }
 
     void Draw(const Vector4& destRect, const Vector4& uvRect,
 	      GLuint texture, int depth, const Vector4& color);
