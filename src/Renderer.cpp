@@ -111,7 +111,6 @@ void Renderer::Draw() {
     spriteBatch.End();
     spriteBatch.DrawBatch();
 
-    DebugRenderer::End(); // TODO: We probably don't need this function.
     DebugRenderer::Draw(view, 1.0f);
 
     SDL_GL_SwapWindow(window);

@@ -124,12 +124,14 @@ void DebugRenderer::DrawLine(const Vector2& from, const Vector2& to, const Vecto
     indices.push_back(start + 1);
 }
 
-void DebugRenderer::End() {
+void DebugRenderer::Draw(const Matrix4& projectionMatrix, float lineWidth) {
+    // Allocate vertex memory and upload the data to the VAO.
     GL_CALL(glBindVertexArray(vao));
     GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, vbo));
     GL_CALL(glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(DebugVertex), nullptr, GL_DYNAMIC_DRAW));
     GL_CALL(glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.size() * sizeof(DebugVertex), vertices.data()));
 
+    // Allocate index memory and upload the data to the IBO.
     GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo));
     GL_CALL(glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), nullptr, GL_DYNAMIC_DRAW));
     GL_CALL(glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, indices.size() * sizeof(GLuint), indices.data()));
@@ -137,9 +139,7 @@ void DebugRenderer::End() {
     numElements = indices.size();
     indices.clear();
     vertices.clear();
-}
 
-void DebugRenderer::Draw(const Matrix4& projectionMatrix, float lineWidth) {
     shader.SetActive();
     shader.SetMatrixUniform("uViewProjection", projectionMatrix);
 

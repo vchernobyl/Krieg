@@ -228,9 +228,10 @@ issue and happening only rarely (plus it is not caused by the gameplay code,
 but the engine code, most likely rendering), I will leave this one slide for now.
 As a note - it looks like the SDL_GL_SwapWindow function was the one that was chugging.
 30. Add basic shooting. [DONE]
-31. Add basic font rendering. [IN PROGRESS]
+31. Add basic font rendering. [DONE]
 32. Add textual debug info on the screen.
 33. Launch projectiles at selected enemies only.
+34. Untabify all source files. [IN PROGRESS]
 
 
 Notes from 'Game Engine Architecture':
