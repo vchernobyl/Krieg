@@ -12,9 +12,9 @@ struct InputState;
 class Actor {
 public:
     enum class State {
-	Active,
-	Paused,
-	Dead
+        Active,
+        Paused,
+        Dead
     };
 
     Actor(Game* game);
@@ -55,12 +55,12 @@ public:
     virtual void OnBeginContact(const struct Contact& contact) {}
 
     template <typename T> T* GetComponent() {
-	for (auto component : components) {
-	    if (auto target = dynamic_cast<T*>(component)) {
-		return target;
-	    }
-	}
-	return nullptr;
+        for (auto component : components) {
+            if (auto target = dynamic_cast<T*>(component)) {
+                return target;
+            }
+        }
+        return nullptr;
     }
 
 private:

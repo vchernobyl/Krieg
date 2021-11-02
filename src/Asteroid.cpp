@@ -10,7 +10,7 @@
 
 Asteroid::Asteroid(Game* game) : Actor(game) {
     Vector2 randPos = Random::GetVector(Vector2(-8.0f, -6.0f),
-					Vector2(8.0f, 6.0f));
+                                        Vector2(8.0f, 6.0f));
 
     SetPosition(randPos);
     SetRotation(Random::GetFloatRange(0.0f, Math::TwoPi));

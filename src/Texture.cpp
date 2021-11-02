@@ -10,13 +10,13 @@ bool Texture::Load(const std::string& fileName) {
     unsigned char* image = SOIL_load_image(fileName.c_str(), &width, &height, &channels, SOIL_LOAD_AUTO);
 
     if (image == nullptr) {
-	SDL_Log("SOIL failed to load image %s: %s", fileName.c_str(), SOIL_last_result());
-	return false;
+        SDL_Log("SOIL failed to load image %s: %s", fileName.c_str(), SOIL_last_result());
+        return false;
     }
 
     int format = GL_RGB;
     if (channels == 4) {
-	format = GL_RGBA;
+        format = GL_RGBA;
     }
 
     GL_CALL(glGenTextures(1, &textureID));
@@ -46,7 +46,7 @@ void Texture::CreateFromSurface(SDL_Surface* surface) {
     GL_CALL(glGenTextures(1, &textureID));
     GL_CALL(glBindTexture(GL_TEXTURE_2D, textureID));
     GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA,
-			 GL_UNSIGNED_BYTE, surface->pixels));
+                         GL_UNSIGNED_BYTE, surface->pixels));
 
     GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
     GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));

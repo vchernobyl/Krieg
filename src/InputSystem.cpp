@@ -7,17 +7,17 @@ bool KeyboardState::IsKeyPressed(SDL_Scancode keyCode) const {
 
 ButtonState KeyboardState::GetKeyState(SDL_Scancode keyCode) const {
     if (prevState[keyCode] == 0) {
-	if (currState[keyCode] == 0) {
-	    return ButtonState::None;
-	} else {
-	    return ButtonState::Pressed;
-	}
+        if (currState[keyCode] == 0) {
+            return ButtonState::None;
+        } else {
+            return ButtonState::Pressed;
+        }
     } else {
-	if (currState[keyCode] == 0) {
-	    return ButtonState::Released;
-	} else {
-	    return ButtonState::Held;
-	}
+        if (currState[keyCode] == 0) {
+            return ButtonState::Released;
+        } else {
+            return ButtonState::Held;
+        }
     }
 }
 
@@ -28,17 +28,17 @@ bool MouseState::IsButtonPressed(int button) const {
 ButtonState MouseState::GetButtonState(int button) const {
     int mask = SDL_BUTTON(button);
     if ((mask & prevButtons) == 0) {
-	if ((mask & currButtons) == 0) {
-	    return ButtonState::None;
-	} else {
-	    return ButtonState::Pressed;
-	}
+        if ((mask & currButtons) == 0) {
+            return ButtonState::None;
+        } else {
+            return ButtonState::Pressed;
+        }
     } else {
-	if ((mask & currButtons) == 0) {
-	    return ButtonState::Released;
-	} else {
-	    return ButtonState::Held;
-	}
+        if ((mask & currButtons) == 0) {
+            return ButtonState::Released;
+        } else {
+            return ButtonState::Held;
+        }
     }
 }
 
@@ -67,9 +67,9 @@ void InputSystem::PrepareForUpdate() {
 void InputSystem::Update() {
     int x = 0, y = 0;
     if (state.Mouse.isRelative) {
-	state.Mouse.currButtons = SDL_GetRelativeMouseState(&x, &y);
+        state.Mouse.currButtons = SDL_GetRelativeMouseState(&x, &y);
     } else {
-	state.Mouse.currButtons = SDL_GetMouseState(&x, &y);
+        state.Mouse.currButtons = SDL_GetMouseState(&x, &y);
     }
     
     state.Mouse.mousePosition.x = static_cast<float>(x);
@@ -79,11 +79,11 @@ void InputSystem::Update() {
 void InputSystem::ProcessEvent(SDL_Event& event) {
     switch (event.type) {
     case SDL_MOUSEWHEEL:
-	state.Mouse.scrollWheel.x = static_cast<float>(event.wheel.x);
-	state.Mouse.scrollWheel.y = static_cast<float>(event.wheel.y);
-	break;
+        state.Mouse.scrollWheel.x = static_cast<float>(event.wheel.x);
+        state.Mouse.scrollWheel.y = static_cast<float>(event.wheel.y);
+        break;
     default:
-	break;
+        break;
     }
 }
 

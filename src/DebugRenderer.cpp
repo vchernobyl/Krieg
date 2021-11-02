@@ -65,7 +65,7 @@ void DebugRenderer::DrawBox(const Vector4& dst, float angle, const Vector4& colo
     vertices[i + 3].position = Vector2::RotatePoint(topRight, angle) + halfDims + positionOffset;
 
     for (int j = i; j < i + 4; j++) {
-	vertices[j].color = color;
+        vertices[j].color = color;
     }
 
     indices.reserve(indices.size() + 8);
@@ -90,17 +90,17 @@ void DebugRenderer::DrawCircle(const Vector2& center, float radius, const Vector
     vertices.resize(start + vertexCount);
 
     for (int i = 0; i < vertexCount; i++) {
-	const float angle = static_cast<float>(i) / vertexCount * 2 * Math::Pi;
-	vertices[start + i].position.x = Math::Cos(angle) * radius + center.x;
-	vertices[start + i].position.y = Math::Sin(angle) * radius + center.y;
-	vertices[start + i].color = color;
+        const float angle = static_cast<float>(i) / vertexCount * 2 * Math::Pi;
+        vertices[start + i].position.x = Math::Cos(angle) * radius + center.x;
+        vertices[start + i].position.y = Math::Sin(angle) * radius + center.y;
+        vertices[start + i].color = color;
     }
 
     indices.reserve(indices.size() + vertexCount * 2);
 
     for (int i = 0; i < vertexCount - 1; i++) {
-	indices.push_back(start + i);
-	indices.push_back(start + i + 1);
+        indices.push_back(start + i);
+        indices.push_back(start + i + 1);
     }
 
     indices.push_back(start + vertexCount - 1);

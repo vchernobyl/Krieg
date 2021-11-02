@@ -5,7 +5,7 @@
 VertexArray::VertexArray() {}
 
 VertexArray::VertexArray(const float* vertices, unsigned int vertexCount,
-			 const unsigned int* indices, unsigned int indexCount)
+                         const unsigned int* indices, unsigned int indexCount)
     : vertexCount(vertexCount),
       indexCount(indexCount) {
     // Create the vertex array object (VAO).

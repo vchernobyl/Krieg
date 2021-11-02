@@ -19,8 +19,8 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
     this->screenHeight = screenHeight;
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
-	SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
-	return false;
+        SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
+        return false;
     }
 
     // Disable deprecated OpenGL functions.
@@ -44,24 +44,24 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 
     window = SDL_CreateWindow("Game", 100, 100, screenWidth, screenHeight, SDL_WINDOW_OPENGL);
     if (!window) {
-	SDL_Log("Unable to create a window: %s", SDL_GetError());
-	return false;
+        SDL_Log("Unable to create a window: %s", SDL_GetError());
+        return false;
     }
 
     context = SDL_GL_CreateContext(window);
     
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
-	SDL_Log("Failed to initialize GLEW.");
-	return false;
+        SDL_Log("Failed to initialize GLEW.");
+        return false;
     }
 
     // Clear benign error.
     glGetError();
 
     if (!LoadShaders()) {
-	SDL_Log("Failed to load shaders.");
-	return false;
+        SDL_Log("Failed to load shaders.");
+        return false;
     }
 
     spriteBatch.Initialize();
@@ -80,8 +80,8 @@ void Renderer::Shutdown() {
 
 void Renderer::UnloadData() {
     for (auto iter : textures) {
-	iter.second->Unload();
-	delete iter.second;
+        iter.second->Unload();
+        delete iter.second;
     }
     textures.clear();
 }
@@ -99,13 +99,13 @@ void Renderer::Draw() {
     spriteBatch.Begin(SpriteBatch::SortType::FrontToBack);
 
     for (auto sprite : sprites) {
-	if (sprite->IsEnabled()) {
-	    sprite->Draw(spriteBatch);
-	}
+        if (sprite->IsEnabled()) {
+            sprite->Draw(spriteBatch);
+        }
     }
 
     for (auto ui : game->GetUIStack()) {
-	ui->Draw(spriteBatch);
+        ui->Draw(spriteBatch);
     }
 
     spriteBatch.End();
@@ -120,15 +120,15 @@ Texture* Renderer::GetTexture(const std::string& fileName) {
     Texture* tex = nullptr;
     auto iter = textures.find(fileName);
     if (iter != textures.end()) {
-	tex = iter->second;
+        tex = iter->second;
     } else {
-	tex = new Texture();
-	if (tex->Load(fileName)) {
-	    textures.emplace(fileName, tex);
-	} else {
-	    delete tex;
-	    tex = nullptr;
-	}
+        tex = new Texture();
+        if (tex->Load(fileName)) {
+            textures.emplace(fileName, tex);
+        } else {
+            delete tex;
+            tex = nullptr;
+        }
     }
     return tex;
 }
@@ -137,7 +137,7 @@ void Renderer::AddSprite(SpriteComponent* sprite) {
     int drawOrder = sprite->GetDrawOrder();
     auto iter = sprites.begin();
     while (iter != sprites.end() && drawOrder > (*iter)->GetDrawOrder()) {
-	++iter;
+        ++iter;
     }
     sprites.insert(iter, sprite);
 }
@@ -145,7 +145,7 @@ void Renderer::AddSprite(SpriteComponent* sprite) {
 void Renderer::RemoveSprite(SpriteComponent* sprite) {
     auto iter = std::find(sprites.begin(), sprites.end(), sprite);
     if (iter != sprites.end()) {
-	sprites.erase(iter);
+        sprites.erase(iter);
     }
 }
 
@@ -153,7 +153,7 @@ void Renderer::AddParticles(ParticleEmitterComponent* emitter) {
     int drawOrder = emitter->GetDrawOrder();
     auto iter = particles.begin();
     while (iter != particles.end() && drawOrder > (*iter)->GetDrawOrder()) {
-	++iter;
+        ++iter;
     }
     particles.insert(iter, emitter);
 }
@@ -161,14 +161,14 @@ void Renderer::AddParticles(ParticleEmitterComponent* emitter) {
 void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
     auto iter = std::find(particles.begin(), particles.end(), emitter);
     if (iter != particles.end()) {
-	particles.erase(iter);
+        particles.erase(iter);
     }
 }
 
 bool Renderer::LoadShaders() {
     textureShader = new Shader();
     if (!textureShader->Load("data/shaders/Texture.vert", "data/shaders/Texture.frag")) {
-	return false;
+        return false;
     }
 
     return true;

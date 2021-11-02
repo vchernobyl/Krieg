@@ -20,12 +20,12 @@ public:
     // in this map and use it if it already exists. Otherwise we create and store the texture for
     // future use. Whenever the font is unloaded, we clear the maps and texture pointers.
     void Draw(class SpriteBatch& spriteBatch, const std::string& text, const Vector2& position) {
-	assert(false); // Not implemented.
+        assert(false); // Not implemented.
     }
 
     class Texture* RenderText(const std::string& text,
-			      const Vector4& color = Color::White,
-			      int pointSize = 30);
+                              const Vector4& color = Color::White,
+                              int pointSize = 30);
 private:
     std::unordered_map<int, TTF_Font*> fontData; // TODO: Forward declare TTF_Font.
     class Game* game;

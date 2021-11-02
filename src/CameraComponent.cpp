@@ -18,34 +18,34 @@ CameraComponent::CameraComponent(Actor* owner, int updateOrder)
 void CameraComponent::ProcessInput(const InputState& inputState) {
     const float mouseScroll = inputState.Mouse.GetScrollWheel().y;
     if (mouseScroll != 0.0f) {
-	scale += mouseScroll;
-	needsUpdate = true;
+        scale += mouseScroll;
+        needsUpdate = true;
     }
 
     if (inputState.Mouse.GetButtonState(SDL_BUTTON_MIDDLE) == ButtonState::Pressed) {
-	dragStart = ScreenToWorld(inputState.Mouse.GetPosition());
+        dragStart = ScreenToWorld(inputState.Mouse.GetPosition());
     }
 
     if (inputState.Mouse.GetButtonState(SDL_BUTTON_MIDDLE) == ButtonState::Held) {
-	dragEnd = ScreenToWorld(inputState.Mouse.GetPosition());
-	const Vector2 distance = dragEnd - dragStart;
-	position -= distance;
-	needsUpdate = true;
+        dragEnd = ScreenToWorld(inputState.Mouse.GetPosition());
+        const Vector2 distance = dragEnd - dragStart;
+        position -= distance;
+        needsUpdate = true;
     }
 }
 
 void CameraComponent::Update(float deltaTime) {
     if (needsUpdate) {
-	needsUpdate = false;
+        needsUpdate = false;
 
-	// Looks like it's working correctly, but I'm not sure whether the
-	// multiplication order is correct or just an accident.
-	view = Matrix4::CreateTranslation(Vector3(-position.x, -position.y, 0.0f));
-	view *= Matrix4::CreateScale(scale);
-	view *= orthoProjection;
+        // Looks like it's working correctly, but I'm not sure whether the
+        // multiplication order is correct or just an accident.
+        view = Matrix4::CreateTranslation(Vector3(-position.x, -position.y, 0.0f));
+        view *= Matrix4::CreateScale(scale);
+        view *= orthoProjection;
 
-	const auto game = owner->GetGame();
-	game->GetRenderer()->SetViewMatrix(view);
+        const auto game = owner->GetGame();
+        game->GetRenderer()->SetViewMatrix(view);
     }
 }
 

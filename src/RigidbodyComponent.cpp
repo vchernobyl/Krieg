@@ -47,7 +47,7 @@ void RigidbodyComponent::ApplyForce(const Vector2& force) {
     bool awake = true;
 
     if (Math::NearZero(force.Length())) {
-	awake = false;
+        awake = false;
     }
 
     body->ApplyForceToCenter(b2Vec2(force.x, force.y), awake);
@@ -57,7 +57,7 @@ void RigidbodyComponent::ApplyImpulse(const Vector2& impulse) {
     bool awake = true;
 
     if (Math::NearZero(impulse.Length())) {
-	awake = false;
+        awake = false;
     }
 
     body->ApplyLinearImpulseToCenter(b2Vec2(impulse.x, impulse.y), awake);

@@ -13,11 +13,11 @@ AudioComponent::~AudioComponent() {
 void AudioComponent::Update(float deltaTime) {
     auto iter = events.begin();
     while (iter != events.end()) {
-	if (!iter->IsValid()) {
-	    iter = events.erase(iter);
-	} else {
-	    ++iter;
-	}
+        if (!iter->IsValid()) {
+            iter = events.erase(iter);
+        } else {
+            ++iter;
+        }
     }
 }
 
@@ -29,7 +29,7 @@ SoundEvent AudioComponent::PlayEvent(const std::string& name) {
 
 void AudioComponent::StopAllEvents() {
     for (auto& event : events) {
-	event.Stop();
+        event.Stop();
     }
     events.clear();
 }

@@ -30,20 +30,20 @@ Game::Game() :
 bool Game::Initialize() {
     renderer = new Renderer(this);
     if (!renderer->Initialize(1024, 768)) {
-	SDL_Log("Failed to initialize the renderer");
-	return false;
+        SDL_Log("Failed to initialize the renderer");
+        return false;
     }
     
     inputSystem = new InputSystem();
     if (!inputSystem->Initialize()) {
-	SDL_Log("Failed to initialize the input system");
-	return false;
+        SDL_Log("Failed to initialize the input system");
+        return false;
     }
 
     audioSystem = new AudioSystem(this);
     if (!audioSystem->Initialize()) {
-	SDL_Log("Failed to initializa the audio system");
-	return false;
+        SDL_Log("Failed to initializa the audio system");
+        return false;
     }
 
     const auto gravity = Vector2::Zero;
@@ -52,8 +52,8 @@ bool Game::Initialize() {
     Random::Init();
 
     if (TTF_Init() != 0) {
-	SDL_Log("Failed to initialize SDL_ttf");
-	return false;
+        SDL_Log("Failed to initialize SDL_ttf");
+        return false;
     }
 
     LoadData();
@@ -65,9 +65,9 @@ bool Game::Initialize() {
 
 void Game::RunLoop() {
     while (isRunning) {
-	ProcessInput();
-	UpdateGame();
-	DrawGame();
+        ProcessInput();
+        UpdateGame();
+        DrawGame();
     }
 }
 
@@ -91,40 +91,40 @@ void Game::Shutdown() {
 
 void Game::AddActor(Actor* actor) {
     if (updatingActors) {
-	pendingActors.emplace_back(actor);
+        pendingActors.emplace_back(actor);
     } else {
-	actors.emplace_back(actor);
+        actors.emplace_back(actor);
     }
 }
 
 void Game::RemoveActor(Actor* actor) {
     auto iter = std::find(pendingActors.begin(), pendingActors.end(), actor);
     if (iter != pendingActors.end()) {
-	std::iter_swap(iter, pendingActors.end() - 1);
-	pendingActors.pop_back();
+        std::iter_swap(iter, pendingActors.end() - 1);
+        pendingActors.pop_back();
     }
 
     iter = std::find(actors.begin(), actors.end(), actor);
     if (iter != actors.end()) {
-	std::iter_swap(iter, actors.end() - 1);
-	actors.pop_back();
+        std::iter_swap(iter, actors.end() - 1);
+        actors.pop_back();
     }
 }
 
 Font* Game::GetFont(const std::string& fileName) {
     auto iter = fonts.find(fileName);
     if (iter != fonts.end()) {
-	return iter->second;
+        return iter->second;
     } else {
-	Font* font = new Font(this);
-	if (font->Load(fileName)) {
-	    fonts.emplace(fileName, font);
-	} else {
-	    font->Unload();
-	    delete font;
-	    font = nullptr;
-	}
-	return font;
+        Font* font = new Font(this);
+        if (font->Load(fileName)) {
+            fonts.emplace(fileName, font);
+        } else {
+            font->Unload();
+            delete font;
+            font = nullptr;
+        }
+        return font;
     }
 }
 
@@ -134,9 +134,9 @@ void Game::PushUI(UIScreen* screen) {
 
 Actor* Game::GetActorByTag(const std::string& tag) {
     auto iter = std::find_if(actors.begin(), actors.end(),
-			     [&tag](const Actor* actor) { return actor->GetTag() == tag; });
+                             [&tag](const Actor* actor) { return actor->GetTag() == tag; });
     if (iter != actors.end()) {
-	return *iter;
+        return *iter;
     }
     return nullptr;
 }
@@ -146,28 +146,28 @@ void Game::ProcessInput() {
 
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
-	switch (event.type) {
-	case SDL_QUIT:
-	    isRunning = false;
-	    break;
-	case SDL_MOUSEWHEEL:
-	    inputSystem->ProcessEvent(event);
-	    break;
-	default:
-	    break;
-	}
+        switch (event.type) {
+        case SDL_QUIT:
+            isRunning = false;
+            break;
+        case SDL_MOUSEWHEEL:
+            inputSystem->ProcessEvent(event);
+            break;
+        default:
+            break;
+        }
     }
 
     inputSystem->Update();
     const InputState& state = inputSystem->GetState();
 
     if (state.Keyboard.GetKeyState(SDL_SCANCODE_ESCAPE) == ButtonState::Released) {
-	isRunning = false;
+        isRunning = false;
     }
 
     updatingActors = true;
     for (auto actor : actors) {
-	actor->ProcessInput(state);
+        actor->ProcessInput(state);
     }
     updatingActors = false;
 }
@@ -183,43 +183,43 @@ void Game::UpdateGame() {
 
     updatingActors = true;
     for (auto actor : actors) {
-	actor->Update(deltaTime);
+        actor->Update(deltaTime);
     }
     updatingActors = false;
 
     for (auto pending : pendingActors) {
-	pending->ComputeWorldTransform();
-	actors.emplace_back(pending);
+        pending->ComputeWorldTransform();
+        actors.emplace_back(pending);
     }
     pendingActors.clear();
 
     std::vector<Actor*> deadActors;
     for (auto actor : actors) {
-	if (actor->GetState() == Actor::State::Dead) {
-	    deadActors.emplace_back(actor);
-	}
+        if (actor->GetState() == Actor::State::Dead) {
+            deadActors.emplace_back(actor);
+        }
     }
 
     for (auto actor : deadActors) {
-	delete actor;
+        delete actor;
     }
 
     audioSystem->Update(deltaTime);
 
     for (auto ui : uiStack) {
-	if (ui->GetState() == UIScreen::UIState::Active) {
-	    ui->Update(deltaTime);
-	}
+        if (ui->GetState() == UIScreen::UIState::Active) {
+            ui->Update(deltaTime);
+        }
     }
 
     auto iter = uiStack.begin();
     while (iter != uiStack.end()) {
-	if ((*iter)->GetState() == UIScreen::UIState::Closing) {
-	    delete *iter;
-	    iter = uiStack.erase(iter);
-	} else {
-	    ++iter;
-	}
+        if ((*iter)->GetState() == UIScreen::UIState::Closing) {
+            delete *iter;
+            iter = uiStack.erase(iter);
+        } else {
+            ++iter;
+        }
     }
 }
 
@@ -240,7 +240,7 @@ void Game::LoadData() {
 
     const int numAsteroids = 20;
     for (int i = 0; i < numAsteroids; i++) {
-	new Asteroid(this);
+        new Asteroid(this);
     }
 
     // Test UI.
@@ -258,6 +258,6 @@ void Game::UnloadData() {
     renderer->UnloadData();
     
     while (!actors.empty()) {
-	delete actors.back();
+        delete actors.back();
     }
 }

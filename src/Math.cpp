@@ -16,14 +16,14 @@ Rectangle::Rectangle(Vector2 position, Vector2 size)
 
 bool Rectangle::Contains(const Vector2& point) const {
     return (point.x >= position.x && point.y >= position.y &&
-	    point.x <= position.x + size.x && point.y <= position.y + size.y);
+            point.x <= position.x + size.x && point.y <= position.y + size.y);
 }
 
 bool Rectangle::Intersects(const Rectangle& rect) const {
     return (position.x < rect.position.x + rect.size.x &&
-	    position.x + size.x > rect.position.x &&
-	    position.y < rect.position.y + rect.size.y &&
-	    position.y + size.y > rect.position.y);
+            position.x + size.x > rect.position.x &&
+            position.y < rect.position.y + rect.size.y &&
+            position.y + size.y > rect.position.y);
 }
 
 static float m4Ident[4][4] = {

@@ -3,7 +3,7 @@
 #include <algorithm>
 
 SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
-				 GLuint texture, int depth, const Vector4& color) :
+                                 GLuint texture, int depth, const Vector4& color) :
     texture(texture), depth(depth) {
     topLeft.color = color;
     topLeft.SetPosition(destRect.x, destRect.y + destRect.w);
@@ -23,7 +23,7 @@ SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
 }
 
 SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
-				 GLuint texture, int depth, const Vector4& color, float angle) :
+                                 GLuint texture, int depth, const Vector4& color, float angle) :
     texture(texture), depth(depth) {
 
     Vector2 halfDims(destRect.z / 2.0f, destRect.w / 2.0f);
@@ -71,7 +71,7 @@ void SpriteBatch::Begin(SortType sortType) {
 void SpriteBatch::End() {
     spriteBatchItemPtrs.resize(spriteBatchItems.size());
     for (int i = 0; i < spriteBatchItems.size(); i++) {
-	spriteBatchItemPtrs[i] = &spriteBatchItems[i];
+        spriteBatchItemPtrs[i] = &spriteBatchItems[i];
     }
     
     SortSpriteBatchItems();
@@ -79,22 +79,22 @@ void SpriteBatch::End() {
 }
 
 void SpriteBatch::Draw(const Vector4& destRect, const Vector4& uvRect,
-		       GLuint texture, int depth, const Vector4& color) {
+                       GLuint texture, int depth, const Vector4& color) {
     spriteBatchItems.emplace_back(destRect, uvRect, texture, depth, color);
 }
 
 void SpriteBatch::Draw(const Vector4& destRect, const Vector4& uvRect,
-		       GLuint texture, int depth, const Vector4& color, float angle) {
+                       GLuint texture, int depth, const Vector4& color, float angle) {
     spriteBatchItems.emplace_back(destRect, uvRect, texture, depth, color, angle);
 }
 
 void SpriteBatch::Draw(const Vector4& destRect, const Vector4& uvRect,
-		       GLuint texture, int depth, const Vector4& color, const Vector2& direction) {
+                       GLuint texture, int depth, const Vector4& color, const Vector2& direction) {
     Vector2 right(1.0f, 0.0f);
     float angle = acos(Vector2::Dot(right, direction));
 
     if (direction.y < 0.0f) {
-	angle = -angle;
+        angle = -angle;
     }
 
     spriteBatchItems.emplace_back(destRect, uvRect, texture, depth, color, angle);
@@ -104,8 +104,8 @@ void SpriteBatch::DrawBatch() {
     glBindVertexArray(vao);
 
     for (int i = 0; i < renderBatches.size(); i++) {
-	glBindTexture(GL_TEXTURE_2D, renderBatches[i].texture);
-	glDrawArrays(GL_TRIANGLES, renderBatches[i].offset, renderBatches[i].numVertices);
+        glBindTexture(GL_TEXTURE_2D, renderBatches[i].texture);
+        glDrawArrays(GL_TRIANGLES, renderBatches[i].offset, renderBatches[i].numVertices);
     }
 
     glBindVertexArray(0);
@@ -113,7 +113,7 @@ void SpriteBatch::DrawBatch() {
 
 void SpriteBatch::CreateRenderBatches() {
     if (spriteBatchItemPtrs.empty()) {
-	return;
+        return;
     }
 
     std::vector<Vertex> vertices;
@@ -131,19 +131,19 @@ void SpriteBatch::CreateRenderBatches() {
     vertices[currentVertex++] = spriteBatchItemPtrs[0]->topLeft;
 
     for (int i = 1; i < spriteBatchItemPtrs.size(); i++) {
-	if (spriteBatchItemPtrs[i]->texture != spriteBatchItemPtrs[i - 1]->texture) {
-	    renderBatches.emplace_back(currentVertex, 6, spriteBatchItemPtrs[i]->texture);
-	} else {
-	    renderBatches.back().numVertices += 6;
-	}
-	
-	vertices[currentVertex++] = spriteBatchItemPtrs[i]->topLeft;
-	vertices[currentVertex++] = spriteBatchItemPtrs[i]->bottomLeft;
-	vertices[currentVertex++] = spriteBatchItemPtrs[i]->bottomRight;
+        if (spriteBatchItemPtrs[i]->texture != spriteBatchItemPtrs[i - 1]->texture) {
+            renderBatches.emplace_back(currentVertex, 6, spriteBatchItemPtrs[i]->texture);
+        } else {
+            renderBatches.back().numVertices += 6;
+        }
+        
+        vertices[currentVertex++] = spriteBatchItemPtrs[i]->topLeft;
+        vertices[currentVertex++] = spriteBatchItemPtrs[i]->bottomLeft;
+        vertices[currentVertex++] = spriteBatchItemPtrs[i]->bottomRight;
 
-	vertices[currentVertex++] = spriteBatchItemPtrs[i]->bottomRight;
-	vertices[currentVertex++] = spriteBatchItemPtrs[i]->topRight;
-	vertices[currentVertex++] = spriteBatchItemPtrs[i]->topLeft;
+        vertices[currentVertex++] = spriteBatchItemPtrs[i]->bottomRight;
+        vertices[currentVertex++] = spriteBatchItemPtrs[i]->topRight;
+        vertices[currentVertex++] = spriteBatchItemPtrs[i]->topLeft;
     }
 
     glBindBuffer(GL_ARRAY_BUFFER, vbo);
@@ -173,16 +173,16 @@ void SpriteBatch::CreateVertexArray() {
 void SpriteBatch::SortSpriteBatchItems() {
     switch (sortType) {
     case SortType::BackToFront:
-	std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
-			 [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->depth > b->depth; });
-	break;
+        std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
+                         [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->depth > b->depth; });
+        break;
     case SortType::FrontToBack:
-	std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
-			 [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->depth < b->depth; });
-	break;
+        std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
+                         [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->depth < b->depth; });
+        break;
     case SortType::Texture:
-	std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
-			 [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->texture < b->texture; });
-	break;
+        std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
+                         [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->texture < b->texture; });
+        break;
     }
 }

@@ -9,11 +9,11 @@
 namespace FMOD {
     class System;
     namespace Studio {
-	class Bank;
-	class EventDescription;
-	class EventInstance;
-	class System;
-	class Bus;
+        class Bank;
+        class EventDescription;
+        class EventInstance;
+        class System;
+        class Bus;
     }
 };
 

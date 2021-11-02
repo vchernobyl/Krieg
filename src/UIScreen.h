@@ -8,8 +8,8 @@
 class Button {
 public:
     Button(const std::string& name, class Font* font,
-	   std::function<void()> onClick,
-	   const Vector2& position, const Vector2& dimensions);
+           std::function<void()> onClick,
+           const Vector2& position, const Vector2& dimensions);
     ~Button();
 
     void SetName(const std::string& name);
@@ -44,24 +44,24 @@ public:
     virtual void HandleKeyPress(int key);
 
     enum class UIState {
-	Active,
-	Closing
+        Active,
+        Closing
     };
 
     void Close() { state = UIState::Closing; }
     UIState GetState() const { return state; }
 
     void SetTitle(const std::string& text,
-		  const Vector4& color = Color::White,
-		  int pointSize = 40);
+                  const Vector4& color = Color::White,
+                  int pointSize = 40);
 
     void AddButton(const std::string& name, std::function<void()> onClick);
 
 protected:
     void DrawTexture(class SpriteBatch& spriteBatch,
-		     class Texture* texture,
-		     const Vector2& offset = Vector2::Zero,
-		     float scale = 1.0f);
+                     class Texture* texture,
+                     const Vector2& offset = Vector2::Zero,
+                     float scale = 1.0f);
     void SetRelativeMouseMode(bool relative);
 
     class Game* game;

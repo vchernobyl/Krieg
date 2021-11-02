@@ -13,17 +13,17 @@ AnimSpriteComponent::AnimSpriteComponent(Actor* owner, int drawOrder)
 void AnimSpriteComponent::Update(float deltaTime) {
     frameTime += deltaTime;
     if (frameTime > (1.0f / animFPS)) {
-	frameNum += frameTime * animFPS;
-	if (frameNum >= animData.frameInfo[animNum].numFrames) {
-	    if (animData.frameInfo[animNum].isLooping) {
-		frameNum = frameNum % animData.frameInfo[animNum].numFrames;
-	    } else {
-		frameNum = animData.frameInfo[animNum].numFrames - 1;
-	    }
-	}
-	int imageNum = animData.frameInfo[animNum].startFrame + frameNum;
-	SetTexture(animData.images[imageNum]);
-	frameTime = Math::Mod(frameTime, 1.0f / animFPS);
+        frameNum += frameTime * animFPS;
+        if (frameNum >= animData.frameInfo[animNum].numFrames) {
+            if (animData.frameInfo[animNum].isLooping) {
+                frameNum = frameNum % animData.frameInfo[animNum].numFrames;
+            } else {
+                frameNum = animData.frameInfo[animNum].numFrames - 1;
+            }
+        }
+        int imageNum = animData.frameInfo[animNum].startFrame + frameNum;
+        SetTexture(animData.images[imageNum]);
+        frameTime = Math::Mod(frameTime, 1.0f / animFPS);
     }
 }
 
@@ -37,7 +37,7 @@ void AnimSpriteComponent::ChangeAnim(int animNum) {
 
 bool AnimSpriteComponent::Finished(int animNum) {
     if (this->animNum == animNum) {
-	return frameNum >= animData.frameInfo[animNum].numFrames;
+        return frameNum >= animData.frameInfo[animNum].numFrames;
     }
     return false;
 }

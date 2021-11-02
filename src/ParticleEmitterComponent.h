@@ -37,15 +37,15 @@ public:
     int GetDrawOrder() const { return drawOrder; }
 private:
     struct Particle {
-	Vector2 position;
-	Vector2 velocity;
-	Vector4 colorBegin, colorEnd;
-	float rotation = 0.0f;
-	float rotationSpeed = 0.0f;
-	float sizeBegin, sizeEnd;
-	float lifetime = 1.0f;
-	float lifeRemaining = 0.0f;
-	bool active = false;
+        Vector2 position;
+        Vector2 velocity;
+        Vector4 colorBegin, colorEnd;
+        float rotation = 0.0f;
+        float rotationSpeed = 0.0f;
+        float sizeBegin, sizeEnd;
+        float lifetime = 1.0f;
+        float lifeRemaining = 0.0f;
+        bool active = false;
     };
 
     std::vector<Particle> particlePool;

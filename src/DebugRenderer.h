@@ -20,8 +20,8 @@ public:
     
 private:
     struct DebugVertex {
-	Vector2 position;
-	Vector4 color;
+        Vector2 position;
+        Vector4 color;
     };
 
     static Shader shader;

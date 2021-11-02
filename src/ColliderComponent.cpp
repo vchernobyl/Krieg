@@ -10,8 +10,8 @@
 
 CollisionCategory operator|(CollisionCategory lhs, CollisionCategory rhs) {
     return static_cast<CollisionCategory>(
-	static_cast<uint16>(lhs) |
-	static_cast<uint16>(rhs));
+        static_cast<uint16>(lhs) |
+        static_cast<uint16>(rhs));
 }
 
 ColliderComponent::ColliderComponent(Actor* owner) : Component(owner), fixture(nullptr) {

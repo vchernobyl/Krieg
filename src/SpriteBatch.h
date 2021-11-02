@@ -18,10 +18,10 @@ struct Vertex {
 class SpriteBatchItem {
 public:
     SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
-		    GLuint texture, int depth, const Vector4& color);
+                    GLuint texture, int depth, const Vector4& color);
 
     SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
-		    GLuint texture, int depth, const Vector4& color, float angle);
+                    GLuint texture, int depth, const Vector4& color, float angle);
     
     GLuint texture;
     int depth;
@@ -34,7 +34,7 @@ public:
 class RenderBatch {
 public:
     RenderBatch(GLuint offset, GLuint numVertices, GLuint texture) :
-	offset(offset), numVertices(numVertices), texture(texture) {}
+        offset(offset), numVertices(numVertices), texture(texture) {}
     
     GLuint offset;
     GLuint numVertices;
@@ -44,10 +44,10 @@ public:
 class SpriteBatch {
 public:
     enum class SortType {
-	None,
-	FrontToBack,
-	BackToFront,
-	Texture
+        None,
+        FrontToBack,
+        BackToFront,
+        Texture
     };
 
     SpriteBatch();
@@ -57,20 +57,20 @@ public:
 
     // TODO: Better API would be:
     void Draw(class Texture* texture, const Vector4& dest,
-	      const Vector4& uv = Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-	      const Vector4& color = Color::White,
-	      int depth = 0) {
-	assert(false); // Not implemented.
+              const Vector4& uv = Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+              const Vector4& color = Color::White,
+              int depth = 0) {
+        assert(false); // Not implemented.
     }
 
     void Draw(const Vector4& destRect, const Vector4& uvRect,
-	      GLuint texture, int depth, const Vector4& color);
+              GLuint texture, int depth, const Vector4& color);
 
     void Draw(const Vector4& destRect, const Vector4& uvRect,
-	      GLuint texture, int depth, const Vector4& color, float angle);
+              GLuint texture, int depth, const Vector4& color, float angle);
 
     void Draw(const Vector4& destRect, const Vector4& uvRect,
-	      GLuint texture, int depth, const Vector4& color, const Vector2& direction);
+              GLuint texture, int depth, const Vector4& color, const Vector2& direction);
 
     void DrawBatch();
 
