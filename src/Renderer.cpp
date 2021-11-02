@@ -134,12 +134,7 @@ Texture* Renderer::GetTexture(const std::string& fileName) {
 }
 
 void Renderer::AddSprite(SpriteComponent* sprite) {
-    int drawOrder = sprite->GetDrawOrder();
-    auto iter = sprites.begin();
-    while (iter != sprites.end() && drawOrder > (*iter)->GetDrawOrder()) {
-        ++iter;
-    }
-    sprites.insert(iter, sprite);
+    sprites.push_back(sprite);
 }
 
 void Renderer::RemoveSprite(SpriteComponent* sprite) {
@@ -150,12 +145,7 @@ void Renderer::RemoveSprite(SpriteComponent* sprite) {
 }
 
 void Renderer::AddParticles(ParticleEmitterComponent* emitter) {
-    int drawOrder = emitter->GetDrawOrder();
-    auto iter = particles.begin();
-    while (iter != particles.end() && drawOrder > (*iter)->GetDrawOrder()) {
-        ++iter;
-    }
-    particles.insert(iter, emitter);
+    particles.push_back(emitter);
 }
 
 void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {

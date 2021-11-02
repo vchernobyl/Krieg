@@ -231,8 +231,9 @@ As a note - it looks like the SDL_GL_SwapWindow function was the one that was ch
 31. Add basic font rendering. [DONE]
 32. Add textual debug info on the screen.
 33. Launch projectiles at selected enemies only.
-34. Untabify all source files. [IN PROGRESS]
-
+34. Untabify all source files. [DONE]
+35. Remove the `Component` suffix from all the component classes.
+36. Get main camera from the game/renderer. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

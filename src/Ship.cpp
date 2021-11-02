@@ -83,12 +83,12 @@ void Ship::ActorInput(const InputState& inputState) {
     }
 
     if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
-        auto physics = GetGame()->GetPhysicsWorld();
-        auto worldPos = camera->ScreenToWorld(inputState.Mouse.GetPosition());
-        if (auto rb = physics->GetRigidbodyAt(worldPos)) {
-            if (auto enemy = dynamic_cast<Enemy*>(rb->GetOwner())) {
-                enemy->Select();
-            }
-        }
+        // auto physics = GetGame()->GetPhysicsWorld();
+        // auto worldPos = camera->ScreenToWorld(inputState.Mouse.GetPosition());
+        // if (auto rb = physics->GetRigidbodyAt(worldPos)) {
+        //     if (auto enemy = dynamic_cast<Enemy*>(rb->GetOwner())) {
+        //         enemy->Select();
+        //     }
+        // }
     }
 }

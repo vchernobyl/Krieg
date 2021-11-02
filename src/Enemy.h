@@ -9,7 +9,5 @@ public:
     void Select();
 private:
     class RigidbodyComponent* rigidbody = nullptr;
-    class SpriteComponent* outline = nullptr;
     Actor* followTarget = nullptr;
-    bool isSelected = false;
 };

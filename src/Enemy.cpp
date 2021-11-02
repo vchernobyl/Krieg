@@ -6,6 +6,7 @@
 #include "SpriteComponent.h"
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
+#include "TargetableComponent.h"
 #include <cassert>
 
 Enemy::Enemy(Game* game) : Actor(game) {
@@ -13,16 +14,12 @@ Enemy::Enemy(Game* game) : Actor(game) {
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
     sprite->SetColor(Color::Red);
 
-    outline = new SpriteComponent(this, 200);
-    outline->SetTexture(game->GetRenderer()->GetTexture("data/textures/Circle.png"));
-    outline->SetEnabled(false);
-
-    SetPosition(Vector2(3.0f, 6.0f));
-
     auto collider = new CircleColliderComponent(this, 0.5f);
     collider->SetCollisionFilter(CollisionCategory::Enemy);
     rigidbody = collider->GetAttachedRigidbody();
     followTarget = game->GetActorByTag("Player");
+
+    new TargetableComponent(this);
 
     assert(followTarget);
     assert(rigidbody);
@@ -37,9 +34,4 @@ void Enemy::UpdateActor(float deltaTime) {
     SetRotation(Math::Atan2(direction.y, direction.x));
 
     DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Red);
-}
-
-void Enemy::Select() {
-    isSelected = !isSelected;
-    outline->SetEnabled(isSelected);
 }
