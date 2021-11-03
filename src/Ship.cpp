@@ -48,7 +48,7 @@ Ship::Ship(Game* game) : Actor(game) {
     auto collider = new CircleColliderComponent(this, 0.5f);
     collider->SetCollisionFilter(CollisionCategory::Player);
 
-    camera = new CameraComponent(this);
+    //camera = new CameraComponent(this);
 
     SetTag("Player");
 }

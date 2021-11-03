@@ -9,7 +9,7 @@ CameraComponent::CameraComponent(Actor* owner, int updateOrder)
     const auto renderer = owner->GetGame()->GetRenderer();
     screenWidth = renderer->GetScreenWidth();
     screenHeight = renderer->GetScreenHeight();
-    orthoProjection = Matrix4::CreateOrtho(screenWidth, screenHeight, 0.5f, 100.0f);
+    orthoProjection = Matrix4::CreateOrtho(screenWidth, screenHeight, 0.0f, 1.0f);
 }
 
 // TODO: This is gameplay code, needs to be pulled out of the camera component,
