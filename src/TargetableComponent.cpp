@@ -14,6 +14,10 @@ TargetableComponent::TargetableComponent(Actor* owner) : Component(owner) {
 
 void TargetableComponent::ProcessInput(const InputState& inputState) {
     if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
+        // What we want to achieve here is following:
+        // auto cam = owner->GetGame()->GetRenderer()->GetMainCamera();
+        // After that use camera to get the world point.
+
         isSelected = !isSelected;
         sprite->SetEnabled(isSelected);
     }

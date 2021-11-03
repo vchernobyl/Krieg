@@ -3,6 +3,11 @@
 #include "Component.h"
 #include "Math.h"
 
+// TODO: Instead of the camera component having the core
+// camera functionality, it will be extracted to a regular non-component Camera class,
+// which will support basically the same API (besides component overrides).
+// This camera will be added by default in the renderer. CameraComponent will be just adding some
+// functionality on top of the public Camera API. Borrow some ideas from the LibGDX.
 class CameraComponent : public Component {
 public:
     CameraComponent(class Actor* owner, int updateOrder = 200);

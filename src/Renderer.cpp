@@ -93,6 +93,9 @@ void Renderer::Draw() {
     GL_CALL(glEnable(GL_BLEND));
     GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
+    // TODO: I think it makes total sense to put the sprite-batch specific shader
+    // inside the sprite batch itself?
+    // Also add a function to set the view projection?
     textureShader->SetActive();
     textureShader->SetMatrixUniform("uViewProjection", view);
 
