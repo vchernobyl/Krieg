@@ -20,6 +20,7 @@ public:
 protected:
     class Texture* texture = nullptr;
     Vector4 color = Color::White;
+
     int drawOrder = 0;
     int textureWidth = 0;
     int textureHeight = 0;
