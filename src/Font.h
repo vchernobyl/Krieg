@@ -8,7 +8,7 @@
 
 class Font {
 public:
-    Font(class Game* game);
+    Font();
     ~Font();
     bool Load(const std::string& fileName);
     void Unload();
@@ -28,5 +28,4 @@ public:
                               int pointSize = 30);
 private:
     std::unordered_map<int, TTF_Font*> fontData; // TODO: Forward declare TTF_Font.
-    class Game* game;
 };

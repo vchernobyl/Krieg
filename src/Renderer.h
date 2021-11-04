@@ -41,8 +41,12 @@ private:
     SDL_GLContext context;
 
     SpriteBatch spriteBatch;
-    Shader* textureShader;
+    SpriteBatch uiSpriteBatch;
 
+    Shader* textureShader;
+    Shader* uiShader;
+    
+    Matrix4 uiView;
     Matrix4 view;
 
     std::vector<SpriteComponent*> sprites;
@@ -54,4 +58,7 @@ private:
 
     int screenWidth;
     int screenHeight;
+
+    // Game specific, remove later.
+    class DebugUI* debugUI;
 };

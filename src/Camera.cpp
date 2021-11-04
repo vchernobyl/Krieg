@@ -6,7 +6,7 @@ Camera::Camera(float screenWidth, float screenHeight)
     orthoProjection = Matrix4::CreateOrtho(screenWidth, screenHeight, 0.0f, 1.0f);
 }
     
-void Camera::Update(float deltaTime) {
+void Camera::Update() {
     if (needsUpdate) {
         needsUpdate = false;
 

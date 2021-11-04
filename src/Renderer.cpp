@@ -5,10 +5,13 @@
 #include "Texture.h"
 #include "ParticleEmitterComponent.h"
 #include "DebugRenderer.h"
+#include "DebugUI.h"
 #include "Shader.h"
 #include "UIScreen.h"
 #include "Assert.h"
+#include "Camera.h"
 
+#include <SDL/SDL_ttf.h>
 #include <GL/glew.h>
 #include <algorithm>
 
@@ -20,6 +23,11 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
+        return false;
+    }
+
+    if (TTF_Init() != 0) {
+        SDL_Log("Failed to initialize SDL_ttf: %s", TTF_GetError());
         return false;
     }
 
@@ -64,8 +72,16 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
         return false;
     }
 
+    debugUI = new DebugUI();
+
     spriteBatch.Initialize();
+    uiSpriteBatch.Initialize();
     DebugRenderer::Initialize();
+
+    Camera uiCam(screenWidth, screenHeight);
+    uiCam.SetPosition(Vector2(10.0f, -7.0f));
+    uiCam.Update();
+    uiView = uiCam.GetViewMatrix();
 
     return true;
 }
@@ -73,6 +89,11 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 void Renderer::Shutdown() {
     textureShader->Unload();
     delete textureShader;
+
+    uiShader->Unload();
+    delete uiShader;
+
+    delete debugUI;
 
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
@@ -107,12 +128,16 @@ void Renderer::Draw() {
         }
     }
 
-    for (auto ui : game->GetUIStack()) {
-        ui->Draw(spriteBatch);
-    }
-
     spriteBatch.End();
     spriteBatch.DrawBatch();
+
+    uiShader->SetActive();
+    uiShader->SetMatrixUniform("uViewProjection", uiView);
+
+    uiSpriteBatch.Begin();
+    debugUI->Draw(uiSpriteBatch);
+    uiSpriteBatch.End();
+    uiSpriteBatch.DrawBatch();
 
     DebugRenderer::Draw(view, 1.0f);
 
@@ -161,6 +186,11 @@ void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
 bool Renderer::LoadShaders() {
     textureShader = new Shader();
     if (!textureShader->Load("data/shaders/Texture.vert", "data/shaders/Texture.frag")) {
+        return false;
+    }
+
+    uiShader = new Shader();
+    if (!uiShader->Load("data/shaders/Texture.vert", "data/shaders/Texture.frag")) {
         return false;
     }
 

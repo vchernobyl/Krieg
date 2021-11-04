@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Texture.h"
 
-Font::Font(Game* game) : game(game) {
+Font::Font() {
 }
 
 Font::~Font() {

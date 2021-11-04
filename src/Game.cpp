@@ -9,7 +9,6 @@
 #include "Font.h"
 #include "UIScreen.h"
 
-#include <SDL/SDL_ttf.h>
 #include <algorithm>
 #include <memory>
 
@@ -50,11 +49,6 @@ bool Game::Initialize() {
     physicsWorld = new PhysicsWorld(gravity);
 
     Random::Init();
-
-    if (TTF_Init() != 0) {
-        SDL_Log("Failed to initialize SDL_ttf");
-        return false;
-    }
 
     LoadData();
 
@@ -116,7 +110,7 @@ Font* Game::GetFont(const std::string& fileName) {
     if (iter != fonts.end()) {
         return iter->second;
     } else {
-        Font* font = new Font(this);
+        Font* font = new Font();
         if (font->Load(fileName)) {
             fonts.emplace(fileName, font);
         } else {
@@ -242,16 +236,6 @@ void Game::LoadData() {
     for (int i = 0; i < numAsteroids; i++) {
         new Asteroid(this);
     }
-
-    // Test UI.
-    auto font = new Font(this);
-    font->Load("data/fonts/Carlito-Regular.ttf");
-
-    auto uiActor = new Actor(this);
-    uiActor->SetPosition(Vector2(-6.0f, 6.0f));
-
-    auto textSprite = new SpriteComponent(uiActor, 300);
-    textSprite->SetTexture(font->RenderText("Debug Info"));
 }
 
 void Game::UnloadData() {

@@ -6,7 +6,7 @@ class Camera {
 public:
     Camera(float screenWidth, float screenHeight);
 
-    void Update(float deltaTime);
+    void Update();
 
     const Matrix4& GetViewMatrix() const { return view; }
 
