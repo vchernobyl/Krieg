@@ -3,7 +3,8 @@
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "DebugRenderer.h"
-#include "CameraComponent.h"
+#include "CameraMovement.h"
+#include "Camera.h"
 #include "Texture.h"
 #include "Renderer.h"
 #include "Game.h"
@@ -48,7 +49,7 @@ Ship::Ship(Game* game) : Actor(game) {
     auto collider = new CircleColliderComponent(this, 0.5f);
     collider->SetCollisionFilter(CollisionCategory::Player);
 
-    camera = new CameraComponent(this);
+    cameraMovement = new CameraMovement(this);
 
     SetTag("Player");
 }
@@ -70,7 +71,7 @@ void Ship::UpdateActor(float deltaTime) {
 
 void Ship::ActorInput(const InputState& inputState) {
     if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_LEFT)) {
-        targetPosition = camera->ScreenToWorld(inputState.Mouse.GetPosition());
+        targetPosition = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
         direction = Vector2::Normalize(targetPosition - GetPosition());
         DebugRenderer::DrawCircle(targetPosition, 0.1f, Color::Red);
     }

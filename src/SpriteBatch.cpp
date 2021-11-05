@@ -103,6 +103,8 @@ void SpriteBatch::Draw(const Vector4& destRect, const Vector4& uvRect,
 void SpriteBatch::DrawBatch() {
     glBindVertexArray(vao);
 
+    drawCalls = renderBatches.size();
+
     for (int i = 0; i < renderBatches.size(); i++) {
         glBindTexture(GL_TEXTURE_2D, renderBatches[i].texture);
         glDrawArrays(GL_TRIANGLES, renderBatches[i].offset, renderBatches[i].numVertices);

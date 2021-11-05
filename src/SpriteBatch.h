@@ -74,6 +74,8 @@ public:
 
     void DrawBatch();
 
+    int GetDrawCalls() const { return drawCalls; }
+
 private:
     void CreateRenderBatches();
     void CreateVertexArray();
@@ -86,4 +88,6 @@ private:
     std::vector<SpriteBatchItem*> spriteBatchItemPtrs;
     std::vector<SpriteBatchItem> spriteBatchItems;
     std::vector<RenderBatch> renderBatches;
+
+    int drawCalls = 0;
 };

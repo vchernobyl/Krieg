@@ -13,6 +13,9 @@ public:
     const Vector2& GetPosition() const { return position; }
     void SetPosition(const Vector2& position) { this->position = position; needsUpdate = true; }
 
+    float GetScale() const { return scale; }
+    void SetScale(float scale) { this->scale = scale; needsUpdate = true; }
+
     Vector2 ScreenToWorld(const Vector2& screenPoint);
 
 private:

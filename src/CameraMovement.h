@@ -1,0 +1,15 @@
+#pragma once
+
+#include "Component.h"
+#include "Math.h"
+
+// TODO: Rename to `CameraMovement`.
+class CameraMovement : public Component {
+public:
+    CameraMovement(class Actor* owner, int updateOrder = 200);
+    void ProcessInput(const struct InputState& inputState) override;
+private:
+    Vector2 dragStart;
+    Vector2 dragEnd;
+    class Camera* camera;
+};

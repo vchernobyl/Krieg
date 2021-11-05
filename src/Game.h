@@ -10,8 +10,8 @@ class Renderer;
 class PhysicsWorld;
 class AudioSystem;
 class InputSystem;
-class TileMapRenderer;
-class TileMap;
+class Font;
+class Camera;
 
 class Game {
 public:
@@ -23,13 +23,9 @@ public:
     void AddActor(Actor* actor);
     void RemoveActor(Actor* actor);
 
-    class Font* GetFont(const std::string& fileName);
-    
-    const std::vector<class UIScreen*>& GetUIStack() { return uiStack; }
-    void PushUI(class UIScreen* screen);
-
+    Camera* GetMainCamera() { return mainCamera; }
+    Font* GetFont(const std::string& fileName);
     Actor* GetActorByTag(const std::string& tag);
-
     Renderer* GetRenderer() const { return renderer; }
     PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
     AudioSystem* GetAudioSystem() { return audioSystem; }
@@ -43,7 +39,6 @@ private:
 
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
-    std::vector<class UIScreen*> uiStack;
 
     std::unordered_map<std::string, class Font*> fonts;
     std::unordered_map<std::string, std::string> text;
@@ -53,10 +48,13 @@ private:
     AudioSystem* audioSystem;
     PhysicsWorld* physicsWorld;
 
-    // TODO: Game specific, remove it all later.
-    std::vector<class Asteroid*> asteroids;
+    Camera* mainCamera;
+    Camera* uiCamera;
 
     bool isRunning;
     bool updatingActors;
     Uint32 ticks;
+
+    // TODO: Game specific, remove it all later.
+    std::vector<class Asteroid*> asteroids;
 };

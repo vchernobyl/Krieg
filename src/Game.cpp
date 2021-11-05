@@ -7,7 +7,7 @@
 #include "Random.h"
 #include "Math.h"
 #include "Font.h"
-#include "UIScreen.h"
+#include "Camera.h"
 
 #include <algorithm>
 #include <memory>
@@ -50,6 +50,9 @@ bool Game::Initialize() {
 
     Random::Init();
 
+    mainCamera = new Camera(renderer->GetScreenWidth(), renderer->GetScreenHeight());
+    uiCamera = new Camera(renderer->GetScreenWidth(), renderer->GetScreenHeight());
+
     LoadData();
 
     ticks = SDL_GetTicks();
@@ -79,6 +82,9 @@ void Game::Shutdown() {
 
     physicsWorld->Shutdown();
     delete physicsWorld;
+
+    delete mainCamera;
+    delete uiCamera;
 
     SDL_Quit();
 }
@@ -120,10 +126,6 @@ Font* Game::GetFont(const std::string& fileName) {
         }
         return font;
     }
-}
-
-void Game::PushUI(UIScreen* screen) {
-    uiStack.emplace_back(screen);
 }
 
 Actor* Game::GetActorByTag(const std::string& tag) {
@@ -200,21 +202,12 @@ void Game::UpdateGame() {
 
     audioSystem->Update(deltaTime);
 
-    for (auto ui : uiStack) {
-        if (ui->GetState() == UIScreen::UIState::Active) {
-            ui->Update(deltaTime);
-        }
-    }
+    mainCamera->Update();
+    renderer->SetViewMatrix(mainCamera->GetViewMatrix());
 
-    auto iter = uiStack.begin();
-    while (iter != uiStack.end()) {
-        if ((*iter)->GetState() == UIScreen::UIState::Closing) {
-            delete *iter;
-            iter = uiStack.erase(iter);
-        } else {
-            ++iter;
-        }
-    }
+    uiCamera->SetPosition(Vector2(10.5f, -7.5f));
+    uiCamera->Update();
+    renderer->SetUIViewMatrix(uiCamera->GetViewMatrix());
 }
 
 void Game::DrawGame() {

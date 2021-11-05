@@ -21,6 +21,7 @@ public:
     void Shutdown();
     void UnloadData();
     void Draw();
+
     Texture* GetTexture(const std::string& fileName);
 
     void AddSprite(SpriteComponent* sprite);
@@ -30,6 +31,7 @@ public:
     void RemoveParticles(ParticleEmitterComponent* emitter);
 
     void SetViewMatrix(const Matrix4& view) { this->view = view; }
+    void SetUIViewMatrix(const Matrix4& uiView) { this->uiView = uiView; }
 
     float GetScreenWidth() const { return screenWidth; }
     float GetScreenHeight() const { return screenHeight; }

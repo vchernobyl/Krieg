@@ -21,7 +21,7 @@ public:
     void UpdateActor(float deltaTime) override;
     void ActorInput(const struct InputState& inputState) override;
 private:
-    class CameraComponent* camera;
+    class CameraMovement* cameraMovement;
     class RigidbodyComponent* rigidbody;
 
     Vector2 targetPosition;

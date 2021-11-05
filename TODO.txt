@@ -229,15 +229,21 @@ but the engine code, most likely rendering), I will leave this one slide for now
 As a note - it looks like the SDL_GL_SwapWindow function was the one that was chugging.
 30. Add basic shooting. [DONE]
 31. Add basic font rendering. [DONE]
-32. Add textual debug info on the screen.
-33. Launch projectiles at selected enemies only.
-34. Untabify all source files. [DONE]
-35. Remove the `Component` suffix from all the component classes.
-36. Get main camera from the game/renderer. [IN PROGRESS]
+32. Untabify all source files. [DONE]
+
+November:
+---------
+1. Draw text in screen space. [DONE]
 We can use two sprite batches - one for regular sprites and another one for UI.
 This way each sprite batch would have it's own view matrix. This will allow for sprites
 to be drawn however we want, UI elements would be drawn in screen space, but regular sprites
 would be drawn in world space (given a world matrix).
+2. Launch projectiles at selected enemies only.
+3. Add textual debug info on the screen. [DONE]. For this we need a support for a more `dynamic`
+font because the text is going to be changing rapidly per frame, and we shouldn't create text texture
+every frame. Bitmap font could be a potential solution.
+4. Remove the `Component` suffix from all the component classes.
+5. Select targetable component actors with mouse click. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

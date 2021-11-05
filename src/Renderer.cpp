@@ -7,7 +7,6 @@
 #include "DebugRenderer.h"
 #include "DebugUI.h"
 #include "Shader.h"
-#include "UIScreen.h"
 #include "Assert.h"
 #include "Camera.h"
 
@@ -74,14 +73,13 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 
     debugUI = new DebugUI();
 
+    // auto projection= Matrix4::CreateSimpleViewProjection(screenWidth / 32.0f, screenHeight / 32.0f);
+    // view = projection;
+    // uiView = projection;
+
     spriteBatch.Initialize();
     uiSpriteBatch.Initialize();
     DebugRenderer::Initialize();
-
-    Camera uiCam(screenWidth, screenHeight);
-    uiCam.SetPosition(Vector2(10.0f, -7.0f));
-    uiCam.Update();
-    uiView = uiCam.GetViewMatrix();
 
     return true;
 }
@@ -133,9 +131,11 @@ void Renderer::Draw() {
 
     uiShader->SetActive();
     uiShader->SetMatrixUniform("uViewProjection", uiView);
-
+ 
     uiSpriteBatch.Begin();
+
     debugUI->Draw(uiSpriteBatch);
+
     uiSpriteBatch.End();
     uiSpriteBatch.DrawBatch();
 
