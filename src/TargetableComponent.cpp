@@ -1,10 +1,13 @@
 #include "TargetableComponent.h"
 #include "Actor.h"
+#include "RigidbodyComponent.h"
 #include "SpriteComponent.h"
 #include "Renderer.h"
 #include "Texture.h"
 #include "InputSystem.h"
 #include "Game.h"
+#include "PhysicsWorld.h"
+#include "Camera.h"
 
 TargetableComponent::TargetableComponent(Actor* owner) : Component(owner) {
     sprite = new SpriteComponent(owner, 300);
@@ -14,11 +17,14 @@ TargetableComponent::TargetableComponent(Actor* owner) : Component(owner) {
 
 void TargetableComponent::ProcessInput(const InputState& inputState) {
     if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
-        // What we want to achieve here is following:
-        // auto cam = owner->GetGame()->GetRenderer()->GetMainCamera();
-        // After that use camera to get the world point.
+        auto camera = owner->GetGame()->GetMainCamera();
+        auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());
+        auto selectedRigidbody = owner->GetGame()->GetPhysicsWorld()->GetRigidbodyAt(worldPoint);
 
-        isSelected = !isSelected;
-        sprite->SetEnabled(isSelected);
+        // TODO: There has got to be a better way to know if an actor has been clicked on.
+        if (selectedRigidbody == owner->GetComponent<RigidbodyComponent>()) {
+            isSelected = !isSelected;
+            sprite->SetEnabled(isSelected);
+        }
     }
 }
