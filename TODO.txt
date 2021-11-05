@@ -238,12 +238,14 @@ We can use two sprite batches - one for regular sprites and another one for UI.
 This way each sprite batch would have it's own view matrix. This will allow for sprites
 to be drawn however we want, UI elements would be drawn in screen space, but regular sprites
 would be drawn in world space (given a world matrix).
-2. Launch projectiles at selected enemies only.
+2. Launch projectiles at selected enemies only. [IN PROGRESS]
 3. Add textual debug info on the screen. [DONE]. For this we need a support for a more `dynamic`
 font because the text is going to be changing rapidly per frame, and we shouldn't create text texture
 every frame. Bitmap font could be a potential solution.
 4. Remove the `Component` suffix from all the component classes.
-5. Select targetable component actors with mouse click. [IN PROGRESS]
+5. Select targetable component actors with mouse click. [DONE]
+6. Selection of actors can be simplified. Currently only components with rigidbody can be selected,
+which does not make sense. We need some sort of bounding box over every entity with sprite as well.
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
