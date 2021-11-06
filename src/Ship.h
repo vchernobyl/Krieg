@@ -4,29 +4,16 @@
 #include "Math.h"
 #include <vector>
 
-class Rocket : public Actor {
-public:
-    Rocket(class Game* game);
-    void UpdateActor(float deltaTime) override;
-    void OnBeginContact(const struct Contact& contact) override;
-    void Launch(const Vector2& direction);
-private:
-    class SpriteComponent* sprite;
-    class RigidbodyComponent* rb;
-    float lifetime = 10.0f;
-};
-
 class Ship : public Actor {
 public:
     Ship(class Game* game);
     void UpdateActor(float deltaTime) override;
     void ActorInput(const struct InputState& inputState) override;
 private:
-    class CameraMovement* cameraMovement;
-    class RigidbodyComponent* rigidbody;
+    class CameraMovement* cameraMovement = nullptr;
+    class RigidbodyComponent* rigidbody = nullptr;
+    class RocketLauncher* rocketLauncher = nullptr;
 
     Vector2 moveTargetPosition;
     Vector2 direction = Vector2::Right;
-
-    std::vector<class TargetableComponent*> targets;
 };

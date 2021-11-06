@@ -2,12 +2,13 @@
 
 #include "Component.h"
 
-class TargetableComponent : public Component {
+class Targetable : public Component {
 public:
-    TargetableComponent(class Actor* owner);
-    void ProcessInput(const struct InputState& inputState) override;
+    Targetable(class Actor* owner);
+    void Select();
     bool IsSelected() const { return isSelected; }
 private:
     class SpriteComponent* sprite = nullptr;
+    class ColliderComponent* collider = nullptr;
     bool isSelected = false;
 };
