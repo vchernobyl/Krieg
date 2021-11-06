@@ -16,13 +16,16 @@ public:
     static void DrawBox(const Vector4& dst, float angle, const Vector4& color = Color::Green);
     static void DrawCircle(const Vector2& center, float radius, const Vector4& color = Color::Green);
     static void DrawLine(const Vector2& from, const Vector2& to, const Vector4& color = Color::Green);
-    static void Draw(const Matrix4& projectionMatrix, float lineWidth);
     
 private:
+    friend class Renderer;
+
     struct DebugVertex {
         Vector2 position;
         Vector4 color;
     };
+
+    static void Draw(const Matrix4& projectionMatrix, float lineWidth);
 
     static Shader shader;
     static std::vector<DebugVertex> vertices;

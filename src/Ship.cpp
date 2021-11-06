@@ -55,7 +55,7 @@ Ship::Ship(Game* game) : Actor(game) {
 }
 
 void Ship::UpdateActor(float deltaTime) {
-    if (Vector2::Distance(GetPosition(), targetPosition) < 0.01f) {
+    if (Vector2::Distance(GetPosition(), moveTargetPosition) < 0.01f) {
         rigidbody->SetVelocity(Vector2::Zero);
     } else {
         const auto movementSpeed = 250.0f;
@@ -71,9 +71,9 @@ void Ship::UpdateActor(float deltaTime) {
 
 void Ship::ActorInput(const InputState& inputState) {
     if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_LEFT)) {
-        targetPosition = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
-        direction = Vector2::Normalize(targetPosition - GetPosition());
-        DebugRenderer::DrawCircle(targetPosition, 0.1f, Color::Red);
+        moveTargetPosition = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
+        direction = Vector2::Normalize(moveTargetPosition - GetPosition());
+        DebugRenderer::DrawCircle(moveTargetPosition, 0.1f, Color::Red);
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
@@ -81,15 +81,5 @@ void Ship::ActorInput(const InputState& inputState) {
         rocket->SetPosition(GetPosition());
         rocket->SetRotation(GetRotation());
         rocket->Launch(direction);
-    }
-
-    if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
-        // auto physics = GetGame()->GetPhysicsWorld();
-        // auto worldPos = camera->ScreenToWorld(inputState.Mouse.GetPosition());
-        // if (auto rb = physics->GetRigidbodyAt(worldPos)) {
-        //     if (auto enemy = dynamic_cast<Enemy*>(rb->GetOwner())) {
-        //         enemy->Select();
-        //     }
-        // }
     }
 }

@@ -21,10 +21,17 @@ void TargetableComponent::ProcessInput(const InputState& inputState) {
         auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());
         auto selectedRigidbody = owner->GetGame()->GetPhysicsWorld()->GetRigidbodyAt(worldPoint);
 
-        // TODO: There has got to be a better way to know if an actor has been clicked on.
+        // There is another way to know if an actor has been clicked on.
+        // We could use sprite bounds, but then the selectable area would be larger than the
+        // body and wouldn't be as precise. For now this is working pretty good though.
         if (selectedRigidbody == owner->GetComponent<RigidbodyComponent>()) {
             isSelected = !isSelected;
             sprite->SetEnabled(isSelected);
+            if (isSelected) {
+                owner->SetTag("Target");
+            } else {
+                owner->SetTag("");
+            }
         }
     }
 }

@@ -245,7 +245,8 @@ every frame. Bitmap font could be a potential solution.
 4. Remove the `Component` suffix from all the component classes.
 5. Select targetable component actors with mouse click. [DONE]
 6. Selection of actors can be simplified. Currently only components with rigidbody can be selected,
-which does not make sense. We need some sort of bounding box over every entity with sprite as well.
+which does not make sense. We need some sort of bounding box over every entity
+with sprite as well. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

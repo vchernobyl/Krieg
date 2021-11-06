@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include "Math.h"
+#include <vector>
 
 class Rocket : public Actor {
 public:
@@ -24,6 +25,8 @@ private:
     class CameraMovement* cameraMovement;
     class RigidbodyComponent* rigidbody;
 
-    Vector2 targetPosition;
+    Vector2 moveTargetPosition;
     Vector2 direction = Vector2::Right;
+
+    std::vector<class TargetableComponent*> targets;
 };
