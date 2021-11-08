@@ -11,11 +11,12 @@
 #include <cassert>
 
 Enemy::Enemy(Game* game) : Actor(game) {
+    SetScale(0.75f);
+
     auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
-    sprite->SetColor(Color::Red);
 
-    auto collider = new CircleColliderComponent(this, 0.5f);
+    auto collider = new CircleColliderComponent(this, 0.5f * GetScale());
     collider->SetCollisionFilter(CollisionCategory::Enemy);
     rigidbody = collider->GetAttachedRigidbody();
     followTarget = game->GetActorByTag("Player");

@@ -11,6 +11,7 @@ public:
     void Draw(class SpriteBatch& spriteBatch);
     void SetTexture(class Texture* texture);
     void SetColor(const Vector4& color) { this->color = color; }
+    const Vector4& GetColor() const { return color; }
 
     int GetDrawOrder() const { return drawOrder; }
     int GetTextureWidth() const { return textureWidth; }

@@ -251,6 +251,7 @@ the fixture, which makes the selection not precise. [WON'T DO]
 7. Automatically shoot at selected targets with specific fire rate. [DONE]
 8. Destroy targets after taking some damage. [DONE]
 9. Remove target from rocket launcher list when it is destroyed. [DONE]
+10. Make damageable actors to flash the sprite when damaged. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
