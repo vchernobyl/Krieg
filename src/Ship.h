@@ -13,6 +13,7 @@ private:
     class CameraMovement* cameraMovement = nullptr;
     class RigidbodyComponent* rigidbody = nullptr;
     class RocketLauncher* rocketLauncher = nullptr;
+    class ParticleComponent* emitter = nullptr;
 
     Vector2 moveTargetPosition;
     Vector2 direction = Vector2::Right;

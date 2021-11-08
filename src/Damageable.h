@@ -15,4 +15,5 @@ private:
     int flashFrames = 0;
     Vector4 originalColor;
     class SpriteComponent* ownerSprite = nullptr;
+    class ParticleComponent* particleEmitter = nullptr;
 };

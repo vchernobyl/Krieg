@@ -1,5 +1,6 @@
-#include "ParticleEmitterComponent.h"
+#include "ParticleComponent.h"
 #include "Renderer.h"
+#include "SpriteBatch.h"
 #include "Random.h"
 #include "Texture.h"
 #include "Actor.h"
@@ -7,7 +8,7 @@
 
 const size_t MaxParticles = 1000;
 
-ParticleEmitterComponent::ParticleEmitterComponent(Actor* owner, int drawOrder)
+ParticleComponent::ParticleComponent(Actor* owner, int drawOrder)
     : Component(owner, drawOrder),
       particlePool(MaxParticles),
       texture(nullptr),
@@ -15,11 +16,11 @@ ParticleEmitterComponent::ParticleEmitterComponent(Actor* owner, int drawOrder)
     owner->GetGame()->GetRenderer()->AddParticles(this);
 }
 
-ParticleEmitterComponent::~ParticleEmitterComponent() {
+ParticleComponent::~ParticleComponent() {
     owner->GetGame()->GetRenderer()->RemoveParticles(this);
 }
 
-void ParticleEmitterComponent::Update(float deltaTime) {
+void ParticleComponent::Update(float deltaTime) {
     if (!isRunning) return;
     
     int inactive = 0;
@@ -48,10 +49,22 @@ void ParticleEmitterComponent::Update(float deltaTime) {
     }
 }
 
-void ParticleEmitterComponent::Draw(Renderer* renderer) {
+void ParticleComponent::Draw(SpriteBatch& spriteBatch) {
+    for (auto& particle : particlePool) {
+        if (!particle.active) continue;
+
+        auto t = 1.0f - particle.lifeRemaining / particle.lifeTime;
+        auto size = Math::Lerp(particle.sizeBegin, particle.sizeEnd, t);
+        auto dest = Vector4(particle.position.x, particle.position.y, size, size);
+
+        auto uv = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
+
+        auto color = Vector4::Lerp(particle.colorBegin, particle.colorEnd, t);
+        spriteBatch.Draw(dest, uv, texture->GetID(), GetDrawOrder(), color);
+    }
 }
 
-void ParticleEmitterComponent::Emit(const ParticleProps& props, int amount) {
+void ParticleComponent::Emit(const ParticleProps& props, int amount) {
     isRunning = true;
 
     for (int i = 0; i < amount; i++) {
@@ -68,8 +81,8 @@ void ParticleEmitterComponent::Emit(const ParticleProps& props, int amount) {
         particle.colorBegin = props.colorBegin;
         particle.colorEnd = props.colorEnd;
 
-        particle.lifetime = props.lifetime;
-        particle.lifeRemaining = props.lifetime;
+        particle.lifeTime = props.lifeTime;
+        particle.lifeRemaining = props.lifeTime;
         particle.sizeBegin = props.sizeBegin + props.sizeVariation * (Random::GetFloat() - 0.5f);
         particle.sizeEnd = props.sizeEnd;
 

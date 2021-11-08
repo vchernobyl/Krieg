@@ -12,22 +12,21 @@ struct ParticleProps {
     Vector4 colorBegin, colorEnd;
     float sizeBegin, sizeEnd, sizeVariation;
     float rotationBegin, rotationSpeed;
-    float lifetime = 1.0f;
+    float lifeTime = 1.0f;
 };
 
 class Actor;
 class Renderer;
 class Texture;
 
-// TODO: Probably need to rename to ParticleComponent.
 // TODO: Convert to OpenGL.
-class ParticleEmitterComponent : public Component {
+class ParticleComponent : public Component {
 public:
-    ParticleEmitterComponent(Actor* owner, int drawOrder = 200);
-    ~ParticleEmitterComponent();
+    ParticleComponent(Actor* owner, int drawOrder = 200);
+    ~ParticleComponent();
 
     void Update(float deltaTime) override;
-    void Draw(Renderer* renderer);
+    void Draw(class SpriteBatch& spriteBatch);
 
     void Emit(const ParticleProps& props, int amount);
 
@@ -43,7 +42,7 @@ private:
         float rotation = 0.0f;
         float rotationSpeed = 0.0f;
         float sizeBegin, sizeEnd;
-        float lifetime = 1.0f;
+        float lifeTime = 1.0f;
         float lifeRemaining = 0.0f;
         bool active = false;
     };

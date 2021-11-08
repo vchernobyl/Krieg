@@ -29,12 +29,12 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    auto direction = followTarget->GetPosition() - GetPosition();
-    direction.Normalize();
+    // auto direction = followTarget->GetPosition() - GetPosition();
+    // direction.Normalize();
 
-    const auto movementSpeed = 50.0f;
-    rigidbody->SetVelocity(direction * movementSpeed * deltaTime);
-    SetRotation(Math::Atan2(direction.y, direction.x));
+    // const auto movementSpeed = 50.0f;
+    // rigidbody->SetVelocity(direction * movementSpeed * deltaTime);
+    // SetRotation(Math::Atan2(direction.y, direction.x));
 
-    DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Red);
+    // DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Red);
 }

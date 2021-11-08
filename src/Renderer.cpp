@@ -3,7 +3,7 @@
 #include "SpriteBatch.h"
 #include "Game.h"
 #include "Texture.h"
-#include "ParticleEmitterComponent.h"
+#include "ParticleComponent.h"
 #include "DebugRenderer.h"
 #include "DebugUI.h"
 #include "Shader.h"
@@ -126,6 +126,10 @@ void Renderer::Draw() {
         }
     }
 
+    for (auto emitter : particles) {
+        emitter->Draw(spriteBatch);
+    }
+
     spriteBatch.End();
     spriteBatch.DrawBatch();
 
@@ -172,11 +176,11 @@ void Renderer::RemoveSprite(SpriteComponent* sprite) {
     }
 }
 
-void Renderer::AddParticles(ParticleEmitterComponent* emitter) {
+void Renderer::AddParticles(ParticleComponent* emitter) {
     particles.push_back(emitter);
 }
 
-void Renderer::RemoveParticles(ParticleEmitterComponent* emitter) {
+void Renderer::RemoveParticles(ParticleComponent* emitter) {
     auto iter = std::find(particles.begin(), particles.end(), emitter);
     if (iter != particles.end()) {
         particles.erase(iter);
