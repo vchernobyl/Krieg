@@ -259,6 +259,7 @@ the fixture, which makes the selection not precise. [WON'T DO]
   13.2. Add support for particle positions following the owner. [DONE]
   13.3. Add support for looping and non-looping emissions. [DONE]
         (Looping via `Start` function, non-looping via `Emit` function)
+14. Emit particles at the center of the owner. [DONE]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

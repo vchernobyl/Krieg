@@ -24,12 +24,12 @@ Rocket::Rocket(Game* game, RocketLauncher* rocketLauncher) : Actor(game) {
     rb = collider->GetAttachedRigidbody();
     rb->SetBullet(true);
 
-    trailEmitter = new ParticleComponent(this);
+    trailEmitter = new ParticleComponent(this, sprite->GetDrawOrder() - 1);
     trailEmitter->SetTexture(GetGame()->GetRenderer()->GetTexture("data/textures/Particle.png"));
 
     ParticleProps trailProps;
-    trailProps.colorBegin = Color::White;
-    trailProps.colorEnd = Vector4(0.66f, 0.66f, 0.66f, 0.0f);
+    trailProps.colorBegin = Color::Red;
+    trailProps.colorEnd = Vector4(1.0f, 0.0f, 0.0f, 0.0f);
     trailProps.sizeBegin = Random::GetFloatRange(0.10f, 0.15f);
     trailProps.sizeEnd = 0.0f;
     trailProps.rotationBegin = 0.0f;

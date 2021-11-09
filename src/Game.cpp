@@ -237,28 +237,24 @@ void Game::LoadData() {
         new Asteroid(this);
     }
 
-    auto actor = new Actor(this);
-    auto emitter = new ParticleComponent(actor);
-    emitter->SetTexture(renderer->GetTexture("data/textures/Particle.png"));
+    // auto actor = new Actor(this);
+    // auto emitter = new ParticleComponent(actor);
+    // emitter->SetTexture(renderer->GetTexture("data/textures/Particle.png"));
 
-    ParticleProps trailProps;
-    trailProps.position = Vector2(2.5f, 1.2f);
-    trailProps.velocity = Vector2::One;
-    trailProps.colorBegin = Color::White;
-    trailProps.colorEnd = Color::Red;
-    trailProps.sizeBegin = 0.35f;
-    trailProps.sizeEnd = 0.0f;
-    trailProps.sizeVariation = 0.0f;
-    trailProps.rotationBegin = 0.0f;
-//    trailProps.rotationSpeed = Random::GetFloatRange(0.35f, 2.2f);
-    trailProps.lifeTime = 1.25f;
+    // ParticleProps trailProps;
+    // trailProps.position = Vector2(2.5f, 1.2f);
+    // trailProps.velocity = Vector2::One;
+    // trailProps.colorBegin = Color::White;
+    // trailProps.colorEnd = Color::Red;
+    // trailProps.sizeBegin = 0.35f;
+    // trailProps.sizeEnd = 0.0f;
+    // trailProps.sizeVariation = 0.0f;
+    // trailProps.rotationBegin = 0.0f;
+    // trailProps.lifeTime = 1.25f;
 
     // emitter->SetProps(trailProps);
-    // emitter->SetMaxParticles(1000);
-    // emitter->SetEmissionRate(300.0f); // Amount per second.
-    emitter->SetProps(trailProps);
-    emitter->SetEmissionRate(3.0f);
-    emitter->Start();
+    // emitter->SetEmissionRate(3.0f);
+    // emitter->Start();
 }
 
 void Game::UnloadData() {

@@ -52,7 +52,11 @@ void ParticleComponent::Draw(SpriteBatch& spriteBatch) {
 
         auto t = 1.0f - particle.lifeRemaining / particle.lifeTime;
         auto size = Math::Lerp(particle.sizeBegin, particle.sizeEnd, t);
-        auto dest = Vector4(particle.position.x, particle.position.y, size, size);
+
+        // Draw the particle at the center of the position.
+        auto dest = Vector4(particle.position.x - size / 2.0f,
+                            particle.position.y - size / 2.0f,
+                            size, size);
 
         auto uv = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
@@ -64,10 +68,12 @@ void ParticleComponent::Draw(SpriteBatch& spriteBatch) {
 void ParticleComponent::Emit(const ParticleProps& props, int amount) {
     isRunning = true;
 
+    auto position = owner->GetPosition();
+
     for (int i = 0; i < amount; i++) {
         Particle& particle = particlePool[poolIndex];
         particle.active = true;
-        particle.position = owner->GetPosition();
+        particle.position = position;
         particle.rotation = props.rotationBegin;
         particle.rotationSpeed = props.rotationSpeed;
 

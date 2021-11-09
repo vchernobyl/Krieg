@@ -36,8 +36,8 @@ void Damageable::Damage(int amount) {
     props.position = owner->GetPosition();
     props.velocity = Random::GetVector(Vector2(-1.0f, -1.0f), Vector2(1.0f, 1.0f));
     props.velocityVariation = Vector2(0.5f, 0.5f);
-    props.colorBegin = Color::White;
-    props.colorEnd = Color::White;
+    props.colorBegin = Color::Red;
+    props.colorEnd = Vector4(1.0f, 0.0f, 0.0f, 0.0f);
     props.sizeBegin = 0.15f;
     props.sizeEnd = 0.0f;
     props.sizeVariation = 0.0f;
