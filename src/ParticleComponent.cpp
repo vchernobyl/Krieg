@@ -61,7 +61,7 @@ void ParticleComponent::Draw(SpriteBatch& spriteBatch) {
         auto uv = Vector4(0.0f, 0.0f, 1.0f, 1.0f);
 
         auto color = Vector4::Lerp(particle.colorBegin, particle.colorEnd, t);
-        spriteBatch.Draw(dest, uv, texture->GetID(), GetDrawOrder(), color);
+        spriteBatch.Draw(dest, uv, texture->GetID(), GetDrawOrder(), color, particle.rotation);
     }
 }
 
