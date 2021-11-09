@@ -2,9 +2,7 @@
 
 #include "Math.h"
 #include "Component.h"
-
 #include <vector>
-#include <functional>
 
 struct ParticleProps {
     Vector2 position;
@@ -35,7 +33,6 @@ public:
     void SetTexture(Texture* texture) { this->texture = texture; }
     void SetProps(const ParticleProps& props) { this->props = props; }
     void SetEmissionRate(float emissionRate) { this->emissionRate = emissionRate; }
-    void SetOnEmissionEnd(std::function<void(void)> onEmissionEnd) { this->onEmissionEnd = onEmissionEnd; }
 
     int GetDrawOrder() const { return drawOrder; }
 private:
@@ -59,7 +56,6 @@ private:
     int drawOrder;
 
     bool isRunning = false;
-    std::function<void(void)> onEmissionEnd;
 
     ParticleProps props;
     float emissionRate = 3.0f;

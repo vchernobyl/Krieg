@@ -23,16 +23,15 @@ ParticleComponent::~ParticleComponent() {
 void ParticleComponent::Update(float deltaTime) {
     time += deltaTime;
 
-    int inactive = 0;
-
     if (time >= 1.0f / emissionRate) {
-        Emit(props, 1);
-        time = 0.0f;
+        if (isRunning) {
+            Emit(props, 1);
+            time = 0.0f;
+        }
     }
 
     for (auto& particle : particlePool) {
         if (!particle.active) {
-            inactive++;
             continue;
         }
 
@@ -44,13 +43,6 @@ void ParticleComponent::Update(float deltaTime) {
         particle.lifeRemaining -= deltaTime;
         particle.position += particle.velocity * deltaTime;
         particle.rotation += particle.rotationSpeed * deltaTime;
-    }
-
-    if (isRunning && inactive == MaxParticles) {
-        isRunning = false;
-        if (onEmissionEnd) {
-            onEmissionEnd();
-        }
     }
 }
 
@@ -70,7 +62,7 @@ void ParticleComponent::Draw(SpriteBatch& spriteBatch) {
 }
 
 void ParticleComponent::Emit(const ParticleProps& props, int amount) {
-    if (!isRunning) return;
+    isRunning = true;
 
     for (int i = 0; i < amount; i++) {
         Particle& particle = particlePool[poolIndex];

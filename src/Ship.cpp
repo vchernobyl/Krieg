@@ -33,9 +33,9 @@ Ship::Ship(Game* game) : Actor(game) {
     ParticleProps trailProps;
     trailProps.velocity = Vector2::Zero;
     trailProps.colorBegin = Color::White;
-    trailProps.colorEnd = Vector4(0.66f, 0.66f, 0.66f, 1.0f);
-    trailProps.sizeBegin = Random::GetFloatRange(0.25f, 0.35f);
-    trailProps.sizeEnd = Random::GetFloatRange(0.1f, 0.15f);
+    trailProps.colorEnd = Vector4(0.66f, 0.66f, 0.66f, 0.0f);
+    trailProps.sizeBegin = Random::GetFloatRange(0.15f, 0.25f);
+    trailProps.sizeEnd = 0.0f;
     trailProps.sizeVariation = 0.15f;
     trailProps.rotationBegin = 0.0f;
     trailProps.rotationSpeed = Random::GetFloatRange(0.35f, 2.2f);

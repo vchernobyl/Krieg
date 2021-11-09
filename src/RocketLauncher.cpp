@@ -1,6 +1,7 @@
 #include "RocketLauncher.h"
 #include "Game.h"
 #include "SpriteComponent.h"
+#include "ParticleComponent.h"
 #include "Renderer.h"
 #include "Texture.h"
 #include "RigidbodyComponent.h"
@@ -23,17 +24,21 @@ Rocket::Rocket(Game* game, RocketLauncher* rocketLauncher) : Actor(game) {
     rb = collider->GetAttachedRigidbody();
     rb->SetBullet(true);
 
-    // trailEmitter = new ParticleComponent(this);
-    // trailEmitter->SetTexture(GetGame()->GetRenderer()->GetTexture("data/textures/Particle.png"));
+    trailEmitter = new ParticleComponent(this);
+    trailEmitter->SetTexture(GetGame()->GetRenderer()->GetTexture("data/textures/Particle.png"));
 
-    // trailProps.colorBegin = Color::White;
-    // trailProps.colorEnd = Vector4(0.66f, 0.66f, 0.66f, 1.0f);
-    // trailProps.sizeBegin = Random::GetFloatRange(0.25f, 0.35f);
-    // trailProps.sizeEnd = Random::GetFloatRange(0.1f, 0.15f);
-    // trailProps.sizeVariation = 0.15f;
-    // trailProps.rotationBegin = 0.0f;
-    // trailProps.rotationSpeed = Random::GetFloatRange(0.35f, 2.2f);
-    // trailProps.lifeTime = 1.25f;
+    ParticleProps trailProps;
+    trailProps.colorBegin = Color::White;
+    trailProps.colorEnd = Vector4(0.66f, 0.66f, 0.66f, 0.0f);
+    trailProps.sizeBegin = Random::GetFloatRange(0.10f, 0.15f);
+    trailProps.sizeEnd = 0.0f;
+    trailProps.rotationBegin = 0.0f;
+    trailProps.rotationSpeed = Random::GetFloatRange(0.35f, 2.2f);
+    trailProps.lifeTime = 0.55f;
+
+    trailEmitter->SetProps(trailProps);
+    trailEmitter->SetEmissionRate(45.0f);
+    trailEmitter->Start();
 }
 
 void Rocket::UpdateActor(float deltaTime) {
