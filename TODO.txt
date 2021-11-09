@@ -252,7 +252,13 @@ the fixture, which makes the selection not precise. [WON'T DO]
 8. Destroy targets after taking some damage. [DONE]
 9. Remove target from rocket launcher list when it is destroyed. [DONE]
 10. Make damageable actors to flash the sprite when damaged. [DONE]
-11. Make particles work with OpenGL. [IN PROGRESS]
+11. Make particles work with OpenGL. [DONE]
+12. Add basic particles when dealing damage. [IN PROGRESS]
+13. Refactor particle emitter. [IN PROGRESS]
+  13.1. Add support for emission rate. [DONE]
+  13.2. Add support for particle positions following the owner. [DONE]
+  13.3. Add support for looping and non-looping emissions.
+  13.4. Add support for emission position variation.
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

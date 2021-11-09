@@ -29,8 +29,12 @@ public:
     void Draw(class SpriteBatch& spriteBatch);
 
     void Emit(const ParticleProps& props, int amount);
+    void Start() { isRunning = true; }
+    void Stop() { isRunning = false; }
 
     void SetTexture(Texture* texture) { this->texture = texture; }
+    void SetProps(const ParticleProps& props) { this->props = props; }
+    void SetEmissionRate(float emissionRate) { this->emissionRate = emissionRate; }
     void SetOnEmissionEnd(std::function<void(void)> onEmissionEnd) { this->onEmissionEnd = onEmissionEnd; }
 
     int GetDrawOrder() const { return drawOrder; }
@@ -56,4 +60,8 @@ private:
 
     bool isRunning = false;
     std::function<void(void)> onEmissionEnd;
+
+    ParticleProps props;
+    float emissionRate = 3.0f;
+    float time = 0.0f;
 };

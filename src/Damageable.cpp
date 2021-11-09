@@ -32,19 +32,19 @@ void Damageable::Damage(int amount) {
     flashFrames = 8;
     health -= amount;
     
-    ParticleProps props;
-    props.position = owner->GetPosition();
-    props.velocity = Random::GetVector(Vector2(-1.0f, -1.0f), Vector2(1.0f, 1.0f));
-    props.velocityVariation = Vector2(0.5f, 0.5f);
-    props.colorBegin = Color::White;
-    props.colorEnd = Color::White;
-    props.sizeBegin = 2.0f / 64.0f;
-    props.sizeEnd = 0.0f;
-    props.sizeVariation = 0.0f;
-    props.rotationBegin = 0.0f;
-    props.rotationSpeed = 2.0f;
+    // ParticleProps props;
+    // props.position = owner->GetPosition();
+    // props.velocity = Random::GetVector(Vector2(-1.0f, -1.0f), Vector2(1.0f, 1.0f));
+    // props.velocityVariation = Vector2(0.5f, 0.5f);
+    // props.colorBegin = Color::White;
+    // props.colorEnd = Color::White;
+    // props.sizeBegin = 2.0f / 64.0f;
+    // props.sizeEnd = 0.0f;
+    // props.sizeVariation = 0.0f;
+    // props.rotationBegin = 0.0f;
+    // props.rotationSpeed = 2.0f;
 
-    particleEmitter->Emit(props, 200);
+    // particleEmitter->Emit(props, 200);
 
     if (health <= 0) {
         GetOwner()->SetState(Actor::State::Dead);

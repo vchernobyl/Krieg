@@ -21,10 +21,15 @@ ParticleComponent::~ParticleComponent() {
 }
 
 void ParticleComponent::Update(float deltaTime) {
-    if (!isRunning) return;
-    
+    time += deltaTime;
+
     int inactive = 0;
-    
+
+    if (time >= 1.0f / emissionRate) {
+        Emit(props, 1);
+        time = 0.0f;
+    }
+
     for (auto& particle : particlePool) {
         if (!particle.active) {
             inactive++;
@@ -65,12 +70,12 @@ void ParticleComponent::Draw(SpriteBatch& spriteBatch) {
 }
 
 void ParticleComponent::Emit(const ParticleProps& props, int amount) {
-    isRunning = true;
+    if (!isRunning) return;
 
     for (int i = 0; i < amount; i++) {
         Particle& particle = particlePool[poolIndex];
         particle.active = true;
-        particle.position = props.position;
+        particle.position = owner->GetPosition();
         particle.rotation = props.rotationBegin;
         particle.rotationSpeed = props.rotationSpeed;
 

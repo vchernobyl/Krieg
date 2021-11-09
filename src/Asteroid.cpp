@@ -24,5 +24,5 @@ Asteroid::Asteroid(Game* game) : Actor(game) {
     collider->SetCollisionFilter(CollisionCategory::Ground);
 
     new Targetable(this);
-    new Damageable(this, 200);
+    new Damageable(this, 150);
 }

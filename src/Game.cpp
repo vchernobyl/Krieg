@@ -14,6 +14,7 @@
 
 // Game specific, remove later.
 #include "SpriteComponent.h"
+#include "ParticleComponent.h"
 #include "Asteroid.h"
 #include "Ship.h"
 #include "Enemy.h"
@@ -175,6 +176,12 @@ void Game::UpdateGame() {
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
 
+    static int count = 0;
+    if (count++ == 30) {
+        SDL_Log("fps: %d", static_cast<int>(1.0f / deltaTime));
+        count = 0;
+    }
+
     physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.
 
     updatingActors = true;
@@ -229,6 +236,29 @@ void Game::LoadData() {
     for (int i = 0; i < numAsteroids; i++) {
         new Asteroid(this);
     }
+
+    auto actor = new Actor(this);
+    auto emitter = new ParticleComponent(actor);
+    emitter->SetTexture(renderer->GetTexture("data/textures/Particle.png"));
+
+    ParticleProps trailProps;
+    trailProps.position = Vector2(2.5f, 1.2f);
+    trailProps.velocity = Vector2::One;
+    trailProps.colorBegin = Color::White;
+    trailProps.colorEnd = Color::Red;
+    trailProps.sizeBegin = 0.35f;
+    trailProps.sizeEnd = 0.0f;
+    trailProps.sizeVariation = 0.0f;
+    trailProps.rotationBegin = 0.0f;
+//    trailProps.rotationSpeed = Random::GetFloatRange(0.35f, 2.2f);
+    trailProps.lifeTime = 1.25f;
+
+    // emitter->SetProps(trailProps);
+    // emitter->SetMaxParticles(1000);
+    // emitter->SetEmissionRate(300.0f); // Amount per second.
+    emitter->SetProps(trailProps);
+    emitter->SetEmissionRate(3.0f);
+    emitter->Start();
 }
 
 void Game::UnloadData() {

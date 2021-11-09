@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include <vector>
+#include "ParticleComponent.h"
 
 class Rocket : public Actor {
 public:
@@ -13,6 +14,9 @@ private:
     class SpriteComponent* sprite = nullptr;
     class RigidbodyComponent* rb = nullptr;
     class RocketLauncher* rocketLauncher = nullptr;
+
+    ParticleComponent* trailEmitter = nullptr;
+    ParticleProps trailProps;
 
     float lifetime = 10.0f;
     int damage = 35;

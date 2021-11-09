@@ -52,6 +52,10 @@ public:
     void AddComponent(Component* component);
     void RemoveComponent(Component* component);
 
+    // TODO:: Add `void BeginContact(Contact&)` which will be called from physics world on contact.
+    // This guy will first notify all of the components about the contact,
+    // and notify the actor about the contact as well.
+    // Very similar to how we process the input state.
     virtual void OnBeginContact(const struct Contact& contact) {}
 
     template <typename T> T* GetComponent() {

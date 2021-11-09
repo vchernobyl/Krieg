@@ -7,6 +7,7 @@
 #include "CircleColliderComponent.h"
 #include "Ship.h"
 #include "Damageable.h"
+#include "Random.h"
 
 Rocket::Rocket(Game* game, RocketLauncher* rocketLauncher) : Actor(game) {
     this->rocketLauncher = rocketLauncher;
@@ -18,19 +19,34 @@ Rocket::Rocket(Game* game, RocketLauncher* rocketLauncher) : Actor(game) {
     collider->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Enemy |
                                  CollisionCategory::Ground);
     collider->SetIsSensor(true);
+
     rb = collider->GetAttachedRigidbody();
+    rb->SetBullet(true);
+
+    // trailEmitter = new ParticleComponent(this);
+    // trailEmitter->SetTexture(GetGame()->GetRenderer()->GetTexture("data/textures/Particle.png"));
+
+    // trailProps.colorBegin = Color::White;
+    // trailProps.colorEnd = Vector4(0.66f, 0.66f, 0.66f, 1.0f);
+    // trailProps.sizeBegin = Random::GetFloatRange(0.25f, 0.35f);
+    // trailProps.sizeEnd = Random::GetFloatRange(0.1f, 0.15f);
+    // trailProps.sizeVariation = 0.15f;
+    // trailProps.rotationBegin = 0.0f;
+    // trailProps.rotationSpeed = Random::GetFloatRange(0.35f, 2.2f);
+    // trailProps.lifeTime = 1.25f;
 }
 
 void Rocket::UpdateActor(float deltaTime) {
     lifetime -= deltaTime;
     if (lifetime <= 0.0f) {
-        SetState(Actor::State::Dead);
+        SetState(State::Dead);
     }
 }
 
 void Rocket::OnBeginContact(const Contact& contact) {
     if (!dynamic_cast<Ship*>(contact.other)) {
         SetState(State::Dead);
+
         if (auto target = contact.other->GetComponent<Damageable>()) {
             target->Damage(damage);
             auto owner = target->GetOwner();
