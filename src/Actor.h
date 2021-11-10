@@ -21,16 +21,13 @@ public:
     virtual ~Actor();
 
     const Vector2& GetPosition() const { return position; }
-    void SetPosition(const Vector2& position) { this->position = position; recomputeWorldTransform = true; }
+    void SetPosition(const Vector2& position) { this->position = position; }
 
     float GetScale() const { return scale; }
-    void SetScale(float scale) { this->scale = scale; recomputeWorldTransform = true; }
+    void SetScale(float scale) { this->scale = scale; }
 
     float GetRotation() const { return rotation; }
-    void SetRotation(float rotation) { this->rotation = rotation; recomputeWorldTransform = true; }
-
-    void ComputeWorldTransform();
-    const Matrix4& GetWorldTransform() const { return worldTransform; }
+    void SetRotation(float rotation) { this->rotation = rotation; }
 
     Vector2 GetForward() const { return Vector2(Math::Cos(rotation), Math::Sin(rotation)); }
 
@@ -70,12 +67,10 @@ public:
 private:
     State state;
 
-    Matrix4 worldTransform;
     Vector2 position;
     float scale;
     float rotation; // In radians
     std::string tag;
-    bool recomputeWorldTransform;
 
     std::vector<Component*> components;
     Game* game;

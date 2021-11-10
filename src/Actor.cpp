@@ -11,8 +11,7 @@ Actor::Actor(Game* game)
       position(Vector2::Zero),
       scale(1.0f),
       rotation(0.0f),
-      game(game),
-      recomputeWorldTransform(true) {
+      game(game) {
     game->AddActor(this);
 }
 
@@ -36,12 +35,8 @@ void Actor::ActorInput(const InputState& inputState) {}
 
 void Actor::Update(float deltaTime) {
     if (state == State::Active) {
-        ComputeWorldTransform();
-        
         UpdateComponents(deltaTime);
         UpdateActor(deltaTime);
-
-        ComputeWorldTransform();
     }
 }
 
@@ -52,20 +47,6 @@ void Actor::UpdateComponents(float deltaTime) {
 }
 
 void Actor::UpdateActor(float deltaTime) {}
-
-void Actor::ComputeWorldTransform() {
-    if (recomputeWorldTransform) {
-        recomputeWorldTransform = false;
-
-        worldTransform = Matrix4::CreateScale(scale);
-        worldTransform *= Matrix4::CreateRotationZ(rotation);
-        worldTransform *= Matrix4::CreateTranslation(Vector3(position.x, position.y, 0.0f));
-
-        for (auto component : components) {
-            component->OnUpdateWorldTransform();
-        }
-    }
-}
 
 void Actor::AddComponent(Component* component) {
     int order = component->GetUpdateOrder();

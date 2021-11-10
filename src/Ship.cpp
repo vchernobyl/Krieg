@@ -24,7 +24,7 @@ Ship::Ship(Game* game) : Actor(game) {
     auto collider = new CircleColliderComponent(this, 0.5f);
     collider->SetCollisionFilter(CollisionCategory::Player);
 
-    cameraMovement = new CameraMovement(this);
+    new CameraMovement(this);
     rocketLauncher = new RocketLauncher(game);
     
     trailEmitter = new ParticleComponent(this, sprite->GetDrawOrder() - 1);

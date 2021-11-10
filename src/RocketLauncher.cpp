@@ -81,7 +81,8 @@ void Rocket::OnBeginContact(const Contact& contact) {
     if (!dynamic_cast<Ship*>(contact.other)) {
         SetState(State::Dead);
 
-        new Explosion(GetGame(), GetPosition());
+        auto explosion = new Explosion(GetGame(), GetPosition());
+        explosion->SetPosition(GetPosition());
 
         if (auto target = contact.other->GetComponent<Damageable>()) {
             target->Damage(damage);

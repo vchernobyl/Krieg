@@ -9,6 +9,7 @@ public:
     virtual void ProcessInput(const struct InputState& inputState) {}
     virtual void OnUpdateWorldTransform() {}
     virtual void OnBeginContact(const struct Contact& contact) {}
+    virtual void OnPositionChanged(const class Vector2& newPosition) {}
     
     int GetUpdateOrder() const { return updateOrder; }
     class Actor* GetOwner() const { return owner; }

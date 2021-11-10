@@ -10,7 +10,6 @@ public:
     void UpdateActor(float deltaTime) override;
     void ActorInput(const struct InputState& inputState) override;
 private:
-    class CameraMovement* cameraMovement = nullptr;
     class RigidbodyComponent* rigidbody = nullptr;
     class RocketLauncher* rocketLauncher = nullptr;
     class ParticleComponent* trailEmitter = nullptr;
