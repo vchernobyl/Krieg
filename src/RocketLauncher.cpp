@@ -31,6 +31,9 @@ Explosion::Explosion(Game* game, const Vector2& position) : Actor(game) {
     props.lifeTime = lifeTime;
 
     emitter->Emit(props, 15);
+
+    auto audio = new AudioComponent(this);
+    audio->PlayEvent("event:/Rocket_Explosion");
 }
 
 void Explosion::UpdateActor(float deltaTime) {

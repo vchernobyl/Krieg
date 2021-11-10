@@ -261,7 +261,7 @@ the fixture, which makes the selection not precise. [WON'T DO]
 14. Emit particles at the center of the owner. [DONE]
 15. Emit rocket explosion particles from the rocket itself. [DONE]
 16. Write enemy generator.
-17. Add basic sound effects. [IN PROGRESS]
+17. Add basic sound effects. [DONE]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
