@@ -43,6 +43,8 @@ void Explosion::UpdateActor(float deltaTime) {
     }
 }
 
+// TODO: Decouple rocket launcher from rocket. Rocket actor should be able to
+// stand on its own.
 Rocket::Rocket(Game* game, RocketLauncher* rocketLauncher) : Actor(game) {
     this->rocketLauncher = rocketLauncher;
     
@@ -52,7 +54,7 @@ Rocket::Rocket(Game* game, RocketLauncher* rocketLauncher) : Actor(game) {
     auto collider = new CircleColliderComponent(this, 0.15f);
     collider->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Enemy |
                                  CollisionCategory::Ground);
-    collider->SetIsSensor(true);
+    collider->SetSensor(true);
 
     rb = collider->GetAttachedRigidbody();
     rb->SetBullet(true);

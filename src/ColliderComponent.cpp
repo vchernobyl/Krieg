@@ -27,7 +27,7 @@ RigidbodyComponent* ColliderComponent::GetAttachedRigidbody() const {
 }
 
 void ColliderComponent::SetCollisionFilter(CollisionCategory category, CollisionCategory mask) {
-    assert(fixture != nullptr);
+    assert(fixture);
     
     b2Filter filter = fixture->GetFilterData();
     filter.categoryBits = static_cast<uint16>(category);
@@ -35,7 +35,12 @@ void ColliderComponent::SetCollisionFilter(CollisionCategory category, Collision
     fixture->SetFilterData(filter);
 }
 
-void ColliderComponent::SetIsSensor(bool flag) {
-    assert(fixture != nullptr);
+void ColliderComponent::SetSensor(bool flag) {
+    assert(fixture);
     fixture->SetSensor(flag);
+}
+
+bool ColliderComponent::IsSensor() const {
+    assert(fixture);
+    return fixture->IsSensor();
 }

@@ -34,7 +34,8 @@ public:
     RigidbodyComponent* GetAttachedRigidbody() const;
 
     void SetCollisionFilter(CollisionCategory category, CollisionCategory mask = CollisionCategory::Default);
-    void SetIsSensor(bool flag);
+    void SetSensor(bool flag);
+    bool IsSensor() const;
 
 protected:
     b2Fixture* fixture;

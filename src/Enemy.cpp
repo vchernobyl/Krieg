@@ -29,12 +29,19 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    // auto direction = followTarget->GetPosition() - GetPosition();
-    // direction.Normalize();
+    auto direction = followTarget->GetPosition() - GetPosition();
+    direction.Normalize();
 
-    // const auto movementSpeed = 50.0f;
-    // rigidbody->SetVelocity(direction * movementSpeed * deltaTime);
-    // SetRotation(Math::Atan2(direction.y, direction.x));
+    const auto movementSpeed = 50.0f;
+    rigidbody->SetVelocity(direction * movementSpeed * deltaTime);
+    SetRotation(Math::Atan2(direction.y, direction.x));
 
-    // DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Red);
+    DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Red);
+    DebugRenderer::DrawCircle(GetPosition(), visionRadius, Vector4(1.0f, 1.0f, 0.0f, 0.25f));
+}
+
+void Enemy::Atack() {
+    if (Vector2::Distance(followTarget->GetPosition(), GetPosition()) <= visionRadius) {
+        // TODO: Attack the player here.
+    }
 }
