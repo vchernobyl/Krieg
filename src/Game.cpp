@@ -221,6 +221,10 @@ void Game::DrawGame() {
 }
 
 void Game::LoadData() {
+    // TODO: Move to `LoadData()`.
+    audioSystem->LoadBank("data/audio/Master.strings.bank");
+    audioSystem->LoadBank("data/audio/Master.bank");
+        
     new Ship(this);
     auto e1 = new Enemy(this);
     e1->SetPosition(Vector2(5.0f, -3.5f));
@@ -235,25 +239,6 @@ void Game::LoadData() {
     for (int i = 0; i < numAsteroids; i++) {
         new Asteroid(this);
     }
-
-    // auto actor = new Actor(this);
-    // auto emitter = new ParticleComponent(actor);
-    // emitter->SetTexture(renderer->GetTexture("data/textures/Particle.png"));
-
-    // ParticleProps trailProps;
-    // trailProps.position = Vector2(2.5f, 1.2f);
-    // trailProps.velocity = Vector2::One;
-    // trailProps.colorBegin = Color::White;
-    // trailProps.colorEnd = Color::Red;
-    // trailProps.sizeBegin = 0.35f;
-    // trailProps.sizeEnd = 0.0f;
-    // trailProps.sizeVariation = 0.0f;
-    // trailProps.rotationBegin = 0.0f;
-    // trailProps.lifeTime = 1.25f;
-
-    // emitter->SetProps(trailProps);
-    // emitter->SetEmissionRate(3.0f);
-    // emitter->Start();
 }
 
 void Game::UnloadData() {

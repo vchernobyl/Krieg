@@ -258,10 +258,10 @@ the fixture, which makes the selection not precise. [WON'T DO]
   13.1. Add support for emission rate. [DONE]
   13.2. Add support for particle positions following the owner. [DONE]
   13.3. Add support for looping and non-looping emissions. [DONE]
-        (Looping via `Start` function, non-looping via `Emit` function)
 14. Emit particles at the center of the owner. [DONE]
-15. Emit rocket explosion particles from the rocket itself.
-16. Decouple particle emitter from the particle component. [IN PROGRESS]
+15. Emit rocket explosion particles from the rocket itself. [DONE]
+16. Write enemy generator.
+17. Add basic sound effects. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

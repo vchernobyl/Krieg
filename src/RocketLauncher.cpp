@@ -9,6 +9,7 @@
 #include "Ship.h"
 #include "Damageable.h"
 #include "Random.h"
+#include "AudioComponent.h"
 
 Explosion::Explosion(Game* game, const Vector2& position) : Actor(game) {
     SetPosition(position);
@@ -107,10 +108,16 @@ void RocketLauncher::UpdateActor(float deltaTime) {
     time += deltaTime;
     if (time >= fireRate) {
         time = 0.0f;
+
         for (auto target : targets) {
             auto rocket = new Rocket(GetGame(), this);
             rocket->SetPosition(GetPosition());
             rocket->LaunchAt(target);
+        }
+
+        if (!targets.empty()) {
+            auto audio = new AudioComponent(this);
+            audio->PlayEvent("event:/Launch_Rocket");
         }
     }
 }

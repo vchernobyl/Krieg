@@ -4,11 +4,24 @@
 #include "Component.h"
 #include <vector>
 
+
+// IMPORTANT TODO: Put some proper fucking defaults here!
+// If some of the fields are not initialized, they will be randomgarbage,
+// which will fuck up the whole thing...
 struct ParticleProps {
-    Vector2 velocity, velocityVariation;
-    Vector4 colorBegin, colorEnd;
-    float sizeBegin, sizeEnd, sizeVariation;
-    float rotationBegin, rotationSpeed;
+    Vector2 velocity = Vector2::Zero;
+    Vector2 velocityVariation = Vector2::Zero;
+
+    Vector4 colorBegin = Color::White;
+    Vector4 colorEnd = Color::White;
+
+    float sizeBegin = 0.25f;
+    float sizeEnd = 0.15f;
+    float sizeVariation = 0.0f;
+
+    float rotationBegin = 0.0f;
+    float rotationSpeed = 0.0f;
+
     float lifeTime = 1.0f;
 };
 

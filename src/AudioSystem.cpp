@@ -25,10 +25,7 @@ bool AudioSystem::Initialize() {
         SDL_Log("Failed to initialize FMOD system: %s", FMOD_ErrorString(result));
         return false;
     }
-    
-    LoadBank("data/Master.strings.bank");
-    LoadBank("data/Master.bank");
-        
+
     return true;
 }
 
