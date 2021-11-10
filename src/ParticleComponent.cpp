@@ -23,7 +23,7 @@ ParticleComponent::~ParticleComponent() {
 void ParticleComponent::Update(float deltaTime) {
     time += deltaTime;
 
-    if (time >= 1.0f / emissionRate) {
+    if (emissionRate > 0.0f && time >= 1.0f / emissionRate) {
         if (isRunning) {
             Emit(props, 1);
             time = 0.0f;

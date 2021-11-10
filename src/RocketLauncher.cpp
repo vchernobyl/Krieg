@@ -11,12 +11,13 @@
 #include "Random.h"
 
 Explosion::Explosion(Game* game, const Vector2& position) : Actor(game) {
+    SetPosition(position);
+
     auto emitter = new ParticleComponent(this);
     auto texture = game->GetRenderer()->GetTexture("data/textures/Particle.png");
     emitter->SetTexture(texture);
 
     ParticleProps props;
-    props.position = position;
     props.velocity = Random::GetVector(Vector2(-1.0f, -1.0f), Vector2(1.0f, 1.0f));
     props.velocityVariation = Vector2(-1.0f, 1.0f);
     props.colorBegin = Color::Red;

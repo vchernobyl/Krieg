@@ -5,7 +5,6 @@
 #include <vector>
 
 struct ParticleProps {
-    Vector2 position;
     Vector2 velocity, velocityVariation;
     Vector4 colorBegin, colorEnd;
     float sizeBegin, sizeEnd, sizeVariation;
@@ -58,6 +57,6 @@ private:
     bool isRunning = false;
 
     ParticleProps props;
-    float emissionRate = 3.0f;
+    float emissionRate = 0.0f;
     float time = 0.0f;
 };
