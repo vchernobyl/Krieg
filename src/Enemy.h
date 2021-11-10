@@ -10,6 +10,7 @@ public:
     void Attack();
 private:
     class RigidbodyComponent* rigidbody = nullptr;
+    class RocketLauncher* rocketLauncher = nullptr;
 
     Actor* followTarget = nullptr;
     float visionRadius = 5.0f;
