@@ -3,6 +3,15 @@
 #include "Actor.h"
 #include <vector>
 
+class Explosion : public Actor {
+public:
+    Explosion(class Game* game, const Vector2& position);
+    void UpdateActor(float deltaTime) override;
+private:
+    float time = 0.0f;
+    float lifeTime = 2.0f;
+};
+
 class Rocket : public Actor {
 public:
     Rocket(class Game* game, class RocketLauncher* rocketLauncher);

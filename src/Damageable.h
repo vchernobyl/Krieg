@@ -16,5 +16,4 @@ private:
     Vector4 originalColor;
 
     class SpriteComponent* ownerSprite = nullptr;
-    class ParticleComponent* particleEmitter = nullptr;
 };
