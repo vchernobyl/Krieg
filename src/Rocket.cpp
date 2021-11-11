@@ -1,4 +1,4 @@
-#include "RocketLauncher.h"
+#include "Rocket.h"
 #include "Game.h"
 #include "SpriteComponent.h"
 #include "ParticleComponent.h"
@@ -8,8 +8,13 @@
 #include "CircleColliderComponent.h"
 #include "Ship.h"
 #include "Damageable.h"
+#include "Targetable.h"
 #include "Random.h"
 #include "AudioComponent.h"
+#include "InputSystem.h"
+#include "Camera.h"
+#include "PhysicsWorld.h"
+#include "DebugRenderer.h"
 
 Explosion::Explosion(Game* game, const Vector2& position) : Actor(game) {
     SetPosition(position);
@@ -43,11 +48,7 @@ void Explosion::UpdateActor(float deltaTime) {
     }
 }
 
-// TODO: Decouple rocket launcher from rocket. Rocket actor should be able to
-// stand on its own.
-Rocket::Rocket(Game* game, RocketLauncher* rocketLauncher) : Actor(game) {
-    this->rocketLauncher = rocketLauncher;
-    
+Rocket::Rocket(Game* game) : Actor(game) {
     sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Laser.png"));
 
@@ -87,48 +88,58 @@ void Rocket::OnBeginContact(const Contact& contact) {
     if (!dynamic_cast<Ship*>(contact.other)) {
         SetState(State::Dead);
 
-        auto explosion = new Explosion(GetGame(), GetPosition());
-        explosion->SetPosition(GetPosition());
+        new Explosion(GetGame(), GetPosition());
 
         if (auto target = contact.other->GetComponent<Damageable>()) {
             target->Damage(damage);
-            auto owner = target->GetOwner();
-            if (owner->GetState() == State::Dead) {
-                rocketLauncher->RemoveTarget(owner);
-            }
         }
     }
 }
 
-void Rocket::LaunchAt(const Actor* actor) {
+void Rocket::LaunchAt(const Actor* actor, float speed) {
     auto direction = actor->GetPosition() - GetPosition();
     direction.Normalize();
-    rb->SetVelocity(direction * 12.0f);
+    rb->SetVelocity(direction * speed);
+
+    auto audio = new AudioComponent(this);
+    audio->PlayEvent("event:/Launch_Rocket");
 }
 
 RocketLauncher::RocketLauncher(Game* game) : Actor(game) {
 }
 
 void RocketLauncher::UpdateActor(float deltaTime) {
-    time += deltaTime;
-    if (time >= fireRate) {
-        time = 0.0f;
+    DebugRenderer::DrawCircle(GetPosition(), 0.1f, Color::Yellow);
 
-        for (auto target : targets) {
-            auto rocket = new Rocket(GetGame(), this);
-            rocket->SetPosition(GetPosition());
-            rocket->LaunchAt(target);
-        }
+    SDL_Log("targets=%d", targets.size());
+}
 
-        if (!targets.empty()) {
-            auto audio = new AudioComponent(this);
-            audio->PlayEvent("event:/Launch_Rocket");
+void RocketLauncher::ActorInput(const InputState& inputState) {
+    if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
+        auto camera = GetGame()->GetMainCamera();
+        auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());
+        auto physics = GetGame()->GetPhysicsWorld();
+
+        if (auto rigidbody = physics->GetRigidbodyAt(worldPoint)) {
+            if (auto targetable = rigidbody->GetOwner()->GetComponent<Targetable>()) {
+                auto actor = targetable->GetOwner();
+                if (IsTargeted(actor)) {
+                    targetable->Deselect();
+                    RemoveTarget(actor);
+                } else if (targets.size() < stacks) {
+                    targetable->Select();
+                    AddTarget(actor);
+                }
+            }
         }
     }
 }
 
 void RocketLauncher::AddTarget(const Actor* actor) {
-    targets.push_back(actor);
+    auto iter = std::find(targets.begin(), targets.end(), actor);
+    if (iter == targets.end()) {
+        targets.push_back(actor);
+    }
 }
 
 void RocketLauncher::RemoveTarget(const Actor* actor) {
@@ -136,4 +147,9 @@ void RocketLauncher::RemoveTarget(const Actor* actor) {
     if (iter != targets.end()) {
         targets.erase(iter);
     }
+}
+
+bool RocketLauncher::IsTargeted(const Actor* actor) const {
+    auto iter = std::find(targets.begin(), targets.end(), actor);
+    return iter != targets.end();
 }

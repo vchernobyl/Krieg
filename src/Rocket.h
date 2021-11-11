@@ -14,10 +14,10 @@ private:
 
 class Rocket : public Actor {
 public:
-    Rocket(class Game* game, class RocketLauncher* rocketLauncher);
+    Rocket(class Game* game);
     void UpdateActor(float deltaTime) override;
     void OnBeginContact(const struct Contact& contact) override;
-    void LaunchAt(const Actor* actor);
+    void LaunchAt(const Actor* actor, float speed = 12.0f);
 private:
     class SpriteComponent* sprite = nullptr;
     class RigidbodyComponent* rb = nullptr;
@@ -32,11 +32,17 @@ class RocketLauncher : public Actor {
 public:
     RocketLauncher(class Game* game);
     void UpdateActor(float deltaTime) override;
-    void AddTarget(const Actor* actor);
-    void RemoveTarget(const Actor* actor);
+    void ActorInput(const struct InputState& inputState) override;
 private:
-    float fireRate = 0.75f; // Shots per second.
-    float time = 0.0f;
-    
+    bool IsTargeted(const class Actor* actor) const;
+    void AddTarget(const class Actor* actor);
+    void RemoveTarget(const class Actor* actor);
+
+    int stacks = 2; // Equals amount of targets this weapon can have at once.
     std::vector<const Actor*> targets;
+
+    bool isActivated = false;
+
+    float fireRate = 0.75f;
+    float timeBetweenShots = 0.0f;
 };

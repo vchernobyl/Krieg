@@ -9,7 +9,7 @@
 #include "Targetable.h"
 #include "Damageable.h"
 #include <cassert>
-#include "RocketLauncher.h"
+#include "Rocket.h"
 
 Enemy::Enemy(Game* game) : Actor(game) {
     SetScale(0.75f);
@@ -22,8 +22,6 @@ Enemy::Enemy(Game* game) : Actor(game) {
     rigidbody = collider->GetAttachedRigidbody();
     followTarget = game->GetActorByTag("Player");
 
-    rocketLauncher = new RocketLauncher(game);
-
     new Targetable(this);
     new Damageable(this, 100);
 
@@ -32,9 +30,6 @@ Enemy::Enemy(Game* game) : Actor(game) {
 }
 
 void Enemy::UpdateActor(float deltaTime) {
-    rocketLauncher->SetPosition(GetPosition());
-    rocketLauncher->SetRotation(GetRotation());
-    
     auto direction = followTarget->GetPosition() - GetPosition();
     direction.Normalize();
 
@@ -48,9 +43,7 @@ void Enemy::UpdateActor(float deltaTime) {
 
 void Enemy::Attack() {
     auto dist = Vector2::Distance(followTarget->GetPosition(), GetPosition());
-//    SDL_Log("distance=%f", dist);
     if (Vector2::Distance(followTarget->GetPosition(), GetPosition()) <= visionRadius) {
         SDL_Log("attack");
-        rocketLauncher->AddTarget(followTarget);
     }
 }

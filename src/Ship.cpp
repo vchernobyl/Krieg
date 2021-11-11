@@ -2,7 +2,6 @@
 #include "SpriteComponent.h"
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
-#include "Targetable.h"
 #include "DebugRenderer.h"
 #include "CameraMovement.h"
 #include "Camera.h"
@@ -10,11 +9,9 @@
 #include "Renderer.h"
 #include "Game.h"
 #include "InputSystem.h"
-#include "PhysicsWorld.h"
-#include "Enemy.h"
-#include "RocketLauncher.h"
 #include "ParticleComponent.h"
 #include "Random.h"
+#include "Rocket.h"
 
 Ship::Ship(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this);
@@ -25,7 +22,6 @@ Ship::Ship(Game* game) : Actor(game) {
     collider->SetCollisionFilter(CollisionCategory::Player);
 
     new CameraMovement(this);
-    rocketLauncher = new RocketLauncher(game);
     
     trailEmitter = new ParticleComponent(this, sprite->GetDrawOrder() - 1);
     trailEmitter->SetTexture(game->GetRenderer()->GetTexture("data/textures/Particle.png"));
@@ -44,13 +40,12 @@ Ship::Ship(Game* game) : Actor(game) {
     trailEmitter->SetEmissionRate(15.0f);
     trailEmitter->SetProps(trailProps);
 
+    rocketLauncher = new RocketLauncher(game);
+
     SetTag("Player");
 }
 
 void Ship::UpdateActor(float deltaTime) {
-    // TODO: In this case the rocket launcher is a child actor of ship. It looks like it makes sense
-    // to add some sort of actor functionality, where each actor has a collection of children,
-    // which will take over position and other properties of the parent.
     rocketLauncher->SetPosition(GetPosition());
     rocketLauncher->SetRotation(GetRotation());
 
@@ -75,23 +70,5 @@ void Ship::ActorInput(const InputState& inputState) {
         moveTargetPosition = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
         direction = Vector2::Normalize(moveTargetPosition - GetPosition());
         DebugRenderer::DrawCircle(moveTargetPosition, 0.1f, Color::Red);
-    }
-
-    if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
-        auto camera = GetGame()->GetMainCamera();
-        auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());
-        auto physics = GetGame()->GetPhysicsWorld();
-
-        if (auto rigidbody = physics->GetRigidbodyAt(worldPoint)) {
-            if (auto targetable = rigidbody->GetOwner()->GetComponent<Targetable>()) {
-                targetable->Select();
-                auto owner = targetable->GetOwner();
-                if (targetable->IsSelected()) {
-                    rocketLauncher->AddTarget(owner);
-                } else {
-                    rocketLauncher->RemoveTarget(owner);
-                }
-            }
-        }
     }
 }

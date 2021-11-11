@@ -11,8 +11,8 @@ public:
     void ActorInput(const struct InputState& inputState) override;
 private:
     class RigidbodyComponent* rigidbody = nullptr;
-    class RocketLauncher* rocketLauncher = nullptr;
     class ParticleComponent* trailEmitter = nullptr;
+    class RocketLauncher* rocketLauncher = nullptr;
 
     Vector2 moveTargetPosition;
     Vector2 direction = Vector2::Right;

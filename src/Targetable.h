@@ -6,6 +6,7 @@ class Targetable : public Component {
 public:
     Targetable(class Actor* owner);
     void Select();
+    void Deselect();
     bool IsSelected() const { return isSelected; }
 private:
     class SpriteComponent* sprite = nullptr;

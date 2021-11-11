@@ -16,6 +16,11 @@ Targetable::Targetable(Actor* owner) : Component(owner) {
 }
 
 void Targetable::Select() {
-    isSelected = !isSelected;
+    isSelected = true;
+    sprite->SetEnabled(isSelected);
+}
+
+void Targetable::Deselect() {
+    isSelected = false;
     sprite->SetEnabled(isSelected);
 }
