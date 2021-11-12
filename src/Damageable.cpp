@@ -8,6 +8,10 @@
 #include "Texture.h"
 
 Damageable::Damageable(Actor* owner, int health) : Component(owner), health(health) {
+    sprite = new SpriteComponent(owner, 300);
+    sprite->SetTexture(owner->GetGame()->GetRenderer()->GetTexture("data/textures/Circle.png"));
+    sprite->SetEnabled(false);
+
     ownerSprite = owner->GetComponent<SpriteComponent>();
     originalColor = ownerSprite->GetColor();
 }
@@ -29,6 +33,18 @@ void Damageable::Damage(int amount) {
     health -= amount;
 
     if (health <= 0) {
-        GetOwner()->SetState(Actor::State::Dead);
+        auto owner = GetOwner();
+        if (onDestroy) onDestroy(owner);
+        owner->SetState(Actor::State::Dead);
     }
+}
+
+void Damageable::Select() {
+    isSelected = true;
+    sprite->SetEnabled(isSelected);
+}
+
+void Damageable::Deselect() {
+    isSelected = false;
+    sprite->SetEnabled(isSelected);
 }

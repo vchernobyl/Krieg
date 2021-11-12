@@ -2,12 +2,22 @@
 
 #include "Component.h"
 #include "Math.h"
+#include <functional>
+
+class Actor;
+class SpriteComponent;
+class ColliderComponent;
 
 class Damageable : public Component {
 public:
-    Damageable(class Actor* owner, int health);
+    Damageable(Actor* owner, int health);
     void Update(float deltaTime) override;
     void Damage(int amount);
+    void Select();
+    void Deselect();
+    bool IsSelected() const { return isSelected; }
+    void SetOnDestroy(std::function<void(const Actor*)> onDestroy) { this->onDestroy = onDestroy; }
+
 private:
     int health = 100;
 
@@ -15,5 +25,10 @@ private:
     int flashFrames = 0;
     Vector4 originalColor;
 
-    class SpriteComponent* ownerSprite = nullptr;
+    SpriteComponent* ownerSprite = nullptr;
+    SpriteComponent* sprite = nullptr;
+    ColliderComponent* collider = nullptr;
+    bool isSelected = false;
+
+    std::function<void(const Actor*)> onDestroy = nullptr;
 };

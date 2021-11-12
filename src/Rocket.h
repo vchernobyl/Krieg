@@ -38,11 +38,12 @@ private:
     void AddTarget(const class Actor* actor);
     void RemoveTarget(const class Actor* actor);
 
-    int stacks = 2; // Equals amount of targets this weapon can have at once.
+    int stacks = 3; // Equals amount of targets this weapon can have at once.
     std::vector<const Actor*> targets;
+    int currentTargetIndex = 0;
 
     bool isActivated = false;
 
-    float fireRate = 0.75f;
+    float fireRate = 1.75f;
     float timeBetweenShots = 0.0f;
 };

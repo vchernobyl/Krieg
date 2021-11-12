@@ -8,7 +8,6 @@
 #include "CircleColliderComponent.h"
 #include "Ship.h"
 #include "Damageable.h"
-#include "Targetable.h"
 #include "Random.h"
 #include "AudioComponent.h"
 #include "InputSystem.h"
@@ -111,7 +110,17 @@ RocketLauncher::RocketLauncher(Game* game) : Actor(game) {
 void RocketLauncher::UpdateActor(float deltaTime) {
     DebugRenderer::DrawCircle(GetPosition(), 0.1f, Color::Yellow);
 
-    SDL_Log("targets=%d", targets.size());
+    timeBetweenShots += deltaTime;
+
+    if (targets.empty()) return;
+
+    if (timeBetweenShots >= 1.0f / fireRate) {
+        timeBetweenShots = 0.0f;
+        auto rocket = new Rocket(GetGame());
+        rocket->SetPosition(GetPosition());
+        rocket->LaunchAt(targets[currentTargetIndex]);
+        currentTargetIndex = (currentTargetIndex + 1) % targets.size();
+    }
 }
 
 void RocketLauncher::ActorInput(const InputState& inputState) {
@@ -121,14 +130,15 @@ void RocketLauncher::ActorInput(const InputState& inputState) {
         auto physics = GetGame()->GetPhysicsWorld();
 
         if (auto rigidbody = physics->GetRigidbodyAt(worldPoint)) {
-            if (auto targetable = rigidbody->GetOwner()->GetComponent<Targetable>()) {
-                auto actor = targetable->GetOwner();
+            if (auto target = rigidbody->GetOwner()->GetComponent<Damageable>()) {
+                auto actor = target->GetOwner();
                 if (IsTargeted(actor)) {
-                    targetable->Deselect();
+                    target->Deselect();
                     RemoveTarget(actor);
                 } else if (targets.size() < stacks) {
-                    targetable->Select();
+                    target->Select();
                     AddTarget(actor);
+                    target->SetOnDestroy([this](const Actor* actor) { RemoveTarget(actor); });
                 }
             }
         }
