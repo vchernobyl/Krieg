@@ -21,6 +21,7 @@ public:
     Vector2 GetPosition() const;
 
     float GetAngle() const;
+    void SetAngle(float angle);
 
     void ApplyForce(const Vector2& force);
     void ApplyImpulse(const Vector2& impulse);

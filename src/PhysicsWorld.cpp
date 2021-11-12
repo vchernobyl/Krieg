@@ -61,11 +61,12 @@ void PhysicsWorld::Shutdown() {
 }
 
 void PhysicsWorld::Step(float timeStep) {
-    // Sync up actor and rigidbody positions before doing the simulation step.
+    // Sync up actor and rigidbody positions and rotations before doing the simulation step.
     // This is necessary if actor positions were changed after rigidbody component was attached.
     for (const auto rb : rigidbodies) {
         auto owner = rb->GetOwner();
         rb->SetPosition(owner->GetPosition());
+        rb->SetAngle(owner->GetRotation());
     }
 
     world->Step(timeStep, VelocityIterations, PositionIterations);

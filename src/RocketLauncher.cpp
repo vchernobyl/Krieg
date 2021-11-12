@@ -15,6 +15,8 @@
 #include "PhysicsWorld.h"
 #include "DebugRenderer.h"
 
+#include "Turret.h"
+
 Explosion::Explosion(Game* game, const Vector2& position) : Actor(game) {
     SetPosition(position);
 
@@ -98,6 +100,10 @@ void Rocket::OnBeginContact(const Contact& contact) {
 void Rocket::LaunchAt(const Actor* actor, float speed) {
     auto direction = actor->GetPosition() - GetPosition();
     direction.Normalize();
+    
+    auto rotation = Math::Atan2(direction.y, direction.x);
+    SetRotation(rotation);
+
     rb->SetVelocity(direction * speed);
 
     auto audio = new AudioComponent(this);
@@ -116,9 +122,15 @@ void RocketLauncher::UpdateActor(float deltaTime) {
 
     if (timeBetweenShots >= 1.0f / fireRate) {
         timeBetweenShots = 0.0f;
-        auto rocket = new Rocket(GetGame());
-        rocket->SetPosition(GetPosition());
-        rocket->LaunchAt(targets[currentTargetIndex]);
+        // auto rocket = new Rocket(GetGame());
+        // rocket->SetPosition(GetPosition());
+        // rocket->LaunchAt(targets[currentTargetIndex]);
+        // currentTargetIndex = (currentTargetIndex + 1) % targets.size();
+
+        auto bullet = new Bullet(GetGame());
+        bullet->SetPosition(GetPosition());
+        bullet->ShootAt(targets[currentTargetIndex]->GetPosition());
+        
         currentTargetIndex = (currentTargetIndex + 1) % targets.size();
     }
 }

@@ -13,8 +13,6 @@
 #include "Random.h"
 #include "RocketLauncher.h"
 
-#include "Turret.h"
-
 Ship::Ship(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
@@ -72,11 +70,5 @@ void Ship::ActorInput(const InputState& inputState) {
         moveTargetPosition = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
         direction = Vector2::Normalize(moveTargetPosition - GetPosition());
         DebugRenderer::DrawCircle(moveTargetPosition, 0.1f, Color::Red);
-    }
-
-    if (inputState.Mouse.GetButtonState(SDL_BUTTON_MIDDLE) == ButtonState::Pressed) {
-        auto position = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
-        auto bullet = new Bullet(GetGame());
-        bullet->SetPosition(position);
     }
 }

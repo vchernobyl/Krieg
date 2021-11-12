@@ -47,6 +47,10 @@ float RigidbodyComponent::GetAngle() const {
     return body->GetAngle();
 }
 
+void RigidbodyComponent::SetAngle(float angle) {
+    body->SetTransform(body->GetPosition(), angle);
+}
+
 void RigidbodyComponent::ApplyForce(const Vector2& force) {
     bool awake = true;
 

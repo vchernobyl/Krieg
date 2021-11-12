@@ -44,6 +44,6 @@ private:
 
     bool isActivated = false;
 
-    float fireRate = 1.75f;
+    float fireRate = 8.75f;
     float timeBetweenShots = 0.0f;
 };

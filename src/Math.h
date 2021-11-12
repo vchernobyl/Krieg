@@ -202,6 +202,13 @@ public:
         return rotated;
     }
 
+    // BUG: Does not calculate correct angle past 1 Pi.
+    static float Angle(Vector2 from, Vector2 to) {
+        from.Normalize();
+        to.Normalize();
+        return Math::Acos(Vector2::Dot(from, to));
+    }
+
     // TODO: Can we instantiate them here directly?
     static const Vector2 Zero;
     static const Vector2 One;
