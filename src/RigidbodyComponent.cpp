@@ -43,6 +43,10 @@ Vector2 RigidbodyComponent::GetPosition() const {
     return Vector2(pos.x, pos.y);
 }
 
+float RigidbodyComponent::GetAngle() const {
+    return body->GetAngle();
+}
+
 void RigidbodyComponent::ApplyForce(const Vector2& force) {
     bool awake = true;
 
@@ -79,3 +83,6 @@ void RigidbodyComponent::SetPosition(const Vector2& position) {
     body->SetTransform(b2Vec2(position.x, position.y), body->GetAngle());
 }
 
+void RigidbodyComponent::SetFixedRotation(bool flag) {
+    body->SetFixedRotation(flag);
+}

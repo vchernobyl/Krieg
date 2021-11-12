@@ -8,7 +8,7 @@
 #include "RigidbodyComponent.h"
 #include "Damageable.h"
 #include <cassert>
-#include "Rocket.h"
+#include "RocketLauncher.h"
 
 Enemy::Enemy(Game* game) : Actor(game) {
     SetScale(0.75f);

@@ -73,6 +73,7 @@ void PhysicsWorld::Step(float timeStep) {
     for (const auto rb : rigidbodies) {
         auto owner = rb->GetOwner();
         owner->SetPosition(rb->GetPosition());
+        owner->SetRotation(rb->GetAngle());
     }
 
     world->DebugDraw();

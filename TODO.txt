@@ -263,7 +263,9 @@ the fixture, which makes the selection not precise. [WON'T DO]
 16. Write enemy generator.
 17. Add basic sound effects. [DONE]
 18. Add targeting system where the amount of targets equals the amount of rocket launcher stacks. [DONE]
-19. Add support for dynamic fonts. [IN PROGRESS]
+19. Implement font rendering using the FreeType library.
+20. Add turret weapons system. [IN PROGRESS]
+
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

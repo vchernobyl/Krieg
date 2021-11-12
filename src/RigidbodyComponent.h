@@ -20,6 +20,8 @@ public:
     void SetPosition(const Vector2& position);
     Vector2 GetPosition() const;
 
+    float GetAngle() const;
+
     void ApplyForce(const Vector2& force);
     void ApplyImpulse(const Vector2& impulse);
 
@@ -27,6 +29,7 @@ public:
 
     void SetGravityScale(float scale);
     void SetBullet(bool flag);
+    void SetFixedRotation(bool flag);
 
 private:
     friend class CircleColliderComponent;
