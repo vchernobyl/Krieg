@@ -10,7 +10,6 @@
 #include "Assert.h"
 #include "Camera.h"
 
-#include <SDL/SDL_ttf.h>
 #include <GL/glew.h>
 #include <algorithm>
 
@@ -22,11 +21,6 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
         SDL_Log("Unable to initialize SDL: %s", SDL_GetError());
-        return false;
-    }
-
-    if (TTF_Init() != 0) {
-        SDL_Log("Failed to initialize SDL_ttf: %s", TTF_GetError());
         return false;
     }
 
