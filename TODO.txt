@@ -265,8 +265,9 @@ the fixture, which makes the selection not precise. [WON'T DO]
 18. Add targeting system where the amount of targets equals the amount of rocket launcher stacks. [DONE]
 19. Implement font rendering using the FreeType library.
 20. Add turret weapons system. [DONE]
-21. Refactor turret and rocket launcher into a common class/interface. [IN PROGRESS]
+21. Refactor turret and rocket launcher into a common class/interface. [DONE]
 22. Make the selection sprite to be different for each weapon system.
+23. Remove targets from all weapons on destroy. [IN PROGRESS]
 
 
 Notes from 'Game Engine Architecture':

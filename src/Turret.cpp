@@ -61,63 +61,18 @@ void Bullet::ShootAt(const Vector2& position, float speed) {
     audio->PlayEvent("event:/Laser_Shot");
 }
 
-Turret::Turret(Game* game) : Actor(game) {
+Turret::Turret(Game* game) : Weapon(game) {
+    fireRate = 6.5f;
+    stacks = 2;
 }
 
 void Turret::UpdateActor(float deltaTime) {
+    Weapon::UpdateActor(deltaTime);
     DebugRenderer::DrawCircle(GetPosition(), 0.1f, Color::Red);
-
-    timeBetweenShots += deltaTime;
-
-    if (!isActivated || targets.empty()) return;
-
-    if (timeBetweenShots >= 1.0f / fireRate) {
-        timeBetweenShots = 0.0f;
-        auto bullet = new Bullet(GetGame());
-        bullet->SetPosition(GetPosition());
-        bullet->ShootAt(targets[currentTargetIndex]->GetOwner()->GetPosition());
-        currentTargetIndex = (currentTargetIndex + 1) % targets.size();
-    }
 }
 
-void Turret::ActorInput(const InputState& inputState) {
-    if (!isActivated) return;
-
-    if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
-        auto camera = GetGame()->GetMainCamera();
-        auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());
-        auto physics = GetGame()->GetPhysicsWorld();
-
-        if (auto rigidbody = physics->GetRigidbodyAt(worldPoint)) {
-            if (auto target = rigidbody->GetOwner()->GetComponent<Damageable>()) {
-                if (IsTargeted(target)) {
-                    target->Deselect();
-                    RemoveTarget(target);
-                } else if (targets.size() < stacks) {
-                    target->Select();
-                    AddTarget(target);
-                    target->SetOnDestroy([this](Damageable* target) { RemoveTarget(target); });
-                }
-            }
-        }
-    }
-}
-
-void Turret::AddTarget(Damageable* target) {
-    auto iter = std::find(targets.begin(), targets.end(), target);
-    if (iter == targets.end()) {
-        targets.push_back(target);
-    }
-}
-
-void Turret::RemoveTarget(Damageable* target) {
-    auto iter = std::find(targets.begin(), targets.end(), target);
-    if (iter != targets.end()) {
-        targets.erase(iter);
-    }
-}
-
-bool Turret::IsTargeted(Damageable* target) const {
-    auto iter = std::find(targets.begin(), targets.end(), target);
-    return iter != targets.end();
+void Turret::ShootAt(Damageable* target) {
+    auto bullet = new Bullet(GetGame());
+    bullet->SetPosition(GetPosition());
+    bullet->ShootAt(target->GetOwner()->GetPosition());
 }

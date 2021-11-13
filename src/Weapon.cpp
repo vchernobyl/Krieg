@@ -5,9 +5,9 @@
 #include "Camera.h"
 #include "PhysicsWorld.h"
 #include "RigidbodyComponent.h"
+#include <cassert>
 
 Weapon::Weapon(Game* game) : Actor(game) {
-
 }
 
 void Weapon::UpdateActor(float deltaTime) {
@@ -17,8 +17,13 @@ void Weapon::UpdateActor(float deltaTime) {
 
     if (timeBetweenShots >= 1.0f / fireRate) {
         timeBetweenShots = 0.0f;
-        Shoot();
-        currentTargetIndex = (currentTargetIndex + 1) % targets.size();
+
+        currentTargetIndex = currentTargetIndex % targets.size();
+
+        assert(currentTargetIndex < targets.size());
+        ShootAt(targets[currentTargetIndex]);
+
+        currentTargetIndex++;
     }
 }
 
