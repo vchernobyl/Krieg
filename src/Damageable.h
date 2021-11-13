@@ -16,7 +16,7 @@ public:
     void Select();
     void Deselect();
     bool IsSelected() const { return isSelected; }
-    void SetOnDestroy(std::function<void(const Actor*)> onDestroy) { this->onDestroy = onDestroy; }
+    void SetOnDestroy(std::function<void(Damageable*)> onDestroy) { this->onDestroy = onDestroy; }
 
 private:
     int health = 100;
@@ -30,5 +30,5 @@ private:
     ColliderComponent* collider = nullptr;
     bool isSelected = false;
 
-    std::function<void(const Actor*)> onDestroy = nullptr;
+    std::function<void(Damageable*)> onDestroy = nullptr;
 };

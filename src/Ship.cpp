@@ -12,6 +12,7 @@
 #include "ParticleComponent.h"
 #include "Random.h"
 #include "RocketLauncher.h"
+#include "Turret.h"
 
 Ship::Ship(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this);
@@ -41,13 +42,17 @@ Ship::Ship(Game* game) : Actor(game) {
     trailEmitter->SetProps(trailProps);
 
     rocketLauncher = new RocketLauncher(game);
+    turret = new Turret(game);
 
     SetTag("Player");
 }
 
 void Ship::UpdateActor(float deltaTime) {
-    rocketLauncher->SetPosition(GetPosition());
+    rocketLauncher->SetPosition(GetPosition() - Vector2(0.25f, 0.0f));
     rocketLauncher->SetRotation(GetRotation());
+
+    turret->SetPosition(GetPosition() + Vector2(0.25f, 0.0f));
+    turret->SetRotation(GetRotation());
 
     if (Vector2::Distance(GetPosition(), moveTargetPosition) < 0.01f) {
         rigidbody->SetVelocity(Vector2::Zero);
@@ -70,5 +75,13 @@ void Ship::ActorInput(const InputState& inputState) {
         moveTargetPosition = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
         direction = Vector2::Normalize(moveTargetPosition - GetPosition());
         DebugRenderer::DrawCircle(moveTargetPosition, 0.1f, Color::Red);
+    }
+
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
+        turret->isActivated = true;
+        rocketLauncher->isActivated = false;
+    } else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_2) == ButtonState::Pressed) {
+        turret->isActivated = false;
+        rocketLauncher->isActivated = true;
     }
 }

@@ -97,8 +97,8 @@ void Rocket::OnBeginContact(const Contact& contact) {
     }
 }
 
-void Rocket::LaunchAt(const Actor* actor, float speed) {
-    auto direction = actor->GetPosition() - GetPosition();
+void Rocket::LaunchAt(Damageable* target, float speed) {
+    auto direction = target->GetOwner()->GetPosition() - GetPosition();
     direction.Normalize();
     
     auto rotation = Math::Atan2(direction.y, direction.x);
@@ -118,24 +118,20 @@ void RocketLauncher::UpdateActor(float deltaTime) {
 
     timeBetweenShots += deltaTime;
 
-    if (targets.empty()) return;
+    if (!isActivated || targets.empty()) return;
 
     if (timeBetweenShots >= 1.0f / fireRate) {
         timeBetweenShots = 0.0f;
-        // auto rocket = new Rocket(GetGame());
-        // rocket->SetPosition(GetPosition());
-        // rocket->LaunchAt(targets[currentTargetIndex]);
-        // currentTargetIndex = (currentTargetIndex + 1) % targets.size();
-
-        auto bullet = new Bullet(GetGame());
-        bullet->SetPosition(GetPosition());
-        bullet->ShootAt(targets[currentTargetIndex]->GetPosition());
-        
+        auto rocket = new Rocket(GetGame());
+        rocket->SetPosition(GetPosition());
+        rocket->LaunchAt(targets[currentTargetIndex]);
         currentTargetIndex = (currentTargetIndex + 1) % targets.size();
     }
 }
 
 void RocketLauncher::ActorInput(const InputState& inputState) {
+    if (!isActivated) return;
+
     if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
         auto camera = GetGame()->GetMainCamera();
         auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());
@@ -143,35 +139,34 @@ void RocketLauncher::ActorInput(const InputState& inputState) {
 
         if (auto rigidbody = physics->GetRigidbodyAt(worldPoint)) {
             if (auto target = rigidbody->GetOwner()->GetComponent<Damageable>()) {
-                auto actor = target->GetOwner();
-                if (IsTargeted(actor)) {
+                if (IsTargeted(target)) {
                     target->Deselect();
-                    RemoveTarget(actor);
+                    RemoveTarget(target);
                 } else if (targets.size() < stacks) {
                     target->Select();
-                    AddTarget(actor);
-                    target->SetOnDestroy([this](const Actor* actor) { RemoveTarget(actor); });
+                    AddTarget(target);
+                    target->SetOnDestroy([this](Damageable* target) { RemoveTarget(target); });
                 }
             }
         }
     }
 }
 
-void RocketLauncher::AddTarget(const Actor* actor) {
-    auto iter = std::find(targets.begin(), targets.end(), actor);
+void RocketLauncher::AddTarget(Damageable* target) {
+    auto iter = std::find(targets.begin(), targets.end(), target);
     if (iter == targets.end()) {
-        targets.push_back(actor);
+        targets.push_back(target);
     }
 }
 
-void RocketLauncher::RemoveTarget(const Actor* actor) {
-    auto iter = std::find(targets.begin(), targets.end(), actor);
+void RocketLauncher::RemoveTarget(Damageable* target) {
+    auto iter = std::find(targets.begin(), targets.end(), target);
     if (iter != targets.end()) {
         targets.erase(iter);
     }
 }
 
-bool RocketLauncher::IsTargeted(const Actor* actor) const {
-    auto iter = std::find(targets.begin(), targets.end(), actor);
+bool RocketLauncher::IsTargeted(Damageable* target) const {
+    auto iter = std::find(targets.begin(), targets.end(), target);
     return iter != targets.end();
 }

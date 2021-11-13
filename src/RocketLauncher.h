@@ -3,9 +3,20 @@
 #include "Actor.h"
 #include <vector>
 
+class Game;
+class SpriteComponent;
+class RigidbodyComponent;
+class ParticleComponent;
+class RocketLauncher;
+class Damageable;
+
+struct InputState;
+struct Contact;
+
+
 class Explosion : public Actor {
 public:
-    Explosion(class Game* game, const Vector2& position);
+    Explosion(Game* game, const Vector2& position);
     void UpdateActor(float deltaTime) override;
 private:
     float time = 0.0f;
@@ -14,15 +25,15 @@ private:
 
 class Rocket : public Actor {
 public:
-    Rocket(class Game* game);
+    Rocket(Game* game);
     void UpdateActor(float deltaTime) override;
-    void OnBeginContact(const struct Contact& contact) override;
-    void LaunchAt(const Actor* actor, float speed = 12.0f);
+    void OnBeginContact(const Contact& contact) override;
+    void LaunchAt(Damageable* target, float speed = 12.0f);
 private:
-    class SpriteComponent* sprite = nullptr;
-    class RigidbodyComponent* rb = nullptr;
-    class RocketLauncher* rocketLauncher = nullptr;
-    class ParticleComponent* trailEmitter = nullptr;
+    SpriteComponent* sprite = nullptr;
+    RigidbodyComponent* rb = nullptr;
+    RocketLauncher* rocketLauncher = nullptr;
+    ParticleComponent* trailEmitter = nullptr;
 
     float lifetime = 10.0f;
     int damage = 35;
@@ -30,20 +41,22 @@ private:
 
 class RocketLauncher : public Actor {
 public:
-    RocketLauncher(class Game* game);
+    RocketLauncher(Game* game);
     void UpdateActor(float deltaTime) override;
-    void ActorInput(const struct InputState& inputState) override;
+    void ActorInput(const InputState& inputState) override;
 private:
-    bool IsTargeted(const class Actor* actor) const;
-    void AddTarget(const class Actor* actor);
-    void RemoveTarget(const class Actor* actor);
+    friend class Ship;
+
+    bool IsTargeted(Damageable* target) const;
+    void AddTarget(Damageable* target);
+    void RemoveTarget(Damageable* target);
 
     int stacks = 3; // Equals amount of targets this weapon can have at once.
-    std::vector<const Actor*> targets;
+    std::vector<Damageable*> targets;
     int currentTargetIndex = 0;
 
     bool isActivated = false;
 
-    float fireRate = 8.75f;
+    float fireRate = 1.25f;
     float timeBetweenShots = 0.0f;
 };

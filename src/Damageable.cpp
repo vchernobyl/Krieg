@@ -33,9 +33,8 @@ void Damageable::Damage(int amount) {
     health -= amount;
 
     if (health <= 0) {
-        auto owner = GetOwner();
-        if (onDestroy) onDestroy(owner);
-        owner->SetState(Actor::State::Dead);
+        if (onDestroy) onDestroy(this);
+        GetOwner()->SetState(Actor::State::Dead);
     }
 }
 
