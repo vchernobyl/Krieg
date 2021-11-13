@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor.h"
+#include "Weapon.h"
 #include <vector>
 
 class Game;
@@ -39,24 +40,11 @@ private:
     int damage = 35;
 };
 
-class RocketLauncher : public Actor {
+class RocketLauncher : public Weapon {
 public:
     RocketLauncher(Game* game);
     void UpdateActor(float deltaTime) override;
-    void ActorInput(const InputState& inputState) override;
+    void ShootAt(Damageable* target) override;
 private:
     friend class Ship;
-
-    bool IsTargeted(Damageable* target) const;
-    void AddTarget(Damageable* target);
-    void RemoveTarget(Damageable* target);
-
-    int stacks = 3; // Equals amount of targets this weapon can have at once.
-    std::vector<Damageable*> targets;
-    int currentTargetIndex = 0;
-
-    bool isActivated = false;
-
-    float fireRate = 1.25f;
-    float timeBetweenShots = 0.0f;
 };

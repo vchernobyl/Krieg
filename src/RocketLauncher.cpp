@@ -108,63 +108,18 @@ void Rocket::LaunchAt(Damageable* target, float speed) {
     audio->PlayEvent("event:/Launch_Rocket");
 }
 
-RocketLauncher::RocketLauncher(Game* game) : Actor(game) {
+RocketLauncher::RocketLauncher(Game* game) : Weapon(game) {
+    fireRate = 1.25f;
+    stacks = 3;
 }
 
 void RocketLauncher::UpdateActor(float deltaTime) {
+    Weapon::UpdateActor(deltaTime);
     DebugRenderer::DrawCircle(GetPosition(), 0.1f, Color::Yellow);
-
-    timeBetweenShots += deltaTime;
-
-    if (!isActivated || targets.empty()) return;
-
-    if (timeBetweenShots >= 1.0f / fireRate) {
-        timeBetweenShots = 0.0f;
-        auto rocket = new Rocket(GetGame());
-        rocket->SetPosition(GetPosition());
-        rocket->LaunchAt(targets[currentTargetIndex]);
-        currentTargetIndex = (currentTargetIndex + 1) % targets.size();
-    }
 }
 
-void RocketLauncher::ActorInput(const InputState& inputState) {
-    if (!isActivated) return;
-
-    if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
-        auto camera = GetGame()->GetMainCamera();
-        auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());
-        auto physics = GetGame()->GetPhysicsWorld();
-
-        if (auto rigidbody = physics->GetRigidbodyAt(worldPoint)) {
-            if (auto target = rigidbody->GetOwner()->GetComponent<Damageable>()) {
-                if (IsTargeted(target)) {
-                    target->Deselect();
-                    RemoveTarget(target);
-                } else if (targets.size() < stacks) {
-                    target->Select();
-                    AddTarget(target);
-                    target->SetOnDestroy([this](Damageable* target) { RemoveTarget(target); });
-                }
-            }
-        }
-    }
-}
-
-void RocketLauncher::AddTarget(Damageable* target) {
-    auto iter = std::find(targets.begin(), targets.end(), target);
-    if (iter == targets.end()) {
-        targets.push_back(target);
-    }
-}
-
-void RocketLauncher::RemoveTarget(Damageable* target) {
-    auto iter = std::find(targets.begin(), targets.end(), target);
-    if (iter != targets.end()) {
-        targets.erase(iter);
-    }
-}
-
-bool RocketLauncher::IsTargeted(Damageable* target) const {
-    auto iter = std::find(targets.begin(), targets.end(), target);
-    return iter != targets.end();
+void RocketLauncher::ShootAt(Damageable* target) {
+    auto rocket = new Rocket(GetGame());
+    rocket->SetPosition(GetPosition());
+    rocket->LaunchAt(target);
 }
