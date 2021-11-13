@@ -15,8 +15,6 @@
 #include "PhysicsWorld.h"
 #include "DebugRenderer.h"
 
-#include "Turret.h"
-
 Explosion::Explosion(Game* game, const Vector2& position) : Actor(game) {
     SetPosition(position);
 
