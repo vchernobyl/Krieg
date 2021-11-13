@@ -78,10 +78,8 @@ void Ship::ActorInput(const InputState& inputState) {
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
-        turret->isActivated = true;
-        rocketLauncher->isActivated = false;
+        turret->isActivated = !turret->isActivated;
     } else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_2) == ButtonState::Pressed) {
-        turret->isActivated = false;
-        rocketLauncher->isActivated = true;
+        rocketLauncher->isActivated = !rocketLauncher->isActivated;
     }
 }

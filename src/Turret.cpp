@@ -42,6 +42,10 @@ void Bullet::OnBeginContact(const struct Contact& contact) {
     if (dynamic_cast<Ship*>(contact.other)) return;
 
     SetState(State::Dead);
+
+    if (auto target = contact.other->GetComponent<Damageable>()) {
+        target->Damage(damage);
+    }
 }
 
 void Bullet::ShootAt(const Vector2& position, float speed) {

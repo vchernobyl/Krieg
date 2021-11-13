@@ -16,6 +16,10 @@ public:
     void Select();
     void Deselect();
     bool IsSelected() const { return isSelected; }
+
+    // BUG: If multiple weapons are targetting the same enemy, setting this lambda will override
+    // previously set lambda by the previous weapon system. This will retain the target in the list
+    // even after it is destroyed for all but one weapon system.
     void SetOnDestroy(std::function<void(Damageable*)> onDestroy) { this->onDestroy = onDestroy; }
 
 private:

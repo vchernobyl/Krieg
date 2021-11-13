@@ -22,6 +22,8 @@ private:
 
     float lifeTime = 5.0f;
     float time = 0.0f;
+
+    int damage = 10;
 };
 
 class Turret : public Actor {
@@ -39,7 +41,7 @@ private:
     float fireRate = 6.0f;
     float timeBetweenShots = 0.0f;
     
-    int stacks = 1;
+    int stacks = 2;
     int currentTargetIndex = 0;
 
     bool isActivated = false;
