@@ -1,17 +1,42 @@
 #include "Font.h"
 #include "Game.h"
 #include "Texture.h"
+#include "Shader.h"
+#include "Math.h"
+#include "Renderer.h"
 
+#include <GL/glew.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-Font::Font() {
+Font::Font(Game* game) {
+    shader = new Shader;
+    shader->Load("data/shaders/Text.vert", "data/shaders/Text.frag");
+
+    auto renderer = game->GetRenderer();
+    auto ortho = Matrix4::CreateOrtho(renderer->GetScreenWidth(), renderer->GetScreenHeight(), 0.0f, 1.0f);
+    shader->SetActive();
+    shader->SetMatrixUniform("uViewProjection", ortho);
+
+    glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &VBO);
+
+    glBindVertexArray(VAO);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
+
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 }
 
 Font::~Font() {
 }
 
-bool Font::Load(const std::string& fileName) {
+bool Font::Load(const std::string& fileName, unsigned int fontSize) {
+    // TODO: Move this out to the renderer or whatever.
     FT_Library ft;
     if (FT_Init_FreeType(&ft)) {
         SDL_Log("Unable to initialize FreeType");
@@ -20,11 +45,88 @@ bool Font::Load(const std::string& fileName) {
 
     FT_Face face;
     if (FT_New_Face(ft, fileName.c_str(), 0, &face)) {
-        SDL_Log("Unable to load font: %s", fileName);
+        SDL_Log("Unable to load font: %s", fileName.c_str());
         return false;
     }
+
+    // `0` let's width to be dynamically calculated based on given height.
+    FT_Set_Pixel_Sizes(face, 0, fontSize);
+
+    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+
+    for (unsigned char ch = 0; ch < 128; ch++) {
+        if (FT_Load_Char(face, ch, FT_LOAD_RENDER)) {
+            SDL_Log("Failed to load a glyph: %s", ch);
+            continue;
+        }
+
+        unsigned int textureID;
+        glGenTextures(1, &textureID);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RED,
+                     face->glyph->bitmap.width,
+                     face->glyph->bitmap.rows,
+                     0, GL_RED, GL_UNSIGNED_BYTE,
+                     face->glyph->bitmap.buffer);
+
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+        Character character = {
+            textureID,
+            Vector2(face->glyph->bitmap.width, face->glyph->bitmap.rows),
+            Vector2(face->glyph->bitmap_left, face->glyph->bitmap_top),
+            face->glyph->advance.x
+        };
+
+        characters.emplace(ch, character);
+    }
+
+    FT_Done_Face(face);
+    FT_Done_FreeType(ft);
+
     return true;
 }
 
 void Font::Unload() {
+}
+
+void Font::RenderText(const std::string& text, float x, float y, float scale, const Vector4& color) {
+    shader->SetActive();
+    glActiveTexture(GL_TEXTURE0);
+    glBindVertexArray(VAO);
+
+    for (auto ch = text.begin(); ch != text.end(); ch++) {
+        Character character = characters[*ch];
+
+        float xPos = x + character.bearing.x * scale;
+        float yPos = y + (characters['H'].bearing.y - character.bearing.y) * scale;
+
+        float w = character.size.x * scale;
+        float h = character.size.y * scale;
+
+        float vertices[6][4] = {
+            { xPos, yPos + h, 0.0f, 1.0f },      // Top left.
+            { xPos, yPos, 0.0f, 0.0f },          // Bottom left.
+            { xPos + w, yPos, 1.0f, 0.0f },      // Bottom right.
+
+            { xPos + w, yPos, 1.0f, 0.0f },      // Bottom right.
+            { xPos + w, yPos + h, 1.0f, 1.0f },  // Top right.
+            { xPos, yPos + h, 0.0f, 1.0f }       // Top left.
+        };
+
+        glBindTexture(GL_TEXTURE_2D, character.textureID);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glDrawArrays(GL_TRIANGLES, 0, 6);
+
+        x += (character.advance >> 6) * scale;
+    }
+
+    glBindVertexArray(0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

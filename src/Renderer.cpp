@@ -100,7 +100,7 @@ void Renderer::UnloadData() {
 }
 
 void Renderer::Draw() {
-    GL_CALL(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+    GL_CALL(glClearColor(0.66f, 0.66f, 0.66f, 1.0f));
     GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
 
     GL_CALL(glEnable(GL_BLEND));

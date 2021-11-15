@@ -11,9 +11,6 @@ public:
     void Draw(class SpriteBatch& spriteBatch);
 
 private:
-    class Font* font;
-    class Texture* texture;
-
     int drawCalls = 0;
     int fps = 0;
 };
