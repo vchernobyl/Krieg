@@ -9,6 +9,7 @@
 #include "Shader.h"
 #include "Assert.h"
 #include "Camera.h"
+#include "Font.h"
 
 #include <GL/glew.h>
 #include <algorithm>
@@ -75,6 +76,8 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
     uiSpriteBatch.Initialize();
     DebugRenderer::Initialize();
 
+    font = game->GetFont("data/fonts/Carlito-Regular.ttf");
+
     return true;
 }
 
@@ -100,7 +103,7 @@ void Renderer::UnloadData() {
 }
 
 void Renderer::Draw() {
-    GL_CALL(glClearColor(0.66f, 0.66f, 0.66f, 1.0f));
+    GL_CALL(glClearColor(0.0, 0.0, 0.0f, 1.0f));
     GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
 
     GL_CALL(glEnable(GL_BLEND));
@@ -138,6 +141,8 @@ void Renderer::Draw() {
     uiSpriteBatch.DrawBatch();
 
     DebugRenderer::Draw(view, 1.0f);
+
+    font->RenderText("Hello World!", 0.0f, 0.0f, 1.0f, Color::Red);
 
     SDL_GL_SwapWindow(window);
 }
