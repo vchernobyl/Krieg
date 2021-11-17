@@ -117,7 +117,7 @@ Font* Game::GetFont(const std::string& fileName) {
     if (iter != fonts.end()) {
         return iter->second;
     } else {
-        Font* font = new Font();
+        Font* font = new Font(this);
         if (font->Load(fileName)) {
             fonts.emplace(fileName, font);
         } else {
@@ -218,12 +218,14 @@ void Game::UpdateGame() {
 
 void Game::DrawGame() {
     renderer->Draw();
+    font->RenderText("Hello World", 0, 0, 1.0f, Color::White);
 }
 
 void Game::LoadData() {
-    // TODO: Move to `LoadData()`.
     audioSystem->LoadBank("data/audio/Master.strings.bank");
     audioSystem->LoadBank("data/audio/Master.bank");
+
+    font = GetFont("data/fonts/Carlito-Regular.ttf");
         
     new Ship(this);
     auto e1 = new Enemy(this);

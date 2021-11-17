@@ -63,4 +63,5 @@ private:
 
     // Game specific, remove later.
     class DebugUI* debugUI;
+    class Font* font;
 };

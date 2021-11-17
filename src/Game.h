@@ -57,4 +57,5 @@ private:
 
     // TODO: Game specific, remove it all later.
     std::vector<class Asteroid*> asteroids;
+    class Font* font;
 };
