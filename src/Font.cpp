@@ -4,11 +4,13 @@
 #include "Shader.h"
 #include "Math.h"
 #include "Renderer.h"
+#include "Camera.h"
 
 #include <GL/glew.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
+// TODO: Assert GL_CALL.
 Font::Font(Game* game) {
     shader = new Shader;
     shader->Load("data/shaders/Text.vert", "data/shaders/Text.frag");
@@ -93,6 +95,7 @@ bool Font::Load(const std::string& fileName, unsigned int fontSize) {
 void Font::Unload() {
 }
 
+// TODO: I think it will be easier if we used SpriteBatch::Vertex to render the text.
 void Font::RenderText(const std::string& text, float x, float y, float scale, const Vector4& color) {
     shader->SetActive();
     glActiveTexture(GL_TEXTURE0);
@@ -102,7 +105,7 @@ void Font::RenderText(const std::string& text, float x, float y, float scale, co
         Character character = characters[*ch];
 
         float xPos = x + character.bearing.x * scale;
-        float yPos = y + (characters['H'].bearing.y - character.bearing.y) * scale;
+        float yPos = y - (character.size.y - character.bearing.y) * scale;
 
         float w = character.size.x * scale;
         float h = character.size.y * scale;
