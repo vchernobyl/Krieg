@@ -5,6 +5,7 @@
 #include "Math.h"
 #include "Renderer.h"
 #include "Camera.h"
+#include "SpriteBatch.h" // For Vertex, will remove after integrating font rendering into the sprite batch.
 
 #include <GL/glew.h>
 #include <ft2build.h>
@@ -25,10 +26,15 @@ Font::Font(Game* game) {
 
     glBindVertexArray(VAO);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(float) * 6 * 4, nullptr, GL_DYNAMIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vertex), nullptr, GL_DYNAMIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, color));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, uv));
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
@@ -110,14 +116,29 @@ void Font::RenderText(const std::string& text, float x, float y, float scale, co
         float w = character.size.x * scale;
         float h = character.size.y * scale;
 
-        float vertices[6][4] = {
-            { xPos, yPos + h, 0.0f, 1.0f },      // Top left.
-            { xPos, yPos, 0.0f, 0.0f },          // Bottom left.
-            { xPos + w, yPos, 1.0f, 0.0f },      // Bottom right.
+        Vertex topLeft;
+        topLeft.SetPosition(xPos, yPos + h);
+        topLeft.SetUV(0.0f, 1.0f);
+        topLeft.color = color;
+        
+        Vertex bottomLeft;
+        bottomLeft.SetPosition(xPos, yPos);
+        bottomLeft.SetUV(0.0f, 0.0f);
+        bottomLeft.color = color;
 
-            { xPos + w, yPos, 1.0f, 0.0f },      // Bottom right.
-            { xPos + w, yPos + h, 1.0f, 1.0f },  // Top right.
-            { xPos, yPos + h, 0.0f, 1.0f }       // Top left.
+        Vertex bottomRight;
+        bottomRight.SetPosition(xPos + w, yPos);
+        bottomRight.SetUV(1.0f, 0.0f);
+        bottomRight.color = color;
+
+        Vertex topRight;
+        topRight.SetPosition(xPos + w, yPos + h);
+        topRight.SetUV(1.0f, 1.0f);
+        topRight.color = color;
+
+        Vertex vertices[6] = {
+            topLeft, bottomLeft, bottomRight,
+            bottomRight, topRight, topLeft
         };
 
         glBindTexture(GL_TEXTURE_2D, character.textureID);

@@ -268,6 +268,8 @@ the fixture, which makes the selection not precise. [WON'T DO]
 21. Refactor turret and rocket launcher into a common class/interface. [DONE]
 22. Make the selection sprite to be different for each weapon system.
 23. Remove targets from all weapons on destroy. [IN PROGRESS]
+24. Basic font rendering. [DONE]
+25. Add font color via vertex data. [IN PROGRESS]
 
 
 Notes from 'Game Engine Architecture':

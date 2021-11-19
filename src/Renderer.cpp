@@ -142,7 +142,7 @@ void Renderer::Draw() {
 
     DebugRenderer::Draw(view, 1.0f);
 
-    font->RenderText("Hello World, pipi gaga!", 0.0f, 0.0f, 1.0f, Color::Red);
+    font->RenderText("Hello World, pipi gaga!", 0.0f, 0.0f, 1.0f, Color::White);
 
     SDL_GL_SwapWindow(window);
 }
