@@ -129,7 +129,8 @@ void Renderer::Draw() {
     uiShader->SetMatrixUniform("uViewProjection", view);
  
     uiSpriteBatch.Begin();
-    font->RenderText(uiSpriteBatch, "Hello World, pipi gaga!", 5.0f, 0.0f, 3.0f, Color::Blue);
+    font->RenderText(uiSpriteBatch, "Hello World, pipi gaga!", 1.0f, 0.0f, 1.0f, Color::Blue);
+    font->RenderText(uiSpriteBatch, "Hello World, pipi gaga!", 0.0f, 2.0f, 2.0f, Color::Blue);
     uiSpriteBatch.End();
     uiSpriteBatch.DrawBatch();
 

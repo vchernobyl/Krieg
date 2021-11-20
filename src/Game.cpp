@@ -224,6 +224,7 @@ void Game::LoadData() {
     audioSystem->LoadBank("data/audio/Master.bank");
 
     new Ship(this);
+    
     auto e1 = new Enemy(this);
     e1->SetPosition(Vector2(15.0f, -3.5f));
     

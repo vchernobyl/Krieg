@@ -313,6 +313,10 @@ public:
         return Vector4(v.x * scalar, v.y * scalar, v.z * scalar, v.w * scalar);
     }
 
+    friend Vector4 operator/(const Vector4& v, float scalar) {
+        return Vector4(v.x / scalar, v.y / scalar, v.z / scalar, v.w / scalar);
+    }
+
     static Vector4 Lerp(const Vector4& a, const Vector4& b, float t) {
         if (t < 0.0f) return a;
         if (t > 1.0f) return b;

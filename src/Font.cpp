@@ -100,11 +100,11 @@ void Font::RenderText(SpriteBatch& spriteBatch, const std::string& text,
 
         const float pixelsPerUnit = 64.0f;
 
-        float xPos = (x + character.bearing.x * scale) / pixelsPerUnit;
-        float yPos = (y - (character.size.y - character.bearing.y) * scale) / pixelsPerUnit;
+        float xPos = (x + (character.bearing.x / pixelsPerUnit) * scale);
+        float yPos = (y - ((character.size.y - character.bearing.y) / pixelsPerUnit) * scale);
 
-        float w = (character.size.x / pixelsPerUnit) * scale;
-        float h = (character.size.y / pixelsPerUnit) * scale;
+        float w = character.size.x * scale / pixelsPerUnit;
+        float h = character.size.y * scale / pixelsPerUnit;
 
         spriteBatch.Draw(Vector4(xPos, yPos, w, h),
                          Vector4(0.0f, 0.0f, 1.0f, 1.0f),
@@ -112,6 +112,6 @@ void Font::RenderText(SpriteBatch& spriteBatch, const std::string& text,
                          1,
                          color);
 
-        x += (character.advance >> 6) * scale;
+        x += (character.advance >> 6) / pixelsPerUnit * scale;
     }
 }
