@@ -13,14 +13,6 @@
 
 // TODO: Assert GL_CALL.
 Font::Font(Game* game) {
-    shader = new Shader;
-    shader->Load("data/shaders/Text.vert", "data/shaders/Text.frag");
-
-    auto renderer = game->GetRenderer();
-    auto ortho = Matrix4::CreateOrtho(renderer->GetScreenWidth(), renderer->GetScreenHeight(), 0.0f, 1.0f);
-    shader->SetActive();
-    shader->SetMatrixUniform("uViewProjection", ortho);
-
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
@@ -101,56 +93,25 @@ bool Font::Load(const std::string& fileName, unsigned int fontSize) {
 void Font::Unload() {
 }
 
-// TODO: I think it will be easier if we used SpriteBatch::Vertex to render the text.
-void Font::RenderText(const std::string& text, float x, float y, float scale, const Vector4& color) {
-    shader->SetActive();
-    glActiveTexture(GL_TEXTURE0);
-    glBindVertexArray(VAO);
-
+void Font::RenderText(SpriteBatch& spriteBatch, const std::string& text,
+                      float x, float y, float scale, const Vector4& color) {
     for (auto ch = text.begin(); ch != text.end(); ch++) {
         Character character = characters[*ch];
 
-        float xPos = x + character.bearing.x * scale;
-        float yPos = y - (character.size.y - character.bearing.y) * scale;
+        const float pixelsPerUnit = 64.0f;
 
-        float w = character.size.x * scale;
-        float h = character.size.y * scale;
+        float xPos = (x + character.bearing.x * scale) / pixelsPerUnit;
+        float yPos = (y - (character.size.y - character.bearing.y) * scale) / pixelsPerUnit;
 
-        Vertex topLeft;
-        topLeft.SetPosition(xPos, yPos + h);
-        topLeft.SetUV(0.0f, 1.0f);
-        topLeft.color = color;
-        
-        Vertex bottomLeft;
-        bottomLeft.SetPosition(xPos, yPos);
-        bottomLeft.SetUV(0.0f, 0.0f);
-        bottomLeft.color = color;
+        float w = (character.size.x / pixelsPerUnit) * scale;
+        float h = (character.size.y / pixelsPerUnit) * scale;
 
-        Vertex bottomRight;
-        bottomRight.SetPosition(xPos + w, yPos);
-        bottomRight.SetUV(1.0f, 0.0f);
-        bottomRight.color = color;
-
-        Vertex topRight;
-        topRight.SetPosition(xPos + w, yPos + h);
-        topRight.SetUV(1.0f, 1.0f);
-        topRight.color = color;
-
-        Vertex vertices[6] = {
-            topLeft, bottomLeft, bottomRight,
-            bottomRight, topRight, topLeft
-        };
-
-        glBindTexture(GL_TEXTURE_2D, character.textureID);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        glDrawArrays(GL_TRIANGLES, 0, 6);
+        spriteBatch.Draw(Vector4(xPos, yPos, w, h),
+                         Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+                         character.textureID,
+                         1,
+                         color);
 
         x += (character.advance >> 6) * scale;
     }
-
-    glBindVertexArray(0);
-    glBindTexture(GL_TEXTURE_2D, 0);
 }

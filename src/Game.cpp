@@ -211,22 +211,18 @@ void Game::UpdateGame() {
     mainCamera->Update();
     renderer->SetViewMatrix(mainCamera->GetViewMatrix());
 
-    uiCamera->SetPosition(Vector2(10.5f, -7.5f));
     uiCamera->Update();
     renderer->SetUIViewMatrix(uiCamera->GetViewMatrix());
 }
 
 void Game::DrawGame() {
     renderer->Draw();
-    font->RenderText("Hello World", 0, 0, 1.0f, Color::White);
 }
 
 void Game::LoadData() {
     audioSystem->LoadBank("data/audio/Master.strings.bank");
     audioSystem->LoadBank("data/audio/Master.bank");
 
-    font = GetFont("data/fonts/Carlito-Regular.ttf");
-        
     new Ship(this);
     auto e1 = new Enemy(this);
     e1->SetPosition(Vector2(15.0f, -3.5f));

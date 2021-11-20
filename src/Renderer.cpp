@@ -68,15 +68,12 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
 
     debugUI = new DebugUI();
 
-    // auto projection= Matrix4::CreateSimpleViewProjection(screenWidth / 32.0f, screenHeight / 32.0f);
-    // view = projection;
-    // uiView = projection;
-
     spriteBatch.Initialize();
     uiSpriteBatch.Initialize();
     DebugRenderer::Initialize();
 
     font = game->GetFont("data/fonts/Carlito-Regular.ttf");
+    uiView = Matrix4::CreateOrtho(screenWidth, screenHeight, 0.0f, 1.0f);
 
     return true;
 }
@@ -116,7 +113,6 @@ void Renderer::Draw() {
     textureShader->SetMatrixUniform("uViewProjection", view);
 
     spriteBatch.Begin(SpriteBatch::SortType::FrontToBack);
-
     for (auto sprite : sprites) {
         if (sprite->IsEnabled()) {
             sprite->Draw(spriteBatch);
@@ -126,23 +122,18 @@ void Renderer::Draw() {
     for (auto emitter : particles) {
         emitter->Draw(spriteBatch);
     }
-
     spriteBatch.End();
     spriteBatch.DrawBatch();
 
     uiShader->SetActive();
-    uiShader->SetMatrixUniform("uViewProjection", uiView);
+    uiShader->SetMatrixUniform("uViewProjection", view);
  
     uiSpriteBatch.Begin();
-
-    debugUI->Draw(uiSpriteBatch);
-
+    font->RenderText(uiSpriteBatch, "Hello World, pipi gaga!", 5.0f, 0.0f, 3.0f, Color::Blue);
     uiSpriteBatch.End();
     uiSpriteBatch.DrawBatch();
 
     DebugRenderer::Draw(view, 1.0f);
-
-    font->RenderText("Hello World, pipi gaga!", 0.0f, 0.0f, 1.0f, Color::White);
 
     SDL_GL_SwapWindow(window);
 }
@@ -193,7 +184,7 @@ bool Renderer::LoadShaders() {
     }
 
     uiShader = new Shader();
-    if (!uiShader->Load("data/shaders/Texture.vert", "data/shaders/Texture.frag")) {
+    if (!uiShader->Load("data/shaders/Text.vert", "data/shaders/Text.frag")) {
         return false;
     }
 
