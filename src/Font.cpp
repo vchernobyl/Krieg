@@ -5,14 +5,14 @@
 #include "Math.h"
 #include "Renderer.h"
 #include "Camera.h"
-#include "SpriteBatch.h" // For Vertex, will remove after integrating font rendering into the sprite batch.
+#include "SpriteBatch.h"
 
 #include <GL/glew.h>
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
 // TODO: Assert GL_CALL.
-Font::Font(Game* game) {
+Font::Font(Game* game) : game(game) {
     glGenVertexArrays(1, &VAO);
     glGenBuffers(1, &VBO);
 
@@ -93,25 +93,23 @@ bool Font::Load(const std::string& fileName, unsigned int fontSize) {
 void Font::Unload() {
 }
 
-void Font::RenderText(SpriteBatch& spriteBatch, const std::string& text,
-                      float x, float y, float scale, const Vector4& color) {
+void Font::Draw(SpriteBatch& spriteBatch, const std::string& text,
+                const Vector2& position, float scale, int drawOrder, const Vector4& color) {
+    auto cursor = position.x;
     for (auto ch = text.begin(); ch != text.end(); ch++) {
         Character character = characters[*ch];
 
         const float pixelsPerUnit = 64.0f;
 
-        float xPos = (x + (character.bearing.x / pixelsPerUnit) * scale);
-        float yPos = (y - ((character.size.y - character.bearing.y) / pixelsPerUnit) * scale);
+        float xPos = (cursor + (character.bearing.x / pixelsPerUnit) * scale);
+        float yPos = (position.y - ((character.size.y - character.bearing.y) / pixelsPerUnit) * scale);
 
         float w = character.size.x * scale / pixelsPerUnit;
         float h = character.size.y * scale / pixelsPerUnit;
 
-        spriteBatch.Draw(Vector4(xPos, yPos, w, h),
-                         Vector4(0.0f, 0.0f, 1.0f, 1.0f),
-                         character.textureID,
-                         1,
-                         color);
+        spriteBatch.Draw(Vector4(xPos, yPos, w, h), Vector4(0.0f, 0.0f, 1.0f, 1.0f),
+                         character.textureID, drawOrder, color);
 
-        x += (character.advance >> 6) / pixelsPerUnit * scale;
+        cursor += (character.advance >> 6) / pixelsPerUnit * scale;
     }
 }

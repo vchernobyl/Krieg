@@ -15,6 +15,7 @@
 // Game specific, remove later.
 #include "SpriteComponent.h"
 #include "ParticleComponent.h"
+#include "TextComponent.h"
 #include "Asteroid.h"
 #include "Ship.h"
 #include "Enemy.h"
@@ -238,11 +239,25 @@ void Game::LoadData() {
     for (int i = 0; i < numAsteroids; i++) {
         new Asteroid(this);
     }
+
+    auto t = new Actor(this);
+    auto text = new TextComponent(t);
+    text->SetFont(GetFont("data/fonts/Carlito-Regular.ttf"));
+    text->SetText("Grapple Hook!");
+    t->SetPosition(Vector2(0.0f, 2.0f));
+    t->SetScale(0.5f);
 }
 
 void Game::UnloadData() {
-    renderer->UnloadData();
+    if (renderer) {
+        renderer->UnloadData();
+    }
     
+    for (auto [_, font] : fonts) {
+        font->Unload();
+        delete font;
+    }
+
     while (!actors.empty()) {
         delete actors.back();
     }

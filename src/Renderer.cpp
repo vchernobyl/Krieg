@@ -10,6 +10,7 @@
 #include "Assert.h"
 #include "Camera.h"
 #include "Font.h"
+#include "TextComponent.h"
 
 #include <GL/glew.h>
 #include <algorithm>
@@ -129,8 +130,9 @@ void Renderer::Draw() {
     uiShader->SetMatrixUniform("uViewProjection", view);
  
     uiSpriteBatch.Begin();
-    font->RenderText(uiSpriteBatch, "Hello World, pipi gaga!", 1.0f, 0.0f, 1.0f, Color::Blue);
-    font->RenderText(uiSpriteBatch, "Hello World, pipi gaga!", 0.0f, 2.0f, 2.0f, Color::Blue);
+    for (auto text : texts) {
+        text->Draw(uiSpriteBatch);
+    }
     uiSpriteBatch.End();
     uiSpriteBatch.DrawBatch();
 
@@ -175,6 +177,17 @@ void Renderer::RemoveParticles(ParticleComponent* emitter) {
     auto iter = std::find(particles.begin(), particles.end(), emitter);
     if (iter != particles.end()) {
         particles.erase(iter);
+    }
+}
+
+void Renderer::AddText(TextComponent* text) {
+    texts.push_back(text);
+}
+
+void Renderer::RemoveText(TextComponent* text) {
+    auto iter = std::find(texts.begin(), texts.end(), text);
+    if (iter != texts.end()) {
+        texts.erase(iter);
     }
 }
 

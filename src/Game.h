@@ -40,7 +40,7 @@ private:
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
 
-    std::unordered_map<std::string, class Font*> fonts;
+    std::unordered_map<std::string, Font*> fonts;
     std::unordered_map<std::string, std::string> text;
 
     Renderer* renderer;

@@ -270,10 +270,10 @@ the fixture, which makes the selection not precise. [WON'T DO]
 23. Remove targets from all weapons on destroy. [IN PROGRESS]
 24. Basic font rendering. [DONE]
 25. Add font color via vertex data. [DONE]
-26. Refactor font rendering: [IN PROGRESS]
+26. Refactor font rendering: [DONE]
   26.1. Add capability in sprite batch to draw font. [DONE]
   26.2. Downscale font to use unit size. [DONE]
-  26.3. Implement text component. [IN PROGRESS]
+  26.3. Implement text component. [DONE]
 27. Support compilation with VS for easier debugging.
 28. Add sprite shader to be a part of sprite batch.
 

@@ -11,6 +11,7 @@ class Game;
 class Texture;
 class SpriteComponent;
 class ParticleComponent;
+class TextComponent;
 class Shader;
 
 class Renderer {
@@ -29,6 +30,9 @@ public:
 
     void AddParticles(ParticleComponent* emitter);
     void RemoveParticles(ParticleComponent* emitter);
+
+    void AddText(TextComponent* text);
+    void RemoveText(TextComponent* text);
 
     void SetViewMatrix(const Matrix4& view) { this->view = view; }
     void SetUIViewMatrix(const Matrix4& uiView) { this->uiView = uiView; }
@@ -53,6 +57,7 @@ private:
 
     std::vector<SpriteComponent*> sprites;
     std::vector<ParticleComponent*> particles;
+    std::vector<TextComponent*> texts;
 
     std::unordered_map<std::string, Texture*> textures;
 
