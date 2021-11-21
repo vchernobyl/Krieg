@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Math.h"
+#include "Shader.h"
 #include <GL/glew.h>
 #include <vector>
 #include <cassert>
@@ -51,7 +52,7 @@ public:
     };
 
     SpriteBatch();
-    void Initialize();
+    bool Initialize();
     void Begin(SortType sortType = SortType::Texture);
     void End();
 
@@ -74,7 +75,8 @@ public:
 
     void DrawBatch();
 
-    int GetDrawCalls() const { return drawCalls; }
+    void SetProjectionMatrix(const Matrix4& projection) { this->projection = projection; }
+    void SetShader(const Shader& shader) { this->shader = shader; }
 
 private:
     void CreateRenderBatches();
@@ -85,9 +87,10 @@ private:
     GLuint vao = 0;
     SortType sortType = SortType::Texture;
 
+    Shader shader;
+    Matrix4 projection;
+    
     std::vector<SpriteBatchItem*> spriteBatchItemPtrs;
     std::vector<SpriteBatchItem> spriteBatchItems;
     std::vector<RenderBatch> renderBatches;
-
-    int drawCalls = 0;
 };

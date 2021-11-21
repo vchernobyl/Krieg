@@ -24,7 +24,7 @@ private:
     };
 
     std::map<char, Character> characters;
-    unsigned int VAO, VBO;
+    unsigned int vao, vbo;
 
     class Shader* shader;
     class Game* game;

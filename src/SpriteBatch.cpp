@@ -1,6 +1,7 @@
 #include "SpriteBatch.h"
 #include <iostream>
 #include <algorithm>
+#include <SDL/SDL_log.h>
 
 SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
                                  GLuint texture, int depth, const Vector4& color) :
@@ -58,8 +59,15 @@ SpriteBatchItem::SpriteBatchItem(const Vector4& destRect, const Vector4& uvRect,
 SpriteBatch::SpriteBatch() {
 }
 
-void SpriteBatch::Initialize() {
+bool SpriteBatch::Initialize() {
+    if (!shader.Load("data/shaders/Texture.vert", "data/shaders/Texture.frag")) {
+        SDL_Log("Failed to load sprite batch shader.");
+        return false;
+    }
+    
     CreateVertexArray();
+
+    return true;
 }
 
 void SpriteBatch::Begin(SortType sortType) {
@@ -101,9 +109,10 @@ void SpriteBatch::Draw(const Vector4& destRect, const Vector4& uvRect,
 }
 
 void SpriteBatch::DrawBatch() {
+    shader.SetActive();
+    shader.SetMatrixUniform("uViewProjection", projection);
+    
     glBindVertexArray(vao);
-
-    drawCalls = renderBatches.size();
 
     for (int i = 0; i < renderBatches.size(); i++) {
         glBindTexture(GL_TEXTURE_2D, renderBatches[i].texture);

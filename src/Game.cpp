@@ -245,7 +245,7 @@ void Game::LoadData() {
     text->SetFont(GetFont("data/fonts/Carlito-Regular.ttf"));
     text->SetText("Grapple Hook!");
     t->SetPosition(Vector2(0.0f, 2.0f));
-    t->SetScale(0.5f);
+    t->SetScale(1.5f);
 }
 
 void Game::UnloadData() {

@@ -15,6 +15,6 @@ TextComponent::~TextComponent() {
 
 void TextComponent::Draw(SpriteBatch& spriteBatch) {
     if (font) {
-        font->Draw(spriteBatch, text, owner->GetPosition(), owner->GetScale(), updateOrder);
+        font->Draw(spriteBatch, text, owner->GetPosition(), owner->GetScale(), updateOrder, color);
     }
 }

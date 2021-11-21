@@ -2,6 +2,7 @@
 
 #include "Math.h"
 #include "SpriteBatch.h"
+#include "Shader.h"
 
 #include <SDL/SDL.h>
 #include <vector>
@@ -49,9 +50,7 @@ private:
     SpriteBatch spriteBatch;
     SpriteBatch uiSpriteBatch;
 
-    Shader* textureShader;
-    Shader* uiShader;
-    
+    Shader textShader;
     Matrix4 uiView;
     Matrix4 view;
 
@@ -65,8 +64,4 @@ private:
 
     int screenWidth;
     int screenHeight;
-
-    // Game specific, remove later.
-    class DebugUI* debugUI;
-    class Font* font;
 };

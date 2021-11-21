@@ -67,26 +67,24 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
         return false;
     }
 
-    debugUI = new DebugUI();
+    if (!spriteBatch.Initialize()) {
+        SDL_Log("Failed to initialized sprite batch.");
+        return false;
+    }
 
-    spriteBatch.Initialize();
-    uiSpriteBatch.Initialize();
+    if (!uiSpriteBatch.Initialize()) {
+        SDL_Log("Failed to initialized UI batch.");
+        return false;
+    }
+    uiSpriteBatch.SetShader(textShader);
+
     DebugRenderer::Initialize();
-
-    font = game->GetFont("data/fonts/Carlito-Regular.ttf");
-    uiView = Matrix4::CreateOrtho(screenWidth, screenHeight, 0.0f, 1.0f);
 
     return true;
 }
 
 void Renderer::Shutdown() {
-    textureShader->Unload();
-    delete textureShader;
-
-    uiShader->Unload();
-    delete uiShader;
-
-    delete debugUI;
+    textShader.Unload();
 
     SDL_GL_DeleteContext(context);
     SDL_DestroyWindow(window);
@@ -107,12 +105,7 @@ void Renderer::Draw() {
     GL_CALL(glEnable(GL_BLEND));
     GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 
-    // TODO: I think it makes total sense to put the sprite-batch specific shader
-    // inside the sprite batch itself?
-    // Also add a function to set the view projection?
-    textureShader->SetActive();
-    textureShader->SetMatrixUniform("uViewProjection", view);
-
+    spriteBatch.SetProjectionMatrix(view);
     spriteBatch.Begin(SpriteBatch::SortType::FrontToBack);
     for (auto sprite : sprites) {
         if (sprite->IsEnabled()) {
@@ -126,9 +119,7 @@ void Renderer::Draw() {
     spriteBatch.End();
     spriteBatch.DrawBatch();
 
-    uiShader->SetActive();
-    uiShader->SetMatrixUniform("uViewProjection", view);
- 
+    uiSpriteBatch.SetProjectionMatrix(uiView);
     uiSpriteBatch.Begin();
     for (auto text : texts) {
         text->Draw(uiSpriteBatch);
@@ -192,13 +183,7 @@ void Renderer::RemoveText(TextComponent* text) {
 }
 
 bool Renderer::LoadShaders() {
-    textureShader = new Shader();
-    if (!textureShader->Load("data/shaders/Texture.vert", "data/shaders/Texture.frag")) {
-        return false;
-    }
-
-    uiShader = new Shader();
-    if (!uiShader->Load("data/shaders/Text.vert", "data/shaders/Text.frag")) {
+    if (!textShader.Load("data/shaders/Text.vert", "data/shaders/Text.frag")) {
         return false;
     }
 
