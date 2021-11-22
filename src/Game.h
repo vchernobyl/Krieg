@@ -12,6 +12,7 @@ class AudioSystem;
 class InputSystem;
 class Font;
 class Camera;
+class UILayer;
 
 class Game {
 public:
@@ -30,6 +31,9 @@ public:
     PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
     AudioSystem* GetAudioSystem() { return audioSystem; }
     
+    const std::vector<UILayer*>& GetUIStack() { return uiStack; }
+    void PushUI(UILayer* layer);
+
 private:
     void ProcessInput();
     void UpdateGame();
@@ -39,6 +43,7 @@ private:
 
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
+    std::vector<UILayer*> uiStack;
 
     std::unordered_map<std::string, Font*> fonts;
     std::unordered_map<std::string, std::string> text;

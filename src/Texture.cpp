@@ -2,7 +2,7 @@
 #include "Assert.h"
 
 #include <SOIL/SOIL.h>
-#include <SDL/SDL.h>
+#include <SDL/SDL_log.h>
 #include <GL/glew.h>
 
 bool Texture::Load(const std::string& fileName) {
@@ -37,19 +37,6 @@ bool Texture::Load(const std::string& fileName) {
 
 void Texture::Unload() {
     GL_CALL(glDeleteTextures(1, &textureID));
-}
-
-void Texture::CreateFromSurface(SDL_Surface* surface) {
-    width = surface->w;
-    height = surface->h;
-
-    GL_CALL(glGenTextures(1, &textureID));
-    GL_CALL(glBindTexture(GL_TEXTURE_2D, textureID));
-    GL_CALL(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_BGRA,
-                         GL_UNSIGNED_BYTE, surface->pixels));
-
-    GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-    GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
 }
 
 void Texture::SetActive() {

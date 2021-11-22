@@ -8,6 +8,7 @@
 #include "Math.h"
 #include "Font.h"
 #include "Camera.h"
+#include "UILayer.h"
 
 #include <algorithm>
 #include <memory>
@@ -139,6 +140,10 @@ Actor* Game::GetActorByTag(const std::string& tag) {
     return nullptr;
 }
 
+void Game::PushUI(UILayer* layer) {
+    uiStack.emplace_back(layer);
+}
+
 void Game::ProcessInput() {
     inputSystem->PrepareForUpdate();
 
@@ -214,6 +219,22 @@ void Game::UpdateGame() {
 
     uiCamera->Update();
     renderer->SetUIViewMatrix(uiCamera->GetViewMatrix());
+
+    for (auto ui : uiStack) {
+        if (ui->GetState() == UILayer::State::Active) {
+            ui->Update(deltaTime);
+        }
+    }
+
+    auto iter = uiStack.begin();
+    while (iter != uiStack.end()) {
+        if ((*iter)->GetState() == UILayer::State::Closing) {
+            delete *iter;
+            iter = uiStack.erase(iter);
+        } else {
+            ++iter;
+        }
+    }
 }
 
 void Game::DrawGame() {

@@ -11,6 +11,7 @@
 #include "Camera.h"
 #include "Font.h"
 #include "TextComponent.h"
+#include "UILayer.h"
 
 #include <GL/glew.h>
 #include <algorithm>
@@ -76,6 +77,7 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
         SDL_Log("Failed to initialized UI batch.");
         return false;
     }
+
     uiSpriteBatch.SetShader(textShader);
 
     DebugRenderer::Initialize();
@@ -128,6 +130,10 @@ void Renderer::Draw() {
     uiSpriteBatch.DrawBatch();
 
     DebugRenderer::Draw(view, 1.0f);
+
+    for (auto ui : game->GetUIStack()) {
+        ui->Draw(uiSpriteBatch);
+    }
 
     SDL_GL_SwapWindow(window);
 }

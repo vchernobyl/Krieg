@@ -267,15 +267,15 @@ the fixture, which makes the selection not precise. [WON'T DO]
 20. Add turret weapons system. [DONE]
 21. Refactor turret and rocket launcher into a common class/interface. [DONE]
 22. Make the selection sprite to be different for each weapon system.
-23. Remove targets from all weapons on destroy. [IN PROGRESS]
+23. Remove targets from all weapons on destroy.
 24. Basic font rendering. [DONE]
 25. Add font color via vertex data. [DONE]
 26. Refactor font rendering: [DONE]
   26.1. Add capability in sprite batch to draw font. [DONE]
   26.2. Downscale font to use unit size. [DONE]
   26.3. Implement text component. [DONE]
-27. Support compilation with VS for easier debugging.
-28. Add sprite shader to be a part of sprite batch. [DONE]
+27. Add sprite shader to be a part of sprite batch. [DONE]
+28. Add simple HUD. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
