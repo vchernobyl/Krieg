@@ -276,6 +276,8 @@ the fixture, which makes the selection not precise. [WON'T DO]
   26.3. Implement text component. [DONE]
 27. Add sprite shader to be a part of sprite batch. [DONE]
 28. Add simple HUD. [IN PROGRESS]
+29. Think about how to manage text shader, currently it's quite awkward to switch between shaders
+when rendering text vs sprites. Maybe the font itself should own a text shader?
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
@@ -293,7 +295,7 @@ Backlog
 
 How be brutally effective:
 --------------------------
-1. Get things done quickly
-2. Get things done robustly
-3. Make things simple
-4. Finish things!
+1. Get things done quickly.
+2. Get things done robustly.
+3. Make things simple.
+4. Finish things.

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Math.h"
+#include "Shader.h"
 #include <string>
 #include <map>
 
@@ -26,6 +27,7 @@ private:
     std::map<char, Character> characters;
     unsigned int vao, vbo;
 
-    class Shader* shader;
+    Shader shader;
+
     class Game* game;
 };
