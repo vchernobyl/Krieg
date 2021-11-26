@@ -1,8 +1,6 @@
 #pragma once
 
-#include "Actor.h"
 #include "Math.h"
-#include "Component.h"
 #include <vector>
 #include <string>
 #include <functional>
@@ -40,7 +38,7 @@ private:
     bool highlighted;
 };
 
-class UIScreen : public Actor {
+class UIScreen {
 public:
     enum class State {
         Active,

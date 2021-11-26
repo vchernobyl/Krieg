@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SDL/SDL.h>
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -30,6 +29,8 @@ public:
     Renderer* GetRenderer() const { return renderer; }
     PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
     AudioSystem* GetAudioSystem() { return audioSystem; }
+    unsigned long GetTicks() const { return ticks; }
+    float GetDeltaTime() const { return deltaTime; }
     
     const std::vector<UIScreen*>& GetUIStack() { return uiStack; }
     void PushUI(UIScreen* ui);
@@ -57,7 +58,9 @@ private:
 
     bool isRunning;
     bool updatingActors;
-    Uint32 ticks;
+
+    unsigned long ticks;
+    float deltaTime;
 
     // TODO: Game specific, remove it all later.
     std::vector<class Asteroid*> asteroids;

@@ -9,6 +9,7 @@
 #include "Font.h"
 #include "Camera.h"
 #include "UIScreen.h"
+#include "DebugUI.h"
 
 #include <algorithm>
 #include <memory>
@@ -26,7 +27,9 @@ Game::Game() :
     inputSystem(nullptr),
     physicsWorld(nullptr),
     isRunning(true),
-    updatingActors(false) {}
+    updatingActors(false),
+    ticks(0),
+    deltaTime(0.0f) {}
 
 bool Game::Initialize() {
     renderer = new Renderer(this);
@@ -177,15 +180,9 @@ void Game::ProcessInput() {
 void Game::UpdateGame() {
     while (!SDL_TICKS_PASSED(SDL_GetTicks(), ticks + 16));
 
-    float deltaTime = (SDL_GetTicks() - ticks) / 1000.0f;
+    deltaTime = (SDL_GetTicks() - ticks) / 1000.0f;
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
-
-    static int count = 0;
-    if (count++ == 30) {
-        SDL_Log("fps: %d", static_cast<int>(1.0f / deltaTime));
-        count = 0;
-    }
 
     physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.
 
@@ -263,6 +260,8 @@ void Game::LoadData() {
     auto ui = new UIScreen(this);
     ui->AddButton("Button title", Vector2(1.0f, 0.0f));
     ui->AddButton("Second button", Vector2(-3.0f, -2.0f));
+
+    auto debugUI = new DebugUI(this);
 }
 
 void Game::UnloadData() {

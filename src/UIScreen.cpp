@@ -26,7 +26,7 @@ bool Button::ContainsPoint(const Vector2& point) const {
 }
 
 UIScreen::UIScreen(Game* game)
-    : Actor(game),
+    : game(game),
       state(State::Active) {
     game->PushUI(this);
     font = game->GetFont("data/fonts/Carlito-Regular.ttf");
