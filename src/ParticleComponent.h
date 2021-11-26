@@ -29,14 +29,12 @@ class Actor;
 class Renderer;
 class Texture;
 
-// TODO: Convert to OpenGL.
-class ParticleComponent : public Component {
+class ParticleComponent : public DrawableComponent {
 public:
     ParticleComponent(Actor* owner, int drawOrder = 200);
-    ~ParticleComponent();
 
     void Update(float deltaTime) override;
-    void Draw(class SpriteBatch& spriteBatch);
+    void Draw(class SpriteBatch& spriteBatch) override;
 
     void Emit(const ParticleProps& props, int amount);
     void Start() { isRunning = true; }
@@ -45,8 +43,6 @@ public:
     void SetTexture(Texture* texture) { this->texture = texture; }
     void SetProps(const ParticleProps& props) { this->props = props; }
     void SetEmissionRate(float emissionRate) { this->emissionRate = emissionRate; }
-
-    int GetDrawOrder() const { return drawOrder; }
 private:
     struct Particle {
         Vector2 position;
@@ -65,8 +61,6 @@ private:
 
     Texture* texture;
     
-    int drawOrder;
-
     bool isRunning = false;
 
     ParticleProps props;

@@ -12,6 +12,7 @@ class Game;
 class Texture;
 class SpriteComponent;
 class ParticleComponent;
+class DrawableComponent;
 class TextComponent;
 class Shader;
 
@@ -26,11 +27,8 @@ public:
 
     Texture* GetTexture(const std::string& fileName);
 
-    void AddSprite(SpriteComponent* sprite);
-    void RemoveSprite(SpriteComponent* sprite);
-
-    void AddParticles(ParticleComponent* emitter);
-    void RemoveParticles(ParticleComponent* emitter);
+    void AddDrawable(DrawableComponent* drawable);
+    void RemoveDrawable(DrawableComponent* drawable);
 
     void AddText(TextComponent* text);
     void RemoveText(TextComponent* text);
@@ -54,8 +52,7 @@ private:
     Matrix4 uiView;
     Matrix4 view;
 
-    std::vector<SpriteComponent*> sprites;
-    std::vector<ParticleComponent*> particles;
+    std::vector<DrawableComponent*> drawables;
     std::vector<TextComponent*> texts;
 
     std::unordered_map<std::string, Texture*> textures;

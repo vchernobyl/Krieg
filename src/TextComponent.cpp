@@ -5,7 +5,8 @@
 #include "Renderer.h"
 #include "SpriteBatch.h"
 
-TextComponent::TextComponent(Actor* owner, int drawOrder) : Component(owner, drawOrder) {
+TextComponent::TextComponent(Actor* owner, int drawOrder)
+    : Component(owner, drawOrder) {
     owner->GetGame()->GetRenderer()->AddText(this);
 }
 

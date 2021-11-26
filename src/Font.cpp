@@ -1,7 +1,6 @@
 #include "Font.h"
 #include "Game.h"
 #include "Texture.h"
-#include "Shader.h"
 #include "Math.h"
 #include "Renderer.h"
 #include "Camera.h"
@@ -30,8 +29,6 @@ Font::Font(Game* game) : game(game) {
 
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-
-    shader.Load("data/shaders/Text.vert", "data/shaders/Text.frag");
 }
 
 Font::~Font() {
@@ -93,7 +90,6 @@ bool Font::Load(const std::string& fileName, unsigned int fontSize) {
 }
 
 void Font::Unload() {
-    shader.Unload();
 }
 
 void Font::Draw(SpriteBatch& spriteBatch, const std::string& text,

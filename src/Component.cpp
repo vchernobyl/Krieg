@@ -1,6 +1,8 @@
 #include "Component.h"
 #include "Actor.h"
 #include "InputSystem.h"
+#include "Game.h"
+#include "Renderer.h"
 
 Component::Component(Actor* owner, int updateOrder)
     : owner(owner),
@@ -10,4 +12,14 @@ Component::Component(Actor* owner, int updateOrder)
 
 Component::~Component() {
     owner->RemoveComponent(this);
+}
+
+DrawableComponent::DrawableComponent(Actor* owner, int drawOrder)
+    : Component(owner, drawOrder),
+      drawOrder(drawOrder) {
+    owner->GetGame()->GetRenderer()->AddDrawable(this);
+}
+
+DrawableComponent::~DrawableComponent() {
+    owner->GetGame()->GetRenderer()->RemoveDrawable(this);
 }

@@ -46,7 +46,6 @@ private:
     std::vector<UILayer*> uiStack;
 
     std::unordered_map<std::string, Font*> fonts;
-    std::unordered_map<std::string, std::string> text;
 
     Renderer* renderer;
     InputSystem* inputSystem;
