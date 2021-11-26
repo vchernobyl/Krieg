@@ -275,10 +275,8 @@ the fixture, which makes the selection not precise. [WON'T DO]
   26.2. Downscale font to use unit size. [DONE]
   26.3. Implement text component. [DONE]
 27. Add sprite shader to be a part of sprite batch. [DONE]
-28. Add simple HUD. [IN PROGRESS]
-29. Think about how to manage text shader, currently it's quite awkward to switch between shaders
-when rendering text vs sprites. Maybe the font itself should own a text shader?
-30. Add FPS debug UI. [IN PROGRESS]
+28. Add FPS debug UI. [DONE]
+29. Add simple weapons HUD. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

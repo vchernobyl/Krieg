@@ -257,14 +257,15 @@ void Game::LoadData() {
         new Asteroid(this);
     }
 
-    auto ui = new UIScreen(this);
-    ui->AddButton("Button title", Vector2(1.0f, 0.0f));
-    ui->AddButton("Second button", Vector2(-3.0f, -2.0f));
-
-    auto debugUI = new DebugUI(this);
+    new DebugUI(this);
 }
 
 void Game::UnloadData() {
+    while (!uiStack.empty()) {
+        delete uiStack.back();
+        uiStack.pop_back();
+    }
+
     if (renderer) {
         renderer->UnloadData();
     }
