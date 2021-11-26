@@ -1,16 +1,15 @@
 #pragma once
 
-class DebugUI {
+#include "UIScreen.h"
+#include "Math.h"
+
+class DebugUI : public UIScreen{
 public:
-    DebugUI();
-    ~DebugUI();
-
-    void AddDrawCalls(int drawCalls) { this->drawCalls += drawCalls; }
-    void SetFPS(int fps) { this->fps = fps; }
-
-    void Draw(class SpriteBatch& spriteBatch);
-
+    DebugUI(class Game* game);
+    void Draw(class SpriteBatch& batch) override;
 private:
-    int drawCalls = 0;
-    int fps = 0;
+    float totalDeltaTime = 0.0f;
+    float minFPS = Math::Infinity;
+    int frame = 0;
+    int sampleRate = 30;
 };

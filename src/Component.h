@@ -24,3 +24,13 @@ protected:
 private:
     bool enabled = true;
 };
+
+class DrawableComponent : public Component {
+public:
+    DrawableComponent(class Actor* owner, int drawOrder = 100);
+    ~DrawableComponent();
+    virtual void Draw(class SpriteBatch& batch) = 0;
+    int GetDrawOrder() const { return drawOrder; }
+protected:
+    int drawOrder;
+};

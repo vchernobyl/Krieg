@@ -8,7 +8,8 @@
 #include "Math.h"
 #include "Font.h"
 #include "Camera.h"
-#include "UILayer.h"
+#include "UIScreen.h"
+#include "DebugUI.h"
 
 #include <algorithm>
 #include <memory>
@@ -16,7 +17,6 @@
 // Game specific, remove later.
 #include "SpriteComponent.h"
 #include "ParticleComponent.h"
-#include "TextComponent.h"
 #include "Asteroid.h"
 #include "Ship.h"
 #include "Enemy.h"
@@ -27,7 +27,9 @@ Game::Game() :
     inputSystem(nullptr),
     physicsWorld(nullptr),
     isRunning(true),
-    updatingActors(false) {}
+    updatingActors(false),
+    ticks(0),
+    deltaTime(0.0f) {}
 
 bool Game::Initialize() {
     renderer = new Renderer(this);
@@ -114,13 +116,13 @@ void Game::RemoveActor(Actor* actor) {
     }
 }
 
-Font* Game::GetFont(const std::string& fileName) {
+Font* Game::GetFont(const std::string& fileName, int fontSize) {
     auto iter = fonts.find(fileName);
     if (iter != fonts.end()) {
         return iter->second;
     } else {
         Font* font = new Font(this);
-        if (font->Load(fileName)) {
+        if (font->Load(fileName, fontSize)) {
             fonts.emplace(fileName, font);
         } else {
             font->Unload();
@@ -140,8 +142,8 @@ Actor* Game::GetActorByTag(const std::string& tag) {
     return nullptr;
 }
 
-void Game::PushUI(UILayer* layer) {
-    uiStack.emplace_back(layer);
+void Game::PushUI(UIScreen* ui) {
+    uiStack.emplace_back(ui);
 }
 
 void Game::ProcessInput() {
@@ -178,15 +180,9 @@ void Game::ProcessInput() {
 void Game::UpdateGame() {
     while (!SDL_TICKS_PASSED(SDL_GetTicks(), ticks + 16));
 
-    float deltaTime = (SDL_GetTicks() - ticks) / 1000.0f;
+    deltaTime = (SDL_GetTicks() - ticks) / 1000.0f;
     if (deltaTime > 0.05f) deltaTime = 0.05f;
     ticks = SDL_GetTicks();
-
-    static int count = 0;
-    if (count++ == 30) {
-        SDL_Log("fps: %d", static_cast<int>(1.0f / deltaTime));
-        count = 0;
-    }
 
     physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.
 
@@ -221,14 +217,14 @@ void Game::UpdateGame() {
     renderer->SetUIViewMatrix(uiCamera->GetViewMatrix());
 
     for (auto ui : uiStack) {
-        if (ui->GetState() == UILayer::State::Active) {
+        if (ui->GetState() == UIScreen::State::Active) {
             ui->Update(deltaTime);
         }
     }
 
     auto iter = uiStack.begin();
     while (iter != uiStack.end()) {
-        if ((*iter)->GetState() == UILayer::State::Closing) {
+        if ((*iter)->GetState() == UIScreen::State::Closing) {
             delete *iter;
             iter = uiStack.erase(iter);
         } else {
@@ -261,15 +257,15 @@ void Game::LoadData() {
         new Asteroid(this);
     }
 
-    auto t = new Actor(this);
-    auto text = new TextComponent(t);
-    text->SetFont(GetFont("data/fonts/Carlito-Regular.ttf"));
-    text->SetText("Grapple Hook!");
-    t->SetPosition(Vector2(0.0f, 2.0f));
-    t->SetScale(1.5f);
+    new DebugUI(this);
 }
 
 void Game::UnloadData() {
+    while (!uiStack.empty()) {
+        delete uiStack.back();
+        uiStack.pop_back();
+    }
+
     if (renderer) {
         renderer->UnloadData();
     }

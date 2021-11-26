@@ -1,6 +1,5 @@
 #pragma once
 
-#include <SDL/SDL.h>
 #include <vector>
 #include <string>
 #include <unordered_map>
@@ -12,7 +11,7 @@ class AudioSystem;
 class InputSystem;
 class Font;
 class Camera;
-class UILayer;
+class UIScreen;
 
 class Game {
 public:
@@ -25,14 +24,16 @@ public:
     void RemoveActor(Actor* actor);
 
     Camera* GetMainCamera() { return mainCamera; }
-    Font* GetFont(const std::string& fileName);
+    Font* GetFont(const std::string& fileName, int fontSize = 48);
     Actor* GetActorByTag(const std::string& tag);
     Renderer* GetRenderer() const { return renderer; }
     PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
     AudioSystem* GetAudioSystem() { return audioSystem; }
+    unsigned long GetTicks() const { return ticks; }
+    float GetDeltaTime() const { return deltaTime; }
     
-    const std::vector<UILayer*>& GetUIStack() { return uiStack; }
-    void PushUI(UILayer* layer);
+    const std::vector<UIScreen*>& GetUIStack() { return uiStack; }
+    void PushUI(UIScreen* ui);
 
 private:
     void ProcessInput();
@@ -43,10 +44,9 @@ private:
 
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
-    std::vector<UILayer*> uiStack;
+    std::vector<UIScreen*> uiStack;
 
     std::unordered_map<std::string, Font*> fonts;
-    std::unordered_map<std::string, std::string> text;
 
     Renderer* renderer;
     InputSystem* inputSystem;
@@ -58,7 +58,9 @@ private:
 
     bool isRunning;
     bool updatingActors;
-    Uint32 ticks;
+
+    unsigned long ticks;
+    float deltaTime;
 
     // TODO: Game specific, remove it all later.
     std::vector<class Asteroid*> asteroids;

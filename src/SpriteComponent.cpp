@@ -6,14 +6,7 @@
 #include "Game.h"
 
 SpriteComponent::SpriteComponent(Actor* owner, int drawOrder)
-    : Component(owner, drawOrder),
-      drawOrder(drawOrder) {
-    owner->GetGame()->GetRenderer()->AddSprite(this);
-}
-
-SpriteComponent::~SpriteComponent() {
-    owner->GetGame()->GetRenderer()->RemoveSprite(this);
-}
+    : DrawableComponent(owner, drawOrder) {}
 
 void SpriteComponent::Draw(SpriteBatch& spriteBatch) {
     if (texture) {

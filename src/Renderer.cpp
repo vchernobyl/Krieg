@@ -5,13 +5,11 @@
 #include "Texture.h"
 #include "ParticleComponent.h"
 #include "DebugRenderer.h"
-#include "DebugUI.h"
 #include "Shader.h"
 #include "Assert.h"
 #include "Camera.h"
 #include "Font.h"
-#include "TextComponent.h"
-#include "UILayer.h"
+#include "UIScreen.h"
 
 #include <GL/glew.h>
 #include <algorithm>
@@ -109,31 +107,23 @@ void Renderer::Draw() {
 
     spriteBatch.SetProjectionMatrix(view);
     spriteBatch.Begin(SpriteBatch::SortType::FrontToBack);
-    for (auto sprite : sprites) {
-        if (sprite->IsEnabled()) {
-            sprite->Draw(spriteBatch);
+    for (auto drawable : drawables) {
+        if (drawable->IsEnabled()) {
+            drawable->Draw(spriteBatch);
         }
-    }
-
-    for (auto emitter : particles) {
-        emitter->Draw(spriteBatch);
     }
     spriteBatch.End();
     spriteBatch.DrawBatch();
 
     uiSpriteBatch.SetProjectionMatrix(uiView);
     uiSpriteBatch.Begin();
-    for (auto text : texts) {
-        text->Draw(uiSpriteBatch);
+    for (auto ui : game->GetUIStack()) {
+        ui->Draw(uiSpriteBatch);
     }
     uiSpriteBatch.End();
     uiSpriteBatch.DrawBatch();
 
     DebugRenderer::Draw(view, 1.0f);
-
-    for (auto ui : game->GetUIStack()) {
-        ui->Draw(uiSpriteBatch);
-    }
 
     SDL_GL_SwapWindow(window);
 }
@@ -155,36 +145,14 @@ Texture* Renderer::GetTexture(const std::string& fileName) {
     return tex;
 }
 
-void Renderer::AddSprite(SpriteComponent* sprite) {
-    sprites.push_back(sprite);
+void Renderer::AddDrawable(DrawableComponent* drawable) {
+    drawables.push_back(drawable);
 }
 
-void Renderer::RemoveSprite(SpriteComponent* sprite) {
-    auto iter = std::find(sprites.begin(), sprites.end(), sprite);
-    if (iter != sprites.end()) {
-        sprites.erase(iter);
-    }
-}
-
-void Renderer::AddParticles(ParticleComponent* emitter) {
-    particles.push_back(emitter);
-}
-
-void Renderer::RemoveParticles(ParticleComponent* emitter) {
-    auto iter = std::find(particles.begin(), particles.end(), emitter);
-    if (iter != particles.end()) {
-        particles.erase(iter);
-    }
-}
-
-void Renderer::AddText(TextComponent* text) {
-    texts.push_back(text);
-}
-
-void Renderer::RemoveText(TextComponent* text) {
-    auto iter = std::find(texts.begin(), texts.end(), text);
-    if (iter != texts.end()) {
-        texts.erase(iter);
+void Renderer::RemoveDrawable(DrawableComponent* drawable) {
+    auto iter = std::find(drawables.begin(), drawables.end(), drawable);
+    if (iter != drawables.end()) {
+        drawables.erase(iter);
     }
 }
 

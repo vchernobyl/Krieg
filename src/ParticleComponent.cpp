@@ -9,16 +9,9 @@
 const size_t MaxParticles = 1000;
 
 ParticleComponent::ParticleComponent(Actor* owner, int drawOrder)
-    : Component(owner, drawOrder),
+    : DrawableComponent(owner, drawOrder),
       particlePool(MaxParticles),
-      texture(nullptr),
-      drawOrder(drawOrder) {
-    owner->GetGame()->GetRenderer()->AddParticles(this);
-}
-
-ParticleComponent::~ParticleComponent() {
-    owner->GetGame()->GetRenderer()->RemoveParticles(this);
-}
+      texture(nullptr) {}
 
 void ParticleComponent::Update(float deltaTime) {
     time += deltaTime;

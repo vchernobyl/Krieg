@@ -275,7 +275,8 @@ the fixture, which makes the selection not precise. [WON'T DO]
   26.2. Downscale font to use unit size. [DONE]
   26.3. Implement text component. [DONE]
 27. Add sprite shader to be a part of sprite batch. [DONE]
-28. Add simple HUD. [IN PROGRESS]
+28. Add FPS debug UI. [DONE]
+29. Add simple weapons HUD. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
@@ -293,7 +294,7 @@ Backlog
 
 How be brutally effective:
 --------------------------
-1. Get things done quickly
-2. Get things done robustly
-3. Make things simple
-4. Finish things!
+1. Get things done quickly.
+2. Get things done robustly.
+3. Make things simple.
+4. Finish things.
