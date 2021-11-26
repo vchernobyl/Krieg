@@ -30,9 +30,6 @@ public:
     void AddDrawable(DrawableComponent* drawable);
     void RemoveDrawable(DrawableComponent* drawable);
 
-    void AddText(TextComponent* text);
-    void RemoveText(TextComponent* text);
-
     void SetViewMatrix(const Matrix4& view) { this->view = view; }
     void SetUIViewMatrix(const Matrix4& uiView) { this->uiView = uiView; }
 
@@ -53,8 +50,6 @@ private:
     Matrix4 view;
 
     std::vector<DrawableComponent*> drawables;
-    std::vector<TextComponent*> texts;
-
     std::unordered_map<std::string, Texture*> textures;
 
     Game* game;

@@ -9,8 +9,7 @@
 #include "Assert.h"
 #include "Camera.h"
 #include "Font.h"
-#include "TextComponent.h"
-#include "UILayer.h"
+#include "UIScreen.h"
 
 #include <GL/glew.h>
 #include <algorithm>
@@ -118,17 +117,13 @@ void Renderer::Draw() {
 
     uiSpriteBatch.SetProjectionMatrix(uiView);
     uiSpriteBatch.Begin();
-    for (auto text : texts) {
-        text->Draw(uiSpriteBatch);
+    for (auto ui : game->GetUIStack()) {
+        ui->Draw(uiSpriteBatch);
     }
     uiSpriteBatch.End();
     uiSpriteBatch.DrawBatch();
 
     DebugRenderer::Draw(view, 1.0f);
-
-    for (auto ui : game->GetUIStack()) {
-        ui->Draw(uiSpriteBatch);
-    }
 
     SDL_GL_SwapWindow(window);
 }
@@ -158,17 +153,6 @@ void Renderer::RemoveDrawable(DrawableComponent* drawable) {
     auto iter = std::find(drawables.begin(), drawables.end(), drawable);
     if (iter != drawables.end()) {
         drawables.erase(iter);
-    }
-}
-
-void Renderer::AddText(TextComponent* text) {
-    texts.push_back(text);
-}
-
-void Renderer::RemoveText(TextComponent* text) {
-    auto iter = std::find(texts.begin(), texts.end(), text);
-    if (iter != texts.end()) {
-        texts.erase(iter);
     }
 }
 

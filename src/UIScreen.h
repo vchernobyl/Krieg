@@ -11,7 +11,6 @@ class Game;
 class SpriteBatch;
 class SpriteComponent;
 class TextComponent;
-class UILayer;
 struct InputState;
 
 class Button {
@@ -39,22 +38,44 @@ private:
     bool highlighted;
 };
 
-class UILayer : public Actor {
+class UIScreen : public Actor {
 public:
     enum class State {
         Active,
         Closing
     };
     
-    UILayer(Game* game);
-    virtual ~UILayer() {}
+    UIScreen(Game* game);
+    virtual ~UIScreen() {}
     
     virtual void Update(float deltaTime) {}
     virtual void Draw(SpriteBatch& batch);
+    virtual void ProcessInput(const struct InputState& input);
+    virtual void HandleKeyPress(int key);
+
+    void Close();
 
     State GetState() const { return state; }
 
-private:
-    Game* game;
+    void SetTitle(const std::string& text,
+                  const Vector4& color = Color::White,
+                  int pointSize = 48);
+    void AddButton(const std::string& text, std::function<void()> onClick);
+
+protected:
+    void DrawTexture(class SpriteBatch& batch, class Texture* texture,
+                     const Vector2& offset = Vector2::Zero,
+                     float scale = 1.0f,
+                     bool flipY = false);
+    void SetRelativeMouseMode(bool flag);
+
+    class Game* game;
+    class Font* font;
+    
+    Vector2 titlePosition;
+    Vector2 nextButtonPosition;
+    Vector2 backgroundPosition;
+
     State state;
+    std::vector<Button*> buttons;
 };
