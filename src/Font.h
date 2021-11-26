@@ -12,8 +12,8 @@ public:
     bool Load(const std::string& fileName, unsigned int fontSize = 48);
     void Unload();
     void Draw(class SpriteBatch& spriteBatch, const std::string& text,
-              const Vector2& position, float scale = 1.0f, int drawOrder = 1,
-              const Vector4& color = Color::White);
+              const Vector2& position, const Vector4& color = Color::White,
+              float scale = 1.0f, int drawOrder = 1);
 private:
     struct Character {
         unsigned int textureID;

@@ -15,24 +15,26 @@ struct InputState;
 
 class Button {
 public:
-    Button(const std::string& name, class Font*,
+    Button(const std::string& text, class Font*,
            std::function<void()> onClick,
            const Vector2& position, const Vector2& size);
-    ~Button();
 
-    void SetText(const std::string& text);
+    void SetText(const std::string& text) { this->text = text; }
+    const std::string& GetText() const { return text; }
+    
     const Vector2& GetPosition() const { return position; }
+    const Vector2& GetSize() const { return size; }
     
     void SetHighlighted(bool flag) { highlighted = flag; }
     bool GetHighlighted() const { return highlighted; }
 
     bool ContainsPoint(const Vector2& point) const;
-    void Onclick();
+    void OnClick() { if (onClick) onClick(); }
 
 private:
-    std::function<void()> onClick;
     std::string text;
     class Font* font;
+    std::function<void()> onClick;
     Vector2 position;
     Vector2 size;
     bool highlighted;
@@ -46,7 +48,7 @@ public:
     };
     
     UIScreen(Game* game);
-    virtual ~UIScreen() {}
+    virtual ~UIScreen();
     
     virtual void Update(float deltaTime) {}
     virtual void Draw(SpriteBatch& batch);
@@ -60,7 +62,10 @@ public:
     void SetTitle(const std::string& text,
                   const Vector4& color = Color::White,
                   int pointSize = 48);
-    void AddButton(const std::string& text, std::function<void()> onClick);
+
+    void AddButton(const std::string& text,
+                   const Vector2& position = Vector2::Zero,
+                   std::function<void()> onClick = nullptr);
 
 protected:
     void DrawTexture(class SpriteBatch& batch, class Texture* texture,
@@ -71,11 +76,16 @@ protected:
 
     class Game* game;
     class Font* font;
-    
+
     Vector2 titlePosition;
-    Vector2 nextButtonPosition;
     Vector2 backgroundPosition;
 
     State state;
     std::vector<Button*> buttons;
+
+    // Game specific, remove later.
+    class Texture* title;
+    class Texture* background;
+    class Texture* buttonOn;
+    class Texture* buttonOff;
 };

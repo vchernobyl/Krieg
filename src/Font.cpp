@@ -93,7 +93,8 @@ void Font::Unload() {
 }
 
 void Font::Draw(SpriteBatch& spriteBatch, const std::string& text,
-                const Vector2& position, float scale, int drawOrder, const Vector4& color) {
+                const Vector2& position, const Vector4& color,
+                float scale, int drawOrder) {
     auto cursor = position.x;
     for (auto ch = text.begin(); ch != text.end(); ch++) {
         Character character = characters[*ch];

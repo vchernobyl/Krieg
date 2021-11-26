@@ -261,6 +261,8 @@ void Game::LoadData() {
     }
 
     auto ui = new UIScreen(this);
+    ui->AddButton("Button title", Vector2(1.0f, 0.0f));
+    ui->AddButton("Second button", Vector2(-3.0f, -2.0f));
 }
 
 void Game::UnloadData() {
