@@ -10,6 +10,7 @@
 #include "Camera.h"
 #include "UIScreen.h"
 #include "DebugUI.h"
+#include "HUD.h"
 
 #include <algorithm>
 #include <memory>
@@ -258,6 +259,7 @@ void Game::LoadData() {
     }
 
     new DebugUI(this);
+    new HUD(this);
 }
 
 void Game::UnloadData() {

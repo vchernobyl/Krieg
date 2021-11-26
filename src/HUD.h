@@ -1,7 +1,11 @@
 #pragma once
 
-class HUD {
+#include "UIScreen.h"
+
+class HUD : public UIScreen {
 public:
     HUD(class Game* game);
-    ~HUD();
+    void Draw(class SpriteBatch& batch) override;
+private:
+    std::vector<class Weapon*> weapons;
 };
