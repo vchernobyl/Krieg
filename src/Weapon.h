@@ -2,6 +2,7 @@
 
 #include "Actor.h"
 #include <vector>
+#include <string>
 
 class Game;
 class TargetComponent;
@@ -12,7 +13,11 @@ public:
     Weapon(Game* game);
     void UpdateActor(float deltaTime) override;
     void ActorInput(const struct InputState& inputState) override;
+
     virtual void ShootAt(TargetComponent* target) = 0;
+    virtual std::string GetWeaponName() const = 0;
+    
+    int GetWeaponStacks() const { return stacks; }
 
 protected:
     bool IsTargeted(TargetComponent* target) const;
@@ -23,7 +28,7 @@ protected:
     int stacks = 3;
     int currentTargetIndex = 0;
 
-    bool isActivated = false;
+    bool isActivated = true;
 
     float fireRate = 1.0f;
     float timeBetweenShots = 0.0f;

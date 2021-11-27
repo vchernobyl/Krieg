@@ -9,12 +9,13 @@ public:
     Ship(class Game* game);
     void UpdateActor(float deltaTime) override;
     void ActorInput(const struct InputState& inputState) override;
+
+    const std::vector<class Weapon*>& GetWeapons() const { return weapons; }
+
 private:
     class RigidbodyComponent* rigidbody = nullptr;
     class ParticleComponent* trailEmitter = nullptr;
 
-    class RocketLauncher* rocketLauncher = nullptr;
-    class Turret* turret = nullptr;
     std::vector<class Weapon*> weapons;
 
     Vector2 moveTargetPosition;

@@ -32,6 +32,8 @@ public:
     Turret(Game* game);
     void UpdateActor(float deltaTime) override;
     void ShootAt(TargetComponent* target) override;
+    std::string GetWeaponName() const override { return "Turret"; }
+    
 private:
     friend class Ship;
 };

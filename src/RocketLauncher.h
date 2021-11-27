@@ -45,6 +45,7 @@ public:
     RocketLauncher(Game* game);
     void UpdateActor(float deltaTime) override;
     void ShootAt(TargetComponent* target) override;
+    std::string GetWeaponName() const override { return "Rocket Launcher"; }
 private:
     friend class Ship;
 };

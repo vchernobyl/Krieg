@@ -41,18 +41,17 @@ Ship::Ship(Game* game) : Actor(game) {
     trailEmitter->SetEmissionRate(15.0f);
     trailEmitter->SetProps(trailProps);
 
-    rocketLauncher = new RocketLauncher(game);
-    turret = new Turret(game);
+    weapons.push_back(new RocketLauncher(game));
+    weapons.push_back(new Turret(game));
 
     SetTag("Player");
 }
 
 void Ship::UpdateActor(float deltaTime) {
-    rocketLauncher->SetPosition(GetPosition() - Vector2(0.25f, 0.0f));
-    rocketLauncher->SetRotation(GetRotation());
-
-    turret->SetPosition(GetPosition() + Vector2(0.25f, 0.0f));
-    turret->SetRotation(GetRotation());
+    for (auto weapon : weapons) {
+        weapon->SetPosition(GetPosition());
+        weapon->SetRotation(GetRotation());
+    }
 
     if (Vector2::Distance(GetPosition(), moveTargetPosition) < 0.01f) {
         rigidbody->SetVelocity(Vector2::Zero);
@@ -77,9 +76,9 @@ void Ship::ActorInput(const InputState& inputState) {
         DebugRenderer::DrawCircle(moveTargetPosition, 0.1f, Color::Red);
     }
 
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
-        turret->isActivated = !turret->isActivated;
-    } else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_2) == ButtonState::Pressed) {
-        rocketLauncher->isActivated = !rocketLauncher->isActivated;
-    }
+    // if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
+    //     turret->isActivated = !turret->isActivated;
+    // } else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_2) == ButtonState::Pressed) {
+    //     rocketLauncher->isActivated = !rocketLauncher->isActivated;
+    // }
 }
