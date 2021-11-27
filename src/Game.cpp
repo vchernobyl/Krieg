@@ -182,7 +182,14 @@ void Game::UpdateGame() {
     while (!SDL_TICKS_PASSED(SDL_GetTicks(), ticks + 16));
 
     deltaTime = (SDL_GetTicks() - ticks) / 1000.0f;
-    if (deltaTime > 0.05f) deltaTime = 0.05f;
+
+    // Reduce delta time to a sane default when debugger has paused the game at a breakpoint.
+    // TODO: Noincidentally, removing this line improves the performance of the 3rd frame of the game.
+    // This needs further investigation.
+    if (deltaTime > 0.05f) {
+        deltaTime = 0.05f;
+    }
+
     ticks = SDL_GetTicks();
 
     physicsWorld->Step(0.016f); // Run physics step at 60Hz independent of the frame rate.

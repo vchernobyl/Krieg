@@ -9,7 +9,7 @@ class SpriteComponent;
 class RigidbodyComponent;
 class ParticleComponent;
 class RocketLauncher;
-class Damageable;
+class TargetComponent;
 
 struct InputState;
 struct Contact;
@@ -29,7 +29,7 @@ public:
     Rocket(Game* game);
     void UpdateActor(float deltaTime) override;
     void OnBeginContact(const Contact& contact) override;
-    void LaunchAt(Damageable* target, float speed = 12.0f);
+    void LaunchAt(TargetComponent* target, float speed = 12.0f);
 private:
     SpriteComponent* sprite = nullptr;
     RigidbodyComponent* rb = nullptr;
@@ -44,7 +44,7 @@ class RocketLauncher : public Weapon {
 public:
     RocketLauncher(Game* game);
     void UpdateActor(float deltaTime) override;
-    void ShootAt(Damageable* target) override;
+    void ShootAt(TargetComponent* target) override;
 private:
     friend class Ship;
 };

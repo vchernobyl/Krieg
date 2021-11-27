@@ -7,7 +7,7 @@
 #include "RigidbodyComponent.h"
 #include "AudioComponent.h"
 #include "Ship.h"
-#include "Damageable.h"
+#include "TargetComponent.h"
 #include "InputSystem.h"
 #include "Camera.h"
 #include "PhysicsWorld.h"
@@ -43,7 +43,7 @@ void Bullet::OnBeginContact(const struct Contact& contact) {
 
     SetState(State::Dead);
 
-    if (auto target = contact.other->GetComponent<Damageable>()) {
+    if (auto target = contact.other->GetComponent<TargetComponent>()) {
         target->Damage(damage);
     }
 }
@@ -71,7 +71,7 @@ void Turret::UpdateActor(float deltaTime) {
     DebugRenderer::DrawCircle(GetPosition(), 0.1f, Color::Red);
 }
 
-void Turret::ShootAt(Damageable* target) {
+void Turret::ShootAt(TargetComponent* target) {
     auto bullet = new Bullet(GetGame());
     bullet->SetPosition(GetPosition());
     bullet->ShootAt(target->GetOwner()->GetPosition());

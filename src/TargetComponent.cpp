@@ -1,4 +1,4 @@
-#include "Damageable.h"
+#include "TargetComponent.h"
 #include "Actor.h"
 #include "SpriteComponent.h"
 #include "ParticleComponent.h"
@@ -7,7 +7,7 @@
 #include "Renderer.h"
 #include "Texture.h"
 
-Damageable::Damageable(Actor* owner, int health) : Component(owner), health(health) {
+TargetComponent::TargetComponent(Actor* owner, int health) : Component(owner), health(health) {
     sprite = new SpriteComponent(owner, 300);
     sprite->SetTexture(owner->GetGame()->GetRenderer()->GetTexture("data/textures/Circle.png"));
     sprite->SetEnabled(false);
@@ -16,7 +16,7 @@ Damageable::Damageable(Actor* owner, int health) : Component(owner), health(heal
     originalColor = ownerSprite->GetColor();
 }
 
-void Damageable::Update(float deltaTime) {
+void TargetComponent::Update(float deltaTime) {
     if (shouldFlash) {
         ownerSprite->SetColor(Color::Red);
         flashFrames--;
@@ -27,7 +27,7 @@ void Damageable::Update(float deltaTime) {
     } 
 }
 
-void Damageable::Damage(int amount) {
+void TargetComponent::Damage(int amount) {
     shouldFlash = true;
     flashFrames = 8;
     health -= amount;
@@ -38,12 +38,12 @@ void Damageable::Damage(int amount) {
     }
 }
 
-void Damageable::Select() {
+void TargetComponent::Select() {
     isSelected = true;
     sprite->SetEnabled(isSelected);
 }
 
-void Damageable::Deselect() {
+void TargetComponent::Deselect() {
     isSelected = false;
     sprite->SetEnabled(isSelected);
 }

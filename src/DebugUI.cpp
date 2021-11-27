@@ -3,7 +3,6 @@
 #include "Font.h"
 #include "SpriteBatch.h"
 #include <string>
-#include <SDL/SDL.h>
 
 DebugUI::DebugUI(Game* game) : UIScreen(game) {
     font = game->GetFont("data/fonts/SourceCodePro-Regular.otf", 19);

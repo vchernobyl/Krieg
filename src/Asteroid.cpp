@@ -7,7 +7,7 @@
 #include "SpriteComponent.h"
 #include "RigidbodyComponent.h"
 #include "CircleColliderComponent.h"
-#include "Damageable.h"
+#include "TargetComponent.h"
 
 Asteroid::Asteroid(Game* game) : Actor(game) {
     SetPosition(Random::GetVector(Vector2(-8.0f, -6.0f), Vector2(8.0f, 6.0f)));
@@ -20,5 +20,5 @@ Asteroid::Asteroid(Game* game) : Actor(game) {
     auto collider = new CircleColliderComponent(this, 0.5f * GetScale());
     collider->SetCollisionFilter(CollisionCategory::Ground);
 
-    new Damageable(this, 150);
+    new TargetComponent(this, 150);
 }

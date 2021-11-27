@@ -1,6 +1,6 @@
 #include "Weapon.h"
 #include "Game.h"
-#include "Damageable.h"
+#include "TargetComponent.h"
 #include "InputSystem.h"
 #include "Camera.h"
 #include "PhysicsWorld.h"
@@ -36,35 +36,35 @@ void Weapon::ActorInput(const InputState& inputState) {
         auto physics = GetGame()->GetPhysicsWorld();
 
         if (auto rigidbody = physics->GetRigidbodyAt(worldPoint)) {
-            if (auto target = rigidbody->GetOwner()->GetComponent<Damageable>()) {
+            if (auto target = rigidbody->GetOwner()->GetComponent<TargetComponent>()) {
                 if (IsTargeted(target)) {
                     target->Deselect();
                     RemoveTarget(target);
                 } else if (targets.size() < stacks) {
                     target->Select();
                     AddTarget(target);
-                    target->SetOnDestroy([this](Damageable* target) { RemoveTarget(target); });
+                    target->SetOnDestroy([this](TargetComponent* target) { RemoveTarget(target); });
                 }
             }
         }
     }
 }
 
-void Weapon::AddTarget(Damageable* target) {
+void Weapon::AddTarget(TargetComponent* target) {
     auto iter = std::find(targets.begin(), targets.end(), target);
     if (iter == targets.end()) {
         targets.push_back(target);
     }
 }
 
-void Weapon::RemoveTarget(Damageable* target) {
+void Weapon::RemoveTarget(TargetComponent* target) {
     auto iter = std::find(targets.begin(), targets.end(), target);
     if (iter != targets.end()) {
         targets.erase(iter);
     }
 }
 
-bool Weapon::IsTargeted(Damageable* target) const {
+bool Weapon::IsTargeted(TargetComponent* target) const {
     auto iter = std::find(targets.begin(), targets.end(), target);
     return iter != targets.end();
 }

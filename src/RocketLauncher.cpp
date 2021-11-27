@@ -7,7 +7,7 @@
 #include "RigidbodyComponent.h"
 #include "CircleColliderComponent.h"
 #include "Ship.h"
-#include "Damageable.h"
+#include "TargetComponent.h"
 #include "Random.h"
 #include "AudioComponent.h"
 #include "InputSystem.h"
@@ -89,13 +89,13 @@ void Rocket::OnBeginContact(const Contact& contact) {
 
         new Explosion(GetGame(), GetPosition());
 
-        if (auto target = contact.other->GetComponent<Damageable>()) {
+        if (auto target = contact.other->GetComponent<TargetComponent>()) {
             target->Damage(damage);
         }
     }
 }
 
-void Rocket::LaunchAt(Damageable* target, float speed) {
+void Rocket::LaunchAt(TargetComponent* target, float speed) {
     auto direction = target->GetOwner()->GetPosition() - GetPosition();
     direction.Normalize();
     
@@ -118,7 +118,7 @@ void RocketLauncher::UpdateActor(float deltaTime) {
     DebugRenderer::DrawCircle(GetPosition(), 0.1f, Color::Yellow);
 }
 
-void RocketLauncher::ShootAt(Damageable* target) {
+void RocketLauncher::ShootAt(TargetComponent* target) {
     auto rocket = new Rocket(GetGame());
     rocket->SetPosition(GetPosition());
     rocket->LaunchAt(target);

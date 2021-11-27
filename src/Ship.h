@@ -12,8 +12,10 @@ public:
 private:
     class RigidbodyComponent* rigidbody = nullptr;
     class ParticleComponent* trailEmitter = nullptr;
+
     class RocketLauncher* rocketLauncher = nullptr;
     class Turret* turret = nullptr;
+    std::vector<class Weapon*> weapons;
 
     Vector2 moveTargetPosition;
     Vector2 direction = Vector2::Right;

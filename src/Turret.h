@@ -8,7 +8,7 @@ class Game;
 class SpriteComponent;
 class BoxColliderComponent;
 class RigidbodyComponent;
-class Damageable;
+class TargetComponent;
 
 class Bullet : public Actor {
 public:
@@ -31,7 +31,7 @@ class Turret : public Weapon {
 public:
     Turret(Game* game);
     void UpdateActor(float deltaTime) override;
-    void ShootAt(Damageable* target) override;
+    void ShootAt(TargetComponent* target) override;
 private:
     friend class Ship;
 };

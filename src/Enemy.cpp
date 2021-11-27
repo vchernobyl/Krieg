@@ -6,9 +6,9 @@
 #include "SpriteComponent.h"
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
-#include "Damageable.h"
-#include <cassert>
+#include "TargetComponent.h"
 #include "RocketLauncher.h"
+#include <cassert>
 
 Enemy::Enemy(Game* game) : Actor(game) {
     SetScale(0.75f);
@@ -21,7 +21,7 @@ Enemy::Enemy(Game* game) : Actor(game) {
     rigidbody = collider->GetAttachedRigidbody();
     followTarget = game->GetActorByTag("Player");
 
-    new Damageable(this, 100);
+    new TargetComponent(this, 100);
 
     assert(followTarget);
     assert(rigidbody);

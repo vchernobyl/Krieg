@@ -4,7 +4,7 @@
 #include <vector>
 
 class Game;
-class Damageable;
+class TargetComponent;
 struct InputState;
 
 class Weapon : public Actor {
@@ -12,14 +12,14 @@ public:
     Weapon(Game* game);
     void UpdateActor(float deltaTime) override;
     void ActorInput(const struct InputState& inputState) override;
-    virtual void ShootAt(Damageable* target) = 0;
+    virtual void ShootAt(TargetComponent* target) = 0;
 
 protected:
-    bool IsTargeted(Damageable* target) const;
-    void AddTarget(Damageable* target);
-    void RemoveTarget(Damageable* target);
+    bool IsTargeted(TargetComponent* target) const;
+    void AddTarget(TargetComponent* target);
+    void RemoveTarget(TargetComponent* target);
 
-    std::vector<Damageable*> targets;
+    std::vector<TargetComponent*> targets;
     int stacks = 3;
     int currentTargetIndex = 0;
 

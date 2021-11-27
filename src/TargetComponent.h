@@ -8,9 +8,9 @@ class Actor;
 class SpriteComponent;
 class ColliderComponent;
 
-class Damageable : public Component {
+class TargetComponent : public Component {
 public:
-    Damageable(Actor* owner, int health);
+    TargetComponent(Actor* owner, int health);
     void Update(float deltaTime) override;
     void Damage(int amount);
     void Select();
@@ -20,7 +20,7 @@ public:
     // BUG: If multiple weapons are targetting the same enemy, setting this lambda will override
     // previously set lambda by the previous weapon system. This will retain the target in the list
     // even after it is destroyed for all but one weapon system.
-    void SetOnDestroy(std::function<void(Damageable*)> onDestroy) { this->onDestroy = onDestroy; }
+    void SetOnDestroy(std::function<void(TargetComponent*)> onDestroy) { this->onDestroy = onDestroy; }
 
 private:
     int health = 100;
@@ -34,5 +34,5 @@ private:
     ColliderComponent* collider = nullptr;
     bool isSelected = false;
 
-    std::function<void(Damageable*)> onDestroy = nullptr;
+    std::function<void(TargetComponent*)> onDestroy = nullptr;
 };
