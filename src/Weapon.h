@@ -16,6 +16,7 @@ public:
 
     virtual void ShootAt(TargetComponent* target) = 0;
     virtual std::string GetWeaponName() const = 0;
+    virtual Vector4 GetReticleColor() const = 0;
     
     int GetWeaponStacks() const { return stacks; }
 

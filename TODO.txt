@@ -281,7 +281,7 @@ the fixture, which makes the selection not precise. [WON'T DO]
 31. Highlight currently selected weapon in the HUD. [DONE]
 32. Target enemies only with selected weapon up to it's stack count. [DONE]
 33. Remove destroyed target from all weapons targets list.
-34. Give each weapon different colore target reticle. [IN PROGRESS]
+34. Give each weapon different colore target reticle. [DONE]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

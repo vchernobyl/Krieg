@@ -13,7 +13,7 @@ public:
     TargetComponent(Actor* owner, int health);
     void Update(float deltaTime) override;
     void Damage(int amount);
-    void Select();
+    void Select(const Vector4& reticleColor);
     void Deselect();
     bool IsSelected() const { return isSelected; }
 

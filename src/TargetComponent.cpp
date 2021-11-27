@@ -38,9 +38,10 @@ void TargetComponent::Damage(int amount) {
     }
 }
 
-void TargetComponent::Select() {
+void TargetComponent::Select(const Vector4& reticleColor) {
     isSelected = true;
     sprite->SetEnabled(isSelected);
+    sprite->SetColor(reticleColor);
 }
 
 void TargetComponent::Deselect() {

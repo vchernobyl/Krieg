@@ -33,7 +33,7 @@ public:
     void UpdateActor(float deltaTime) override;
     void ShootAt(TargetComponent* target) override;
     std::string GetWeaponName() const override { return "Turret"; }
-    
+    Vector4 GetReticleColor() const override { return Color::Cyan; }
 private:
     friend class Ship;
 };

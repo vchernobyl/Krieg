@@ -95,7 +95,7 @@ void Ship::ActorInput(const InputState& inputState) {
                     target->Deselect();
                     weapon->RemoveTarget(target);
                 } else if (weapon->GetTargets().size() < weapon->GetWeaponStacks()) {
-                    target->Select();
+                    target->Select(weapon->GetReticleColor());
                     weapon->AddTarget(target);
                     target->SetOnDestroy([=](TargetComponent* target) { weapon->RemoveTarget(target); });
                 }
