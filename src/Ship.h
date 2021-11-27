@@ -11,12 +11,14 @@ public:
     void ActorInput(const struct InputState& inputState) override;
 
     const std::vector<class Weapon*>& GetWeapons() const { return weapons; }
+    const Weapon* GetSelectedWeapon() const { return weapons[selectedWeapon]; }
 
 private:
     class RigidbodyComponent* rigidbody = nullptr;
     class ParticleComponent* trailEmitter = nullptr;
 
     std::vector<class Weapon*> weapons;
+    int selectedWeapon = 0;
 
     Vector2 moveTargetPosition;
     Vector2 direction = Vector2::Right;

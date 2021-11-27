@@ -23,6 +23,7 @@ void HUD::Draw(class SpriteBatch& batch) {
         auto name = weapons[i]->GetWeaponName();
         auto stacks = weapons[i]->GetWeaponStacks();
         auto text = name + " " + std::to_string(stacks) + "x";
-        font->Draw(batch, text, anchor + (step * i));
+        auto color = ship->GetSelectedWeapon() == weapons[i] ? Color::Yellow : Color::White;
+        font->Draw(batch, text, anchor + (step * i), color);
     }
 }

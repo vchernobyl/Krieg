@@ -13,7 +13,7 @@ Weapon::Weapon(Game* game) : Actor(game) {
 void Weapon::UpdateActor(float deltaTime) {
     timeBetweenShots += deltaTime;
 
-    if (!isActivated || targets.empty()) return;
+    if (targets.empty()) return;
 
     if (timeBetweenShots >= 1.0f / fireRate) {
         timeBetweenShots = 0.0f;
@@ -28,8 +28,6 @@ void Weapon::UpdateActor(float deltaTime) {
 }
 
 void Weapon::ActorInput(const InputState& inputState) {
-    if (!isActivated) return;
-
     if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
         auto camera = GetGame()->GetMainCamera();
         auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());

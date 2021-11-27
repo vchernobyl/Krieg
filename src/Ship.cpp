@@ -76,9 +76,9 @@ void Ship::ActorInput(const InputState& inputState) {
         DebugRenderer::DrawCircle(moveTargetPosition, 0.1f, Color::Red);
     }
 
-    // if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
-    //     turret->isActivated = !turret->isActivated;
-    // } else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_2) == ButtonState::Pressed) {
-    //     rocketLauncher->isActivated = !rocketLauncher->isActivated;
-    // }
+    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
+        selectedWeapon = 0;
+    } else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_2) == ButtonState::Pressed) {
+        selectedWeapon = 1;
+    }
 }

@@ -28,8 +28,6 @@ protected:
     int stacks = 3;
     int currentTargetIndex = 0;
 
-    bool isActivated = true;
-
     float fireRate = 1.0f;
     float timeBetweenShots = 0.0f;
 };

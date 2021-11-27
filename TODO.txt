@@ -277,7 +277,8 @@ the fixture, which makes the selection not precise. [WON'T DO]
 27. Add sprite shader to be a part of sprite batch. [DONE]
 28. Add FPS debug UI. [DONE]
 29. Add simple weapons HUD. [DONE]
-30. Add weapon names and weapons list to the player. [IN PROGRESS]
+30. Add weapon names and weapons list to the player. [DONE]
+31. Highlight currently selected weapon in the HUD. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
