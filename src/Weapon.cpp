@@ -28,24 +28,6 @@ void Weapon::UpdateActor(float deltaTime) {
 }
 
 void Weapon::ActorInput(const InputState& inputState) {
-    if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
-        auto camera = GetGame()->GetMainCamera();
-        auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());
-        auto physics = GetGame()->GetPhysicsWorld();
-
-        if (auto rigidbody = physics->GetRigidbodyAt(worldPoint)) {
-            if (auto target = rigidbody->GetOwner()->GetComponent<TargetComponent>()) {
-                if (IsTargeted(target)) {
-                    target->Deselect();
-                    RemoveTarget(target);
-                } else if (targets.size() < stacks) {
-                    target->Select();
-                    AddTarget(target);
-                    target->SetOnDestroy([this](TargetComponent* target) { RemoveTarget(target); });
-                }
-            }
-        }
-    }
 }
 
 void Weapon::AddTarget(TargetComponent* target) {

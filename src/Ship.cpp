@@ -13,6 +13,8 @@
 #include "Random.h"
 #include "RocketLauncher.h"
 #include "Turret.h"
+#include "PhysicsWorld.h"
+#include "TargetComponent.h"
 
 Ship::Ship(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this);
@@ -73,12 +75,31 @@ void Ship::ActorInput(const InputState& inputState) {
     if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_LEFT)) {
         moveTargetPosition = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
         direction = Vector2::Normalize(moveTargetPosition - GetPosition());
-        DebugRenderer::DrawCircle(moveTargetPosition, 0.1f, Color::Red);
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
         selectedWeapon = 0;
     } else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_2) == ButtonState::Pressed) {
         selectedWeapon = 1;
+    }
+
+    if (inputState.Mouse.GetButtonState(SDL_BUTTON_RIGHT) == ButtonState::Pressed) {
+        auto camera = GetGame()->GetMainCamera();
+        auto worldPoint = camera->ScreenToWorld(inputState.Mouse.GetPosition());
+        auto physics = GetGame()->GetPhysicsWorld();
+
+        auto weapon = weapons[selectedWeapon];
+        if (auto rigidbody = physics->GetRigidbodyAt(worldPoint)) {
+            if (auto target = rigidbody->GetOwner()->GetComponent<TargetComponent>()) {
+                if (weapon->IsTargeted(target)) {
+                    target->Deselect();
+                    weapon->RemoveTarget(target);
+                } else if (weapon->GetTargets().size() < weapon->GetWeaponStacks()) {
+                    target->Select();
+                    weapon->AddTarget(target);
+                    target->SetOnDestroy([=](TargetComponent* target) { weapon->RemoveTarget(target); });
+                }
+            }
+        }
     }
 }

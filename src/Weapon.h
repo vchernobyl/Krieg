@@ -19,11 +19,13 @@ public:
     
     int GetWeaponStacks() const { return stacks; }
 
-protected:
     bool IsTargeted(TargetComponent* target) const;
     void AddTarget(TargetComponent* target);
     void RemoveTarget(TargetComponent* target);
 
+    const std::vector<TargetComponent*>& GetTargets() const { return targets; }
+
+protected:
     std::vector<TargetComponent*> targets;
     int stacks = 3;
     int currentTargetIndex = 0;
