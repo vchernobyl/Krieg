@@ -282,6 +282,7 @@ the fixture, which makes the selection not precise. [WON'T DO]
 32. Target enemies only with selected weapon up to it's stack count. [DONE]
 33. Remove destroyed target from all weapons targets list. [DONE]
 34. Give each weapon different colore target reticle. [DONE]
+35. Basic enemy attacking. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
