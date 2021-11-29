@@ -266,8 +266,8 @@ the fixture, which makes the selection not precise. [WON'T DO]
 19. Implement font rendering using the FreeType library.
 20. Add turret weapons system. [DONE]
 21. Refactor turret and rocket launcher into a common class/interface. [DONE]
-22. Make the selection sprite to be different for each weapon system.
-23. Remove targets from all weapons on destroy.
+22. Make the selection sprite to be different for each weapon system. [DONE]
+23. Remove targets from all weapons on destroy. [DONE]
 24. Basic font rendering. [DONE]
 25. Add font color via vertex data. [DONE]
 26. Refactor font rendering: [DONE]
@@ -280,7 +280,7 @@ the fixture, which makes the selection not precise. [WON'T DO]
 30. Add weapon names and weapons list to the player. [DONE]
 31. Highlight currently selected weapon in the HUD. [DONE]
 32. Target enemies only with selected weapon up to it's stack count. [DONE]
-33. Remove destroyed target from all weapons targets list.
+33. Remove destroyed target from all weapons targets list. [DONE]
 34. Give each weapon different colore target reticle. [DONE]
 
 Notes from 'Game Engine Architecture':

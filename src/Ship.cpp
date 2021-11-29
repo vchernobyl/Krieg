@@ -97,7 +97,11 @@ void Ship::ActorInput(const InputState& inputState) {
                 } else if (weapon->GetTargets().size() < weapon->GetWeaponStacks()) {
                     target->Select(weapon->GetReticleColor());
                     weapon->AddTarget(target);
-                    target->SetOnDestroy([=](TargetComponent* target) { weapon->RemoveTarget(target); });
+                    target->SetOnDestroy([=](TargetComponent* target) {
+                        for (auto w : weapons) {
+                            w->RemoveTarget(target);
+                        }
+                    });
                 }
             }
         }
