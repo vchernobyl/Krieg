@@ -37,11 +37,9 @@ void Enemy::UpdateActor(float deltaTime) {
 
     DebugRenderer::DrawLine(GetPosition(), GetPosition() + GetForward(), Color::Red);
     DebugRenderer::DrawCircle(GetPosition(), visionRadius, Vector4(1.0f, 1.0f, 0.0f, 0.25f));
-}
 
-void Enemy::Attack() {
     auto dist = Vector2::Distance(followTarget->GetPosition(), GetPosition());
-    if (Vector2::Distance(followTarget->GetPosition(), GetPosition()) <= visionRadius) {
-        SDL_Log("attack");
+    if (dist <= visionRadius) {
+        SDL_Log("attack at distance %f", dist);
     }
 }

@@ -7,7 +7,6 @@ public:
     Enemy(class Game*);
     void UpdateActor(float deltaTime) override;
     void Select();
-    void Attack();
 private:
     class RigidbodyComponent* rigidbody = nullptr;
     class RocketLauncher* rocketLauncher = nullptr;

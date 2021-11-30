@@ -182,7 +182,7 @@ public:
     }
 
     static float Distance(const Vector2& a, const Vector2& b) {
-        return (b - a).LengthSq();
+        return (b - a).Length();
     }
 
     static Vector2 Reflect(const Vector2& v, const Vector2& n) {
