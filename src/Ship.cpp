@@ -25,7 +25,7 @@ Ship::Ship(Game* game) : Actor(game) {
     collider->SetCollisionFilter(CollisionCategory::Player);
 
     new CameraMovement(this);
-    
+
     trailEmitter = new ParticleComponent(this, sprite->GetDrawOrder() - 1);
     trailEmitter->SetTexture(game->GetRenderer()->GetTexture("data/textures/Particle.png"));
 
@@ -55,7 +55,7 @@ void Ship::UpdateActor(float deltaTime) {
         weapon->SetRotation(GetRotation());
     }
 
-    if (Vector2::Distance(GetPosition(), moveTargetPosition) < 0.01f) {
+    if (Vector2::Distance(GetPosition(), moveTargetPosition) < 0.1f) {
         rigidbody->SetVelocity(Vector2::Zero);
         trailEmitter->Stop();
     } else {
@@ -75,6 +75,7 @@ void Ship::ActorInput(const InputState& inputState) {
     if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_LEFT)) {
         moveTargetPosition = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
         direction = Vector2::Normalize(moveTargetPosition - GetPosition());
+        DebugRenderer::DrawCircle(moveTargetPosition, 0.25f);
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
