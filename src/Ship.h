@@ -9,6 +9,7 @@ public:
     Ship(class Game* game);
     void UpdateActor(float deltaTime) override;
     void ActorInput(const struct InputState& inputState) override;
+    void OnBeginContact(const struct Contact& contact) override;
 
     const std::vector<class Weapon*>& GetWeapons() const { return weapons; }
     const Weapon* GetSelectedWeapon() const { return weapons[selectedWeapon]; }
@@ -19,6 +20,8 @@ private:
 
     std::vector<class Weapon*> weapons;
     int selectedWeapon = 0;
+
+    int health = 100;
 
     Vector2 moveTargetPosition;
     Vector2 direction = Vector2::Right;

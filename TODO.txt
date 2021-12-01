@@ -284,6 +284,11 @@ the fixture, which makes the selection not precise. [WON'T DO]
 34. Give each weapon different colore target reticle. [DONE]
 35. Basic enemy attacking. [DONE]
 
+December:
+---------
+1. Make player damageable. [IN PROGRESS]
+2. Check why bullet box collider is green. [DONE]
+
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
   it could be expressed better as a HAS-A relationship. Should AnimatedSprite inherit from Sprite?

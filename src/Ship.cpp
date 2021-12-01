@@ -15,6 +15,7 @@
 #include "Turret.h"
 #include "PhysicsWorld.h"
 #include "TargetComponent.h"
+#include "Enemy.h"
 
 Ship::Ship(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this);
@@ -106,5 +107,11 @@ void Ship::ActorInput(const InputState& inputState) {
                 }
             }
         }
+    }
+}
+
+void Ship::OnBeginContact(const Contact& contact) {
+    if (auto projectile = dynamic_cast<Projectile*>(contact.other)) {
+        health -= 50;
     }
 }

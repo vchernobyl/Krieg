@@ -31,7 +31,6 @@ private:
 
     SpriteComponent* ownerSprite = nullptr;
     SpriteComponent* sprite = nullptr;
-    ColliderComponent* collider = nullptr;
     bool isSelected = false;
 
     std::function<void(TargetComponent*)> onDestroy = nullptr;

@@ -6,13 +6,11 @@
 
 class Game;
 class TargetComponent;
-struct InputState;
 
 class Weapon : public Actor {
 public:
     Weapon(Game* game);
     void UpdateActor(float deltaTime) override;
-    void ActorInput(const struct InputState& inputState) override;
 
     virtual void ShootAt(TargetComponent* target) = 0;
     virtual std::string GetWeaponName() const = 0;

@@ -27,9 +27,6 @@ void Weapon::UpdateActor(float deltaTime) {
     }
 }
 
-void Weapon::ActorInput(const InputState& inputState) {
-}
-
 void Weapon::AddTarget(TargetComponent* target) {
     auto iter = std::find(targets.begin(), targets.end(), target);
     if (iter == targets.end()) {

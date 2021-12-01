@@ -18,6 +18,7 @@ enum class CollisionCategory : unsigned short {
     Default = 0xFFFF,
 };
 
+// TODO: Implement the rest of the operators.
 CollisionCategory operator|(CollisionCategory lhs, CollisionCategory rhs);
 
 struct Contact {
