@@ -1,15 +1,16 @@
 #include "RocketLauncher.h"
 #include "Game.h"
-#include "SpriteComponent.h"
-#include "ParticleComponent.h"
 #include "Renderer.h"
 #include "Texture.h"
+#include "SpriteComponent.h"
+#include "ParticleComponent.h"
 #include "RigidbodyComponent.h"
 #include "CircleColliderComponent.h"
-#include "Ship.h"
 #include "TargetComponent.h"
-#include "Random.h"
+#include "HealthComponent.h"
 #include "AudioComponent.h"
+#include "Ship.h"
+#include "Random.h"
 #include "InputSystem.h"
 #include "Camera.h"
 #include "PhysicsWorld.h"
@@ -89,8 +90,8 @@ void Rocket::OnBeginContact(const Contact& contact) {
 
         new Explosion(GetGame(), GetPosition());
 
-        if (auto target = contact.other->GetComponent<TargetComponent>()) {
-            target->Damage(damage);
+        if (auto target = contact.other->GetComponent<HealthComponent>()) {
+            target->ReceiveDamage(damage);
         }
     }
 }

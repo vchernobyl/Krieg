@@ -7,6 +7,7 @@
 #include "CircleColliderComponent.h"
 #include "RigidbodyComponent.h"
 #include "TargetComponent.h"
+#include "HealthComponent.h"
 #include "RocketLauncher.h"
 #include "AudioComponent.h"
 #include <cassert>
@@ -30,9 +31,9 @@ void Projectile::UpdateActor(float deltaTime) {
     }
 }
 
-void Projectile::OnBeginContact(const struct Contact& contact) {
-    if (auto target = contact.other->GetComponent<TargetComponent>()) {
-        target->Damage(50);
+void Projectile::OnBeginContact(const Contact& contact) {
+    if (auto target = contact.other->GetComponent<HealthComponent>()) {
+        target->ReceiveDamage(0);
     }
     SetState(Actor::State::Dead);
 }
@@ -48,7 +49,8 @@ Enemy::Enemy(Game* game) : Actor(game) {
     rigidbody = collider->GetAttachedRigidbody();
     followTarget = game->GetActorByTag("Player");
 
-    new TargetComponent(this, 100);
+    new TargetComponent(this);
+    new HealthComponent(this, 100);
 
     audio = new AudioComponent(this);
 

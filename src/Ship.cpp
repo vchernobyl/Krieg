@@ -16,6 +16,7 @@
 #include "PhysicsWorld.h"
 #include "TargetComponent.h"
 #include "Enemy.h"
+#include "HealthComponent.h"
 
 Ship::Ship(Game* game) : Actor(game) {
     auto sprite = new SpriteComponent(this);
@@ -26,6 +27,7 @@ Ship::Ship(Game* game) : Actor(game) {
     collider->SetCollisionFilter(CollisionCategory::Player);
 
     new CameraMovement(this);
+    new HealthComponent(this, 100);
 
     trailEmitter = new ParticleComponent(this, sprite->GetDrawOrder() - 1);
     trailEmitter->SetTexture(game->GetRenderer()->GetTexture("data/textures/Particle.png"));
@@ -99,7 +101,9 @@ void Ship::ActorInput(const InputState& inputState) {
                 } else if (weapon->GetTargets().size() < weapon->GetWeaponStacks()) {
                     target->Select(weapon->GetReticleColor());
                     weapon->AddTarget(target);
-                    target->SetOnDestroy([=](TargetComponent* target) {
+                    
+                    auto health = rigidbody->GetOwner()->GetComponent<HealthComponent>();
+                    health->SetOnDestroy([=]() {
                         for (auto w : weapons) {
                             w->RemoveTarget(target);
                         }
@@ -107,11 +111,5 @@ void Ship::ActorInput(const InputState& inputState) {
                 }
             }
         }
-    }
-}
-
-void Ship::OnBeginContact(const Contact& contact) {
-    if (auto projectile = dynamic_cast<Projectile*>(contact.other)) {
-        health -= 50;
     }
 }

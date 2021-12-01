@@ -12,6 +12,7 @@
 #include "Camera.h"
 #include "PhysicsWorld.h"
 #include "DebugRenderer.h"
+#include "HealthComponent.h"
 
 Bullet::Bullet(Game* game) : Actor(game) {
     auto texture = game->GetRenderer()->GetTexture("data/textures/Bullet.png");
@@ -43,8 +44,8 @@ void Bullet::OnBeginContact(const struct Contact& contact) {
 
     SetState(State::Dead);
 
-    if (auto target = contact.other->GetComponent<TargetComponent>()) {
-        target->Damage(damage);
+    if (auto target = contact.other->GetComponent<HealthComponent>()) {
+        target->ReceiveDamage(damage);
     }
 }
 
