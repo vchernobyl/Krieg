@@ -8,6 +8,9 @@ class HealthComponent : public Component {
 public:
     HealthComponent(class Actor* owner, int maxHealth);
     void Update(float deltaTime) override;
+
+    int GetHealth() const { return health; }
+
     void ReceiveDamage(int damage);
     void SetOnDestroy(std::function<void()> onDestroy) { this->onDestroy = onDestroy; }
 private:

@@ -78,7 +78,6 @@ void Ship::ActorInput(const InputState& inputState) {
     if (inputState.Mouse.IsButtonPressed(SDL_BUTTON_LEFT)) {
         moveTargetPosition = GetGame()->GetMainCamera()->ScreenToWorld(inputState.Mouse.GetPosition());
         direction = Vector2::Normalize(moveTargetPosition - GetPosition());
-        DebugRenderer::DrawCircle(moveTargetPosition, 0.25f);
     }
 
     if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
@@ -102,12 +101,13 @@ void Ship::ActorInput(const InputState& inputState) {
                     target->Select(weapon->GetReticleColor());
                     weapon->AddTarget(target);
                     
-                    auto health = rigidbody->GetOwner()->GetComponent<HealthComponent>();
-                    health->SetOnDestroy([=]() {
-                        for (auto w : weapons) {
-                            w->RemoveTarget(target);
-                        }
-                    });
+                    if (auto health = rigidbody->GetOwner()->GetComponent<HealthComponent>()) {
+                        health->SetOnDestroy([=]() {
+                            for (auto w : weapons) {
+                                w->RemoveTarget(target);
+                            }
+                        });
+                    }
                 }
             }
         }

@@ -85,14 +85,13 @@ void Rocket::UpdateActor(float deltaTime) {
 }
 
 void Rocket::OnBeginContact(const Contact& contact) {
-    if (!dynamic_cast<Ship*>(contact.other)) {
-        SetState(State::Dead);
+    if (dynamic_cast<Ship*>(contact.other)) return;
 
-        new Explosion(GetGame(), GetPosition());
+    SetState(State::Dead);
+    new Explosion(GetGame(), GetPosition());
 
-        if (auto target = contact.other->GetComponent<HealthComponent>()) {
-            target->ReceiveDamage(damage);
-        }
+    if (auto target = contact.other->GetComponent<HealthComponent>()) {
+        target->ReceiveDamage(damage);
     }
 }
 

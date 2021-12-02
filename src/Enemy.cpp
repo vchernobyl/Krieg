@@ -33,7 +33,7 @@ void Projectile::UpdateActor(float deltaTime) {
 
 void Projectile::OnBeginContact(const Contact& contact) {
     if (auto target = contact.other->GetComponent<HealthComponent>()) {
-        target->ReceiveDamage(0);
+        target->ReceiveDamage(35);
     }
     SetState(Actor::State::Dead);
 }

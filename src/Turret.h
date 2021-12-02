@@ -9,6 +9,17 @@ class SpriteComponent;
 class BoxColliderComponent;
 class RigidbodyComponent;
 class TargetComponent;
+class ParticleComponent;
+
+class HitParticles : public Actor {
+public:
+    HitParticles(Game* game, const Vector2& position);
+    void UpdateActor(float deltaTime) override;
+private:
+    ParticleComponent* particles = nullptr;
+    float time = 0.0f;
+    float lifeTime = 0.5f;
+};
 
 class Bullet : public Actor {
 public:

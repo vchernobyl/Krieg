@@ -3,6 +3,7 @@
 #include "Font.h"
 #include "Ship.h"
 #include "Weapon.h"
+#include "HealthComponent.h"
 
 #include <cassert>
 #include <string>
@@ -26,4 +27,7 @@ void HUD::Draw(class SpriteBatch& batch) {
         auto color = ship->GetSelectedWeapon() == weapons[i] ? Color::Yellow : Color::White;
         font->Draw(batch, text, anchor + (step * i), color);
     }
+
+    auto health = player->GetComponent<HealthComponent>()->GetHealth();
+    font->Draw(batch, "Health: " + std::to_string(health), anchor + (step * 2));
 }
