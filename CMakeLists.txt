@@ -24,15 +24,18 @@ target_link_directories(Game PRIVATE
     ${CMAKE_SOURCE_DIR}/external/glew/lib/x64
     ${CMAKE_SOURCE_DIR}/external/SOIL/lib/x64
     ${CMAKE_SOURCE_DIR}/external/FMOD/api/studio/lib/x64
+    ${CMAKE_SOURCE_DIR}/external/FMOD/api/core/lib/x64
 )
 
 target_link_libraries(Game PRIVATE
     SDL2
+    SDL2main
     box2d
     freetype
     glew32
     SOIL
     fmodstudio_vc
+    fmod_vc
     opengl32
 )
 
