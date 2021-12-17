@@ -283,6 +283,9 @@ the fixture, which makes the selection not precise. [WON'T DO]
 33. Remove destroyed target from all weapons targets list. [DONE]
 34. Give each weapon different colore target reticle. [DONE]
 35. Basic enemy attacking. [DONE]
+36. Spawn enemies out of the screen bounds, and set their destination. Let them attack player from
+any distance. Destroy the enemy once it disappears from the screen view.
+
 
 December:
 ---------
