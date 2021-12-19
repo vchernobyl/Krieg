@@ -1,13 +1,13 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.21)
 
 project("Game")
 
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_SOURCE_DIR}/src/*.cpp)
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_SOURCE_DIR}/src/*.h)
 
-add_executable(Game ${HEADER_FILES} ${SOURCE_FILES})
+add_executable(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES})
 
-target_include_directories(Game PRIVATE
+target_include_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/external/SDL/include
     ${CMAKE_SOURCE_DIR}/external/box2d/include
     ${CMAKE_SOURCE_DIR}/external/freetype/include
@@ -17,26 +17,61 @@ target_include_directories(Game PRIVATE
     ${CMAKE_SOURCE_DIR}/external/FMOD/api/studio/include
 )
 
-target_link_directories(Game PRIVATE
-    ${CMAKE_SOURCE_DIR}/external/SDL/lib/x64
-    ${CMAKE_SOURCE_DIR}/external/box2d/lib/x64
-    ${CMAKE_SOURCE_DIR}/external/freetype/lib/x64
-    ${CMAKE_SOURCE_DIR}/external/glew/lib/x64
-    ${CMAKE_SOURCE_DIR}/external/SOIL/lib/x64
-    ${CMAKE_SOURCE_DIR}/external/FMOD/api/studio/lib/x64
-    ${CMAKE_SOURCE_DIR}/external/FMOD/api/core/lib/x64
+if(WIN32)
+    SET(LIB_PATH "lib/win/x64")
+elseif(APPLE)
+    SET(LIB_PATH "lib/mac")
+endif()
+
+target_link_directories(${PROJECT_NAME} PRIVATE
+    ${CMAKE_SOURCE_DIR}/external/SDL/${LIB_PATH}
+    ${CMAKE_SOURCE_DIR}/external/box2d/${LIB_PATH}
+    ${CMAKE_SOURCE_DIR}/external/freetype/${LIB_PATH}
+    ${CMAKE_SOURCE_DIR}/external/glew/${LIB_PATH}
+    ${CMAKE_SOURCE_DIR}/external/SOIL/${LIB_PATH}
+    ${CMAKE_SOURCE_DIR}/external/FMOD/api/studio/${LIB_PATH}
+    ${CMAKE_SOURCE_DIR}/external/FMOD/api/core/${LIB_PATH}
 )
 
-target_link_libraries(Game PRIVATE
-    SDL2
-    SDL2main
-    box2d
-    freetype
-    glew32
-    SOIL
-    fmodstudio_vc
-    fmod_vc
-    opengl32
-)
+if(WIN32)
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        SDL2
+        SDL2main
+        box2d
+        freetype
+        glew32
+        SOIL
+        fmodstudio_vc
+        fmod_vc
+        opengl32
+    )
+elseif(APPLE)
+    target_link_libraries(${PROJECT_NAME} PRIVATE
+        SDL2
+        box2d
+        freetype
+        GLEW
+        SOIL
+        fmodstudio
+        fmod
+        ${OPENGL_LIBRARIES}
+        "-framework Cocoa"
+    )
+endif()
 
-target_compile_features(Game PRIVATE cxx_std_17)
+target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_17)
+
+if(WIN32)
+    set_property(TARGET ${PROJECT_NAME} PROPERTY
+        VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
+
+    set_property(TARGET ${PROJECT_NAME} PROPERTY
+        MSVC_RUNTIME_LIBRARY "MultiThreaded"
+    )
+elseif(APPLE)
+    set_target_properties(${PROJECT_NAME} PROPERTIES
+        XCODE_GENERATE_SCHEME_TRUE
+        XCODE_SCHEME_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    )
+endif()
