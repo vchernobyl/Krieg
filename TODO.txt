@@ -293,7 +293,8 @@ December:
 2. Check why bullet box collider is green. [DONE]
 3. Add turret impact particles. [DONE]
 4. Add player health to the HUD. [DONE]
-5. Kill player when health runs out. [IN PROGRESS]
+5. Extract common game interface to used by games. [DONE]
+6. Create a separate folder per game and another one for the engine. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

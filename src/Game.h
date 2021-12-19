@@ -16,9 +16,8 @@ class UIScreen;
 class Game {
 public:
     Game();
-    bool Initialize();
-    void RunLoop();
-    void Shutdown();
+
+    void Run();
 
     void AddActor(Actor* actor);
     void RemoveActor(Actor* actor);
@@ -35,12 +34,18 @@ public:
     const std::vector<UIScreen*>& GetUIStack() { return uiStack; }
     void PushUI(UIScreen* ui);
 
+protected:
+    virtual void LoadData();
+    virtual void UnloadData();
+
 private:
+    bool Initialize();
+    void RunLoop();
+    void Shutdown();
+
     void ProcessInput();
     void UpdateGame();
     void DrawGame();
-    void LoadData();
-    void UnloadData();
 
     std::vector<Actor*> actors;
     std::vector<Actor*> pendingActors;
@@ -61,7 +66,4 @@ private:
 
     unsigned long ticks;
     float deltaTime;
-
-    // TODO: Game specific, remove it all later.
-    std::vector<class Asteroid*> asteroids;
 };

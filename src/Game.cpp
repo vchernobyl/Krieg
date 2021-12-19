@@ -32,6 +32,13 @@ Game::Game() :
     ticks(0),
     deltaTime(0.0f) {}
 
+void Game::Run() {
+    if (Initialize()) {
+        RunLoop();
+    }
+    Shutdown();
+}
+
 bool Game::Initialize() {
     renderer = new Renderer(this);
     if (!renderer->Initialize(1024, 768)) {
@@ -59,9 +66,9 @@ bool Game::Initialize() {
     mainCamera = new Camera(renderer->GetScreenWidth(), renderer->GetScreenHeight());
     uiCamera = new Camera(renderer->GetScreenWidth(), renderer->GetScreenHeight());
 
-    LoadData();
-
     ticks = SDL_GetTicks();
+
+    LoadData();
 
     return true;
 }

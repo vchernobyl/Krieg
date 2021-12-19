@@ -1,10 +1,7 @@
-#include "Game.h"
+#include "SpaceGame.h"
 
 int main(int argc, char** argv) {
-    Game game;
-    if (game.Initialize()) {
-        game.RunLoop();
-    }
-    game.Shutdown();
+    SpaceGame game;
+    game.Run();
     return 0;
 }
