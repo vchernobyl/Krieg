@@ -33,25 +33,27 @@ target_link_directories(${PROJECT_NAME} PRIVATE
     ${CMAKE_SOURCE_DIR}/external/FMOD/api/core/${LIB_PATH}
 )
 
+# Common platform libraries.
+target_link_libraries(${PROJECT_NAME} PRIVATE
+    SDL2
+    box2d
+    freetype
+    SOIL
+)
+
+# Windows libraries.
 if(WIN32)
     target_link_libraries(${PROJECT_NAME} PRIVATE
-        SDL2
         SDL2main
-        box2d
-        freetype
         glew32
-        SOIL
         fmodstudio_vc
         fmod_vc
         opengl32
     )
+# Mac libraries.
 elseif(APPLE)
     target_link_libraries(${PROJECT_NAME} PRIVATE
-        SDL2
-        box2d
-        freetype
         GLEW
-        SOIL
         fmodstudio
         fmod
         "-framework OpenGL"
