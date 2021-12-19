@@ -54,7 +54,7 @@ elseif(APPLE)
         SOIL
         fmodstudio
         fmod
-        ${OPENGL_LIBRARIES}
+        "-framework OpenGL"
         "-framework Cocoa"
     )
 endif()
@@ -71,7 +71,7 @@ if(WIN32)
     )
 elseif(APPLE)
     set_target_properties(${PROJECT_NAME} PROPERTIES
-        XCODE_GENERATE_SCHEME_TRUE
+        XCODE_GENERATE_SCHEME TRUE
         XCODE_SCHEME_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     )
 endif()
