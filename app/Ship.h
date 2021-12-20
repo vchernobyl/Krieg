@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Actor.h"
-#include "Math.h"
+#include "Maths.h"
 #include <vector>
 
 class Ship : public Actor {

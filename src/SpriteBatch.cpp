@@ -195,5 +195,7 @@ void SpriteBatch::SortSpriteBatchItems() {
         std::stable_sort(spriteBatchItemPtrs.begin(), spriteBatchItemPtrs.end(),
                          [](SpriteBatchItem* a, SpriteBatchItem* b) { return a->texture < b->texture; });
         break;
+    case SortType::None:
+        break;
     }
 }

@@ -55,7 +55,7 @@ bool Font::Load(const std::string& fileName, unsigned int fontSize) {
 
     for (unsigned char ch = 0; ch < 128; ch++) {
         if (FT_Load_Char(face, ch, FT_LOAD_RENDER)) {
-            SDL_Log("Failed to load a glyph: %s", ch);
+            SDL_Log("Failed to load a glyph: %c", ch);
             continue;
         }
 

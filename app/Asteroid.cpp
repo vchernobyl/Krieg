@@ -1,7 +1,7 @@
 #include "Asteroid.h"
 #include "Actor.h"
 #include "Game.h"
-#include "Math.h"
+#include "Maths.h"
 #include "Random.h"
 #include "Renderer.h"
 #include "SpriteComponent.h"
