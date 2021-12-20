@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Component.h"
-#include "Math.h"
+#include "Maths.h"
 
 enum class BodyType {
     Static,

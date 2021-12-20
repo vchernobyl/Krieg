@@ -1,5 +1,5 @@
 #include "DebugRenderer.h"
-#include "Assert.h"
+#include "GLAssert.h"
 
 Shader DebugRenderer::shader;
 std::vector<DebugRenderer::DebugVertex> DebugRenderer::vertices = {};

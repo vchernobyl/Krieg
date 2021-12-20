@@ -1,6 +1,6 @@
 #include "Box2DDebugRenderer.h"
 #include "DebugRenderer.h"
-#include "Math.h"
+#include "Maths.h"
 #include "Game.h"
 
 Box2DDebugRenderer::Box2DDebugRenderer() : b2Draw() {

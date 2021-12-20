@@ -1,7 +1,7 @@
 #include "Font.h"
 #include "Game.h"
 #include "Texture.h"
-#include "Math.h"
+#include "Maths.h"
 #include "Renderer.h"
 #include "Camera.h"
 #include "SpriteBatch.h"

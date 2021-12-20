@@ -1,5 +1,5 @@
 #include "Shader.h"
-#include "Assert.h"
+#include "GLAssert.h"
 
 #include <SDL/SDL.h>
 #include <fstream>

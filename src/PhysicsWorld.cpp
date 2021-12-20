@@ -4,7 +4,7 @@
 #include "RigidbodyComponent.h"
 #include "BoxColliderComponent.h"
 #include "Actor.h"
-#include "Math.h"
+#include "Maths.h"
 
 #include <algorithm>
 #include <cassert>

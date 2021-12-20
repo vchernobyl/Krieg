@@ -6,7 +6,7 @@
 #include "ParticleComponent.h"
 #include "DebugRenderer.h"
 #include "Shader.h"
-#include "Assert.h"
+#include "GLAssert.h"
 #include "Camera.h"
 #include "Font.h"
 #include "UIScreen.h"

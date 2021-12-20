@@ -1,0 +1,6 @@
+file(GLOB_RECURSE SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+
+add_executable(Shooter ${SOURCE_FILES} ${HEADER_FILES})
+
+target_link_libraries(Shooter PRIVATE Engine)

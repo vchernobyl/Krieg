@@ -1,5 +1,5 @@
 #include "Texture.h"
-#include "Assert.h"
+#include "GLAssert.h"
 
 #include <SOIL/SOIL.h>
 #include <SDL/SDL_log.h>

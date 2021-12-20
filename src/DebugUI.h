@@ -1,7 +1,7 @@
 #pragma once
 
 #include "UIScreen.h"
-#include "Math.h"
+#include "Maths.h"
 
 class DebugUI : public UIScreen{
 public:

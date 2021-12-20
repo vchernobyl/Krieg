@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ColliderComponent.h"
-#include "Math.h"
+#include "Maths.h"
 
 class BoxColliderComponent : public ColliderComponent {
 public:

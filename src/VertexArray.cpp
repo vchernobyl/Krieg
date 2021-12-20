@@ -1,5 +1,5 @@
 #include "VertexArray.h"
-#include "Assert.h"
+#include "GLAssert.h"
 #include <GL/glew.h>
 
 VertexArray::VertexArray() {}

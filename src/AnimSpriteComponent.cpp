@@ -1,7 +1,7 @@
 #include "AnimSpriteComponent.h"
 #include "Actor.h"
 #include "Texture.h"
-#include "Math.h"
+#include "Maths.h"
 
 AnimSpriteComponent::AnimSpriteComponent(Actor* owner, int drawOrder)
     : SpriteComponent(owner, drawOrder),

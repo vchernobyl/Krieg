@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Math.h"
+#include "Maths.h"
 #include <SDL/SDL.h>
 
 enum class ButtonState {
