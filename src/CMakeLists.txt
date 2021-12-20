@@ -1,12 +1,10 @@
-set(LIB_NAME "Engine")
-
 file(GLOB_RECURSE SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
 file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
 
-add_library(${LIB_NAME} ${HEADER_FILES} ${SOURCE_FILES})
-target_include_directories(${LIB_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+add_library(Engine ${HEADER_FILES} ${SOURCE_FILES})
+target_include_directories(Engine PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-target_include_directories(${LIB_NAME}
+target_include_directories(Engine
     PRIVATE
         ${CMAKE_SOURCE_DIR}/external/box2d/include
         ${CMAKE_SOURCE_DIR}/external/freetype/include
@@ -24,7 +22,7 @@ elseif(APPLE)
     SET(LIB_PATH "lib/mac")
 endif()
 
-target_link_directories(${LIB_NAME}
+target_link_directories(Engine
     PUBLIC
         ${CMAKE_SOURCE_DIR}/external/box2d/${LIB_PATH}
         ${CMAKE_SOURCE_DIR}/external/freetype/${LIB_PATH}
@@ -35,7 +33,7 @@ target_link_directories(${LIB_NAME}
         ${CMAKE_SOURCE_DIR}/external/SDL/${LIB_PATH}
 )
 
-target_link_libraries(${LIB_NAME} PRIVATE
+target_link_libraries(Engine PRIVATE
     SDL2
     box2d
     freetype
@@ -43,7 +41,7 @@ target_link_libraries(${LIB_NAME} PRIVATE
 )
 
 if(WIN32)
-    target_link_libraries(${LIB_NAME} PRIVATE
+    target_link_libraries(Engine PRIVATE
         SDL2main
         glew32
         fmodstudio_vc
@@ -51,7 +49,7 @@ if(WIN32)
         opengl32
     )
 elseif(APPLE)
-    target_link_libraries(${LIB_NAME} PRIVATE
+    target_link_libraries(Engine PRIVATE
         GLEW
         fmodstudio
         fmod
@@ -61,5 +59,5 @@ elseif(APPLE)
 endif()
 
 if(WIN32)
-    set_property(TARGET ${LIB_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded")
+    set_property(TARGET Engine PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded")
 endif()
