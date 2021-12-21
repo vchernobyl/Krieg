@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Orbit.h"
+#include "Planet.h"
 #include "Rocket.h"
 
 #include <SDL/SDL.h> // TODO: I've done fucked up here real bad.
@@ -18,11 +18,13 @@ Player::Player(Game* game) : Actor(game) {
     camera->SetScale(scale / 1.5f);
 
     rocketSound = new AudioComponent(this);
+
+    SetTag("Player");
 }
 
 void Player::ActorInput(const InputState& input) {
-    auto actor = GetGame()->GetActorByTag("Orbit");
-    auto orbit = dynamic_cast<Orbit*>(actor);
+    auto actor = GetGame()->GetActorByTag("Planet");
+    auto orbit = dynamic_cast<Planet*>(actor);
     assert(orbit);
 
     auto radius = orbit->GetRadius();
@@ -50,7 +52,9 @@ void Player::ActorInput(const InputState& input) {
 
     if (input.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
         auto rocket = new Rocket(GetGame());
+        rocket->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Enemy);
         rocket->SetPosition(GetPosition());
+        rocket->SetSpeed(1500.0f);
         rocket->Launch(direction);
         rocketSound->PlayEvent("event:/Launch_Rocket");
     }

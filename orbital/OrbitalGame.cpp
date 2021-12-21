@@ -1,6 +1,6 @@
 #include "OrbitalGame.h"
 #include "Player.h"
-#include "Orbit.h"
+#include "Planet.h"
 
 void OrbitalGame::LoadData() {
     auto audioSystem = GetAudioSystem();
@@ -8,6 +8,6 @@ void OrbitalGame::LoadData() {
     audioSystem->LoadBank("data/audio/Master.bank");
     
     new Player(this);
-    new Orbit(this, Vector2::Zero, 10.0f);
+    new Planet(this, Vector2::Zero, 10.0f);
     new DebugUI(this);
 }
