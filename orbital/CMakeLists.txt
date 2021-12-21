@@ -1,6 +1,8 @@
 add_executable(Orbital
     Main.cpp
     OrbitalGame.cpp
+    Player.cpp
+    Orbit.cpp
 )
 
 target_link_libraries(Orbital PRIVATE Engine)
