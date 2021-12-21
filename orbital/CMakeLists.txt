@@ -1,9 +1,7 @@
-add_executable(Orbital
-    Main.cpp
-    OrbitalGame.cpp
-    Player.cpp
-    Orbit.cpp
-)
+file(GLOB_RECURSE SOURCE_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp)
+file(GLOB_RECURSE HEADER_FILES ${CMAKE_CURRENT_SOURCE_DIR}/*.h)
+
+add_executable(Orbital ${HEADER_FILES} ${SOURCE_FILES})
 
 target_link_libraries(Orbital PRIVATE Engine)
 

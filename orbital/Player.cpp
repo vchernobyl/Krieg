@@ -1,5 +1,7 @@
 #include "Player.h"
 #include "Orbit.h"
+#include "Rocket.h"
+
 #include <SDL/SDL.h> // TODO: I've done fucked up here real bad.
 #include <cassert>
 
@@ -9,6 +11,7 @@ Player::Player(Game* game) : Actor(game) {
 
     auto rigidbody = new RigidbodyComponent(this, BodyType::Kinematic);
     auto collider = new CircleColliderComponent(this, 0.5f, GetPosition());
+    collider->SetCollisionFilter(CollisionCategory::Player);
 
     auto camera = game->GetMainCamera();
     auto scale = camera->GetScale();
@@ -36,6 +39,12 @@ void Player::ActorInput(const InputState& input) {
 
     auto direction = Vector2::Normalize(orbit->GetPosition() - GetPosition());
     SetRotation(Math::Atan2(direction.y, direction.x));
+
+    if (input.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
+        auto rocket = new Rocket(GetGame());
+        rocket->SetPosition(GetPosition());
+        rocket->Launch(direction);
+    }
 }
 
 void Player::UpdateActor(float deltaTime) {

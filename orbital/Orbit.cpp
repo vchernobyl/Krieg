@@ -2,6 +2,14 @@
 
 Orbit::Orbit(Game* game, const Vector2& center, float radius)
     : Actor(game), center(center), radius(radius) {
+    auto sprite = new SpriteComponent(this);
+    sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Asteroid.png"));
+
+    auto rigidbody = new RigidbodyComponent(this, BodyType::Static);
+    auto collider = new CircleColliderComponent(this, 0.5f * 1.5f);
+    collider->SetCollisionFilter(CollisionCategory::Enemy);
+
+    SetScale(1.5f);
     SetTag("Orbit");
 }
 
