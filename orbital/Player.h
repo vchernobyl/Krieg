@@ -9,4 +9,5 @@ public:
     void UpdateActor(float deltaTime) override;
 private:
     float angle = 90.0f;
+    float speed = 3.5f;
 };
