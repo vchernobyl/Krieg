@@ -33,6 +33,12 @@ void Player::ActorInput(const InputState& input) {
         angle -= speed * deltaTime;
     }
 
+    if (input.Keyboard.IsKeyPressed(SDL_SCANCODE_UP)) {
+        orbit->SetRadius(radius + orbitSpeed * deltaTime);
+    } else if (input.Keyboard.IsKeyPressed(SDL_SCANCODE_DOWN)) {
+        orbit->SetRadius(radius - orbitSpeed * deltaTime);
+    }
+
     auto x = Math::Cos(angle) * radius + center.x;
     auto y = Math::Sin(angle) * radius + center.y;
     SetPosition(Vector2(x, y));

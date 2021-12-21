@@ -9,6 +9,7 @@ public:
 
     const Vector2& GetCenter() { return center; }
     float GetRadius() const { return radius; }
+    void SetRadius(float radius) { this->radius = radius; }
 
 private:
     Vector2 center;
