@@ -14,5 +14,5 @@ Orbit::Orbit(Game* game, const Vector2& center, float radius)
 }
 
 void Orbit::UpdateActor(float deltaTime) {
-    DebugRenderer::DrawCircle(center, radius, Color::Yellow);
+    DebugRenderer::DrawCircle(center, radius, Vector4(1.0f, 1.0f, 0.0f, 0.5f));
 }

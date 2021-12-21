@@ -16,6 +16,8 @@ Player::Player(Game* game) : Actor(game) {
     auto camera = game->GetMainCamera();
     auto scale = camera->GetScale();
     camera->SetScale(scale / 1.5f);
+
+    rocketSound = new AudioComponent(this);
 }
 
 void Player::ActorInput(const InputState& input) {
@@ -50,6 +52,7 @@ void Player::ActorInput(const InputState& input) {
         auto rocket = new Rocket(GetGame());
         rocket->SetPosition(GetPosition());
         rocket->Launch(direction);
+        rocketSound->PlayEvent("event:/Launch_Rocket");
     }
 }
 
@@ -57,4 +60,3 @@ void Player::UpdateActor(float deltaTime) {
     auto position = GetPosition();
     DebugRenderer::DrawLine(position, position + GetForward(), Color::Blue);
 }
-
