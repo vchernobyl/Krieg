@@ -2,6 +2,7 @@
 #include "Planet.h"
 #include "Rocket.h"
 #include "HUD.h"
+#include "DamageReceiver.h"
 
 #include <SDL/SDL.h> // TODO: I've done fucked up here real bad.
 #include <cassert>
@@ -19,9 +20,10 @@ Player::Player(Game* game) : Actor(game) {
     camera->SetScale(scale / 1.5f);
 
     rocketSound = new AudioComponent(this);
+    new DamageReceiver(this, 50);
 
     hud = new HUD(game);
-    hud->SetHealth(health);
+    hud->SetHealth(50);
 
     SetTag("Player");
 }

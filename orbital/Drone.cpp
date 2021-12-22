@@ -26,6 +26,8 @@ void Drone::UpdateActor(float deltaTime) {
     if (fireTimer >= 1.0f / fireRate) {
         fireTimer = 0.0f;
         auto player = dynamic_cast<Player*>(GetGame()->GetActorByTag("Player"));
+        if (!player) return;
+
         auto direction = Vector2::Normalize(player->GetPosition() - GetPosition());
         auto rocket = new Rocket(GetGame());
         

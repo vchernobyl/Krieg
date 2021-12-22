@@ -12,8 +12,6 @@ private:
     float speed = 3.5f;
     float orbitSpeed = 2.5f;
 
-    int health = 100;
-
     AudioComponent* rocketSound = nullptr;
     class HUD* hud = nullptr;
 };
