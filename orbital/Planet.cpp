@@ -1,6 +1,7 @@
 #include "Planet.h"
 #include "Rocket.h"
 #include "Player.h"
+#include "Drone.h"
 
 Planet::Planet(Game* game, const Vector2& center, float radius)
     : Actor(game), center(center), radius(radius) {
@@ -10,6 +11,8 @@ Planet::Planet(Game* game, const Vector2& center, float radius)
     auto rigidbody = new RigidbodyComponent(this, BodyType::Static);
     auto collider = new CircleColliderComponent(this, 0.5f * 1.5f);
     collider->SetCollisionFilter(CollisionCategory::Enemy);
+
+    rocketSound = new AudioComponent(this);
 
     SetScale(1.5f);
     SetTag("Planet");
@@ -29,5 +32,17 @@ void Planet::UpdateActor(float deltaTime) {
         rocket->SetPosition(GetPosition());
         rocket->SetSpeed(1000.0f);
         rocket->Launch(direction);
+
+        rocketSound->PlayEvent("event:/Launch_Rocket");
+    }
+
+    droneSpawnTime += deltaTime;
+    if (droneCount < maxDrones && droneSpawnTime >= droneSpawnInterval) {
+        droneSpawnTime = 0.0f;
+        droneCount++;
+        auto player = dynamic_cast<Player*>(GetGame()->GetActorByTag("Player"));
+        auto direction = Vector2::Normalize(player->GetPosition() - GetPosition());
+
+        new Drone(GetGame(), direction, [&]() { droneCount--; });
     }
 }

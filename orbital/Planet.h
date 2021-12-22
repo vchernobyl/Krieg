@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Engine.h"
+#include <Engine.h>
 
 class Planet : public Actor {
 public:
@@ -17,4 +17,11 @@ private:
 
     float fireRate = 1.75f;
     float time = 0.0f;
+
+    int maxDrones = 5;
+    int droneCount = 0;
+    float droneSpawnInterval = 2.0f; // In seconds.
+    float droneSpawnTime = 0.0f;
+
+    AudioComponent* rocketSound = nullptr;
 };

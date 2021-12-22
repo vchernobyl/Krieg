@@ -9,7 +9,7 @@
 SpaceGame::SpaceGame() : Game() {
 }
 
-void SpaceGame::LoadData() {
+void SpaceGame::LoadContent() {
     GetAudioSystem()->LoadBank("data/audio/Master.strings.bank");
     GetAudioSystem()->LoadBank("data/audio/Master.bank");
 

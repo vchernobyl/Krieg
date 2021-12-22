@@ -5,5 +5,5 @@
 class SpaceGame : public Game {
 public:
     SpaceGame();
-    void LoadData() override;
+    void LoadContent() override;
 };

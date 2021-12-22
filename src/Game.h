@@ -35,8 +35,8 @@ public:
     void PushUI(UIScreen* ui);
 
 protected:
-    virtual void LoadData();
-    virtual void UnloadData();
+    virtual void LoadContent();
+    virtual void UnloadContent();
 
 private:
     bool Initialize();

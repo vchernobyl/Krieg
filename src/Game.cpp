@@ -57,7 +57,7 @@ bool Game::Initialize() {
 
     ticks = SDL_GetTicks();
 
-    LoadData();
+    LoadContent();
 
     return true;
 }
@@ -71,7 +71,7 @@ void Game::RunLoop() {
 }
 
 void Game::Shutdown() {
-    UnloadData();
+    UnloadContent();
 
     renderer->Shutdown();
     delete renderer;
@@ -241,17 +241,17 @@ void Game::DrawGame() {
     renderer->Draw();
 }
 
-void Game::LoadData() {
+void Game::LoadContent() {
 }
 
-void Game::UnloadData() {
+void Game::UnloadContent() {
     while (!uiStack.empty()) {
         delete uiStack.back();
         uiStack.pop_back();
     }
 
     if (renderer) {
-        renderer->UnloadData();
+        renderer->UnloadContent();
     }
     
     for (auto [_, font] : fonts) {

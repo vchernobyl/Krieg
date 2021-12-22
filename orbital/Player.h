@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Engine.h"
+#include <Engine.h>
 
 class Player : public Actor {
 public:
@@ -12,5 +12,5 @@ private:
     float speed = 3.5f;
     float orbitSpeed = 2.5f;
 
-    AudioComponent* rocketSound;
+    AudioComponent* rocketSound = nullptr;
 };

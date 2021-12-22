@@ -90,7 +90,7 @@ void Renderer::Shutdown() {
     SDL_DestroyWindow(window);
 }
 
-void Renderer::UnloadData() {
+void Renderer::UnloadContent() {
     for (auto iter : textures) {
         iter.second->Unload();
         delete iter.second;
@@ -99,7 +99,7 @@ void Renderer::UnloadData() {
 }
 
 void Renderer::Draw() {
-    GL_CALL(glClearColor(0.0, 0.0, 0.0f, 1.0f));
+    GL_CALL(glClearColor(clearColor.x, clearColor.y, clearColor.z, clearColor.w));
     GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
 
     GL_CALL(glEnable(GL_BLEND));

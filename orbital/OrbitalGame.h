@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Engine.h"
+#include <Engine.h>
 
 class OrbitalGame : public Game {
 public:
     OrbitalGame() : Game() {}
 protected:
-    void LoadData() override;
+    void LoadContent() override;
 };

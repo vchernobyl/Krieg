@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Planet.h"
 
-void OrbitalGame::LoadData() {
+void OrbitalGame::LoadContent() {
     auto audioSystem = GetAudioSystem();
     audioSystem->LoadBank("data/audio/Master.strings.bank");
     audioSystem->LoadBank("data/audio/Master.bank");
@@ -10,4 +10,6 @@ void OrbitalGame::LoadData() {
     new Player(this);
     new Planet(this, Vector2::Zero, 10.0f);
     new DebugUI(this);
+
+    GetRenderer()->SetClearColor(Color::Gray);
 }

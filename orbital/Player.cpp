@@ -52,7 +52,7 @@ void Player::ActorInput(const InputState& input) {
 
     if (input.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
         auto rocket = new Rocket(GetGame());
-        rocket->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Enemy);
+        rocket->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Enemy);
         rocket->SetPosition(GetPosition());
         rocket->SetSpeed(1500.0f);
         rocket->Launch(direction);

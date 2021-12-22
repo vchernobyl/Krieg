@@ -22,7 +22,7 @@ public:
 
     bool Initialize(int screenWidth, int screenHeight);
     void Shutdown();
-    void UnloadData();
+    void UnloadContent();
     void Draw();
 
     Texture* GetTexture(const std::string& fileName);
@@ -36,6 +36,8 @@ public:
     float GetScreenWidth() const { return screenWidth; }
     float GetScreenHeight() const { return screenHeight; }
 
+    void SetClearColor(const Vector4& color) { this->clearColor = color; }
+
 private:
     bool LoadShaders();
     
@@ -48,6 +50,8 @@ private:
     Shader textShader;
     Matrix4 uiView;
     Matrix4 view;
+
+    Vector4 clearColor = Color::Black;
 
     std::vector<DrawableComponent*> drawables;
     std::unordered_map<std::string, Texture*> textures;
