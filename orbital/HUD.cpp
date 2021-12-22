@@ -1,7 +1,7 @@
 #include "HUD.h"
 
 HUD::HUD(Game* game) : UIScreen(game) {
-    font = game->GetFont("data/fonts/SourceCodePro-Regular.otf", 22);
+    font = game->GetFont("data/fonts/SourceCodePro-Regular.otf", 18);
 }
 
 void HUD::Draw(SpriteBatch& batch) {

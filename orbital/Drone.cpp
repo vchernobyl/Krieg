@@ -1,6 +1,7 @@
 #include "Drone.h"
 #include "Rocket.h"
 #include "Player.h"
+#include "Explosion.h"
 
 Drone::Drone(Game* game, const Vector2& movement,
              std::function<void()> onDestroy)
@@ -15,7 +16,7 @@ Drone::Drone(Game* game, const Vector2& movement,
     SetRotation(Math::Atan2(movement.y, movement.x));
 
     auto rigidbody = new RigidbodyComponent(this);
-    rigidbody->SetVelocity(movement);
+    rigidbody->SetVelocity(movement * 1.5f);
     
     auto collider = new CircleColliderComponent(this, 0.5f * GetScale());
     collider->SetCollisionFilter(CollisionCategory::Enemy, CollisionCategory::Player);
@@ -33,7 +34,7 @@ void Drone::UpdateActor(float deltaTime) {
         
         rocket->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Player);
         rocket->SetPosition(GetPosition());
-        rocket->SetSpeed(1000.0f);
+        rocket->SetSpeed(500.0f);
         rocket->Launch(direction);
 
         rocketSound->PlayEvent("event:/Launch_Rocket");
@@ -42,5 +43,6 @@ void Drone::UpdateActor(float deltaTime) {
 
 void Drone::OnBeginContact(const Contact& contact) {
     SetState(Actor::State::Dead);
+    new Explosion(GetGame(), GetPosition());
     if (onDestroy) onDestroy();
 }

@@ -3,6 +3,7 @@
 #include "Rocket.h"
 #include "HUD.h"
 #include "DamageReceiver.h"
+#include "Explosion.h"
 
 #include <SDL/SDL.h> // TODO: I've done fucked up here real bad.
 #include <cassert>
@@ -20,7 +21,14 @@ Player::Player(Game* game) : Actor(game) {
     camera->SetScale(scale / 1.5f);
 
     rocketSound = new AudioComponent(this);
-    new DamageReceiver(this, 50);
+
+    auto damageReceiver = new DamageReceiver(this, 50);
+    damageReceiver->SetOnReceiveDamage([=]() {
+        hud->SetHealth(damageReceiver->GetHealth());
+    });
+    damageReceiver->SetOnZeroHealth([=]() {
+        new Explosion(game, GetPosition());
+    });
 
     hud = new HUD(game);
     hud->SetHealth(50);
@@ -60,7 +68,7 @@ void Player::ActorInput(const InputState& input) {
         auto rocket = new Rocket(GetGame());
         rocket->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Enemy);
         rocket->SetPosition(GetPosition());
-        rocket->SetSpeed(1500.0f);
+        rocket->SetSpeed(600.0f);
         rocket->Launch(direction);
         rocketSound->PlayEvent("event:/Launch_Rocket");
     }

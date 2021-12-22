@@ -10,6 +10,22 @@ Rocket::Rocket(Game* game, int damage) : Actor(game), damage(damage) {
     rigidbody->SetBullet(true);
 
     new CircleColliderComponent(this, 0.15f);
+
+    trailEmitter = new ParticleComponent(this, sprite->GetDrawOrder() - 1);
+    trailEmitter->SetTexture(GetGame()->GetRenderer()->GetTexture("data/textures/Particle.png"));
+
+    ParticleProps trailProps;
+    trailProps.colorBegin = Color::Red;
+    trailProps.colorEnd = Vector4(1.0f, 0.0f, 0.0f, 0.0f);
+    trailProps.sizeBegin = Random::GetFloatRange(0.10f, 0.15f);
+    trailProps.sizeEnd = 0.0f;
+    trailProps.rotationBegin = 0.0f;
+    trailProps.rotationSpeed = Random::GetFloatRange(0.35f, 2.2f);
+    trailProps.lifeTime = 0.55f;
+
+    trailEmitter->SetProps(trailProps);
+    trailEmitter->SetEmissionRate(45.0f);
+    trailEmitter->Start();
 }
 
 void Rocket::UpdateActor(float deltaTime) {

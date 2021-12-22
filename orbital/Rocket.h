@@ -13,4 +13,6 @@ public:
 private:
     float speed = 100.0f;
     int damage;
+
+    ParticleComponent* trailEmitter = nullptr;
 };
