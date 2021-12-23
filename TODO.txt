@@ -297,12 +297,12 @@ December:
 6. Create a separate folder per game and another one for the engine. [DONE]
 7. Implement data/resource/asset path finding (similar how it's done in Blah). Start from the executable
 run path and go up a directory until we reach the "data" directory, abort otherwise.
-8. Map SDL keyboard keys to internal representation.
+8. Map SDL keyboard keys to internal representation. [IN PROGRESS]
 9. Implement small planet drones that hunt and attack the player. [DONE]
 10. Implement player health and dead state. [DONE]
 11. Add rocket trace effects. [DONE]
 12. Add basic score to the HUD.
-13. Remove actors when they are out of screen bounds. [IN PROGRESS]
+13. Remove actors when they are out of screen bounds. [DONE]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not

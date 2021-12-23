@@ -80,9 +80,9 @@ void Ship::ActorInput(const InputState& inputState) {
         direction = Vector2::Normalize(moveTargetPosition - GetPosition());
     }
 
-    if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_1) == ButtonState::Pressed) {
+    if (inputState.Keyboard.GetKeyState(Key::Num1) == ButtonState::Pressed) {
         selectedWeapon = 0;
-    } else if (inputState.Keyboard.GetKeyState(SDL_SCANCODE_2) == ButtonState::Pressed) {
+    } else if (inputState.Keyboard.GetKeyState(Key::Num2) == ButtonState::Pressed) {
         selectedWeapon = 1;
     }
 

@@ -4,8 +4,6 @@
 #include "Hud.h"
 #include "Health.h"
 #include "Explosion.h"
-
-#include <SDL/SDL.h> // TODO: I've done fucked up here real bad.
 #include <cassert>
 
 Player::Player(Game* game) : Actor(game) {
@@ -45,15 +43,15 @@ void Player::ActorInput(const InputState& input) {
     auto center = orbit->GetCenter();
 
     auto deltaTime = GetGame()->GetDeltaTime();
-    if (input.Keyboard.IsKeyPressed(SDL_SCANCODE_LEFT)) {
+    if (input.Keyboard.IsKeyPressed(Key::Left)) {
         angle += speed * deltaTime;
-    } else if (input.Keyboard.IsKeyPressed(SDL_SCANCODE_RIGHT)) {
+    } else if (input.Keyboard.IsKeyPressed(Key::Right)) {
         angle -= speed * deltaTime;
     }
 
-    if (input.Keyboard.IsKeyPressed(SDL_SCANCODE_UP)) {
+    if (input.Keyboard.IsKeyPressed(Key::Up)) {
         orbit->SetRadius(radius + orbitSpeed * deltaTime);
-    } else if (input.Keyboard.IsKeyPressed(SDL_SCANCODE_DOWN)) {
+    } else if (input.Keyboard.IsKeyPressed(Key::Down)) {
         orbit->SetRadius(radius - orbitSpeed * deltaTime);
     }
 
@@ -64,7 +62,7 @@ void Player::ActorInput(const InputState& input) {
     auto direction = Vector2::Normalize(orbit->GetPosition() - GetPosition());
     SetRotation(Math::Atan2(direction.y, direction.x));
 
-    if (input.Keyboard.GetKeyState(SDL_SCANCODE_SPACE) == ButtonState::Pressed) {
+    if (input.Keyboard.GetKeyState(Key::Space) == ButtonState::Pressed) {
         auto rocket = new Rocket(GetGame());
         rocket->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Enemy);
         rocket->SetPosition(GetPosition());

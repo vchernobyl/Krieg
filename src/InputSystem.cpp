@@ -1,19 +1,18 @@
 #include "InputSystem.h"
-#include <cstring>
 
-bool KeyboardState::IsKeyPressed(SDL_Scancode keyCode) const {
-    return currState[keyCode] == 1;
+bool KeyboardState::IsKeyPressed(Key key) const {
+    return currState[static_cast<Uint8>(key)] == 1;
 }
 
-ButtonState KeyboardState::GetKeyState(SDL_Scancode keyCode) const {
-    if (prevState[keyCode] == 0) {
-        if (currState[keyCode] == 0) {
+ButtonState KeyboardState::GetKeyState(Key key) const {
+    if (prevState[static_cast<Uint8>(key)] == 0) {
+        if (currState[static_cast<Uint8>(key)] == 0) {
             return ButtonState::None;
         } else {
             return ButtonState::Pressed;
         }
     } else {
-        if (currState[keyCode] == 0) {
+        if (currState[static_cast<Uint8>(key)] == 0) {
             return ButtonState::Released;
         } else {
             return ButtonState::Held;
