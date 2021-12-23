@@ -10,6 +10,7 @@ Rocket::Rocket(Game* game, int damage) : Actor(game), damage(damage) {
     rigidbody->SetBullet(true);
 
     collider = new CircleColliderComponent(this, 0.15f);
+    collider->SetSensor(true);
 
     trailEmitter = new ParticleComponent(this, sprite->GetDrawOrder() - 1);
     trailEmitter->SetTexture(GetGame()->GetRenderer()->GetTexture("data/textures/Particle.png"));
@@ -37,8 +38,6 @@ void Rocket::UpdateActor(float deltaTime) {
     if (!camera->IsBoxInView(position, size)) {
         SetState(Actor::State::Dead);
     }
-
-    DebugRenderer::DrawBox(position, Vector2(radius, radius) * 2.0f, 0); 
 }
 
 void Rocket::OnBeginContact(const Contact& contact) {

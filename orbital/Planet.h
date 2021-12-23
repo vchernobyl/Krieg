@@ -15,7 +15,7 @@ private:
     Vector2 center;
     float radius;
 
-    float fireRate = 1.75f;
+    float fireRate = 1.0f;
     float time = 0.0f;
 
     int maxDrones = 5;

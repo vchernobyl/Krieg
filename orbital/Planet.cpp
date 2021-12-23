@@ -27,7 +27,7 @@ void Planet::UpdateActor(float deltaTime) {
     auto direction = Vector2::Normalize(player->GetPosition() - GetPosition());
 
     time += deltaTime;
-    if (time >= 1.0f / fireRate) {
+    if (time >= fireRate) {
         time = 0.0f;
         auto rocket = new Rocket(GetGame());
         rocket->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Player);

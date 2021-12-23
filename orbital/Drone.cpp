@@ -16,15 +16,19 @@ Drone::Drone(Game* game, const Vector2& movement,
     SetRotation(Math::Atan2(movement.y, movement.x));
 
     auto rigidbody = new RigidbodyComponent(this);
-    rigidbody->SetVelocity(movement * 5.5f);
+    rigidbody->SetVelocity(movement * 2.5f);
     
     collider = new CircleColliderComponent(this, 0.5f * GetScale());
     collider->SetCollisionFilter(CollisionCategory::Enemy, CollisionCategory::Player);
 }
 
+Drone::~Drone() {
+    if (onDestroy) onDestroy();
+}
+
 void Drone::UpdateActor(float deltaTime) {
     fireTimer += deltaTime;
-    if (fireTimer >= 1.0f / fireRate) {
+    if (fireTimer >= fireRate) {
         fireTimer = 0.0f;
         auto player = dynamic_cast<Player*>(GetGame()->GetActorByTag("Player"));
         if (!player) return;
@@ -53,5 +57,4 @@ void Drone::UpdateActor(float deltaTime) {
 void Drone::OnBeginContact(const Contact& contact) {
     SetState(Actor::State::Dead);
     new Explosion(GetGame(), GetPosition());
-    if (onDestroy) onDestroy();
 }
