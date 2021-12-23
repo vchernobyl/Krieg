@@ -29,3 +29,21 @@ Vector2 Camera::ScreenToWorld(const Vector2& screenPoint) {
     
     return worldPoint;
 }
+
+bool Camera::IsBoxInView(const Vector2& boxPosition, const Vector2& size) {
+    auto scaledScreenSize = Vector2(screenWidth, screenHeight) / scale;
+    float minDistanceX = size.x / 2.0f + scaledScreenSize.x / 2.0f;
+    float minDistanceY = size.y / 2.0f + scaledScreenSize.y / 2.0f;
+    
+    auto centerPos = boxPosition + size / 2.0f;
+    auto distVec = boxPosition - position;
+    
+    float xDepth = minDistanceX - Math::Abs(distVec.x);
+    float yDepth = minDistanceY - Math::Abs(distVec.y);
+
+    if (xDepth > 0 && yDepth > 0) {
+        return true;
+    }
+
+    return false;
+}

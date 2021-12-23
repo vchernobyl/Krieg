@@ -18,6 +18,8 @@ public:
 
     Vector2 ScreenToWorld(const Vector2& screenPoint);
 
+    bool IsBoxInView(const Vector2& position, const Vector2& size);
+
 private:
     bool needsUpdate = true;
 

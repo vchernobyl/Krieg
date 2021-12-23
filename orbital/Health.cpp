@@ -1,13 +1,10 @@
-#include "DamageReceiver.h"
-#include <SDL/SDL.h>
+#include "Health.h"
 
-DamageReceiver::DamageReceiver(Actor* owner, int maxHealth)
+Health::Health(Actor* owner, int maxHealth)
     : Component(owner), health(maxHealth) {
 }
 
-void DamageReceiver::ReceiveDamage(int amount) {
-    SDL_Log("damage received");
-
+void Health::ReceiveDamage(int amount) {
     health -= amount;
     if (health <= 0) {
         GetOwner()->SetState(Actor::State::Dead);

@@ -2,16 +2,18 @@
 
 #include <Engine.h>
 
-class HUD : public UIScreen {
+class Hud : public UIScreen {
 public:
-    HUD(Game* game);
+    Hud(Game* game);
     void Draw(SpriteBatch& batch) override;
     
     void SetHealth(int health) { this->health = health; }
+    void SetScore(int score) { this->score = score; }
 
 private:
-    int health;
-    
+    int health = 0;
+    int score = 0;
+
     Vector2 anchor;
     Font* font;
 };

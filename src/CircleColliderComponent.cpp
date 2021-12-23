@@ -23,4 +23,6 @@ CircleColliderComponent::CircleColliderComponent(Actor* owner, float radius, con
     fixture = rigidbody->body->CreateFixture(&fixtureDef);
 }
 
-
+float CircleColliderComponent::GetRadius() const {
+    return fixture->GetShape()->m_radius;
+}

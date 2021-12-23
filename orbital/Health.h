@@ -3,9 +3,9 @@
 #include <Engine.h>
 #include <functional>
 
-class DamageReceiver : public Component {
+class Health : public Component {
 public:
-    DamageReceiver(Actor* owner, int maxHealth);
+    Health(Actor* owner, int maxHealth);
 
     void ReceiveDamage(int amount);
     void SetOnReceiveDamage(std::function<void()> fn) { onReceiveDamage = fn; }

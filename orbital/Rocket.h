@@ -15,4 +15,5 @@ private:
     int damage;
 
     ParticleComponent* trailEmitter = nullptr;
+    CircleColliderComponent* collider = nullptr;
 };

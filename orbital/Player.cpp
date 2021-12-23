@@ -1,8 +1,8 @@
 #include "Player.h"
 #include "Planet.h"
 #include "Rocket.h"
-#include "HUD.h"
-#include "DamageReceiver.h"
+#include "Hud.h"
+#include "Health.h"
 #include "Explosion.h"
 
 #include <SDL/SDL.h> // TODO: I've done fucked up here real bad.
@@ -22,16 +22,16 @@ Player::Player(Game* game) : Actor(game) {
 
     rocketSound = new AudioComponent(this);
 
-    auto damageReceiver = new DamageReceiver(this, 50);
-    damageReceiver->SetOnReceiveDamage([=]() {
-        hud->SetHealth(damageReceiver->GetHealth());
-    });
-    damageReceiver->SetOnZeroHealth([=]() {
-        new Explosion(game, GetPosition());
-    });
+    // auto health = new Health(this, 100);
+    // health->SetOnReceiveDamage([=]() {
+    //     hud->SetHealth(health->GetHealth());
+    // });
+    // health->SetOnZeroHealth([=]() {
+    //     new Explosion(game, GetPosition());
+    // });
 
-    hud = new HUD(game);
-    hud->SetHealth(50);
+    // hud = new Hud(game);
+    // hud->SetHealth(health->GetHealth());
 
     SetTag("Player");
 }

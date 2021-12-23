@@ -16,9 +16,9 @@ Drone::Drone(Game* game, const Vector2& movement,
     SetRotation(Math::Atan2(movement.y, movement.x));
 
     auto rigidbody = new RigidbodyComponent(this);
-    rigidbody->SetVelocity(movement * 1.5f);
+    rigidbody->SetVelocity(movement * 5.5f);
     
-    auto collider = new CircleColliderComponent(this, 0.5f * GetScale());
+    collider = new CircleColliderComponent(this, 0.5f * GetScale());
     collider->SetCollisionFilter(CollisionCategory::Enemy, CollisionCategory::Player);
 }
 
@@ -38,6 +38,15 @@ void Drone::UpdateActor(float deltaTime) {
         rocket->Launch(direction);
 
         rocketSound->PlayEvent("event:/Launch_Rocket");
+    }
+
+    auto radius = collider->GetRadius();
+    auto position = GetPosition() - Vector2(radius, radius);
+    auto size = Vector2(radius, radius) * 2.0f;
+    auto camera = GetGame()->GetMainCamera();
+
+    if (!camera->IsBoxInView(position, size)) {
+        SetState(Actor::State::Dead);
     }
 }
 

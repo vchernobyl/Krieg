@@ -9,9 +9,9 @@ public:
     void UpdateActor(float deltaTime) override;
 private:
     float angle = 90.0f;
-    float speed = 3.5f;
+    float speed = 1.5f;
     float orbitSpeed = 2.5f;
 
     AudioComponent* rocketSound = nullptr;
-    class HUD* hud = nullptr;
+    class Hud* hud = nullptr;
 };

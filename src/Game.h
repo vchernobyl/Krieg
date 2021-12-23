@@ -25,6 +25,7 @@ public:
     Camera* GetMainCamera() { return mainCamera; }
     Font* GetFont(const std::string& fileName, int fontSize = 48);
     Actor* GetActorByTag(const std::string& tag);
+    const std::vector<Actor*>& GetActors() const { return actors; }
     Renderer* GetRenderer() const { return renderer; }
     PhysicsWorld* GetPhysicsWorld() { return physicsWorld; }
     AudioSystem* GetAudioSystem() { return audioSystem; }

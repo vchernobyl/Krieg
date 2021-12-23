@@ -13,6 +13,8 @@ public:
     static void Initialize();
     static void Shutdown();
 
+    static void DrawBox(const Vector2& position, const Vector2& size,
+                        float angle, const Vector4& color = Color::Green);
     static void DrawBox(const Vector4& dst, float angle, const Vector4& color = Color::Green);
     static void DrawCircle(const Vector2& center, float radius, const Vector4& color = Color::Green);
     static void DrawLine(const Vector2& from, const Vector2& to, const Vector4& color = Color::Green);

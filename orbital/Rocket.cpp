@@ -1,5 +1,5 @@
 #include "Rocket.h"
-#include "DamageReceiver.h"
+#include "Health.h"
 #include <cassert>
 
 Rocket::Rocket(Game* game, int damage) : Actor(game), damage(damage) {
@@ -9,7 +9,7 @@ Rocket::Rocket(Game* game, int damage) : Actor(game), damage(damage) {
     auto rigidbody = new RigidbodyComponent(this);
     rigidbody->SetBullet(true);
 
-    new CircleColliderComponent(this, 0.15f);
+    collider = new CircleColliderComponent(this, 0.15f);
 
     trailEmitter = new ParticleComponent(this, sprite->GetDrawOrder() - 1);
     trailEmitter->SetTexture(GetGame()->GetRenderer()->GetTexture("data/textures/Particle.png"));
@@ -29,13 +29,23 @@ Rocket::Rocket(Game* game, int damage) : Actor(game), damage(damage) {
 }
 
 void Rocket::UpdateActor(float deltaTime) {
+    auto radius = collider->GetRadius();
+    auto position = GetPosition() - Vector2(radius, radius);
+    auto size = Vector2(radius, radius) * 2.0f;
+    auto camera = GetGame()->GetMainCamera();
+
+    if (!camera->IsBoxInView(position, size)) {
+        SetState(Actor::State::Dead);
+    }
+
+    DebugRenderer::DrawBox(position, Vector2(radius, radius) * 2.0f, 0); 
 }
 
 void Rocket::OnBeginContact(const Contact& contact) {
     SetState(Actor::State::Dead);
 
-    if (auto receiver = contact.other->GetComponent<DamageReceiver>()) {
-        receiver->ReceiveDamage(25);
+    if (auto health = contact.other->GetComponent<Health>()) {
+        health->ReceiveDamage(25);
     }
 }
 

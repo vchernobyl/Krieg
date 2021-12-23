@@ -20,6 +20,7 @@ void DebugUI::Draw(SpriteBatch& batch) {
     font->Draw(batch, "Average FPS: " + std::to_string(static_cast<int>(fps)), Vector2(-10.5f, 7.55f));
     font->Draw(batch, "Min FPS: " + std::to_string(static_cast<int>(minFPS)), Vector2(-10.5f, 7.20f));
     font->Draw(batch, "Sample rate: " + std::to_string(sampleRate), Vector2(-10.5f, 6.85f));
+    font->Draw(batch, "Actors live: " + std::to_string(game->GetActors().   size()), Vector2(-10.5f, 6.5f));
 
     // Reset the accumulated average FPS values.
     if (frame == sampleRate) {
