@@ -17,5 +17,6 @@ private:
     std::function<void()> onDestroy;
 
     AudioComponent* rocketSound = nullptr;
+    AudioComponent* hitSound = nullptr;
     CircleColliderComponent* collider = nullptr;
 };

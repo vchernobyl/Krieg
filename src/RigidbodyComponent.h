@@ -38,5 +38,4 @@ private:
     friend class PhysicsWorld;
     
     class b2Body* body;
-    Vector2 velocity;
 };

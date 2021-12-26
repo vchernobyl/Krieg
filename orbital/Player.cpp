@@ -20,16 +20,16 @@ Player::Player(Game* game) : Actor(game) {
 
     rocketSound = new AudioComponent(this);
 
-    // auto health = new Health(this, 100);
-    // health->SetOnReceiveDamage([=]() {
-    //     hud->SetHealth(health->GetHealth());
-    // });
-    // health->SetOnZeroHealth([=]() {
-    //     new Explosion(game, GetPosition());
-    // });
+    auto health = new Health(this, 100000);
+    health->SetOnReceiveDamage([=]() {
+        hud->SetHealth(health->GetHealth());
+    });
+    health->SetOnZeroHealth([=]() {
+        new Explosion(game, GetPosition());
+    });
 
-    // hud = new Hud(game);
-    // hud->SetHealth(health->GetHealth());
+    hud = new Hud(game);
+    hud->SetHealth(health->GetHealth());
 
     SetTag("Player");
 }
@@ -63,16 +63,21 @@ void Player::ActorInput(const InputState& input) {
     SetRotation(Math::Atan2(direction.y, direction.x));
 
     if (input.Keyboard.GetKeyState(Key::Space) == ButtonState::Pressed) {
-        auto rocket = new Rocket(GetGame());
-        rocket->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Enemy);
-        rocket->SetPosition(GetPosition());
-        rocket->SetSpeed(600.0f);
-        rocket->Launch(direction);
-        rocketSound->PlayEvent("event:/Launch_Rocket");
+        if (time >= fireRate) {
+            time = 0.0f;
+            auto rocket = new Rocket(GetGame());
+            rocket->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Enemy);
+            rocket->SetPosition(GetPosition());
+            rocket->SetSpeed(600.0f);
+            rocket->Launch(direction);
+            rocketSound->PlayEvent("event:/Launch_Rocket");
+        }
     }
 }
 
 void Player::UpdateActor(float deltaTime) {
     auto position = GetPosition();
     DebugRenderer::DrawLine(position, position + GetForward(), Color::Blue);
+
+    time += deltaTime;
 }

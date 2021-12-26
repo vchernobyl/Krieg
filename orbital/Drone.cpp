@@ -2,6 +2,7 @@
 #include "Rocket.h"
 #include "Player.h"
 #include "Explosion.h"
+#include "Health.h"
 
 Drone::Drone(Game* game, const Vector2& movement,
              std::function<void()> onDestroy)
@@ -11,6 +12,7 @@ Drone::Drone(Game* game, const Vector2& movement,
     sprite->SetColor(Color::Red);
 
     rocketSound = new AudioComponent(this);
+    hitSound = new AudioComponent(this);
 
     SetScale(0.75f);
     SetRotation(Math::Atan2(movement.y, movement.x));
@@ -18,12 +20,16 @@ Drone::Drone(Game* game, const Vector2& movement,
     auto rigidbody = new RigidbodyComponent(this);
     rigidbody->SetVelocity(movement * 2.5f);
     
+    auto health = new Health(this, 1);
+    health->SetOnReceiveDamage([this]() { hitSound->PlayEvent("event:/Laser_Hit"); });
+
     collider = new CircleColliderComponent(this, 0.5f * GetScale());
     collider->SetCollisionFilter(CollisionCategory::Enemy, CollisionCategory::Player);
 }
 
 Drone::~Drone() {
     if (onDestroy) onDestroy();
+    new Explosion(GetGame(), GetPosition());
 }
 
 void Drone::UpdateActor(float deltaTime) {
@@ -55,6 +61,7 @@ void Drone::UpdateActor(float deltaTime) {
 }
 
 void Drone::OnBeginContact(const Contact& contact) {
-    SetState(Actor::State::Dead);
-    new Explosion(GetGame(), GetPosition());
+    if (dynamic_cast<Player*>(contact.other)) {
+        SetState(Actor::State::Dead);
+    }
 }

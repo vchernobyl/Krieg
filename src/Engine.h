@@ -23,5 +23,6 @@
 #include "SoundEvent.h"
 #include "SpriteBatch.h"
 #include "SpriteComponent.h"
+#include "SpriteAnimation.h"
 #include "Texture.h"
 #include "UIScreen.h"

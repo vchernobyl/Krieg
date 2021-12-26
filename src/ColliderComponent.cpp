@@ -26,6 +26,8 @@ RigidbodyComponent* ColliderComponent::GetAttachedRigidbody() const {
     return owner->GetComponent<RigidbodyComponent>();
 }
 
+// TODO: Split this function up into two.
+// Also remove CollisionCategory and pass regular uin16 instead.
 void ColliderComponent::SetCollisionFilter(CollisionCategory category, CollisionCategory mask) {
     assert(fixture);
     
