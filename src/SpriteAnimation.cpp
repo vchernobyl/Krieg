@@ -2,7 +2,6 @@
 #include "Actor.h"
 #include "SpriteComponent.h"
 #include "Texture.h"
-#include <cassert>
 #include <utility>
 
 void Animation::AddFrame(int textureID, int x, int y, int width, int height, float frameTime) {
@@ -43,7 +42,12 @@ void Animation::Reset() {
 SpriteAnimation::SpriteAnimation(Actor* owner, Texture* sheet) : Component(owner) {
     sprite = new SpriteComponent(owner);
     sprite->SetTexture(sheet);
-    assert(sprite);
+}
+
+SpriteAnimation::~SpriteAnimation() {
+    for (auto [_, animation] : animations) {
+        delete animation;
+    }
 }
 
 void SpriteAnimation::Update(float deltaTime) {

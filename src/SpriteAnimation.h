@@ -31,6 +31,7 @@ private:
 class SpriteAnimation : public Component {
 public:
     SpriteAnimation(class Actor* owner, class Texture* sheet);
+    ~SpriteAnimation();
     void Update(float deltaTime) override;
     void AddAnimation(const std::string& name, Animation* animation);
     void SetAnimation(const std::string& name);
