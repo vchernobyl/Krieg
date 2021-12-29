@@ -2,7 +2,7 @@
 #include "Planet.h"
 #include "Rocket.h"
 #include "Health.h"
-#include "Explosion.h"
+#include "Effects.h"
 #include "Collision.h"
 #include <cassert>
 

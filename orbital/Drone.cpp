@@ -1,10 +1,11 @@
 #include "Drone.h"
 #include "Rocket.h"
 #include "Player.h"
-#include "Explosion.h"
+#include "Effects.h"
 #include "Health.h"
 #include "Collision.h"
 #include "Timer.h"
+#include "Powerups.h"
 
 Drone::Drone(Game* game, const Vector2& movement)
     : Actor(game), movement(movement) {
@@ -52,6 +53,13 @@ Drone::Drone(Game* game, const Vector2& movement)
 Drone::~Drone() {
     if (onDestroy) onDestroy();
     new Explosion(GetGame(), GetPosition());
+
+    auto chance = Random::GetFloat();
+    if (chance <= 0.3f) {
+        auto velocity = GetComponent<RigidbodyComponent>()->GetVelocity();
+        auto heart = new Heart(GetGame(), velocity);
+        heart->SetPosition(GetPosition());
+    }
 }
 
 void Drone::UpdateActor(float deltaTime) {

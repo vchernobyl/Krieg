@@ -19,18 +19,15 @@ void OrbitalGame::LoadContent() {
     auto a = new Actor(this);
     a->SetPosition(Vector2(5, 5));
 
-    auto heart = new Heart(this);
-    heart->SetPosition(Vector2::Zero);
+    // // Animations
+    // {
+    //     auto idle = new Animation;
+    //     idle->AddFrame(99, 0, 0, 64, 64, 0.5f);
+    //     idle->AddFrame(99, 64, 0, 64, 64, 0.5f);
+    //     idle->AddFrame(99, 64 * 2, 0, 64, 64, 0.5f);
 
-    // Animations
-    {
-        auto idle = new Animation;
-        idle->AddFrame(99, 0, 0, 64, 64, 0.5f);
-        idle->AddFrame(99, 64, 0, 64, 64, 0.5f);
-        idle->AddFrame(99, 64 * 2, 0, 64, 64, 0.5f);
-
-        auto sheet = GetRenderer()->GetTexture("data/textures/animation.png");
-        auto animation = new SpriteAnimation(a, sheet);
-        animation->AddAnimation("idle", idle);
-    }
+    //     auto sheet = GetRenderer()->GetTexture("data/textures/animation.png");
+    //     auto animation = new SpriteAnimation(a, sheet);
+    //     animation->AddAnimation("idle", idle);
+    // }
 }

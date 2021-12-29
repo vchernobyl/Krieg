@@ -33,6 +33,7 @@ public:
 
     State GetState() const { return state; }
     void SetState(State state) { this->state = state; }
+    void Destroy() { this->state = State::Dead; }
 
     const std::string& GetTag() const { return tag; }
     void SetTag(const std::string& tag) { this->tag = tag; }
