@@ -41,8 +41,9 @@ void Drone::UpdateActor(float deltaTime) {
 
         auto direction = Vector2::Normalize(player->GetPosition() - GetPosition());
         auto rocket = new Rocket(GetGame());
+        auto collider = rocket->GetComponent<CircleColliderComponent>();
+        collider->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Player);
         
-        rocket->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Player);
         rocket->SetPosition(GetPosition());
         rocket->SetSpeed(500.0f);
         rocket->Launch(direction);

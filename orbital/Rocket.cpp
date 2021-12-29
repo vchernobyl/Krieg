@@ -53,8 +53,3 @@ void Rocket::Launch(const Vector2& direction) {
     rigidbody->SetVelocity(direction * speed * GetGame()->GetDeltaTime());
     SetRotation(Math::Atan2(direction.y, direction.x));
 }
-
-void Rocket::SetCollisionFilter(CollisionCategory self, CollisionCategory other) {
-    auto collider = GetComponent<CircleColliderComponent>();
-    collider->SetCollisionFilter(self, other);
-}

@@ -35,6 +35,8 @@ public:
     RigidbodyComponent* GetAttachedRigidbody() const;
 
     void SetCollisionFilter(CollisionCategory category, CollisionCategory mask = CollisionCategory::Default);
+    void SetCategoryAndMask(unsigned short category, unsigned short mask);
+    
     void SetSensor(bool flag);
     bool IsSensor() const;
 

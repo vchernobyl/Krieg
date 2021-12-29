@@ -4,6 +4,7 @@
 #include "Hud.h"
 #include "Health.h"
 #include "Explosion.h"
+#include "Collision.h"
 #include <cassert>
 
 Player::Player(Game* game) : Actor(game) {
@@ -12,7 +13,9 @@ Player::Player(Game* game) : Actor(game) {
 
     auto rigidbody = new RigidbodyComponent(this, BodyType::Kinematic);
     auto collider = new CircleColliderComponent(this, 0.5f, GetPosition());
-    collider->SetCollisionFilter(CollisionCategory::Player);
+    //collider->SetCategoryAndMask(CollisionMask::Default, CollisionMask::Default);
+   collider->SetCollisionFilter(CollisionCategory::Player);
+    
 
     auto camera = game->GetMainCamera();
     auto scale = camera->GetScale();
@@ -66,7 +69,8 @@ void Player::ActorInput(const InputState& input) {
         if (time >= fireRate) {
             time = 0.0f;
             auto rocket = new Rocket(GetGame());
-            rocket->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Enemy);
+            auto collider = rocket->GetComponent<CircleColliderComponent>();
+            collider->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Enemy);
             rocket->SetPosition(GetPosition());
             rocket->SetSpeed(600.0f);
             rocket->Launch(direction);

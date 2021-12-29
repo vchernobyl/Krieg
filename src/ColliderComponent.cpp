@@ -37,6 +37,13 @@ void ColliderComponent::SetCollisionFilter(CollisionCategory category, Collision
     fixture->SetFilterData(filter);
 }
 
+void ColliderComponent::SetCategoryAndMask(unsigned short category, unsigned short mask) {
+    b2Filter filter = fixture->GetFilterData();
+    filter.categoryBits = static_cast<uint16>(category);
+    filter.maskBits = static_cast<uint16>(mask);
+    fixture->SetFilterData(filter);
+}
+
 void ColliderComponent::SetSensor(bool flag) {
     assert(fixture);
     fixture->SetSensor(flag);

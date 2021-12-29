@@ -30,7 +30,9 @@ void Planet::UpdateActor(float deltaTime) {
     if (time >= fireRate) {
         time = 0.0f;
         auto rocket = new Rocket(GetGame());
-        rocket->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Player);
+        auto collider = rocket->GetComponent<CircleColliderComponent>();
+        collider->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Player);
+        
         rocket->SetPosition(GetPosition());
         rocket->SetSpeed(500.0f);
         rocket->Launch(direction);
