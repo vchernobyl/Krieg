@@ -2,13 +2,15 @@
 #include "Player.h"
 #include "Planet.h"
 #include "Powerups.h"
+#include "HUD.h"
 
 void OrbitalGame::LoadContent() {
     auto audioSystem = GetAudioSystem();
     audioSystem->LoadBank("data/audio/Master.strings.bank");
     audioSystem->LoadBank("data/audio/Master.bank");
     
-    new Player(this);
+    auto player = new Player(this);
+    new HUD(this, player);
     new Planet(this, Vector2::Zero, 10.0f);
     new DebugUI(this);
 

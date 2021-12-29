@@ -1,7 +1,6 @@
 #include "Player.h"
 #include "Planet.h"
 #include "Rocket.h"
-#include "Hud.h"
 #include "Health.h"
 #include "Explosion.h"
 #include "Collision.h"
@@ -24,12 +23,8 @@ Player::Player(Game* game) : Actor(game) {
 
     rocketSound = new AudioComponent(this);
 
-    auto health = new Health(this, 1000);
-    health->onDamage = [=]() { hud->SetHealth(health->GetHealth()); };
+    auto health = new Health(this, 100);
     health->onDie = [=]() { new Explosion(game, GetPosition()); };
-
-    hud = new Hud(game);
-    hud->SetHealth(health->GetHealth());
 
     SetTag("Player");
 }

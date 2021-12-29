@@ -4,6 +4,8 @@
 
 class Player : public Actor {
 public:
+    int score = 0;
+
     Player(Game* game);
     void ActorInput(const InputState& input) override;
     void UpdateActor(float deltaTime) override;
@@ -16,5 +18,4 @@ private:
     float time = 0.0f;
 
     AudioComponent* rocketSound = nullptr;
-    class Hud* hud = nullptr;
 };
