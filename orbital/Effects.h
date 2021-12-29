@@ -7,7 +7,7 @@ public:
     Explosion(Game* game, const Vector2& position, float lifeTime = 1.0f);
 };
 
-class HeartPickup : public Actor {
+class HeartPickupEffect : public Actor {
 public:
-    HeartPickup(Game* game, const Vector2& position, float lifeTime = 1.0f);
+    HeartPickupEffect(Game* game, const Vector2& position, float lifeTime = 1.0f);
 };

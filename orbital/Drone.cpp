@@ -6,6 +6,7 @@
 #include "Collision.h"
 #include "Timer.h"
 #include "Powerups.h"
+#include <cassert>
 
 Drone::Drone(Game* game, const Vector2& movement)
     : Actor(game), movement(movement) {
@@ -51,7 +52,6 @@ Drone::Drone(Game* game, const Vector2& movement)
 }
 
 Drone::~Drone() {
-    if (onDestroy) onDestroy();
     new Explosion(GetGame(), GetPosition());
 
     auto chance = Random::GetFloat();
@@ -69,12 +69,15 @@ void Drone::UpdateActor(float deltaTime) {
     auto camera = GetGame()->GetMainCamera();
 
     if (!camera->IsBoxInView(position, size)) {
-        SetState(Actor::State::Dead);
+        Destroy();
     }
 }
 
 void Drone::OnBeginContact(const Contact& contact) {
-    if (dynamic_cast<Player*>(contact.other)) {
-        SetState(Actor::State::Dead);
+    if (auto player = dynamic_cast<Player*>(contact.other)) {
+        Destroy();
+        auto health = player->GetComponent<Health>();
+        assert(health);
+        health->ReceiveDamage(50);
     }
 }

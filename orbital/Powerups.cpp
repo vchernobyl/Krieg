@@ -19,7 +19,7 @@ void Heart::OnBeginContact(const Contact& contact) {
     if (auto health = contact.other->GetComponent<Health>()) {
         health->AddHealth(HealingAmount);
 
-        new HeartPickup(GetGame(), GetPosition(), 0.7f);
+        new HeartPickupEffect(GetGame(), GetPosition(), 0.7f);
 
         Destroy();
     }

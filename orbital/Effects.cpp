@@ -28,7 +28,8 @@ Explosion::Explosion(Game* game, const Vector2& position, float lifeTime) : Acto
     new Timer(this, lifeTime, [](Timer* self) { self->GetOwner()->Destroy(); });
 }
 
-HeartPickup::HeartPickup(Game* game, const Vector2& position, float lifeTime) : Actor(game) {
+HeartPickupEffect::HeartPickupEffect(Game* game, const Vector2& position, float lifeTime)
+    : Actor(game) {
     SetPosition(position);
 
     auto emitter = new ParticleComponent(this);

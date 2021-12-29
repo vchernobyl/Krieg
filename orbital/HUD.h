@@ -9,5 +9,5 @@ public:
 private:
     Vector2 anchor;
     Font* font;
-    class Health* health = nullptr;
+    class Player* player = nullptr;
 };
