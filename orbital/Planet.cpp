@@ -2,6 +2,7 @@
 #include "Rocket.h"
 #include "Player.h"
 #include "Drone.h"
+#include "Collision.h"
 
 Planet::Planet(Game* game, const Vector2& center, float radius)
     : Actor(game), center(center), radius(radius) {
@@ -10,7 +11,7 @@ Planet::Planet(Game* game, const Vector2& center, float radius)
 
     auto rigidbody = new RigidbodyComponent(this, BodyType::Static);
     auto collider = new CircleColliderComponent(this, 0.5f * 1.5f);
-    collider->SetCollisionFilter(CollisionCategory::Enemy);
+    collider->SetCategoryAndMask(CollisionMask::Enemy, CollisionMask::PlayerProjectile);
 
     rocketSound = new AudioComponent(this);
 
@@ -31,7 +32,7 @@ void Planet::UpdateActor(float deltaTime) {
         time = 0.0f;
         auto rocket = new Rocket(GetGame());
         auto collider = rocket->GetComponent<CircleColliderComponent>();
-        collider->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Player);
+	collider->SetCategoryAndMask(CollisionMask::EnemyProjectile, CollisionMask::Player);
         
         rocket->SetPosition(GetPosition());
         rocket->SetSpeed(500.0f);

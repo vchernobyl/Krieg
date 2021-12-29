@@ -34,6 +34,7 @@ public:
 
     RigidbodyComponent* GetAttachedRigidbody() const;
 
+    [[deprecated]]
     void SetCollisionFilter(CollisionCategory category, CollisionCategory mask = CollisionCategory::Default);
     void SetCategoryAndMask(unsigned short category, unsigned short mask);
     

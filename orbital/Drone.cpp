@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Explosion.h"
 #include "Health.h"
+#include "Collision.h"
 
 Drone::Drone(Game* game, const Vector2& movement,
              std::function<void()> onDestroy)
@@ -24,7 +25,8 @@ Drone::Drone(Game* game, const Vector2& movement,
     health->SetOnReceiveDamage([this]() { hitSound->PlayEvent("event:/Laser_Hit"); });
 
     collider = new CircleColliderComponent(this, 0.5f * GetScale());
-    collider->SetCollisionFilter(CollisionCategory::Enemy, CollisionCategory::Player);
+    collider->SetCategoryAndMask(CollisionMask::Enemy,
+				 CollisionMask::Player | CollisionMask::PlayerProjectile);
 }
 
 Drone::~Drone() {
@@ -41,8 +43,9 @@ void Drone::UpdateActor(float deltaTime) {
 
         auto direction = Vector2::Normalize(player->GetPosition() - GetPosition());
         auto rocket = new Rocket(GetGame());
-        auto collider = rocket->GetComponent<CircleColliderComponent>();
-        collider->SetCollisionFilter(CollisionCategory::Bullet, CollisionCategory::Player);
+
+        auto collider = rocket->GetComponent<ColliderComponent>();
+	collider->SetCategoryAndMask(CollisionMask::EnemyProjectile, CollisionMask::Player);
         
         rocket->SetPosition(GetPosition());
         rocket->SetSpeed(500.0f);

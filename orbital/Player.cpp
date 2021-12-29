@@ -13,9 +13,8 @@ Player::Player(Game* game) : Actor(game) {
 
     auto rigidbody = new RigidbodyComponent(this, BodyType::Kinematic);
     auto collider = new CircleColliderComponent(this, 0.5f, GetPosition());
-    //collider->SetCategoryAndMask(CollisionMask::Default, CollisionMask::Default);
-   collider->SetCollisionFilter(CollisionCategory::Player);
-    
+    collider->SetCategoryAndMask(CollisionMask::Player,
+				 CollisionMask::Enemy | CollisionMask::EnemyProjectile);
 
     auto camera = game->GetMainCamera();
     auto scale = camera->GetScale();
@@ -69,9 +68,10 @@ void Player::ActorInput(const InputState& input) {
         if (time >= fireRate) {
             time = 0.0f;
             auto rocket = new Rocket(GetGame());
-            auto collider = rocket->GetComponent<CircleColliderComponent>();
-            collider->SetCollisionFilter(CollisionCategory::Player, CollisionCategory::Enemy);
-            rocket->SetPosition(GetPosition());
+            auto collider = rocket->GetComponent<ColliderComponent>();
+	    collider->SetCategoryAndMask(CollisionMask::PlayerProjectile, CollisionMask::Enemy);
+
+	    rocket->SetPosition(GetPosition());
             rocket->SetSpeed(600.0f);
             rocket->Launch(direction);
             rocketSound->PlayEvent("event:/Launch_Rocket");
