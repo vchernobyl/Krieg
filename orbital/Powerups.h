@@ -2,8 +2,10 @@
 
 #include <Engine.h>
 
-class HealthPack : public Actor {
+class Heart : public Actor {
 public:
-    HealthPack(Game* game);
+    Heart(Game* game);
     void OnBeginContact(const Contact& contact) override;
+private:
+    static constexpr int HealingAmount = 50;
 };

@@ -14,7 +14,9 @@ Player::Player(Game* game) : Actor(game) {
     auto rigidbody = new RigidbodyComponent(this, BodyType::Kinematic);
     auto collider = new CircleColliderComponent(this, 0.5f, GetPosition());
     collider->SetCategoryAndMask(CollisionMask::Player,
-				 CollisionMask::Enemy | CollisionMask::EnemyProjectile);
+				 CollisionMask::Enemy |
+				 CollisionMask::EnemyProjectile |
+				 CollisionMask::Powerup);
 
     auto camera = game->GetMainCamera();
     auto scale = camera->GetScale();
@@ -22,13 +24,9 @@ Player::Player(Game* game) : Actor(game) {
 
     rocketSound = new AudioComponent(this);
 
-    auto health = new Health(this, 100000);
-    health->SetOnReceiveDamage([=]() {
-        hud->SetHealth(health->GetHealth());
-    });
-    health->SetOnZeroHealth([=]() {
-        new Explosion(game, GetPosition());
-    });
+    auto health = new Health(this, 1000);
+    health->onDamage = [=]() { hud->SetHealth(health->GetHealth()); };
+    health->onDie = [=]() { new Explosion(game, GetPosition()); };
 
     hud = new Hud(game);
     hud->SetHealth(health->GetHealth());

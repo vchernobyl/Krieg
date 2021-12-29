@@ -22,7 +22,7 @@ Drone::Drone(Game* game, const Vector2& movement,
     rigidbody->SetVelocity(movement * 2.5f);
     
     auto health = new Health(this, 1);
-    health->SetOnReceiveDamage([this]() { hitSound->PlayEvent("event:/Laser_Hit"); });
+    health->onDamage = [this]() { hitSound->PlayEvent("event:/Laser_Hit"); };
 
     collider = new CircleColliderComponent(this, 0.5f * GetScale());
     collider->SetCategoryAndMask(CollisionMask::Enemy,

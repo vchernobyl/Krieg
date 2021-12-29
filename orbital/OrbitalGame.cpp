@@ -1,6 +1,7 @@
 #include "OrbitalGame.h"
 #include "Player.h"
 #include "Planet.h"
+#include "Powerups.h"
 
 void OrbitalGame::LoadContent() {
     auto audioSystem = GetAudioSystem();
@@ -15,6 +16,9 @@ void OrbitalGame::LoadContent() {
 
     auto a = new Actor(this);
     a->SetPosition(Vector2(5, 5));
+
+    auto heart = new Heart(this);
+    heart->SetPosition(Vector2::Zero);
 
     // Animations
     {

@@ -1,7 +1,7 @@
 #include "Health.h"
 
 Health::Health(Actor* owner, int maxHealth)
-    : Component(owner), health(maxHealth) {
+    : Component(owner), maxHealth(maxHealth), health(maxHealth) {
 }
 
 void Health::ReceiveDamage(int amount) {
@@ -9,8 +9,15 @@ void Health::ReceiveDamage(int amount) {
     if (health <= 0) {
         GetOwner()->SetState(Actor::State::Dead);
         health = 0;
-        if (onZeroHealth) onZeroHealth();
+        if (onDie) onDie();
     }
     
-    if (onReceiveDamage) onReceiveDamage();
+    if (onDamage) onDamage();
+}
+
+void Health::AddHealth(int amount) {
+    health += amount;
+    if (health > maxHealth) {
+	health = maxHealth;
+    }
 }
