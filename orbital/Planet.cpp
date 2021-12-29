@@ -22,30 +22,13 @@ Planet::Planet(Game* game, const Vector2& center, float radius)
 void Planet::UpdateActor(float deltaTime) {
     DebugRenderer::DrawCircle(center, radius, Vector4(1.0f, 1.0f, 0.0f, 0.5f));
 
-    auto player = dynamic_cast<Player*>(GetGame()->GetActorByTag("Player"));
-    if (!player) return;
-    
-    auto direction = Vector2::Normalize(player->GetPosition() - GetPosition());
-
-    time += deltaTime;
-    if (time >= fireRate) {
-        time = 0.0f;
-        auto rocket = new Rocket(GetGame());
-        auto collider = rocket->GetComponent<CircleColliderComponent>();
-	collider->SetCategoryAndMask(CollisionMask::EnemyProjectile, CollisionMask::Player);
-        
-        rocket->SetPosition(GetPosition());
-        rocket->SetSpeed(500.0f);
-        rocket->Launch(direction);
-
-        rocketSound->PlayEvent("event:/Launch_Rocket");
-    }
-
     droneSpawnTime += deltaTime;
     if (droneCount < maxDrones && droneSpawnTime >= droneSpawnInterval) {
         droneSpawnTime = 0.0f;
         droneCount++;
 
+	auto direction = Random::GetVector(-Vector2::One, Vector2::One);
+	direction.Normalize();
         new Drone(GetGame(), direction, [&]() { droneCount--; });
     }
 }

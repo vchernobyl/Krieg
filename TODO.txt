@@ -304,7 +304,9 @@ run path and go up a directory until we reach the "data" directory, abort otherw
 12. Add basic score to the HUD.
 13. Remove actors when they are out of screen bounds. [DONE]
 14. Update current drone count when they are out of screen bounds. [DONE]
-15. Research an easy way to create sprite animations. [IN PROGRESS]
+15. Research an easy way to create sprite animations. [DONE]
+16. Heart powerup. [DONE]
+17. Timer component. [IN PROGRESS]
 
 Notes from 'Game Engine Architecture':
 - Whenever we want to express a IS-A relationship via inheritence, think about whether or not
