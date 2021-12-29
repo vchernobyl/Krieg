@@ -15,13 +15,5 @@ private:
     Vector2 center;
     float radius;
 
-    float fireRate = 1.0f;
-    float time = 0.0f;
-
-    int maxDrones = 5;
-    int droneCount = 0;
-    float droneSpawnInterval = 2.0f; // In seconds.
-    float droneSpawnTime = 0.0f;
-
     AudioComponent* rocketSound = nullptr;
 };

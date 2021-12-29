@@ -11,7 +11,7 @@ public:
     void UpdateActor(float deltaTime) override;
 private:
     float angle = 90.0f;
-    float speed = 1.5f;
+    float speed = 2.5f;
     float orbitSpeed = 2.5f;
 
     float fireRate = 0.35f;

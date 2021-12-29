@@ -4,10 +4,10 @@
 #include "Explosion.h"
 #include "Health.h"
 #include "Collision.h"
+#include "Timer.h"
 
-Drone::Drone(Game* game, const Vector2& movement,
-             std::function<void()> onDestroy)
-    : Actor(game), movement(movement), onDestroy(onDestroy) {
+Drone::Drone(Game* game, const Vector2& movement)
+    : Actor(game), movement(movement) {
     auto sprite = new SpriteComponent(this);
     sprite->SetTexture(game->GetRenderer()->GetTexture("data/textures/Ship.png"));
     sprite->SetColor(Color::Red);
@@ -27,17 +27,9 @@ Drone::Drone(Game* game, const Vector2& movement,
     collider = new CircleColliderComponent(this, 0.5f * GetScale());
     collider->SetCategoryAndMask(CollisionMask::Enemy,
 				 CollisionMask::Player | CollisionMask::PlayerProjectile);
-}
 
-Drone::~Drone() {
-    if (onDestroy) onDestroy();
-    new Explosion(GetGame(), GetPosition());
-}
-
-void Drone::UpdateActor(float deltaTime) {
-    fireTimer += deltaTime;
-    if (fireTimer >= fireRate) {
-        fireTimer = 0.0f;
+    float shotInterval = 1.35f;
+    new Timer(this, shotInterval, [=](Timer* self) {
         auto player = dynamic_cast<Player*>(GetGame()->GetActorByTag("Player"));
         if (!player) return;
 
@@ -52,8 +44,17 @@ void Drone::UpdateActor(float deltaTime) {
         rocket->Launch(direction);
 
         rocketSound->PlayEvent("event:/Launch_Rocket");
-    }
 
+        self->Start(shotInterval);
+    });
+}
+
+Drone::~Drone() {
+    if (onDestroy) onDestroy();
+    new Explosion(GetGame(), GetPosition());
+}
+
+void Drone::UpdateActor(float deltaTime) {
     auto radius = collider->GetRadius();
     auto position = GetPosition() - Vector2(radius, radius);
     auto size = Vector2(radius, radius) * 2.0f;

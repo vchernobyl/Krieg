@@ -5,13 +5,11 @@
 
 class Drone : public Actor {
 public:
-    Drone(Game* game, const Vector2& movement, std::function<void()> onDestroy);
+    Drone(Game* game, const Vector2& movement);
     ~Drone();
     void UpdateActor(float deltaTime) override;
     void OnBeginContact(const Contact& contact) override;
 private:
-    float fireRate = 1.5f;
-    float fireTimer = 0.0f;
 
     Vector2 movement;
     std::function<void()> onDestroy;
