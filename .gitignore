@@ -1,6 +1,7 @@
 build/
 src/.vs/
 .vs/
+*.sln
 *.obj
 *.log
 *.tlog
