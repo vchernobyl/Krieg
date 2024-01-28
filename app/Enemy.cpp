@@ -9,7 +9,6 @@
 #include "TargetComponent.h"
 #include "HealthComponent.h"
 #include "RocketLauncher.h"
-#include "AudioComponent.h"
 #include <cassert>
 
 Projectile::Projectile(Game* game) : Actor(game) {
@@ -52,8 +51,6 @@ Enemy::Enemy(Game* game) : Actor(game) {
     new TargetComponent(this);
     new HealthComponent(this, 100);
 
-    audio = new AudioComponent(this);
-
     assert(followTarget);
     assert(rigidbody);
 }
@@ -86,7 +83,6 @@ void Enemy::ShootAt(const Vector2& position) {
 
     auto direction = position - GetPosition();
     direction.Normalize();
-    
+
     projectile->rigidbody->SetVelocity(direction * 10.0f);
-    audio->PlayEvent("event:/Laser_Shot");
 }

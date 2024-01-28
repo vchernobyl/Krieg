@@ -16,7 +16,7 @@ void HealthComponent::Update(float deltaTime) {
             shouldFlash = false;
             ownerSprite->SetColor(originalColor);
         }
-    } 
+    }
 }
 
 void HealthComponent::ReceiveDamage(int damage) {

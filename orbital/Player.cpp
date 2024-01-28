@@ -21,8 +21,6 @@ Player::Player(Game* game) : Actor(game) {
     auto scale = camera->GetScale();
     camera->SetScale(scale / 1.5f);
 
-    rocketSound = new AudioComponent(this);
-
     auto health = new Health(this, 100);
     health->onDie = [=]() { new Explosion(game, GetPosition()); };
 
@@ -67,7 +65,6 @@ void Player::ActorInput(const InputState& input) {
 	    rocket->SetPosition(GetPosition());
             rocket->SetSpeed(600.0f);
             rocket->Launch(direction);
-            rocketSound->PlayEvent("event:/Launch_Rocket");
         }
     }
 }

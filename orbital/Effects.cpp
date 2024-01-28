@@ -22,9 +22,6 @@ Explosion::Explosion(Game* game, const Vector2& position, float lifeTime) : Acto
 
     emitter->Emit(props, 35);
 
-    auto audio = new AudioComponent(this);
-    audio->PlayEvent("event:/Rocket_Explosion");
-
     new Timer(this, lifeTime, [](Timer* self) { self->GetOwner()->Destroy(); });
 }
 

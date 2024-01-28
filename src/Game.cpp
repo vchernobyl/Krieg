@@ -1,6 +1,5 @@
 #include "Game.h"
 #include "Actor.h"
-#include "AudioSystem.h"
 #include "InputSystem.h"
 #include "PhysicsWorld.h"
 #include "Renderer.h"
@@ -34,16 +33,10 @@ bool Game::Initialize() {
         SDL_Log("Failed to initialize the renderer");
         return false;
     }
-    
+
     inputSystem = new InputSystem();
     if (!inputSystem->Initialize()) {
         SDL_Log("Failed to initialize the input system");
-        return false;
-    }
-
-    audioSystem = new AudioSystem(this);
-    if (!audioSystem->Initialize()) {
-        SDL_Log("Failed to initializa the audio system");
         return false;
     }
 
@@ -78,9 +71,6 @@ void Game::Shutdown() {
 
     inputSystem->Shutdown();
     delete inputSystem;
-
-    audioSystem->Shutdown();
-    delete audioSystem;
 
     physicsWorld->Shutdown();
     delete physicsWorld;
@@ -211,8 +201,6 @@ void Game::UpdateGame() {
     for (auto actor : deadActors) {
         delete actor;
     }
-
-    audioSystem->Update(deltaTime);
 
     mainCamera->Update();
     renderer->SetViewMatrix(mainCamera->GetViewMatrix());

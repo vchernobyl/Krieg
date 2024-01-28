@@ -9,8 +9,6 @@ target_include_directories(Engine
         ${CMAKE_SOURCE_DIR}/external/box2d/include
         ${CMAKE_SOURCE_DIR}/external/freetype/include
         ${CMAKE_SOURCE_DIR}/external/SOIL/include
-        ${CMAKE_SOURCE_DIR}/external/FMOD/api/core/include
-        ${CMAKE_SOURCE_DIR}/external/FMOD/api/studio/include
     PUBLIC
         ${CMAKE_SOURCE_DIR}/external/SDL/include
         ${CMAKE_SOURCE_DIR}/external/glew/include
@@ -27,8 +25,6 @@ target_link_directories(Engine
         ${CMAKE_SOURCE_DIR}/external/box2d/${LIB_PATH}
         ${CMAKE_SOURCE_DIR}/external/freetype/${LIB_PATH}
         ${CMAKE_SOURCE_DIR}/external/SOIL/${LIB_PATH}
-        ${CMAKE_SOURCE_DIR}/external/FMOD/api/studio/${LIB_PATH}
-        ${CMAKE_SOURCE_DIR}/external/FMOD/api/core/${LIB_PATH}
         ${CMAKE_SOURCE_DIR}/external/glew/${LIB_PATH}
         ${CMAKE_SOURCE_DIR}/external/SDL/${LIB_PATH}
 )
@@ -44,15 +40,11 @@ if(WIN32)
     target_link_libraries(Engine PRIVATE
         SDL2main
         glew32
-        fmodstudio_vc
-        fmod_vc
         opengl32
     )
 elseif(APPLE)
     target_link_libraries(Engine PRIVATE
         GLEW
-        fmodstudio
-        fmod
         "-framework OpenGL"
         "-framework Cocoa"
     )

@@ -25,8 +25,6 @@ private:
     void ShootAt(const Vector2& position);
 
     class RigidbodyComponent* rigidbody = nullptr;
-    class AudioComponent* audio = nullptr;
-
     class RocketLauncher* rocketLauncher = nullptr;
 
     Actor* followTarget = nullptr;

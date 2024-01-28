@@ -12,7 +12,5 @@ private:
 
     Vector2 movement;
 
-    AudioComponent* rocketSound = nullptr;
-    AudioComponent* hitSound = nullptr;
     CircleColliderComponent* collider = nullptr;
 };

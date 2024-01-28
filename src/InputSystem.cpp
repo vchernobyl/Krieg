@@ -70,7 +70,7 @@ void InputSystem::Update() {
     } else {
         state.Mouse.currButtons = SDL_GetMouseState(&x, &y);
     }
-    
+
     state.Mouse.mousePosition.x = static_cast<float>(x);
     state.Mouse.mousePosition.y = static_cast<float>(y);
 }

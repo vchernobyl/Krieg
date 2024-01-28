@@ -4,15 +4,11 @@
 #include "Enemy.h"
 #include "HUD.h"
 #include "DebugUI.h"
-#include "AudioSystem.h"
 
 SpaceGame::SpaceGame() : Game() {
 }
 
 void SpaceGame::LoadContent() {
-    GetAudioSystem()->LoadBank("data/audio/Master.strings.bank");
-    GetAudioSystem()->LoadBank("data/audio/Master.bank");
-
     new Ship(this);
     
     auto e1 = new Enemy(this);

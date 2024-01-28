@@ -6,10 +6,6 @@
 #include "Powerups.h"
 
 void OrbitalGame::LoadContent() {
-    auto audioSystem = GetAudioSystem();
-    audioSystem->LoadBank("data/audio/Master.strings.bank");
-    audioSystem->LoadBank("data/audio/Master.bank");
-    
     auto player = new Player(this);
     new HUD(this, player);
     new Planet(this, Vector2::Zero, 10.0f);

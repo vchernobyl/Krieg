@@ -8,7 +8,6 @@
 #include "CircleColliderComponent.h"
 #include "TargetComponent.h"
 #include "HealthComponent.h"
-#include "AudioComponent.h"
 #include "Ship.h"
 #include "Random.h"
 #include "InputSystem.h"
@@ -36,9 +35,6 @@ Explosion::Explosion(Game* game, const Vector2& position) : Actor(game) {
     props.lifeTime = lifeTime;
 
     emitter->Emit(props, 15);
-
-    auto audio = new AudioComponent(this);
-    audio->PlayEvent("event:/Rocket_Explosion");
 }
 
 void Explosion::UpdateActor(float deltaTime) {
@@ -103,9 +99,6 @@ void Rocket::LaunchAt(TargetComponent* target, float speed) {
     SetRotation(rotation);
 
     rb->SetVelocity(direction * speed);
-
-    auto audio = new AudioComponent(this);
-    audio->PlayEvent("event:/Launch_Rocket");
 }
 
 RocketLauncher::RocketLauncher(Game* game) : Weapon(game) {

@@ -5,7 +5,6 @@
 #include "Texture.h"
 #include "BoxColliderComponent.h"
 #include "RigidbodyComponent.h"
-#include "AudioComponent.h"
 #include "Ship.h"
 #include "TargetComponent.h"
 #include "InputSystem.h"
@@ -36,9 +35,6 @@ HitParticles::HitParticles(Game* game, const Vector2& position) : Actor(game) {
     props.lifeTime = lifeTime;
 
     emitter->Emit(props, 5);
-
-    auto audio = new AudioComponent(this);
-    audio->PlayEvent("event:/Laser_Hit");
 }
 
 void HitParticles::UpdateActor(float deltaTime) {
@@ -91,9 +87,6 @@ void Bullet::ShootAt(const Vector2& position, float speed) {
     SetRotation(rotation);
 
     rigidbody->SetVelocity(direction * speed);
-
-    auto audio = new AudioComponent(this);
-    audio->PlayEvent("event:/Laser_Shot");
 }
 
 Turret::Turret(Game* game) : Weapon(game) {

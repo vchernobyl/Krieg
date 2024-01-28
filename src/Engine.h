@@ -1,8 +1,6 @@
 #pragma once
 
 #include "Actor.h"
-#include "AudioComponent.h"
-#include "AudioSystem.h"
 #include "BoxColliderComponent.h"
 #include "Camera.h"
 #include "CircleColliderComponent.h"
@@ -20,7 +18,6 @@
 #include "Renderer.h"
 #include "RigidbodyComponent.h"
 #include "Shader.h"
-#include "SoundEvent.h"
 #include "SpriteBatch.h"
 #include "SpriteComponent.h"
 #include "SpriteAnimation.h"

@@ -14,8 +14,6 @@ Planet::Planet(Game* game, const Vector2& center, float radius)
     auto collider = new CircleColliderComponent(this, 0.5f * 1.5f);
     collider->SetCategoryAndMask(CollisionMask::Enemy, CollisionMask::PlayerProjectile);
     
-    rocketSound = new AudioComponent(this);
-    
     float spawnInterval = 1.75f;
     new Timer(this, spawnInterval, [=](Timer* self) {
         auto direction = Random::GetVector(-Vector2::One, Vector2::One);

@@ -56,7 +56,7 @@ void Actor::AddComponent(Component* component) {
     }
     components.insert(iter, component);
 }
-            
+
 void Actor::RemoveComponent(Component* component) {
     auto iter = std::find(components.begin(), components.end(), component);
     if (iter != components.end()) {

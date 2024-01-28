@@ -14,6 +14,4 @@ public:
 private:
     Vector2 center;
     float radius;
-
-    AudioComponent* rocketSound = nullptr;
 };

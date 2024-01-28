@@ -51,7 +51,7 @@ bool Renderer::Initialize(int screenWidth, int screenHeight) {
     }
 
     context = SDL_GL_CreateContext(window);
-    
+
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK) {
         SDL_Log("Failed to initialize GLEW.");

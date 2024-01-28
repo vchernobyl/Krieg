@@ -16,6 +16,4 @@ private:
 
     float fireRate = 0.35f;
     float time = 0.0f;
-
-    AudioComponent* rocketSound = nullptr;
 };

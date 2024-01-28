@@ -77,7 +77,7 @@ bool Shader::IsCompiled(GLuint shader) {
         SDL_Log("GLSL compilation failed:\n%s", buffer);
         return false;
     }
-    
+
     return true;
 }
 
@@ -92,6 +92,6 @@ bool Shader::IsValidProgram() {
         SDL_Log("GLSL linking failed:\n%s", buffer);
         return false;
     }
-    
+
     return true;
 }

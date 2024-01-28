@@ -21,7 +21,7 @@ public:
     const FrameData* GetCurrentFrame() const;
     bool UpdateFrame(float deltaTime);
     void Reset();
-    
+
 private:
     std::vector<FrameData> frames;
     int currentFrameIndex = 0;
