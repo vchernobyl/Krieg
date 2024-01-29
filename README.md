@@ -1,4 +1,9 @@
-## Cross platform 2D game engine built using SDL2, OpenGL, Box2D and C++ 17.
+## Cross platform 2D game engine.
+The project is built using:
+- OpenGL - rendering
+- SDL2 - window and input handling
+- Box2D - physics
+- FreeType - font rendering
 
 ### Windows
 To generate a Visual Studio build, you can run a build generator for your current VS version, for example:
