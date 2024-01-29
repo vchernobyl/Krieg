@@ -1,4 +1,4 @@
-## Cross platform 2D game engine.
+## Cross platform 2D game engine
 The project is built using:
 - OpenGL - rendering
 - SDL2 - window and input handling
